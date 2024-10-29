@@ -58,6 +58,12 @@
             Width="25%"
           />
           <DataGridColumn
+            Caption="IP"
+            Field="@nameof(PrinterDto.Ip)"
+            Width="20%"
+            Sortable="false"
+          />
+          <DataGridColumn
             Caption="@WsDataLocalizer["ColProductionSite"]"
             Field="@($"{nameof(PrinterDto.ProductionSite)}.{nameof(ProxyDto.Name)}")"
             Width="35%"
@@ -67,12 +73,6 @@
               <ProductionSiteSelect />
             </FilterTemplate>
           </DataGridColumn>
-          <DataGridColumn
-            Caption="IP"
-            Field="@nameof(PrinterDto.Ip)"
-            Width="20%"
-            Sortable="false"
-          />
         </ColumnsContent>
         <ContextMenuContent>
           <DataGridActionViewItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, async item => await OpenUpdateFormModal(item)))"/>
