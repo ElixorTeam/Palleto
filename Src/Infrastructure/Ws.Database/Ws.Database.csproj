@@ -4,17 +4,17 @@
     </PropertyGroup>
 
     <ItemGroup Label="Packages">
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" VersionOverride="8.0.8" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" VersionOverride="8.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" VersionOverride="8.0.0"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" VersionOverride="8.0.10" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" VersionOverride="8.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" VersionOverride="8.0.1" />
         <PackageReference Include="TscZebra.Plugin.Abstractions" VersionOverride="1.0.4" />
 
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" VersionOverride="8.0.8">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" VersionOverride="8.0.10">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
 
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" VersionOverride="8.0.8">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" VersionOverride="8.0.10">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>

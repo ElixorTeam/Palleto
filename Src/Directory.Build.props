@@ -33,7 +33,7 @@
     </PropertyGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'DevelopVS'">
-      <PackageReference Include="Roslynator.Analyzers" VersionOverride="4.12.7">
+      <PackageReference Include="Roslynator.Analyzers" VersionOverride="4.12.9">
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
