@@ -3,6 +3,7 @@ using Ws.DeviceControl.Api.App.Features.References.Templates.Common;
 using Ws.DeviceControl.Api.App.Features.References.Templates.Impl.Expressions;
 using Ws.DeviceControl.Api.App.Features.References.Templates.Impl.Extensions;
 using Ws.DeviceControl.Api.App.Features.References.Templates.Impl.Validators;
+using Ws.DeviceControl.Api.App.Shared.Enums;
 using Ws.DeviceControl.Models.Features.References.Template.Commands;
 using Ws.DeviceControl.Models.Features.References.Template.Queries;
 using Ws.DeviceControl.Models.Features.References.Template.Universal;
@@ -28,7 +29,7 @@ internal sealed class TemplateApiService(
     }
 
     public async Task<TemplateDto> GetByIdAsync(Guid id) =>
-        TemplateExpressions.ToDto.Compile().Invoke(await dbContext.Templates.SafeGetById(id, "Не найдено"));
+        TemplateExpressions.ToDto.Compile().Invoke(await dbContext.Templates.SafeGetById(id, FkProperty.Template));
 
     public Task<List<TemplateDto>> GetAllAsync() => dbContext.Templates
         .AsNoTracking().Select(TemplateExpressions.ToDto)
@@ -37,7 +38,7 @@ internal sealed class TemplateApiService(
 
     public async Task<TemplateBodyDto> GetBodyByIdAsync(Guid id)
     {
-        TemplateEntity entity = await dbContext.Templates.SafeGetById(id, "Не найдено");
+        TemplateEntity entity = await dbContext.Templates.SafeGetById(id, FkProperty.Template);
         return new()
         {
             Body = entity.Body
@@ -46,7 +47,7 @@ internal sealed class TemplateApiService(
 
     public async Task<BarcodeItemWrapper> GetBarcodeTemplates(Guid id)
     {
-        TemplateEntity entity = await dbContext.Templates.SafeGetById(id, "Не найдено");
+        TemplateEntity entity = await dbContext.Templates.SafeGetById(id, FkProperty.Template);
 
         return new()
         {
@@ -62,9 +63,7 @@ internal sealed class TemplateApiService(
 
     public async Task<TemplateDto> UpdateAsync(Guid id, TemplateUpdateDto dto)
     {
-        await updateValidator.ValidateAsync(dbContext.Templates, dto, id);
-
-        TemplateEntity entity = await dbContext.Templates.SafeGetById(id, "Не найдено");
+        TemplateEntity entity = await updateValidator.ValidateAndGetAsync(dbContext.Templates, dto, id);
 
         dto.UpdateEntity(entity);
         await dbContext.SaveChangesAsync();
@@ -84,7 +83,7 @@ internal sealed class TemplateApiService(
         return TemplateExpressions.ToDto.Compile().Invoke(entity);
     }
 
-    public Task DeleteAsync(Guid id) => dbContext.Templates.SafeDeleteAsync(i => i.Id == id);
+    public Task DeleteAsync(Guid id) => dbContext.Templates.SafeDeleteAsync(i => i.Id == id, FkProperty.Template);
 
     public async Task<BarcodeItemWrapper> UpdateBarcodeTemplates(Guid id, BarcodeItemWrapper barcodes)
     {
@@ -97,7 +96,7 @@ internal sealed class TemplateApiService(
                 StatusCode = HttpStatusCode.UnprocessableEntity
             };
 
-        TemplateEntity entity = await dbContext.Templates.SafeGetById(id, "Не найдено");
+        TemplateEntity entity = await dbContext.Templates.SafeGetById(id, FkProperty.Template);
 
         entity.BarcodeTopBody = barcodes.Top.ToItem();
         entity.BarcodeRightBody = barcodes.Right.ToItem();

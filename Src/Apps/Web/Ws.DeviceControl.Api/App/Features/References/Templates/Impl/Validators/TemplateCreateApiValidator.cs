@@ -8,8 +8,8 @@ using Ws.Shared.Resources;
 
 namespace Ws.DeviceControl.Api.App.Features.References.Templates.Impl.Validators;
 
-public class TemplateCreateApiValidator(IStringLocalizer<WsDataResources> wsDataLocalizer, ErrorHelper errorHelper)
-    : ApiCreateValidator<TemplateEntity, TemplateCreateDto>(errorHelper)
+public class TemplateCreateApiValidator(IStringLocalizer<WsDataResources> wsDataLocalizer)
+    : ApiCreateValidator<TemplateEntity, TemplateCreateDto>
 {
     public override async Task ValidateAsync(DbSet<TemplateEntity> dbSet, TemplateCreateDto dto)
     {

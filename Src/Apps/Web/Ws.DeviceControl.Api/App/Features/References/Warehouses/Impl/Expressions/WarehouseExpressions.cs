@@ -32,6 +32,6 @@ public static class WarehouseExpressions
     public static List<PredicateField<WarehouseEntity>> GetUqPredicates(UqWarehousesProperties uqWarehouseProperties) =>
     [
         new(i => i.Name == uqWarehouseProperties.Name, "Name"),
-        new(i => i.Uid1C == uqWarehouseProperties.Uid1C, ""),
+        new(i => i.Uid1C == uqWarehouseProperties.Uid1C, "Uid1C"),
     ];
 }

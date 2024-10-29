@@ -4,6 +4,7 @@ using Ws.DeviceControl.Api.App.Features.Devices.Printers.Common;
 using Ws.DeviceControl.Api.App.Features.Devices.Printers.Impl.Expressions;
 using Ws.DeviceControl.Api.App.Features.Devices.Printers.Impl.Extensions;
 using Ws.DeviceControl.Api.App.Features.Devices.Printers.Impl.Validators;
+using Ws.DeviceControl.Api.App.Shared.Enums;
 using Ws.DeviceControl.Models.Features.Devices.Printers.Commands;
 using Ws.DeviceControl.Models.Features.Devices.Printers.Queries;
 
@@ -12,7 +13,6 @@ namespace Ws.DeviceControl.Api.App.Features.Devices.Printers.Impl;
 internal sealed class PrinterApiService(
     WsDbContext dbContext,
     UserHelper userHelper,
-    ErrorHelper errorHelper,
     PrinterCreateApiValidator createValidator,
     PrinterUpdateApiValidator updateValidator
     ) : IPrinterService
@@ -41,7 +41,7 @@ internal sealed class PrinterApiService(
     public async Task<PrinterDto> GetByIdAsync(Guid id)
     {
         PrinterEntity entity =
-            await dbContext.Printers.SafeGetById(id, errorHelper.Localize(ErrorType.NotFound, "Printer"));
+            await dbContext.Printers.SafeGetById(id,FkProperty.Printer);
 
         return await GetPrinterDto(entity);
     }
@@ -54,8 +54,8 @@ internal sealed class PrinterApiService(
     {
         await createValidator.ValidateAsync(dbContext.Printers, dto);
 
-        ProductionSiteEntity productionSite = await dbContext.ProductionSites.SafeGetById(dto.ProductionSiteId, errorHelper.Localize(ErrorType.NotFound, "ProductionSite"));
-        await userHelper.CanUserWorkWithProductionSiteAsync(productionSite.Id);
+        ProductionSiteEntity productionSite = await dbContext.ProductionSites.SafeGetById(dto.ProductionSiteId,FkProperty.ProductionSite);
+        await userHelper.ValidateUserProductionSiteAsync(productionSite.Id);
 
         PrinterEntity entity = dto.ToEntity(productionSite);
 
@@ -67,10 +67,8 @@ internal sealed class PrinterApiService(
 
     public async Task<PrinterDto> UpdateAsync(Guid id, PrinterUpdateDto dto)
     {
-        await updateValidator.ValidateAsync(dbContext.Printers, dto, id);
-
-        PrinterEntity entity = await dbContext.Printers.SafeGetById(id, errorHelper.Localize(ErrorType.NotFound, "Printer"));
-        await userHelper.CanUserWorkWithProductionSiteAsync(entity.ProductionSiteId);
+        PrinterEntity entity = await updateValidator.ValidateAndGetAsync(dbContext.Printers, dto, id);
+        await userHelper.ValidateUserProductionSiteAsync(entity.ProductionSiteId);
 
         dto.UpdateEntity(entity);
         await dbContext.SaveChangesAsync();
@@ -78,7 +76,7 @@ internal sealed class PrinterApiService(
         return PrinterExpressions.ToDto.Compile().Invoke(entity);
     }
 
-    public Task DeleteAsync(Guid id) => dbContext.Printers.SafeDeleteAsync(i => i.Id == id);
+    public Task DeleteAsync(Guid id) => dbContext.Printers.SafeDeleteAsync(i => i.Id == id, FkProperty.Printer);
 
     #endregion
 

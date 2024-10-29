@@ -1,32 +1,34 @@
 using LinqKit;
+using Ws.DeviceControl.Api.App.Features.Exceptions;
 using Ws.DeviceControl.Api.App.Shared.Validators.Api.Models;
 
 namespace Ws.DeviceControl.Api.App.Shared.Validators.Api;
 
-public abstract class ApiUpdateValidator<TEntity, TDto, TId>(ErrorHelper errorHelper) : BaseApiValidator<TDto>
+public abstract class ApiUpdateValidator<TEntity, TDto, TId> : BaseApiValidator<TDto>
     where TEntity : class
     where TDto : class
 {
-    public abstract Task ValidateAsync(DbSet<TEntity> dbSet, TDto dto, TId id);
+    public abstract Task<TEntity> ValidateAndGetAsync(DbSet<TEntity> dbSet, TDto dto, TId id);
 
-    protected async Task ValidatePredicatesAsync(DbSet<TEntity> dbSet, List<PredicateField<TEntity>> predicates,
-        PredicateField<TEntity> idPredicate)
+    protected async Task<TEntity> ValidatePredicatesAsync(DbSet<TEntity> dbSet, List<PredicateField<TEntity>> predicates,
+        Expression<Func<TEntity, bool>> idExpression)
     {
-        idPredicate.Predicate.Not();
-
         foreach (PredicateField<TEntity> predicate in predicates)
         {
-            Expression<Func<TEntity, bool>> expandedPredicate =
-                predicate.Predicate.And(idPredicate.Predicate);
-
-            bool isExist = await dbSet.AsExpandable().AnyAsync(expandedPredicate);
+            bool isExist = await dbSet.AsExpandable().AnyAsync(predicate.Predicate.And(idExpression.Not()));
 
             if (isExist)
-                throw new ApiInternalException
+                throw new ApiInternalLocalizingException
                 {
-                    ErrorDisplayMessage = errorHelper.Localize(ErrorType.Unique, predicate.FieldName),
-                    StatusCode = HttpStatusCode.Conflict
+                    PropertyName = predicate.FieldName,
+                    ErrorType = ApiErrorType.Unique
                 };
         }
+
+        return await dbSet.FirstOrDefaultAsync(idExpression) ?? throw new ApiInternalLocalizingException
+        {
+            PropertyName = "Entity",
+            ErrorType = ApiErrorType.NotFound
+        };
     }
 }

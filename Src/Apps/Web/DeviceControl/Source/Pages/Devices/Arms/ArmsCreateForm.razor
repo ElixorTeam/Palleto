@@ -14,32 +14,20 @@
   OnSubmitAction="@CreateItem"
 >
   <FieldsContent>
-    <SectionInputWrapper Label="@WsDataLocalizer["ColNumber"]" HtmlFor="arm-number">
-      <div class="w-full items-center flex gap-2">
-        <InputNumberField
-          id="arm-number"
-          Min="10000"
-          Max="99999"
-          @bind-Value="@FormModel.Number"
-        />
-        <Button
-          Size="ButtonSizeType.Icon"
-          Variant="ButtonVariantType.Outline"
-          Class="shrink-0 !size-10"
-          OnClick="@GenerateArmNumber"
-        >
-          <ArrowPathIcon class="size-5" />
-        </Button>
-      </div>
-      <FieldValidation For="@(() => FormModel.Number)"/>
-    </SectionInputWrapper>
+
+    <SectionNumericField
+      Label="@WsDataLocalizer["ColNumber"]"
+      @bind-Value="@FormModel.Number"
+      Min="10000"
+      Max="99999"
+      For="@(() => FormModel.Number)"
+    />
 
     <SectionTextField
       Label="@WsDataLocalizer["ColName"]"
       @bind-Value="@FormModel.Name"
       For="@(() => FormModel.Name)"
-      MaxLength="32"
-    />
+      MaxLength="32"/>
 
     <SectionSelectSingleField
       TItem="ArmType"
@@ -47,27 +35,23 @@
       Items="LineTypes"
       @bind-Value="@FormModel.Type"
       ItemDisplayName="item => Localizer[item.GetDescription()]"
-      For="@(() => FormModel.Type)"
-    />
+      For="@(() => FormModel.Type)"/>
 
     <FormDivider>@WsDataLocalizer["ColDevice"]</FormDivider>
 
     <SectionGuidField
       Label="@WsDataLocalizer["ColSystemKey"]"
       @bind-Value="@FormModel.SystemKey"
-      For="@(() => FormModel.SystemKey)"
-    />
+      For="@(() => FormModel.SystemKey)"/>
 
     <SectionInputWrapper
       Path="@RedirectHelper.ToPrinter(FormModel.PrinterId)"
       Label="@WsDataLocalizer["ColPrinter"]"
-      HtmlFor="arm-printer"
-    >
+      HtmlFor="arm-printer">
       <UseEndpoint
         Endpoint="@DevicesEndpoints.ProxyPrintersEndpoint"
         Arg="@ProductionSiteState.Value.ProductionSite.Id"
-        Context="printersQuery"
-      >
+        Context="printersQuery">
         @if (printersQuery.HasData)
         {
           <SelectSingle
@@ -80,15 +64,14 @@
             EmptyPlaceholder="@Localizer["FormSelectEmptyDefaultPlaceholder"]"
             SearchPlaceholder="@Localizer["FormSelectSearchDefaultPlaceholder"]"
             ItemDisplayName="@(item => item.Name)"
-            Filterable
-          />
+            Filterable/>
         }
         else
         {
-          <Skeleton class="h-10 w-full" />
+          <Skeleton class="h-10 w-full"/>
         }
       </UseEndpoint>
-      <FieldValidation For="@(() => FormModel.PrinterId)" />
+      <FieldValidation For="@(() => FormModel.PrinterId)"/>
     </SectionInputWrapper>
 
     <FormDivider>@Localizer["FieldLocation"]</FormDivider>
@@ -96,19 +79,16 @@
     <SectionReadOnlyField
       Label="@WsDataLocalizer["ColProductionSite"]"
       Value="@ProductionSiteState.Value.ProductionSite.Name"
-      Path="@RedirectHelper.ToProductionSite(ProductionSiteState.Value.ProductionSite.Id)"
-    />
+      Path="@RedirectHelper.ToProductionSite(ProductionSiteState.Value.ProductionSite.Id)"/>
 
     <SectionInputWrapper
       Path="@RedirectHelper.ToWarehouse(FormModel.WarehouseId)"
       Label="@WsDataLocalizer["ColWarehouse"]"
-      HtmlFor="arm-warehouse"
-    >
+      HtmlFor="arm-warehouse">
       <UseEndpoint
         Endpoint="@ReferencesEndpoints.ProxyWarehousesEndpoint"
         Arg="@ProductionSiteState.Value.ProductionSite.Id"
-        Context="warehousesQuery"
-      >
+        Context="warehousesQuery">
         @if (warehousesQuery.HasData)
         {
           <SelectSingle
@@ -121,15 +101,14 @@
             EmptyPlaceholder="@Localizer["FormSelectEmptyDefaultPlaceholder"]"
             SearchPlaceholder="@Localizer["FormSelectSearchDefaultPlaceholder"]"
             ItemDisplayName="@(item => item.Name)"
-            Filterable
-          />
+            Filterable/>
         }
         else
         {
-          <Skeleton class="h-10 w-full" />
+          <Skeleton class="h-10 w-full"/>
         }
       </UseEndpoint>
-      <FieldValidation For="@(() => FormModel.WarehouseId)" />
+      <FieldValidation For="@(() => FormModel.WarehouseId)"/>
     </SectionInputWrapper>
   </FieldsContent>
 </SectionForm>
@@ -154,6 +133,4 @@
     ArmDto dto = await WebApi.CreateArm(item);
     DevicesEndpoints.AddArm(ProductionSiteState.Value.ProductionSite.Id, dto);
   }
-
-  private void GenerateArmNumber() => FormModel.Number = new Random().Next(10001, 100000);
 }

@@ -4,6 +4,7 @@ using Ws.DeviceControl.Api.App.Features.Admins.PalletMen.Common;
 using Ws.DeviceControl.Api.App.Features.Admins.PalletMen.Impl.Expressions;
 using Ws.DeviceControl.Api.App.Features.Admins.PalletMen.Impl.Extensions;
 using Ws.DeviceControl.Api.App.Features.Admins.PalletMen.Impl.Validators;
+using Ws.DeviceControl.Api.App.Shared.Enums;
 using Ws.DeviceControl.Models.Features.Admins.PalletMen.Commands;
 using Ws.DeviceControl.Models.Features.Admins.PalletMen.Queries;
 
@@ -29,7 +30,7 @@ internal sealed class PalletManApiService(
 
     public async Task<PalletManDto> GetByIdAsync(Guid id)
     {
-        PalletManEntity palletMan = await dbContext.PalletMen.SafeGetById(id, "Не найдено");
+        PalletManEntity palletMan = await dbContext.PalletMen.SafeGetById(id, FkProperty.PalletMan);
         return await GetPalletManDtoDto(palletMan);
     }
 
@@ -41,11 +42,8 @@ internal sealed class PalletManApiService(
     {
         await createValidator.ValidateAsync(dbContext.PalletMen, dto);
 
-        await dbContext.PalletMen.ThrowIfExistAsync(i => i.Name == dto.Name && i.Surname == dto.Surname && i.Patronymic == dto.Patronymic, "Ошибка уникальности");
-        await dbContext.PalletMen.ThrowIfExistAsync(i => i.Uid1C == dto.Id1C, "Ошибка уникальности");
-
-        WarehouseEntity warehouse = await dbContext.Warehouses.SafeGetById(dto.WarehouseId, "Не найдено");
-        await userHelper.CanUserWorkWithProductionSiteAsync(warehouse.ProductionSiteId);
+        WarehouseEntity warehouse = await dbContext.Warehouses.SafeGetById(dto.WarehouseId, FkProperty.Warehouse);
+        await userHelper.ValidateUserProductionSiteAsync(warehouse.ProductionSiteId);
 
         PalletManEntity entity = dto.ToEntity(warehouse);
 
@@ -57,11 +55,11 @@ internal sealed class PalletManApiService(
 
     public async Task<PalletManDto> UpdateAsync(Guid id, PalletManUpdateDto dto)
     {
-        await updateValidator.ValidateAsync(dbContext.PalletMen, dto, id);
+        PalletManEntity entity =  await updateValidator.ValidateAndGetAsync(dbContext.PalletMen, dto, id);
 
-        PalletManEntity entity = await dbContext.PalletMen.SafeGetById(id, "Не найдено");
-        WarehouseEntity warehouse = await dbContext.Warehouses.SafeGetById(dto.WarehouseId, "Не найдено");
-        await userHelper.CanUserWorkWithProductionSiteAsync(warehouse.ProductionSiteId);
+        WarehouseEntity warehouse = await dbContext.Warehouses.SafeGetById(dto.WarehouseId, FkProperty.Warehouse);
+
+        await userHelper.ValidateUserProductionSiteAsync(warehouse.ProductionSiteId);
 
         dto.UpdateEntity(entity, warehouse);
         await dbContext.SaveChangesAsync();
@@ -69,7 +67,7 @@ internal sealed class PalletManApiService(
         return await GetPalletManDtoDto(entity);
     }
 
-    public Task DeleteAsync(Guid id) => dbContext.PalletMen.SafeDeleteAsync(i => i.Id == id);
+    public Task DeleteAsync(Guid id) => dbContext.PalletMen.SafeDeleteAsync(i => i.Id == id, FkProperty.PalletMan);
 
     #endregion
 

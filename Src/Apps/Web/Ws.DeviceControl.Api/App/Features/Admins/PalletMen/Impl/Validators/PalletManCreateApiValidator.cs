@@ -8,8 +8,8 @@ using Ws.Shared.Resources;
 
 namespace Ws.DeviceControl.Api.App.Features.Admins.PalletMen.Impl.Validators;
 
-public class PalletManCreateApiValidator(IStringLocalizer<WsDataResources> wsDataLocalizer, ErrorHelper errorHelper)
-    : ApiCreateValidator<PalletManEntity, PalletManCreateDto>(errorHelper)
+public class PalletManCreateApiValidator(IStringLocalizer<WsDataResources> wsDataLocalizer)
+    : ApiCreateValidator<PalletManEntity, PalletManCreateDto>
 {
     public override async Task ValidateAsync(DbSet<PalletManEntity> dbSet, PalletManCreateDto dto)
     {

@@ -25,7 +25,7 @@ public sealed class UserHelper(
     public async Task<bool> ValidatePolicyAsync(string policy) =>
         (await authorizationService.AuthorizeAsync(user, policy)).Succeeded;
 
-    public async Task CanUserWorkWithProductionSiteAsync(Guid productionSiteId)
+    public async Task ValidateUserProductionSiteAsync(Guid productionSiteId)
     {
         if (productionSiteId == DefaultTypes.GuidMax)
         {
@@ -44,7 +44,7 @@ public sealed class UserHelper(
             throw new ApiInternalException
             {
                 ErrorDisplayMessage = "Пользователь не может работать с выбранной площадкой",
-                StatusCode = HttpStatusCode.Conflict
+                StatusCode = HttpStatusCode.Forbidden
             };
     }
 

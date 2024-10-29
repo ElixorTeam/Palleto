@@ -1,32 +1,23 @@
 using Microsoft.Data.SqlClient;
+using Ws.DeviceControl.Api.App.Features.Exceptions;
+using Ws.DeviceControl.Api.App.Shared.Enums;
 
 namespace Ws.DeviceControl.Api.App.Shared.Extensions;
 
 internal static class DbContextExtensions
 {
-    public static async Task ThrowIfExistAsync<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> predicate, string message) where T : class
-    {
-        bool isExist = await dbSet.AnyAsync(predicate);
-        if (isExist)
-            throw new ApiInternalException
-            {
-                ErrorDisplayMessage = message,
-                StatusCode = HttpStatusCode.Conflict
-            };
-    }
-
-    public static async Task SafeExistAsync<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> predicate, string message) where T : class
+    public static async Task SafeExistAsync<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> predicate, FkProperty property) where T : class
     {
         bool isExist = await dbSet.AnyAsync(predicate);
         if (!isExist)
-            throw new ApiInternalException
-            {
-                ErrorDisplayMessage = message,
-                StatusCode = HttpStatusCode.Conflict
-            };
+            throw new ApiInternalLocalizingException
+        {
+            PropertyName = property.GetDescription(),
+            ErrorType = ApiErrorType.NotFound
+        };
     }
 
-    public static async Task SafeDeleteAsync<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> predicate) where T : class
+    public static async Task SafeDeleteAsync<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> predicate, FkProperty property) where T : class
     {
         try
         {
@@ -34,22 +25,22 @@ internal static class DbContextExtensions
         }
         catch (SqlException)
         {
-            throw new ApiInternalException
+            throw new ApiInternalLocalizingException
             {
-                ErrorDisplayMessage = "Запись используются",
-                StatusCode = HttpStatusCode.Conflict
+                PropertyName = property.GetDescription(),
+                ErrorType = ApiErrorType.IsUse
             };
         }
     }
 
-    public static async Task<T> SafeGetById<T>(this DbSet<T> dbSet, Guid id, string message) where T : class
+    public static async Task<T> SafeGetById<T>(this DbSet<T> dbSet, Guid id, FkProperty property) where T : class
     {
         T? entity = await dbSet.FindAsync(id);
         if (entity == null)
-            throw new ApiInternalException
+            throw new ApiInternalLocalizingException
             {
-                ErrorDisplayMessage = message,
-                StatusCode = HttpStatusCode.NotFound
+                PropertyName = property.GetDescription(),
+                ErrorType = ApiErrorType.NotFound
             };
         return entity;
     }

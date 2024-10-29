@@ -30,4 +30,10 @@
     <data name="errorNotFoundByField" xml:space="preserve">
         <value>{0} is not found</value>
     </data>
+    <data name="errorIsUse" xml:space="preserve">
+        <value>Record is used</value>
+    </data>
+    <data name="errorIsUseByField" xml:space="preserve">
+        <value>{0} is used</value>
+    </data>
 </root>

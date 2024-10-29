@@ -8,8 +8,8 @@ using Ws.Shared.Resources;
 
 namespace Ws.DeviceControl.Api.App.Features.Devices.Arms.Impl.Validators;
 
-public class ArmCreateApiValidator(IStringLocalizer<WsDataResources> wsDataLocalizer, ErrorHelper errorHelper)
-    : ApiCreateValidator<LineEntity, ArmCreateDto>(errorHelper)
+public class ArmCreateApiValidator(IStringLocalizer<WsDataResources> wsDataLocalizer)
+    : ApiCreateValidator<LineEntity, ArmCreateDto>
 {
     public override async Task ValidateAsync(DbSet<LineEntity> dbSet, ArmCreateDto dto)
     {

@@ -3,6 +3,7 @@ using Ws.DeviceControl.Api.App.Features.References.ProductionSites.Common;
 using Ws.DeviceControl.Api.App.Features.References.ProductionSites.Impl.Expressions;
 using Ws.DeviceControl.Api.App.Features.References.ProductionSites.Impl.Extensions;
 using Ws.DeviceControl.Api.App.Features.References.ProductionSites.Impl.Validators;
+using Ws.DeviceControl.Api.App.Shared.Enums;
 using Ws.DeviceControl.Models.Features.References.ProductionSites.Commands;
 using Ws.DeviceControl.Models.Features.References.ProductionSites.Queries;
 
@@ -46,7 +47,7 @@ internal sealed class ProductionSiteApiService(
     }
 
     public async Task<ProductionSiteDto> GetByIdAsync(Guid id) =>
-        ProductionSiteExpressions.ToDto.Compile().Invoke(await dbContext.ProductionSites.SafeGetById(id, "Не найдено"));
+        ProductionSiteExpressions.ToDto.Compile().Invoke(await dbContext.ProductionSites.SafeGetById(id, FkProperty.Label));
 
     public Task<List<ProductionSiteDto>> GetAllAsync() => dbContext.ProductionSites
         .AsNoTracking().Select(ProductionSiteExpressions.ToDto)
@@ -71,16 +72,14 @@ internal sealed class ProductionSiteApiService(
 
     public async Task<ProductionSiteDto> UpdateAsync(Guid id, ProductionSiteUpdateDto dto)
     {
-        await updateValidator.ValidateAsync(dbContext.ProductionSites, dto, id);
-
-        ProductionSiteEntity entity = await dbContext.ProductionSites.SafeGetById(id, "Не найдено");
+        ProductionSiteEntity entity = await updateValidator.ValidateAndGetAsync(dbContext.ProductionSites, dto, id);
         dto.UpdateEntity(entity);
         await dbContext.SaveChangesAsync();
 
         return ProductionSiteExpressions.ToDto.Compile().Invoke(entity);
     }
 
-    public Task DeleteAsync(Guid id) => dbContext.ProductionSites.SafeDeleteAsync(i => i.Id == id);
+    public Task DeleteAsync(Guid id) => dbContext.ProductionSites.SafeDeleteAsync(i => i.Id == id, FkProperty.ProductionSite);
 
     #endregion
 }

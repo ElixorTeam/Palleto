@@ -19,7 +19,6 @@ internal static class PalletManDtoExtensions
         };
     }
 
-
     public static void UpdateEntity(this PalletManUpdateDto dto, PalletManEntity entity, WarehouseEntity warehouse)
     {
         entity.Name = dto.Name;

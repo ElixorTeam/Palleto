@@ -4,6 +4,7 @@ using Ws.DeviceControl.Api.App.Features.References.TemplateResources.Common;
 using Ws.DeviceControl.Api.App.Features.References.TemplateResources.Impl.Expressions;
 using Ws.DeviceControl.Api.App.Features.References.TemplateResources.Impl.Extensions;
 using Ws.DeviceControl.Api.App.Features.References.TemplateResources.Impl.Validators;
+using Ws.DeviceControl.Api.App.Shared.Enums;
 using Ws.DeviceControl.Models.Features.References.TemplateResources.Commands;
 using Ws.DeviceControl.Models.Features.References.TemplateResources.Queries;
 
@@ -18,7 +19,7 @@ internal sealed class ZplResourceApiService(
     #region Queries
 
     public async Task<TemplateResourceDto> GetByIdAsync(Guid id) =>
-        ZplResourceExpressions.ToDto.Compile().Invoke(await dbContext.ZplResources.SafeGetById(id, "Не найдено"));
+        ZplResourceExpressions.ToDto.Compile().Invoke(await dbContext.ZplResources.SafeGetById(id, FkProperty.ZplResource));
 
     public Task<List<TemplateResourceDto>> GetAllAsync() => dbContext.ZplResources
         .AsNoTracking().Select(ZplResourceExpressions.ToDto)
@@ -28,7 +29,7 @@ internal sealed class ZplResourceApiService(
 
     public async Task<TemplateResourceBodyDto> GetBodyByIdAsync(Guid id)
     {
-        ZplResourceEntity entity = await dbContext.ZplResources.SafeGetById(id, "Не найдено");
+        ZplResourceEntity entity = await dbContext.ZplResources.SafeGetById(id, FkProperty.ZplResource);
         return new()
         {
             Body = entity.Zpl
@@ -41,9 +42,7 @@ internal sealed class ZplResourceApiService(
 
     public async Task<TemplateResourceDto> UpdateAsync(Guid id, ZplResourceUpdateDto dto)
     {
-        await updateValidator.ValidateAsync(dbContext.ZplResources, dto, id);
-
-        ZplResourceEntity entity = await dbContext.ZplResources.SafeGetById(id, "Не найдено");
+        ZplResourceEntity entity =  await updateValidator.ValidateAndGetAsync(dbContext.ZplResources, dto, id);
 
         ValidateSvg(dto.Body, entity.Type);
 
@@ -67,7 +66,7 @@ internal sealed class ZplResourceApiService(
         return ZplResourceExpressions.ToDto.Compile().Invoke(entity);
     }
 
-    public Task DeleteAsync(Guid id) => dbContext.ZplResources.SafeDeleteAsync(i => i.Id == id);
+    public Task DeleteAsync(Guid id) => dbContext.ZplResources.SafeDeleteAsync(i => i.Id == id, FkProperty.ZplResource);
 
     #endregion
 
@@ -82,7 +81,7 @@ internal sealed class ZplResourceApiService(
         {
             throw new ApiInternalException
             {
-                ErrorDisplayMessage = "zpl error",
+                ErrorDisplayMessage = "Body not valid",
                 StatusCode = HttpStatusCode.UnprocessableEntity
             };
         }

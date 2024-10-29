@@ -14,7 +14,6 @@ internal static class ProductionSiteDtoExtensions
         };
     }
 
-
     public static void UpdateEntity(this ProductionSiteUpdateDto dto, ProductionSiteEntity entity)
     {
         entity.Name = dto.Name;

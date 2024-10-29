@@ -3,6 +3,7 @@ using Ws.Database.Entities.Ref1C.Nestings;
 using Ws.Database.Entities.Ref1C.Plus;
 using Ws.DeviceControl.Api.App.Features.References1C.Plus.Common;
 using Ws.DeviceControl.Api.App.Features.References1C.Plus.Impl.Expressions;
+using Ws.DeviceControl.Api.App.Shared.Enums;
 using Ws.DeviceControl.Models.Features.References1C.Plus.Commands.Update;
 using Ws.DeviceControl.Models.Features.References1C.Plus.Queries;
 
@@ -14,7 +15,7 @@ internal sealed class PluApiService(WsDbContext dbContext) : IPluService
 
     public async Task<PluDto> GetByIdAsync(Guid id)
     {
-        PluEntity entity = await dbContext.Plus.SafeGetById(id, "Не найдено");
+        PluEntity entity = await dbContext.Plus.SafeGetById(id, FkProperty.Plu);
         await LoadDefaultForeignKeysAsync(entity);
         return PluExpressions.ToDto.Compile().Invoke(entity);
     }
@@ -31,7 +32,7 @@ internal sealed class PluApiService(WsDbContext dbContext) : IPluService
 
     public async Task<List<CharacteristicDto>> GetCharacteristics(Guid id)
     {
-        PluEntity plu = await dbContext.Plus.SafeGetById(id, "Не найдено");
+        PluEntity plu = await dbContext.Plus.SafeGetById(id, FkProperty.Plu);
 
         await dbContext.Entry(plu).Reference(e => e.Clip).LoadAsync();
         await dbContext.Entry(plu).Reference(e => e.Bundle).LoadAsync();
@@ -84,13 +85,14 @@ internal sealed class PluApiService(WsDbContext dbContext) : IPluService
 
     public async Task<PluDto> Update(Guid id, PluUpdateDto dto)
     {
-        PluEntity plu = await dbContext.Plus.SafeGetById(id, "Не найдено");
+        PluEntity plu = await dbContext.Plus.SafeGetById(id, FkProperty.Plu);
 
-        await dbContext.Templates.SafeExistAsync(i => i.Id == dto.TemplateId && i.IsWeight == plu.IsWeight, "Шаблон не найден");
+        await dbContext.Templates.SafeExistAsync(i => i.Id == dto.TemplateId && i.IsWeight == plu.IsWeight, FkProperty.Template);
 
         plu.TemplateId = dto.TemplateId;
         await LoadDefaultForeignKeysAsync(plu);
         await dbContext.SaveChangesAsync();
+
         return PluExpressions.ToDto.Compile().Invoke(plu);
     }
 

@@ -1,6 +1,5 @@
 using Ws.DeviceControl.Api;
 using Ws.DeviceControl.Api.App.Shared.Middlewares;
-using Ws.DeviceControl.Models;
 using Ws.Shared.Web.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

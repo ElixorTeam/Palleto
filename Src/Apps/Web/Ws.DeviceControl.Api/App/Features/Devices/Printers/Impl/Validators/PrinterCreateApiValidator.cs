@@ -8,8 +8,8 @@ using Ws.Shared.Resources;
 
 namespace Ws.DeviceControl.Api.App.Features.Devices.Printers.Impl.Validators;
 
-public class PrinterCreateApiValidator(IStringLocalizer<WsDataResources> wsDataLocalizer, ErrorHelper errorHelper)
-    : ApiCreateValidator<PrinterEntity, PrinterCreateDto>(errorHelper)
+public class PrinterCreateApiValidator(IStringLocalizer<WsDataResources> wsDataLocalizer)
+    : ApiCreateValidator<PrinterEntity, PrinterCreateDto>
 {
     public override async Task ValidateAsync(DbSet<PrinterEntity> dbSet, PrinterCreateDto dto)
     {

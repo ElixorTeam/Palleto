@@ -30,4 +30,10 @@
     <data name="errorNotFoundByField" xml:space="preserve">
         <value>{0} не найден(а)</value>
     </data>
+    <data name="errorIsUse" xml:space="preserve">
+        <value>Запись используется</value>
+    </data>
+    <data name="errorIsUseByField" xml:space="preserve">
+        <value>{0} используется</value>
+    </data>
 </root>

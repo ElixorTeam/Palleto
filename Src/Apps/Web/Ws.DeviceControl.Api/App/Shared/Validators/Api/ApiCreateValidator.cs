@@ -1,9 +1,10 @@
 using LinqKit;
+using Ws.DeviceControl.Api.App.Features.Exceptions;
 using Ws.DeviceControl.Api.App.Shared.Validators.Api.Models;
 
 namespace Ws.DeviceControl.Api.App.Shared.Validators.Api;
 
-public abstract class ApiCreateValidator<TEntity, TDto>(ErrorHelper errorHelper) : BaseApiValidator<TDto>
+public abstract class ApiCreateValidator<TEntity, TDto> : BaseApiValidator<TDto>
     where TEntity : class
     where TDto : class
 {
@@ -16,10 +17,10 @@ public abstract class ApiCreateValidator<TEntity, TDto>(ErrorHelper errorHelper)
             bool isExist = await dbSet.AsExpandable().AnyAsync(predicate.Predicate);
 
             if (isExist)
-                throw new ApiInternalException
+                throw new ApiInternalLocalizingException
                 {
-                    ErrorDisplayMessage = errorHelper.Localize(ErrorType.Unique, predicate.FieldName),
-                    StatusCode = HttpStatusCode.Conflict
+                    PropertyName =  predicate.FieldName,
+                    ErrorType = ApiErrorType.Unique
                 };
         }
     }

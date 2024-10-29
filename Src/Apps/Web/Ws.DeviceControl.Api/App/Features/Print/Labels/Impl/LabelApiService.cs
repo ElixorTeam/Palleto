@@ -1,6 +1,7 @@
 using Ws.Database.Entities.Print.Labels;
 using Ws.DeviceControl.Api.App.Features.Print.Labels.Common;
 using Ws.DeviceControl.Api.App.Features.Print.Labels.Impl.Expressions;
+using Ws.DeviceControl.Api.App.Shared.Enums;
 using Ws.DeviceControl.Models.Features.Print.Labels;
 
 namespace Ws.DeviceControl.Api.App.Features.Print.Labels.Impl;
@@ -13,7 +14,7 @@ internal sealed class LabelApiService(
 
     public async Task<LabelDto> GetByIdAsync(Guid id)
     {
-        LabelEntity entity = await dbContext.Labels.SafeGetById(id, "Не найдено");
+        LabelEntity entity = await dbContext.Labels.SafeGetById(id, FkProperty.Label);
         await LoadDefaultForeignKeysAsync(entity);
         return LabelExpressions.ToLabelDto.Compile().Invoke(entity);
     }
@@ -24,7 +25,7 @@ internal sealed class LabelApiService(
         .ToListAsync();
 
     public async Task<ZplDto> GetZplByIdAsync(Guid id) =>
-        LabelExpressions.ToZplDto.Compile().Invoke(await dbContext.LabelZpl.SafeGetById(id, "Не найдено"));
+        LabelExpressions.ToZplDto.Compile().Invoke(await dbContext.LabelZpl.SafeGetById(id, FkProperty.Label));
 
     #endregion
 

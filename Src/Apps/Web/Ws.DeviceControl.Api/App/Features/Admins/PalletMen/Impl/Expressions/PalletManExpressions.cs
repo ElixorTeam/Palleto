@@ -34,9 +34,9 @@ public static class PalletManExpressions
             i.Name == uqManProperties.Fio.Name &&
             i.Surname == uqManProperties.Fio.Surname &&
             i.Patronymic == uqManProperties.Fio.Patronymic,
-        ""),
+        "FIO"),
 
-        new(i => i.Uid1C == uqManProperties.Id1C, ""),
-        new(i => i.Password == uqManProperties.Password, ""),
+        new(i => i.Uid1C == uqManProperties.Id1C, "Uid1C"),
+        new(i => i.Password == uqManProperties.Password, "Password"),
     ];
 }

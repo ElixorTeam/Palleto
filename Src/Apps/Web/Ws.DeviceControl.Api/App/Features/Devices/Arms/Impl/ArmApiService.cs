@@ -6,6 +6,7 @@ using Ws.DeviceControl.Api.App.Features.Devices.Arms.Common;
 using Ws.DeviceControl.Api.App.Features.Devices.Arms.Impl.Expressions;
 using Ws.DeviceControl.Api.App.Features.Devices.Arms.Impl.Extensions;
 using Ws.DeviceControl.Api.App.Features.Devices.Arms.Impl.Validators;
+using Ws.DeviceControl.Api.App.Shared.Enums;
 using Ws.DeviceControl.Models.Features.Devices.Arms.Commands;
 using Ws.DeviceControl.Models.Features.Devices.Arms.Queries;
 
@@ -15,8 +16,7 @@ internal sealed class ArmApiService(
     WsDbContext dbContext,
     ArmCreateApiValidator createValidator,
     ArmUpdateApiValidator updateValidator,
-    UserHelper userHelper,
-    ErrorHelper errorHelper
+    UserHelper userHelper
     ) : IArmService
 {
     #region Queries
@@ -33,13 +33,13 @@ internal sealed class ArmApiService(
 
     public async Task<ArmDto> GetByIdAsync(Guid id)
     {
-        LineEntity entity = await dbContext.Lines.SafeGetById(id, errorHelper.Localize(ErrorType.NotFound, "Line"));
+        LineEntity entity = await dbContext.Lines.SafeGetById(id, FkProperty.Line);
         return await GetArmDto(entity);
     }
 
     public async Task<List<PluArmDto>> GetArmPlus(Guid id)
     {
-        LineEntity entity = await dbContext.Lines.SafeGetById(id, errorHelper.Localize(ErrorType.NotFound, "Line"));
+        LineEntity entity = await dbContext.Lines.SafeGetById(id, FkProperty.Line);
 
         bool? isWeightFilter = entity.Type switch
         {
@@ -71,12 +71,12 @@ internal sealed class ArmApiService(
     {
         await createValidator.ValidateAsync(dbContext.Lines, dto);
 
-        PrinterEntity printer = await dbContext.Printers.SafeGetById(dto.PrinterId, errorHelper.Localize(ErrorType.NotFound, "Printer"));
-        WarehouseEntity warehouse = await dbContext.Warehouses.SafeGetById(dto.WarehouseId, errorHelper.Localize(ErrorType.NotFound, "Warehouse"));
+        PrinterEntity printer = await dbContext.Printers.SafeGetById(dto.PrinterId,  FkProperty.Printer);
+        WarehouseEntity warehouse = await dbContext.Warehouses.SafeGetById(dto.WarehouseId, FkProperty.Warehouse);
 
         LineEntity entity = dto.ToEntity(warehouse, printer);
 
-        await userHelper.CanUserWorkWithProductionSiteAsync(warehouse.ProductionSiteId);
+        await userHelper.ValidateUserProductionSiteAsync(warehouse.ProductionSiteId);
 
         await dbContext.Lines.AddAsync(entity);
         await dbContext.SaveChangesAsync();
@@ -86,13 +86,12 @@ internal sealed class ArmApiService(
 
     public async Task<ArmDto> UpdateAsync(Guid id, ArmUpdateDto dto)
     {
-        await updateValidator.ValidateAsync(dbContext.Lines, dto, id);
+        LineEntity entity = await updateValidator.ValidateAndGetAsync(dbContext.Lines, dto, id);
 
-        LineEntity entity = await dbContext.Lines.SafeGetById(id, errorHelper.Localize(ErrorType.NotFound, "Line"));
-        PrinterEntity printer = await dbContext.Printers.SafeGetById(dto.PrinterId, errorHelper.Localize(ErrorType.NotFound, "Printer"));
-        WarehouseEntity warehouse = await dbContext.Warehouses.SafeGetById(dto.WarehouseId, errorHelper.Localize(ErrorType.NotFound, "Warehouse"));
+        PrinterEntity printer = await dbContext.Printers.SafeGetById(dto.PrinterId,  FkProperty.Printer);
+        WarehouseEntity warehouse = await dbContext.Warehouses.SafeGetById(dto.WarehouseId, FkProperty.Warehouse);
 
-        await userHelper.CanUserWorkWithProductionSiteAsync(warehouse.ProductionSiteId);
+        await userHelper.ValidateUserProductionSiteAsync(warehouse.ProductionSiteId);
 
         dto.UpdateEntity(entity, printer, warehouse);
         await dbContext.SaveChangesAsync();
@@ -107,7 +106,7 @@ internal sealed class ArmApiService(
           .FirstOrDefaultAsync(l => l.Id == armId)
                 ?? throw new("АРМ не найдено");
 
-        PluEntity plu = await dbContext.Plus.SafeGetById(pluId, "ПЛУ не найдено");
+        PluEntity plu = await dbContext.Plus.SafeGetById(pluId, FkProperty.Plu);
         line.Plus.Remove(plu);
         await dbContext.SaveChangesAsync();
     }
@@ -119,7 +118,7 @@ internal sealed class ArmApiService(
           .FirstOrDefaultAsync(l => l.Id == armId)
                 ?? throw new("АРМ не найдено");
 
-        PluEntity plu = await dbContext.Plus.SafeGetById(pluId, "ПЛУ не найдено");
+        PluEntity plu = await dbContext.Plus.SafeGetById(pluId, FkProperty.Plu);
 
         if (line.Plus.Any(i => i.Id == pluId))
             return;
@@ -129,7 +128,7 @@ internal sealed class ArmApiService(
         await dbContext.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(Guid id) => dbContext.Lines.SafeDeleteAsync(i => i.Id == id);
+    public Task DeleteAsync(Guid id) => dbContext.Lines.SafeDeleteAsync(i => i.Id == id, FkProperty.Line);
 
     #endregion
 

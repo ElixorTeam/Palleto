@@ -315,4 +315,13 @@
     <data name="ColExample" xml:space="preserve">
         <value>Example</value>
     </data>
+    <data name="ColIp" xml:space="preserve">
+        <value>IPv4</value>
+    </data>
+    <data name="ColUid1C" xml:space="preserve">
+        <value>UID 1C</value>
+    </data>
+    <data name="ColZplResource" xml:space="preserve">
+        <value>ZPL Resource</value>
+    </data>
 </root>

@@ -62,6 +62,24 @@ namespace Ws.DeviceControl.Api.App.Shared.Localization {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string errorIsUse {
+            get {
+                return ResourceManager.GetString("errorIsUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string errorIsUseByField {
+            get {
+                return ResourceManager.GetString("errorIsUseByField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string errorNotFound {
             get {
                 return ResourceManager.GetString("errorNotFound", resourceCulture);

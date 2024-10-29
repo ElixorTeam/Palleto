@@ -8,8 +8,8 @@ using Ws.Shared.Resources;
 
 namespace Ws.DeviceControl.Api.App.Features.References.ProductionSites.Impl.Validators;
 
-public class ProductionSiteCreateApiValidator(IStringLocalizer<WsDataResources> wsDataLocalizer, ErrorHelper errorHelper)
-    : ApiCreateValidator<ProductionSiteEntity, ProductionSiteCreateDto>(errorHelper)
+public class ProductionSiteCreateApiValidator(IStringLocalizer<WsDataResources> wsDataLocalizer)
+    : ApiCreateValidator<ProductionSiteEntity, ProductionSiteCreateDto>
 {
     public override async Task ValidateAsync(DbSet<ProductionSiteEntity> dbSet, ProductionSiteCreateDto dto)
     {
