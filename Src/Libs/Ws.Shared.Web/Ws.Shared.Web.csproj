@@ -4,7 +4,7 @@
         <OutputType>Library</OutputType>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
-
+    
     <ItemGroup Label="Directory.Packages.props">
         <PackageReference Include="Refit" PrivateAssets="All" />
         <PackageReference Include="Scrutor" PrivateAssets="All" />
@@ -21,7 +21,7 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride="8.0.1"  PrivateAssets="All" />
         <PackageReference Include="Microsoft.AspNetCore.Localization" VersionOverride="2.2.0" PrivateAssets="All" />
 
-        <PackageReference Include="Microsoft.Extensions.Localization" VersionOverride="8.0.8" />
+        <PackageReference Include="Microsoft.Extensions.Localization" VersionOverride="8.0.10" />
     </ItemGroup>
 
 </Project>

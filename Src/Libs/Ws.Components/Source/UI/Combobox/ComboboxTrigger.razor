@@ -9,8 +9,7 @@
   aria-expanded="@Parent.IsDropdownOpened.ToString()"
 >
   <input
-    @bind-value="Parent.Value"
-    @bind-value:after="@Parent.TriggerValueChanged"
+    @bind-value="TriggerValue"
     class="bg-inherit focus:outline-none pl-3 w-full text-sm"
     disabled="@Disabled"
   />
@@ -24,4 +23,14 @@
 
   [Parameter] public string Class { get; set; } = string.Empty;
   [Parameter] public bool Disabled { get; set; }
+
+  private string? TriggerValue
+  {
+    get => Parent.Value;
+    set
+    {
+      if (value == Parent.Value) return;
+      _ = Parent.SetValueDirect(value);
+    }
+  }
 }

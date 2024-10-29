@@ -53,7 +53,7 @@
         <FluentDataGrid
           TGridItem="DataItem"
           Items="@GetOrderedLabels(labelsQuery.HasData ? labelsQuery.Data : [])"
-          RowClass="@(_ => "border-b shrink-0 hover:bg-secondary/[.5] hover:cursor-pointer")"
+          RowClass="@(_ => "border-b shrink-0 hover:bg-secondary/50 hover:cursor-pointer")"
           Class="overflow-y-auto [&>.sticky-header]:border-b [&>.sticky-header]:!bg-background [&_fluent-data-grid-cell]:!text-primary [&_.col-sort-button]:!text-primary size-full [&_.col-options-button]:pl-1 [&_.col-sort-button]:pl-1"
           Loading="@labelsQuery.IsLoading"
           GenerateHeader="GenerateHeaderOption.Sticky"

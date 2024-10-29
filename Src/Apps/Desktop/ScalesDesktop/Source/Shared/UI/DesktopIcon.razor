@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="@Class" @attributes="Attributes">
+  <path stroke-miterlimit="2" d="M2.18,17.69l20.24,0.1l-7.14-0.03L7.96,9.48V1.97l14.46,15.82l-4.95,4.81H2.21V1.97h5.75v20.63"/>
+</svg>
+
+@code {
+  [Parameter] public string? Class { get; set; } = string.Empty;
+  [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object> Attributes { get; set; } = new();
+}

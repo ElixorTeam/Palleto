@@ -74,6 +74,12 @@ public abstract class SelectBase<TItem, TValue> : ComponentBase, IAsyncDisposabl
 
     internal void Unregister(SelectItem<TItem, TValue> item) => SelectItems.Remove(item.Id);
 
+    internal async Task SetValueDirect(TValue? value)
+    {
+        Value = value;
+        await TriggerValueChanged();
+    }
+
     protected internal abstract Task SetValue(TItem item, bool withClose = true);
     protected internal abstract bool IsItemSelected(TItem item);
 

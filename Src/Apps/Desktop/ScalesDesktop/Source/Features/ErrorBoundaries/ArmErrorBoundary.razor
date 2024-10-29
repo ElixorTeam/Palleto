@@ -1,6 +1,6 @@
 @using Blazor.Heroicons.Outline
 
-<UseParameterlessEndpoint Endpoint="@ArmEndpoints.ArmEndpoint" Options="@(new(){ OnFailure = OnFailure })" Context="query">
+<UseParameterlessEndpoint Endpoint="@ArmEndpoints.ArmEndpoint" Context="query">
   @if (query is { HasData: false, IsLoading: false })
   {
     <div class="size-full flex items-center justify-center">
@@ -13,14 +13,16 @@
           </p>
         </div>
         <div class="w-full max-w-xs mx-auto flex flex-col space-y-2">
-          <Button OnClick="@query.Refetch" Class="!w-full">
+          <Button OnClick="@query.Refetch" Variant="ButtonVariantType.Outline" Class="!w-full">
             <ArrowPathIcon class="size-4 mr-2" />
             @Localizer["BtnUpdate"]
           </Button>
-          <Button OnClick="ShowCloseAppDialog" Variant="ButtonVariantType.Destructive" Class="!w-full">
-            <ArrowRightStartOnRectangleIcon class="size-4 mr-2" />
-            @Localizer["BtnExit"]
-          </Button>
+          <a href="@Routes.Home" class="w-full">
+            <Button Class="!w-full">
+              <ArrowRightStartOnRectangleIcon class="size-4 mr-2" />
+              Главная страница
+            </Button>
+          </a>
         </div>
       </div>
     </div>
@@ -42,11 +44,4 @@
   # endregion
 
   [Parameter] public RenderFragment? ChildContent { get; set; }
-
-  void OnFailure(QueryFailureEventArgs<Unit> obj)
-  {
-    // pass
-  }
-
-  private async Task ShowCloseAppDialog() => await DialogService.ShowDialogAsync<CloseAppDialog>(new());
 }

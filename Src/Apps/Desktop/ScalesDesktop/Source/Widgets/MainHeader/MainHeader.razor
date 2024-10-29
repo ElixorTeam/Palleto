@@ -1,6 +1,6 @@
 @using Blazor.Heroicons.Outline
 
-<div class="w-full h-14 shrink-0 border-b bg-background">
+<div class="w-full h-[3.25rem] shrink-0 border-b bg-background">
   <div class="size-full max-w-screen-2xl mx-auto px-8 flex items-center justify-between">
     <HeaderAppName Class="shrink-0 w-2/5" />
     <div class="w-1/5 flex items-center justify-center">
@@ -11,9 +11,9 @@
         @ChildContent
       </div>
       <a href="@Routes.Home">
-        <Button Variant="ButtonVariantType.Outline" Size="ButtonSizeType.Large">
+        <Button Variant="ButtonVariantType.Outline">
           <HomeIcon class="size-5 mr-2"/>
-          <span class="text-base">@Localizer["BtnMenu"]</span>
+          <span>@Localizer["BtnMenu"]</span>
         </Button>
       </a>
     </div>
