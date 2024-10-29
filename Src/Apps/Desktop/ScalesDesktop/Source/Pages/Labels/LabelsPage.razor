@@ -4,24 +4,28 @@
 @using ScalesDesktop.Source.Widgets.LabelConfig
 @using ScalesDesktop.Source.Widgets.LabelCreateForm
 @using ScalesDesktop.Source.Widgets.MainHeader
+@using ScalesDesktop.Source.Features.ErrorBoundaries
 @implements IDisposable
 
-<div class="flex flex-col grow size-full">
-  <MainHeader>
-    <div class="size-full items-center justify-end flex pr-10">
-      <ul class="flex justify-between items-center gap-3">
-        <li><PrinterStatusIcon/></li>
-        <li><ScaleStatusIcon/></li>
-      </ul>
-    </div>
-  </MainHeader>
-  <div class="size-full flex flex-col grow overflow-hidden items-center justify-center px-8 pt-2 pb-4">
-    <div class="w-full grid grid-rows-1 gap-4 grid-cols-[1fr,1.5fr] h-[34rem] max-w-screen-2xl overflow-hidden">
-      <LabelConfig />
-      <LabelCreateForm />
+<ArmErrorBoundary>
+  <div class="flex flex-col grow size-full">
+    <MainHeader>
+      <div class="size-full items-center justify-end flex pr-10">
+        <ul class="flex justify-between items-center gap-3">
+          <li><PrinterStatusIcon/></li>
+          <li><ScaleStatusIcon/></li>
+        </ul>
+      </div>
+    </MainHeader>
+    <div class="size-full flex flex-col grow overflow-hidden items-center justify-center px-8 pt-2 pb-4">
+      <div class="w-full grid grid-rows-1 gap-4 grid-cols-[1fr,1.5fr] h-[34rem] max-w-screen-2xl overflow-hidden">
+        <LabelConfig />
+        <LabelCreateForm />
+      </div>
     </div>
   </div>
-</div>
+</ArmErrorBoundary>
+
 
 @code {
   # region Injects

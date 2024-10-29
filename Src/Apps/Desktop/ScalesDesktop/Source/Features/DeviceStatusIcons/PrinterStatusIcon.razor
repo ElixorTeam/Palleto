@@ -6,11 +6,11 @@
 <Button
   Size="ButtonSizeType.Icon"
   Variant="ButtonVariantType.Outline"
-  Class="relative !size-10"
+  Class="relative"
   OnClick="@PrintStatusMessage"
 >
   <div class="@Css.Class("size-3 rounded-full shadow-sm overflow-hidden absolute -top-1 -right-1", GetIndicatorStyle)"></div>
-  <PrinterIcon class="@Css.Class("size-6", GetIconStyle)"/>
+  <PrinterIcon class="@Css.Class("size-5", GetIconStyle)"/>
 </Button>
 
 @code {
