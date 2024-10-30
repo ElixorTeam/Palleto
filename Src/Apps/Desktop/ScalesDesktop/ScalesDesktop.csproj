@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <ItemGroup Label="Static assets">
-        <MauiIcon Include="Resources\appicon.svg" BaseSize="32,32" />
         <MauiSplashScreen Include="Resources\organization_icon.svg" Color="#f5f5f6" />
     </ItemGroup>
 
@@ -94,6 +93,12 @@
         <Generator>PublicResXFileCodeGenerator</Generator>
         <LastGenOutput>ApplicationResources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup Label="MSIX Assets">
+      <Content Include="Resources\Assets\**">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup Label="Shared blazor imports">
