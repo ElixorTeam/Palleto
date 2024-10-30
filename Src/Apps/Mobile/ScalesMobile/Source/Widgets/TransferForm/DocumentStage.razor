@@ -1,5 +1,6 @@
 @using Blazor.Heroicons.Outline
 @using ScalesMobile.Source.Features
+@using ScalesMobile.Source.Features.Debug
 
 <InternalBarcodeScanner ValueChanged="@SetDocumentNumber" />
 
@@ -20,10 +21,16 @@
     }
   </div>
   <div class="shrink-0 w-full flex flex-col gap-2">
-    @if (ConfigurationUtils.IsDevelop)
-    {
-      <CameraBarcodeScanner Variant="ButtonVariantType.Outline" ValueChanged="@SetDocumentNumber"/>
+
+    @{
+    #if DEBUG
     }
+    @* ReSharper disable once Razor.UnresolvedComponent *@
+    <CameraBarcodeScanner Variant="ButtonVariantType.Outline" ValueChanged="@SetDocumentNumber"/>
+    @{
+    #endif
+    }
+
     <Button OnClick="@OnSuccessAction" Disabled="@string.IsNullOrWhiteSpace(DocumentNumber)">
       Продолжить
     </Button>
@@ -34,8 +41,6 @@
   [Parameter] public EventCallback OnSuccessAction { get; set; }
   [Parameter] public string DocumentNumber { get; set; } = string.Empty;
   [Parameter] public EventCallback<string> DocumentNumberChanged { get; set; }
-
-  private IEnumerable<Label> LabelEntities { get; set; } = [];
 
   private async Task SetDocumentNumber(string value)
   {

@@ -27,7 +27,7 @@
         <DebugSymbols>false</DebugSymbols>
         <Optimize>true</Optimize>
         <DebugType>none</DebugType>
-        <DefineConstants>TRACE;RELEASE_VS</DefineConstants>
+        <DefineConstants>TRACE;RELEASE</DefineConstants>
         <OutputPath>bin\Release_$(Platform)\</OutputPath>
         <PlatformTarget>x64</PlatformTarget>
     </PropertyGroup>

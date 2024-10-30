@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- https://learn.microsoft.com/en-us/cpp/build/reference/common-macros-for-build-commands-and-properties -->
 <Project>
+
+    <ItemGroup Label="Prod Restrictions" Condition="'$(Configuration)' == 'ReleaseVS'">
+        <RazorComponent Remove="**\Debug\**\*.razor" />
+    </ItemGroup>
+
     <Target Name="Optimize" BeforeTargets="Link">
         <Message Text="Optimizing"/>
     </Target>

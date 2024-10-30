@@ -1,5 +1,6 @@
 @using Blazor.Heroicons.Outline
 @using ScalesMobile.Source.Features
+@using ScalesMobile.Source.Features.Debug
 
 <InternalBarcodeScanner ValueChanged="@AddNewPallet" />
 
@@ -38,10 +39,16 @@
     <Button OnClick="@OnCancelAction" Variant="ButtonVariantType.Outline">
       Назад
     </Button>
-    @if (ConfigurationUtils.IsDevelop)
-    {
-      <CameraBarcodeScanner Variant="ButtonVariantType.Outline" ValueChanged="@AddNewPallet"/>
+
+    @{
+      #if DEBUG
     }
+    @* ReSharper disable once Razor.UnresolvedComponent *@
+    <CameraBarcodeScanner Variant="ButtonVariantType.Outline" ValueChanged="@AddNewPallet"/>
+    @{
+      #endif
+    }
+
     <Button OnClick="@OnSuccessAction" Disabled="@(!Pallets.Any())">
       Продолжить
     </Button>

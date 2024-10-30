@@ -1,14 +1,12 @@
-using BarcodeScanning;
 using CommunityToolkit.Maui;
 using Fluxor;
-using Microsoft.Extensions.Logging;
 using Microsoft.FluentUI.AspNetCore.Components;
 using ScalesMobile.Source.Shared.Api;
 using Ws.Shared.Web.Extensions;
 
 namespace ScalesMobile;
 
-public static class MauiProgram
+public static partial class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
@@ -33,14 +31,10 @@ public static class MauiProgram
             options.ScanAssemblies(typeof(IScalesMobileAssembly).Assembly);
         });
 
-        #if DEBUG
-
-        builder.UseBarcodeScanning();
-        builder.Services.AddBlazorWebViewDeveloperTools();
-        builder.Logging.AddDebug();
-
-        #endif
+        ConfigureDebugServices(builder);
 
         return builder.Build();
     }
+
+    static partial void ConfigureDebugServices(MauiAppBuilder builder);
 }

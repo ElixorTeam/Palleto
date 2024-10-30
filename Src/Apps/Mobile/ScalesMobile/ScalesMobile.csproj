@@ -1,8 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <ItemGroup Label="Static assets">
         <MauiIcon Include="Resources\appicon.svg" BaseSize="32,32" Color="#fff" />
         <MauiSplashScreen Include="Resources\organization_icon.svg" Color="#f5f5f6" />
+    </ItemGroup>
+
+    <ItemGroup Label="Prod Restrictions" Condition="'$(Configuration)' == 'ReleaseVS'">
+        <MauiXaml Remove="ScanPage.xaml" />
+        <Compile Remove="ScanPage.xaml.cs" />
+        <Content Remove="ScanPage.xaml.cs" />
     </ItemGroup>
 
     <PropertyGroup Label="Primary">
@@ -28,7 +34,6 @@
         <PackageReference Include="Fluxor" />
         <PackageReference Include="Fluxor.Blazor.Web" />
         <PackageReference Include="Phetch.Blazor" />
-        <PackageReference Include="BarcodeScanning.Native.Maui" />
         <PackageReference Include="Microsoft.Extensions.Localization" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
         <PackageReference Include="QRCoder" />
@@ -37,6 +42,10 @@
         <PackageReference Include="Microsoft.Maui.Controls" />
         <PackageReference Include="Microsoft.Maui.Controls.Compatibility" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" />
+    </ItemGroup>
+
+    <ItemGroup Label="Dev packages" Condition="'$(Configuration)' == 'DevelopVS'">
+        <PackageReference Include="BarcodeScanning.Native.Maui" />
     </ItemGroup>
 
     <ItemGroup Label="Projects">
@@ -51,6 +60,7 @@
 
     <Import Project="..\..\..\.targets\NodePackages.targets" />
     <Import Project="..\..\..\.targets\AppSettingsForMaui.targets" />
+    <Import Project="..\..\..\.targets\BlazorDebugFiles.targets" />
 
     <Target Name="StaticsBuild" BeforeTargets="PreBuildEvent">
         <Exec Command="npm run build" />

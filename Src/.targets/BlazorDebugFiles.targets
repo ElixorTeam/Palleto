@@ -1,0 +1,19 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup Label="remove debug files" Condition="'$(Configuration)' == 'ReleaseVS'">
+        <Compile Remove="**\Debug\**\*.cs" />
+        <Compile Remove="**\Debug\**\*.razor" />
+
+        <None Include="**\Debug\**\*.razor" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+        <None Include="**\Debug\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);**\Debug\**\.keep.cs" />
+
+        <None Update="**\Debug\**\*.cs" />
+        <None Update="**\Debug\**\*.razor" />
+
+        <None Include="**\Debug\**\.keep.cs" />
+        <Compile Include="**\Debug\**\.keep.cs" />
+    </ItemGroup>
+
+    <PropertyGroup Label="remove debug files" Condition="'$(Configuration)' == 'ReleaseVS'" >
+        <DefaultItemExcludes>$(DefaultItemExcludes);**\Debug\**\*.cs;**\Debug\**\*.razor;!**\Debug\**\*.keep.cs</DefaultItemExcludes>
+    </PropertyGroup>
+</Project>

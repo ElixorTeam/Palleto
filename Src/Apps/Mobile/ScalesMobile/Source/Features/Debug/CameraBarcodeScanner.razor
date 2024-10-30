@@ -28,7 +28,7 @@
   [Parameter] public bool Disabled { get; set; }
 
   private static readonly Lazy<ScanPage> ScanPage = new(() => new());
-  private bool IsCooldownActive { get; set; } = false;
+  private bool IsCooldownActive { get; set; }
   private bool CurrentDisabledState => Disabled || IsCooldownActive;
   private const ushort CooldownTime = 2000;
 
