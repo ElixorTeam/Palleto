@@ -14,8 +14,9 @@ internal sealed class BoxApiService(WsDbContext dbContext) : IBoxService
     public Task<List<PackageDto>> GetAllAsync()
     {
         return dbContext.Boxes
-            .AsNoTracking().Select(BoxExpressions.ToDto)
+            .AsNoTracking()
             .OrderBy(i => i.Weight).ThenBy(i => i.Name)
+            .Select(BoxExpressions.ToDto)
             .ToListAsync();
     }
 

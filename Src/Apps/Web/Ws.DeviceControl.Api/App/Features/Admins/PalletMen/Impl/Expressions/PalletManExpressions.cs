@@ -14,16 +14,8 @@ public static class PalletManExpressions
             Id1C = palletMan.Uid1C,
             Fio = new(palletMan.Surname, palletMan.Name, palletMan.Patronymic),
             Password = palletMan.Password,
-            Warehouse = new()
-            {
-                Id = palletMan.Warehouse.Id,
-                Name = palletMan.Warehouse.Name
-            },
-            ProductionSite = new()
-            {
-                Id = palletMan.Warehouse.ProductionSite.Id,
-                Name = palletMan.Warehouse.ProductionSite.Name
-            },
+            Warehouse = new(palletMan.Warehouse.Id, palletMan.Warehouse.Name),
+            ProductionSite = new(palletMan.Warehouse.ProductionSite.Id, palletMan.Warehouse.ProductionSite.Name),
             CreateDt = palletMan.CreateDt,
             ChangeDt = palletMan.ChangeDt
         };

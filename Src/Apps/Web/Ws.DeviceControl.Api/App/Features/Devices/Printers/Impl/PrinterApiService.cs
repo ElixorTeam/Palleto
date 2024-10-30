@@ -24,8 +24,8 @@ internal sealed class PrinterApiService(
         return dbContext.Printers
             .AsNoTracking()
             .Where(i => i.ProductionSite.Id == productionSiteId)
-            .Select(PrinterExpressions.ToDto)
             .OrderBy(i => i.Type).ThenBy(i => i.Name)
+            .Select(PrinterExpressions.ToDto)
             .ToListAsync();
     }
 
@@ -33,8 +33,8 @@ internal sealed class PrinterApiService(
     {
         return dbContext.Printers
             .Where(i => i.ProductionSite.Id == productionSiteId)
-            .Select(PrinterExpressions.ToProxy)
             .OrderBy(i => i.Name)
+            .Select(PrinterExpressions.ToProxy)
             .ToListAsync();
     }
 

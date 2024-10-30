@@ -14,8 +14,9 @@ internal sealed class ClipApiService(WsDbContext dbContext) : IClipService
     public Task<List<PackageDto>> GetAllAsync()
     {
         return dbContext.Clips
-            .AsNoTracking().Select(ClipExpressions.ToDto)
+            .AsNoTracking()
             .OrderBy(i => i.Weight).ThenBy(i => i.Name)
+            .Select(ClipExpressions.ToDto)
             .ToListAsync();
     }
 

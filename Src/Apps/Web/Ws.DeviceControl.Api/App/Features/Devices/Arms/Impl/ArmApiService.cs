@@ -26,8 +26,8 @@ internal sealed class ArmApiService(
         return dbContext.Lines
             .AsNoTracking()
             .Where(i => i.Warehouse.ProductionSite.Id == productionSiteId)
-            .Select(ArmExpressions.ToDto)
             .OrderBy(i => i.Name)
+            .Select(ArmExpressions.ToDto)
             .ToListAsync();
     }
 

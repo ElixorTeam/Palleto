@@ -16,19 +16,11 @@ public static class PrinterExpressions
             Type = printer.Type,
             CreateDt = printer.CreateDt,
             ChangeDt = printer.ChangeDt,
-            ProductionSite = new()
-            {
-                Id = printer.ProductionSite.Id,
-                Name = printer.ProductionSite.Name
-            }
+            ProductionSite = new(printer.ProductionSite.Id, printer.ProductionSite.Name)
         };
 
     public static Expression<Func<PrinterEntity, ProxyDto>> ToProxy =>
-        printer => new()
-        {
-            Id = printer.Id,
-            Name = printer.Name + " | " + printer.Ip
-        };
+        printer => new(printer.Id, printer.Name + " | " + printer.Ip);
 
     public static List<PredicateField<PrinterEntity>> GetUqPredicates(UqPrinterProperties uqProperties) =>
     [

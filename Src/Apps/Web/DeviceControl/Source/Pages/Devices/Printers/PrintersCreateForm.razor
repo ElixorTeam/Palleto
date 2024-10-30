@@ -1,5 +1,4 @@
 @using DeviceControl.Source.Shared.Api.Web.Endpoints
-@using DeviceControl.Source.Shared.Helpers
 @using DeviceControl.Source.Shared.Services.Stores
 @using TscZebra.Plugin.Abstractions.Enums
 @using Ws.DeviceControl.Models
@@ -22,7 +21,7 @@
     />
 
     <SectionIpField
-      Label="IP"
+      Label="@WsDataLocalizer["ColIp"]"
       @bind-Value="@FormModel.Ip"
       For="@(() => FormModel.Ip)"
     />

@@ -14,8 +14,9 @@ internal sealed class BundleApiService(WsDbContext dbContext) : IBundleService
     public Task<List<PackageDto>> GetAllAsync()
     {
         return dbContext.Bundles
-            .AsNoTracking().Select(BundleExpressions.ToDto)
+            .AsNoTracking()
             .OrderBy(i => i.Weight).ThenBy(i => i.Name)
+            .Select(BundleExpressions.ToDto)
             .ToListAsync();
     }
 

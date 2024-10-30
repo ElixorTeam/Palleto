@@ -23,8 +23,8 @@ internal sealed class TemplateApiService(
         return await dbContext.Templates
             .AsNoTracking()
             .Where(i => i.IsWeight == isWeight)
-            .Select(TemplateExpressions.ToProxy)
             .OrderBy(i => i.Name)
+            .Select(TemplateExpressions.ToProxy)
             .ToListAsync();
     }
 
@@ -32,8 +32,10 @@ internal sealed class TemplateApiService(
         TemplateExpressions.ToDto.Compile().Invoke(await dbContext.Templates.SafeGetById(id, FkProperty.Template));
 
     public Task<List<TemplateDto>> GetAllAsync() => dbContext.Templates
-        .AsNoTracking().Select(TemplateExpressions.ToDto)
-        .OrderBy(i => i.IsWeight).ThenBy(i => i.Name)
+        .AsNoTracking()
+        .OrderBy(i => i.IsWeight)
+        .ThenBy(i => i.Name)
+        .Select(TemplateExpressions.ToDto)
         .ToListAsync();
 
     public async Task<TemplateBodyDto> GetBodyByIdAsync(Guid id)

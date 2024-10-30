@@ -8,7 +8,6 @@ using DeviceControl.Source.Shared.Auth;
 using DeviceControl.Source.Shared.Auth.Settings;
 using DeviceControl.Source.Shared.Constants;
 using Fluxor;
-using Refit;
 using Ws.Shared.Web.Extensions;
 using Ws.Shared.Constants;
 

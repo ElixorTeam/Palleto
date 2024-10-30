@@ -10,7 +10,7 @@ public sealed record ArmCreateDto
     public ArmType Type { get; set; }
 
     [JsonPropertyName("number")]
-    public int Number { get; set; } = new Random().Next(10001, 100000);
+    public int Number { get; set; }
 
     [JsonPropertyName("systemKey")]
     public Guid SystemKey { get; set; }
@@ -31,11 +31,10 @@ public sealed class ArmCreateValidator : AbstractValidator<ArmCreateDto>
             .WithName(wsDataLocalizer["ColName"]);
 
         RuleFor(item => item.Number)
-            .GreaterThan(10000).LessThan(100000)
+            .GreaterThanOrEqualTo(10000).LessThanOrEqualTo(99999)
             .WithName(wsDataLocalizer["ColNumber"]);
 
-        RuleFor(item => item.SystemKey)
-            .NotEmpty().WithName(wsDataLocalizer["ColSystemKey"]);
+        RuleFor(item => item.SystemKey).NotEmpty().WithName(wsDataLocalizer["ColSystemKey"]);
 
         RuleFor(item => item.Type).IsInEnum().WithName(wsDataLocalizer["ColType"]);
         RuleFor(item => item.PrinterId).NotEmpty().WithName(wsDataLocalizer["ColPrinter"]);

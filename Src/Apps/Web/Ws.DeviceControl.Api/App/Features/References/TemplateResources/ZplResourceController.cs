@@ -12,15 +12,18 @@ public sealed class ZplResourceController(IZplResourceService zplResourceService
 
     [Authorize(PolicyEnum.SeniorSupport)]
     [HttpGet]
-    public Task<List<TemplateResourceDto>> GetAll() => zplResourceService.GetAllAsync();
+    public Task<List<TemplateResourceDto>> GetAll() =>
+        zplResourceService.GetAllAsync();
 
     [Authorize(PolicyEnum.SeniorSupport)]
     [HttpGet("{id:guid}")]
-    public Task<TemplateResourceDto> GetById([FromRoute] Guid id) => zplResourceService.GetByIdAsync(id);
+    public Task<TemplateResourceDto> GetById([FromRoute] Guid id) =>
+        zplResourceService.GetByIdAsync(id);
 
     [Authorize(PolicyEnum.SeniorSupport)]
     [HttpGet("{id:guid}/body")]
-    public Task<TemplateResourceBodyDto> GetBodyById([FromRoute] Guid id) => zplResourceService.GetBodyByIdAsync(id);
+    public Task<TemplateResourceBodyDto> GetBodyById([FromRoute] Guid id) =>
+        zplResourceService.GetBodyByIdAsync(id);
 
     #endregion
 
@@ -38,7 +41,8 @@ public sealed class ZplResourceController(IZplResourceService zplResourceService
 
     [Authorize(PolicyEnum.Admin)]
     [HttpDelete("{id:guid}")]
-    public Task Delete([FromRoute] Guid id) => zplResourceService.DeleteAsync(id);
+    public Task Delete([FromRoute] Guid id) =>
+        zplResourceService.DeleteAsync(id);
 
     #endregion
 }

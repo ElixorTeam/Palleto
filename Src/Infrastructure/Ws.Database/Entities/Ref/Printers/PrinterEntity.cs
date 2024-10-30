@@ -6,7 +6,7 @@ public sealed class PrinterEntity : EfEntityBase
 {
     public string Name { get; set; } = string.Empty;
     public PrinterTypes Type { get; set; } = PrinterTypes.Tsc;
-    public IPAddress Ip { get; set; } = DefaultTypes.IpLocal;
+    public IPAddress Ip { get; set; } = IPAddress.None;
 
     #region Fk
 

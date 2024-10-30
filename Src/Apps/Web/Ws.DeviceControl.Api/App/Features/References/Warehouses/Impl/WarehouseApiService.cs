@@ -24,8 +24,8 @@ internal sealed class WarehouseApiService(
         return dbContext.Warehouses
             .AsNoTracking()
             .Where(i => i.ProductionSite.Id == productionSiteId)
-            .Select(WarehouseExpressions.ToDto)
             .OrderBy(i => i.Name)
+            .Select(WarehouseExpressions.ToDto)
             .ToListAsync();
     }
 
@@ -33,8 +33,8 @@ internal sealed class WarehouseApiService(
     {
         return dbContext.Warehouses
             .Where(i => i.ProductionSite.Id == productionSiteId)
-            .Select(WarehouseExpressions.ToProxy)
             .OrderBy(i => i.Name)
+            .Select(WarehouseExpressions.ToProxy)
             .ToListAsync();
     }
 

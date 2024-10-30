@@ -38,8 +38,8 @@ internal sealed class ProductionSiteApiService(
             return await dbContext.ProductionSites
                 .AsNoTracking()
                 .IfWhere(!developer, entity => entity.Id != DefaultTypes.GuidMax)
-                .Select(ProductionSiteCommonExpressions.ToProxy)
                 .OrderBy(i => i.Name)
+                .Select(ProductionSiteCommonExpressions.ToProxy)
                 .ToListAsync();
         }
         ProxyDto? userProductionSite = await userHelper.GetUserProductionSiteAsync();
@@ -50,8 +50,9 @@ internal sealed class ProductionSiteApiService(
         ProductionSiteExpressions.ToDto.Compile().Invoke(await dbContext.ProductionSites.SafeGetById(id, FkProperty.Label));
 
     public Task<List<ProductionSiteDto>> GetAllAsync() => dbContext.ProductionSites
-        .AsNoTracking().Select(ProductionSiteExpressions.ToDto)
+        .AsNoTracking()
         .OrderBy(i => i.Name)
+        .Select(ProductionSiteExpressions.ToDto)
         .ToListAsync();
 
     #endregion

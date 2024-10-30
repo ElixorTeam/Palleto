@@ -25,8 +25,8 @@ internal sealed class PluApiService(WsDbContext dbContext) : IPluService
     {
         return dbContext.Plus
             .AsNoTracking()
-            .Select(PluExpressions.ToDto)
             .OrderBy(i => i.Number)
+            .Select(PluExpressions.ToDto)
             .ToListAsync();
     }
 

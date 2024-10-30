@@ -1,6 +1,5 @@
 @using DeviceControl.Source.Shared.Api.Web.Endpoints
 @using DeviceControl.Source.Shared.Constants
-@using DeviceControl.Source.Shared.Helpers
 @using Ws.DeviceControl.Models
 @using Ws.DeviceControl.Models.Features.References1C.Plus.Commands.Update
 @using Ws.DeviceControl.Models.Features.References1C.Plus.Queries
@@ -145,13 +144,15 @@
 @code {
   # region Injects
 
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private IWebApi WebApi { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Inject] private UserHelper UserHelper { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
   [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private IAuthorizationService AuthorizationService { get; set; } = default!;
+
 
   # endregion
 
@@ -162,7 +163,7 @@
   protected override async Task OnInitializedAsync()
   {
     await base.OnInitializedAsync();
-    IsSupport = (await AuthorizationService.AuthorizeAsync(UserPrincipal, PolicyEnum.Support)).Succeeded;
+    IsSupport = await UserHelper.ValidatePolicyAsync(PolicyEnum.Support);
   }
 
   protected override async Task UpdateItemAction(PluUpdateDto item)

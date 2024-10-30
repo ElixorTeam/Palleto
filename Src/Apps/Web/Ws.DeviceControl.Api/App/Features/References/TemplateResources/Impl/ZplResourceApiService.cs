@@ -22,9 +22,10 @@ internal sealed class ZplResourceApiService(
         ZplResourceExpressions.ToDto.Compile().Invoke(await dbContext.ZplResources.SafeGetById(id, FkProperty.ZplResource));
 
     public Task<List<TemplateResourceDto>> GetAllAsync() => dbContext.ZplResources
-        .AsNoTracking().Select(ZplResourceExpressions.ToDto)
+        .AsNoTracking()
         .OrderBy(i => i.Type)
         .ThenBy(i => i.Name)
+        .Select(ZplResourceExpressions.ToDto)
         .ToListAsync();
 
     public async Task<TemplateResourceBodyDto> GetBodyByIdAsync(Guid id)

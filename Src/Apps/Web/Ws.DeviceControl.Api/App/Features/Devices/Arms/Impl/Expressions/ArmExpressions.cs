@@ -18,21 +18,9 @@ public static class ArmExpressions
             Number = arm.Number,
             Counter = arm.Counter,
             SystemKey = arm.SystemKey,
-            Printer = new()
-            {
-                Id = arm.Printer.Id,
-                Name = arm.Printer.Name
-            },
-            Warehouse = new()
-            {
-                Id = arm.Warehouse.Id,
-                Name = arm.Warehouse.Name
-            },
-            ProductionSite = new()
-            {
-                Id = arm.Warehouse.ProductionSite.Id,
-                Name = arm.Warehouse.ProductionSite.Name
-            },
+            Printer = new(arm.Printer.Id, arm.Printer.Name),
+            Warehouse = new(arm.Warehouse.Id, arm.Warehouse.Name),
+            ProductionSite = new(arm.Warehouse.ProductionSite.Id, arm.Warehouse.ProductionSite.Name),
             CreateDt = arm.CreateDt,
             ChangeDt = arm.ChangeDt
         };

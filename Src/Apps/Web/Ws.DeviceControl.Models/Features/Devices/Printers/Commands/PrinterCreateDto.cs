@@ -9,7 +9,7 @@ public sealed record PrinterCreateDto
 
     [JsonPropertyName("ip")]
     [JsonConverter(typeof(IpV4AddressJsonConverter))]
-    public IPAddress Ip { get; set; } = DefaultTypes.IpLocal;
+    public IPAddress Ip { get; set; } = IPAddress.None;
 
     [JsonPropertyName("type")]
     [JsonConverter(typeof(EnumJsonConverter<PrinterTypes>))]
@@ -27,7 +27,7 @@ public class PrinterCreateValidator : AbstractValidator<PrinterCreateDto>
             .MaximumLength(16).NotEmpty().Matches("^[A-Z0-9-]*$")
             .WithName(wsDataLocalizer["ColName"]);
 
-        RuleFor(item => item.Ip).NotEmpty().NotEqual(DefaultTypes.IpLocal);
+        RuleFor(item => item.Ip).NotEmpty().NotEqual(IPAddress.None);
         RuleFor(item => item.Type).IsInEnum().WithName(wsDataLocalizer["ColType"]);
         RuleFor(item => item.ProductionSiteId).NotEmpty().WithName(wsDataLocalizer["ColProductionSite"]);
     }

@@ -40,6 +40,7 @@
         {
           { "Name", WindowsUtils.GetHost() },
           { "BiosGuid", WindowsUtils.GetBiosId().ToString() },
+          { "Os", Environment.OSVersion.VersionString }
         }},
         { "Network", new Dictionary<string, string> {
           { "Ip", networkInfo.Ip.ToString() },

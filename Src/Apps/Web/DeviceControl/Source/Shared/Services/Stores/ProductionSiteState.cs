@@ -6,7 +6,7 @@ namespace DeviceControl.Source.Shared.Services.Stores;
 [FeatureState]
 public record ProductionSiteState(ProxyDto ProductionSite)
 {
-    public static ProxyDto EmptyProductionSite { get; } = new() { Id = Guid.Empty, Name = string.Empty };
+    public static ProxyDto EmptyProductionSite { get; } = new(Guid.Empty, string.Empty);
     private ProductionSiteState() : this(EmptyProductionSite) { }
 }
 

@@ -1,6 +1,5 @@
 @using DeviceControl.Source.Shared.Api.Web.Endpoints
 @using DeviceControl.Source.Shared.Constants
-@using DeviceControl.Source.Shared.Helpers
 @using TscZebra.Plugin.Abstractions.Enums
 @using Ws.DeviceControl.Models
 @using Ws.DeviceControl.Models.Features.Devices.Printers.Commands
@@ -11,7 +10,7 @@
   Endpoint="ReferencesEndpoints.ProxyUserProductionSiteEndpoint"
   Context="userProductionSiteQuery"
 >
-  @{ bool isOnlyView = !((!IsSeniorSupport && Model.ProductionSite.Id == userProductionSiteQuery.Data?.Id) || IsSeniorSupport); }
+  @{ bool isOnlyView = !(!IsSeniorSupport && Model.ProductionSite.Id == userProductionSiteQuery.Data?.Id || IsSeniorSupport); }
   <SectionForm
     FormModel="@FormModel"
     ChangeDate="@Model.ChangeDt"
@@ -31,7 +30,7 @@
       />
 
       <SectionIpField
-        Label="@($"IP ({Localizer["FormPrinterControl"]})")"
+        Label="@($"{WsDataLocalizer["ColIp"]} ({Localizer["FormPrinterControl"]})")"
         @bind-Value="@FormModel.Ip"
         For="@(() => FormModel.Ip)"
         Path="@($"http://{FormModel.Ip}")"
@@ -69,8 +68,9 @@
 
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IAuthorizationService AuthorizationService { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
+
+  [Inject] private UserHelper UserHelper { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
   [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
@@ -79,13 +79,14 @@
 
   [Parameter, EditorRequired] public PrinterDto Model { get; set; } = default!;
 
+
   private IEnumerable<PrinterTypes> PrinterTypes { get; } = Enum.GetValues(typeof(PrinterTypes)).Cast<PrinterTypes>().ToList();
   private bool IsSeniorSupport { get; set; }
 
   protected override async Task OnInitializedAsync()
   {
     await base.OnInitializedAsync();
-    IsSeniorSupport = (await AuthorizationService.AuthorizeAsync(UserPrincipal, PolicyEnum.SeniorSupport)).Succeeded;
+    IsSeniorSupport = await UserHelper.ValidatePolicyAsync(PolicyEnum.SeniorSupport);
   }
 
   protected override async Task UpdateItemAction(PrinterUpdateDto item)

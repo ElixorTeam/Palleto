@@ -12,33 +12,17 @@ public static class PluExpressions
             Number = (ushort)plu.Number,
             IsWeight = plu.IsWeight,
             Weight = plu.Weight,
-            Brand = new()
-            {
-                Id = plu.Brand.Id,
-                Name = plu.Brand.Name
-            },
+            Brand = new(plu.Brand.Id, plu.Brand.Name),
             ShelfLifeDays = (ushort)plu.ShelfLifeDays,
-            Template = plu.TemplateId != null ? new()
-            {
-                Id = plu.Template.Id,
-                Name = plu.Template.Name
-            } : null,
+            Template = plu.TemplateId != null ? new(plu.Template.Id, plu.Template.Name) : null,
             StorageMethod = plu.StorageMethod,
             Name = plu.Name,
             FullName = plu.FullName,
             Description = plu.Description,
             Ean13 = plu.Ean13,
             Gtin = plu.Ean13,
-            Clip = new()
-            {
-                Id = plu.Clip.Id,
-                Name = plu.Clip.Name
-            },
-            Bundle = new()
-            {
-                Id = plu.Bundle.Id,
-                Name = plu.Bundle.Name
-            },
+            Clip = new(plu.Clip.Id, plu.Clip.Name),
+            Bundle = new(plu.Bundle.Id, plu.Bundle.Name),
             CreateDt = plu.CreateDt,
             ChangeDt = plu.ChangeDt
         };

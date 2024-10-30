@@ -62,14 +62,14 @@ public class DevicesEndpoints(IWebApi webApi)
     {
         PrintersEndpoint.UpdateQueryData(productionSiteId, query =>
             query.Data == null ? query.Data! : query.Data.Prepend(printer).ToArray());
-        AddProxyPrinter(productionSiteId, new() { Id = printer.Id, Name = printer.Name });
+        AddProxyPrinter(productionSiteId, new(printer.Id, printer.Name));
     }
 
     public void UpdatePrinter(Guid productionSiteId, PrinterDto printer)
     {
         PrintersEndpoint.UpdateQueryData(productionSiteId, query =>
             query.Data == null ? query.Data! : query.Data.ReplaceItemBy(printer, p => p.Id == printer.Id).ToArray());
-        UpdateProxyPrinter(productionSiteId, new() { Id = printer.Id, Name = printer.Name });
+        UpdateProxyPrinter(productionSiteId, new(printer.Id, printer.Name));
     }
 
     public void DeletePrinter(Guid productionSiteId, Guid printerId)

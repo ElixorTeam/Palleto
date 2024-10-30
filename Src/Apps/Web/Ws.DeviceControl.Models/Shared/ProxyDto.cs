@@ -1,10 +1,6 @@
 namespace Ws.DeviceControl.Models.Shared;
 
-public sealed record ProxyDto
-{
-    [JsonPropertyName("id")]
-    public required Guid Id { get; init; }
-
-    [JsonPropertyName("name")]
-    public required string Name { get; init; }
-}
+public sealed record ProxyDto(
+    [property: JsonPropertyName("id")] Guid Id,
+    [property: JsonPropertyName("name")] string Name
+);

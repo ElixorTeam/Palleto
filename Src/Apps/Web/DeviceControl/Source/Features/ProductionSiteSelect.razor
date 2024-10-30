@@ -69,7 +69,7 @@
   private List<ProxyDto> GetFilteredProductionSiteList(ProxyDto[] productionSites, ProxyDto? userProductionSite)
   {
     List<ProxyDto> productionSitesList = productionSites.ToList();
-    if (AllowIsNew) productionSitesList = productionSitesList.Append(new() { Id = Guid.Empty, Name = "Без площадки" }).ToList();
+    if (AllowIsNew) productionSitesList = productionSitesList.Append(new(Guid.Empty, "Без площадки")).ToList();
     if (userProductionSite != null && !productionSitesList.Contains(ProductionSiteState.Value.ProductionSite) && productionSitesList.Contains(userProductionSite))
       Dispatcher.Dispatch(new ChangeProductionSiteAction(userProductionSite));
     return productionSitesList;

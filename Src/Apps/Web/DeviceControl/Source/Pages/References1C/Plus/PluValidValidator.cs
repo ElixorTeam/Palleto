@@ -10,10 +10,6 @@ public class PluValidator : AbstractValidator<PluDto>
             .NotNull()
             .WithMessage("Шаблон не задан");
 
-        RuleFor(item => item.Template!.Id)
-            .NotEmpty()
-            .WithMessage("Id шаблона не должен быть пустым GUID");
-
         RuleFor(item => item.StorageMethod)
             .Must(value => value is "Замороженное" or "Охлаждённое")
             .WithMessage("Способ хранения - должен быть ['Замороженное', 'Охлаждённое']");

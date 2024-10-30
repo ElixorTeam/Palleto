@@ -13,21 +13,13 @@ public static class WarehouseExpressions
             Id = warehouse.Id,
             Id1C = warehouse.Uid1C,
             Name = warehouse.Name,
-            ProductionSite = new()
-            {
-                Id = warehouse.ProductionSite.Id,
-                Name = warehouse.ProductionSite.Name
-            },
+            ProductionSite = new(warehouse.ProductionSite.Id, warehouse.ProductionSite.Name),
             CreateDt = warehouse.CreateDt,
             ChangeDt = warehouse.ChangeDt
         };
 
     public static Expression<Func<WarehouseEntity, ProxyDto>> ToProxy =>
-        warehouse => new()
-        {
-            Id = warehouse.Id,
-            Name = warehouse.Name,
-        };
+        warehouse => new(warehouse.Id, warehouse.Name);
 
     public static List<PredicateField<WarehouseEntity>> GetUqPredicates(UqWarehousesProperties uqWarehouseProperties) =>
     [

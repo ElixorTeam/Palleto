@@ -28,6 +28,7 @@ app.UseApiLocalization();
 app.UseHttpsRedirection();
 app.MapControllers();
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<ApiInternalExceptionMiddleware>();
+app.UseMiddleware<ApiLocalizingExceptionMiddleware>();
 
 app.Run();

@@ -45,9 +45,10 @@
   # region Injects
 
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
-  [Inject] private IAuthorizationService AuthorizationService { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
+
+  [Inject] private UserHelper UserHelper { get; set; } = default!;
+  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
 
   # endregion
 
@@ -58,7 +59,7 @@
   protected override async Task OnInitializedAsync()
   {
     await base.OnInitializedAsync();
-    IsAdmin = (await AuthorizationService.AuthorizeAsync(UserPrincipal, PolicyEnum.Admin)).Succeeded;
+    IsAdmin = await UserHelper.ValidatePolicyAsync(PolicyEnum.Admin);
   }
 
   protected override async Task UpdateItemAction(ProductionSiteUpdateDto item)

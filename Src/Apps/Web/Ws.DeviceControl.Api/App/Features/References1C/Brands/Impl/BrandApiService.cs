@@ -15,8 +15,9 @@ internal sealed class BrandApiService(WsDbContext dbContext) : IBrandService
     public Task<List<BrandDto>> GetAllAsync()
     {
         return dbContext.Brands
-            .AsNoTracking().Select(BrandExpressions.ToDto)
+            .AsNoTracking()
             .OrderBy(i => i.Name)
+            .Select(BrandExpressions.ToDto)
             .ToListAsync();
     }
 

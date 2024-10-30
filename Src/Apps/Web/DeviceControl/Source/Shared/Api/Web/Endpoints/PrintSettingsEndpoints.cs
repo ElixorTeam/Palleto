@@ -19,7 +19,8 @@ public class PrintSettingsEndpoints(IWebApi webApi)
     {
         TemplatesEndpoint.UpdateQueryData(new(), query =>
             query.Data == null ? query.Data! : query.Data.Prepend(template).ToArray());
-        AddProxyTemplate(template.IsWeight, new() { Id = template.Id, Name = template.Name });
+
+        AddProxyTemplate(template.IsWeight, new(template.Id, template.Name));
         AddTemplateBody(template.Id, body);
     }
 
@@ -27,7 +28,7 @@ public class PrintSettingsEndpoints(IWebApi webApi)
     {
         TemplatesEndpoint.UpdateQueryData(new(), query =>
             query.Data == null ? query.Data! : query.Data.ReplaceItemBy(template, p => p.Id == template.Id).ToArray());
-        UpdateProxyTemplate(template.IsWeight, new() { Id = template.Id, Name = template.Name });
+        UpdateProxyTemplate(template.IsWeight, new(template.Id, template.Name));
         UpdateTemplateBody(template.Id, body);
     }
 

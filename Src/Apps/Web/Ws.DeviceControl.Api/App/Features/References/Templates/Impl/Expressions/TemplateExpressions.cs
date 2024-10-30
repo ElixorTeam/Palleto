@@ -8,11 +8,7 @@ namespace Ws.DeviceControl.Api.App.Features.References.Templates.Impl.Expression
 internal static class TemplateExpressions
 {
     public static Expression<Func<TemplateEntity, ProxyDto>> ToProxy =>
-        template => new()
-        {
-            Id = template.Id,
-            Name = template.Name
-        };
+        template => new(template.Id, template.Name);
 
     public static Expression<Func<TemplateEntity, TemplateDto>> ToDto =>
         template => new()

@@ -18,14 +18,14 @@ public class ReferencesEndpoints(IWebApi webApi)
     {
         ProductionSitesEndpoint.UpdateQueryData(new(), query =>
             query.Data == null ? query.Data! : query.Data.Prepend(productionSite).ToArray());
-        AddProxyProductionSite(new() { Id = productionSite.Id, Name = productionSite.Name });
+        AddProxyProductionSite(new(productionSite.Id, productionSite.Name));
     }
 
     public void UpdateProductionSite(ProductionSiteDto productionSite)
     {
         ProductionSitesEndpoint.UpdateQueryData(new(), query =>
             query.Data == null ? query.Data! : query.Data.ReplaceItemBy(productionSite, p => p.Id == productionSite.Id).ToArray());
-        UpdateProxyProductionSite(new() { Id = productionSite.Id, Name = productionSite.Name });
+        UpdateProxyProductionSite(new(productionSite.Id, productionSite.Name));
     }
 
     public void DeleteProductionSite(Guid productionSiteId)
@@ -71,14 +71,14 @@ public class ReferencesEndpoints(IWebApi webApi)
     {
         WarehousesEndpoint.UpdateQueryData(productionSiteId, query =>
             query.Data == null ? query.Data! : query.Data.Prepend(warehouse).ToArray());
-        AddProxyWarehouse(productionSiteId, new() { Id = warehouse.Id, Name = warehouse.Name });
+        AddProxyWarehouse(productionSiteId, new(warehouse.Id, warehouse.Name));
     }
 
     public void UpdateWarehouse(Guid productionSiteId, WarehouseDto warehouse)
     {
         WarehousesEndpoint.UpdateQueryData(productionSiteId, query =>
             query.Data == null ? query.Data! : query.Data.ReplaceItemBy(warehouse, p => p.Id == warehouse.Id).ToArray());
-        UpdateProxyWarehouse(productionSiteId, new() { Id = warehouse.Id, Name = warehouse.Name });
+        UpdateProxyWarehouse(productionSiteId, new(warehouse.Id, warehouse.Name));
     }
 
     public void DeleteWarehouse(Guid productionSiteId, Guid warehouseId)
