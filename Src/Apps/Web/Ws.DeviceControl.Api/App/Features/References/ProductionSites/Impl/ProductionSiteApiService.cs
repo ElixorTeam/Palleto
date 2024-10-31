@@ -18,7 +18,7 @@ internal sealed class ProductionSiteApiService(
 {
     #region Queries
 
-    public async Task<ProxyDto> GetProxyByUser()
+    public async Task<ProxyDto> GetProxyByUserAsync()
     {
         ProxyDto? data = await userHelper.GetUserProductionSiteAsync();
         if (data == null) throw new ApiInternalException
@@ -49,11 +49,11 @@ internal sealed class ProductionSiteApiService(
     public async Task<ProductionSiteDto> GetByIdAsync(Guid id) =>
         ProductionSiteExpressions.ToDto.Compile().Invoke(await dbContext.ProductionSites.SafeGetById(id, FkProperty.Label));
 
-    public Task<List<ProductionSiteDto>> GetAllAsync() => dbContext.ProductionSites
+    public Task<ProductionSiteDto[]> GetAllAsync() => dbContext.ProductionSites
         .AsNoTracking()
         .OrderBy(i => i.Name)
         .Select(ProductionSiteExpressions.ToDto)
-        .ToListAsync();
+        .ToArrayAsync();
 
     #endregion
 

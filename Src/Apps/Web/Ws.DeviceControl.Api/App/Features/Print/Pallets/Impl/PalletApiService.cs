@@ -1,7 +1,7 @@
-using Ws.DeviceControl.Api.App.Features.Exceptions;
 using Ws.DeviceControl.Api.App.Features.Print.Pallets.Common;
 using Ws.DeviceControl.Api.App.Features.Print.Pallets.Expressions;
 using Ws.DeviceControl.Api.App.Shared.Enums;
+using Ws.DeviceControl.Api.App.Shared.Exceptions;
 using Ws.DeviceControl.Models.Features.Print.Pallets;
 using Ws.Shared.ValueTypes;
 

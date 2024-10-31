@@ -25,7 +25,7 @@ public static class ArmExpressions
             ChangeDt = arm.ChangeDt
         };
 
-    public static Expression<Func<PluEntity, PluArmDto>> ToPluDto(List<Guid> plusId) =>
+    public static Expression<Func<PluEntity, PluArmDto>> ToPluDto(Guid[] plusId) =>
         plu => new()
         {
             Id = plu.Id,

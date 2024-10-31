@@ -3,7 +3,7 @@ using Ws.DeviceControl.Models.Features.References1C.Plus.Queries;
 
 namespace Ws.DeviceControl.Api.App.Features.References1C.Plus.Common;
 
-public interface IPluService : IGetApiService<PluDto>
+public interface IPluService : IGetAll<PluDto>, IGetById<PluDto>
 {
     #region Queries
 

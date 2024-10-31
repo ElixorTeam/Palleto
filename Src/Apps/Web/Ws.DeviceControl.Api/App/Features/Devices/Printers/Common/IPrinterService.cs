@@ -3,16 +3,12 @@ using Ws.DeviceControl.Models.Features.Devices.Printers.Queries;
 
 namespace Ws.DeviceControl.Api.App.Features.Devices.Printers.Common;
 
-public interface IPrinterService : IDeleteService<Guid>
+public interface IPrinterService :
+    IDeleteById,
+    IGetById<PrinterDto>,
+    IGetByProdSite<PrinterDto>,
+    IGetProxiesByProdSite
 {
-    #region Queries
-
-    Task<PrinterDto> GetByIdAsync(Guid id);
-    Task<List<PrinterDto>> GetAllByProductionSiteAsync(Guid productionSiteId);
-    Task<List<ProxyDto>> GetProxiesByProductionSiteAsync(Guid productionSiteId);
-
-    #endregion
-
     #region Commands
 
     Task<PrinterDto> CreateAsync(PrinterCreateDto dto);

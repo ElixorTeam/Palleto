@@ -12,13 +12,13 @@ internal sealed class BrandApiService(WsDbContext dbContext) : IBrandService
     public async Task<BrandDto> GetByIdAsync(Guid id) =>
         BrandExpressions.ToDto.Compile().Invoke(await dbContext.Brands.SafeGetById(id, FkProperty.Brand));
 
-    public Task<List<BrandDto>> GetAllAsync()
+    public Task<BrandDto[]> GetAllAsync()
     {
         return dbContext.Brands
             .AsNoTracking()
             .OrderBy(i => i.Name)
             .Select(BrandExpressions.ToDto)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     #endregion

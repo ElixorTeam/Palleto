@@ -3,15 +3,11 @@ using Ws.DeviceControl.Models.Features.Admins.Users.Queries;
 
 namespace Ws.DeviceControl.Api.App.Features.Admins.Users.Common;
 
-public interface IUserService : IDeleteService<Guid>
+public interface IUserService :
+    IDeleteById,
+    IGetById<UserDto>,
+    IGetAll<UserDto>
 {
-    #region Queries
-
-    Task<UserDto> GetByIdAsync(Guid id);
-    Task<List<UserDto>> GetAllUsers();
-
-    #endregion
-
     #region Commands
 
     Task<UserDto> SaveOrUpdateUser(Guid uid, UserUpdateDto updateDto);

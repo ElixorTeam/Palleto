@@ -9,9 +9,6 @@ public sealed class LabelController(ILabelService labelService)
 {
     #region Queries
 
-    [HttpGet]
-    public Task<List<LabelDto>> GetAll() => labelService.GetAllAsync();
-
     [HttpGet("arm/{armId:guid}")]
     public Task<List<LabelDto>> GetLabelsWorkShiftByArm(Guid armId) =>
         labelService.GetLabelsWorkShiftByArmAsync(armId);

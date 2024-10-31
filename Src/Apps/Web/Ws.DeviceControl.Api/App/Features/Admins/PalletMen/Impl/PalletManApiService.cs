@@ -19,13 +19,13 @@ internal sealed class PalletManApiService(
 {
     #region Queries
 
-    public Task<List<PalletManDto>> GetAllByProductionSiteAsync(Guid productionSiteId)
+    public Task<PalletManDto[]> GetAllByProdSiteAsync(Guid prodSiteId)
     {
         return dbContext.PalletMen
             .AsNoTracking()
-            .Where(i => i.Warehouse.ProductionSite.Id == productionSiteId)
+            .Where(i => i.Warehouse.ProductionSite.Id == prodSiteId)
             .Select(PalletManExpressions.ToDto)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     public async Task<PalletManDto> GetByIdAsync(Guid id)

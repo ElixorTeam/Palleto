@@ -1,5 +1,5 @@
 using LinqKit;
-using Ws.DeviceControl.Api.App.Features.Exceptions;
+using Ws.DeviceControl.Api.App.Shared.Exceptions;
 using Ws.DeviceControl.Api.App.Shared.Validators.Api.Models;
 
 namespace Ws.DeviceControl.Api.App.Shared.Validators.Api;

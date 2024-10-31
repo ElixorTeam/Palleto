@@ -19,23 +19,23 @@ internal sealed class PrinterApiService(
 {
     #region Queries
 
-    public Task<List<PrinterDto>> GetAllByProductionSiteAsync(Guid productionSiteId)
+    public Task<PrinterDto[]> GetAllByProdSiteAsync(Guid prodSiteId)
     {
         return dbContext.Printers
             .AsNoTracking()
-            .Where(i => i.ProductionSite.Id == productionSiteId)
+            .Where(i => i.ProductionSite.Id == prodSiteId)
             .OrderBy(i => i.Type).ThenBy(i => i.Name)
             .Select(PrinterExpressions.ToDto)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
-    public Task<List<ProxyDto>> GetProxiesByProductionSiteAsync(Guid productionSiteId)
+    public Task<ProxyDto[]> GetProxiesByProdSiteAsync(Guid prodSiteId)
     {
         return dbContext.Printers
-            .Where(i => i.ProductionSite.Id == productionSiteId)
+            .Where(i => i.ProductionSite.Id == prodSiteId)
             .OrderBy(i => i.Name)
             .Select(PrinterExpressions.ToProxy)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     public async Task<PrinterDto> GetByIdAsync(Guid id)

@@ -12,13 +12,27 @@ internal sealed class UserApiService(WsDbContext dbContext) : IUserService
 {
     #region Queries
 
-    public Task<List<UserDto>> GetAllUsers()
+    public Task<UserDto[]> GetAllAsync()
     {
         return dbContext.Users
             .AsNoTracking()
             .Select(UserExpressions.ToDto)
-            .ToListAsync();
+            .ToArrayAsync();
     }
+
+    public async Task<UserDto> GetByIdAsync(Guid id)
+    {
+        UserEntity user = await dbContext.Users.SafeGetById(id, FkProperty.User);
+        await LoadDefaultForeignKeysAsync(user);
+        return UserExpressions.ToDto.Compile().Invoke(user);
+    }
+
+    #endregion
+
+    #region Commands
+
+    public Task DeleteAsync(Guid id) => dbContext.Users.SafeDeleteAsync(i => i.Id == id, FkProperty.User);
+
     public async Task<UserDto> SaveOrUpdateUser(Guid uid, UserUpdateDto updateDto)
     {
         UserEntity? user = await dbContext.Users.FindAsync(uid);
@@ -41,19 +55,6 @@ internal sealed class UserApiService(WsDbContext dbContext) : IUserService
         await dbContext.SaveChangesAsync();
         return UserExpressions.ToDto.Compile().Invoke(user);
     }
-
-    public async Task<UserDto> GetByIdAsync(Guid id)
-    {
-        UserEntity user = await dbContext.Users.SafeGetById(id, FkProperty.User);
-        await LoadDefaultForeignKeysAsync(user);
-        return UserExpressions.ToDto.Compile().Invoke(user);
-    }
-
-    #endregion
-
-    #region Commands
-
-    public Task DeleteAsync(Guid id) => dbContext.Users.SafeDeleteAsync(i => i.Id == id, FkProperty.User);
 
     #endregion
 

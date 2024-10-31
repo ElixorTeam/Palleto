@@ -19,23 +19,23 @@ internal sealed class WarehouseApiService(
 {
     #region Queries
 
-    public Task<List<WarehouseDto>> GetAllByProductionSiteAsync(Guid productionSiteId)
+    public Task<WarehouseDto[]> GetAllByProdSiteAsync(Guid productionSiteId)
     {
         return dbContext.Warehouses
             .AsNoTracking()
             .Where(i => i.ProductionSite.Id == productionSiteId)
             .OrderBy(i => i.Name)
             .Select(WarehouseExpressions.ToDto)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
-    public Task<List<ProxyDto>> GetProxiesByProductionSiteAsync(Guid productionSiteId)
+    public Task<ProxyDto[]> GetProxiesByProdSiteAsync(Guid productionSiteId)
     {
         return dbContext.Warehouses
             .Where(i => i.ProductionSite.Id == productionSiteId)
             .OrderBy(i => i.Name)
             .Select(WarehouseExpressions.ToProxy)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     public async Task<WarehouseDto> GetByIdAsync(Guid id)

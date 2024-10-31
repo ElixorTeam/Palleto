@@ -11,7 +11,7 @@ public sealed class BrandController(IBrandService brandService)
     #region Queries
 
     [HttpGet]
-    public Task<List<BrandDto>> GetAll() => brandService.GetAllAsync();
+    public Task<BrandDto[]> GetAll() => brandService.GetAllAsync();
 
     [HttpGet("{id:guid}")]
     public Task<BrandDto> GetById([FromRoute] Guid id) => brandService.GetByIdAsync(id);

@@ -1,6 +1,6 @@
 using Microsoft.Data.SqlClient;
-using Ws.DeviceControl.Api.App.Features.Exceptions;
 using Ws.DeviceControl.Api.App.Shared.Enums;
+using Ws.DeviceControl.Api.App.Shared.Exceptions;
 
 namespace Ws.DeviceControl.Api.App.Shared.Extensions;
 

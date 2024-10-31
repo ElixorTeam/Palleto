@@ -11,13 +11,13 @@ internal sealed class BundleApiService(WsDbContext dbContext) : IBundleService
     public async Task<PackageDto> GetByIdAsync(Guid id) =>
         BundleExpressions.ToDto.Compile().Invoke(await dbContext.Bundles.SafeGetById(id, FkProperty.Bundle));
 
-    public Task<List<PackageDto>> GetAllAsync()
+    public Task<PackageDto[]> GetAllAsync()
     {
         return dbContext.Bundles
             .AsNoTracking()
             .OrderBy(i => i.Weight).ThenBy(i => i.Name)
             .Select(BundleExpressions.ToDto)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     #endregion

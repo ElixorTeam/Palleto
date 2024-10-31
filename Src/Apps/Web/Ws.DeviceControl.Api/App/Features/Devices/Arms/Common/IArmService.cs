@@ -3,13 +3,14 @@ using Ws.DeviceControl.Models.Features.Devices.Arms.Queries;
 
 namespace Ws.DeviceControl.Api.App.Features.Devices.Arms.Common;
 
-public interface IArmService : IDeleteService<Guid>
+public interface IArmService :
+    IDeleteById,
+    IGetById<ArmDto>,
+    IGetByProdSite<ArmDto>
 {
     #region Queries
 
-    Task<ArmDto> GetByIdAsync(Guid id);
-    Task<List<PluArmDto>> GetArmPlus(Guid id);
-    Task<List<ArmDto>> GetAllByProductionSiteAsync(Guid productionSiteId);
+    Task<PluArmDto[]> GetArmPlus(Guid id);
 
     #endregion
 

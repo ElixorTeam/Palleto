@@ -20,12 +20,6 @@ internal sealed class LabelApiService(
         return LabelExpressions.ToLabelDto.Compile().Invoke(entity);
     }
 
-    public Task<List<LabelDto>> GetAllAsync() => dbContext.Labels
-        .AsNoTracking()
-        .OrderByDescending(i => i.CreateDt)
-        .Select(LabelExpressions.ToLabelDto)
-        .ToListAsync();
-
     public async Task<ZplDto> GetZplByIdAsync(Guid id) =>
         LabelExpressions.ToZplDto.Compile().Invoke(await dbContext.LabelZpl.SafeGetById(id, FkProperty.Label));
 
@@ -43,7 +37,12 @@ internal sealed class LabelApiService(
 
         return await dbContext.Labels
             .AsNoTracking()
-            .Where(i => i.CreateDt > workShift.Start && i.CreateDt < workShift.End && i.LineId == amrId && i.IsWeight)
+            .Where(i =>
+                i.CreateDt > workShift.Start &&
+                i.CreateDt < workShift.End &&
+                i.LineId == amrId &&
+                i.PalletId == null
+            )
             .OrderByDescending(i => i.CreateDt)
             .Select(LabelExpressions.ToLabelDto)
             .ToListAsync();

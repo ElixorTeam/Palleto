@@ -12,8 +12,8 @@ public sealed class PalletManController(IPalletManService palletManService)
     #region Queries
 
     [HttpGet]
-    public Task<List<PalletManDto>> GetAllByProductionSite([FromQuery(Name = "productionSite")] Guid productionSiteId) =>
-        palletManService.GetAllByProductionSiteAsync(productionSiteId);
+    public Task<PalletManDto[]> GetAllByProductionSite([FromQuery(Name = "productionSite")] Guid productionSiteId) =>
+        palletManService.GetAllByProdSiteAsync(productionSiteId);
 
     [HttpGet("{id:guid}")]
     public Task<PalletManDto> GetById([FromRoute] Guid id) =>

@@ -1,4 +1,4 @@
-namespace Ws.DeviceControl.Api.App.Features.Exceptions;
+namespace Ws.DeviceControl.Api.App.Shared.Exceptions;
 
 public enum ApiErrorType
 {

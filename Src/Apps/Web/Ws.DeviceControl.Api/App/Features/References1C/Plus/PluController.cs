@@ -11,7 +11,7 @@ public sealed class PluController(IPluService pluService)
     #region Queries
 
     [HttpGet]
-    public Task<List<PluDto>> GetAll() => pluService.GetAllAsync();
+    public Task<PluDto[]> GetAll() => pluService.GetAllAsync();
 
     [HttpGet("{id:guid}")]
     public Task<PluDto> GetById([FromRoute] Guid id) => pluService.GetByIdAsync(id);

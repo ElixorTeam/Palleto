@@ -12,16 +12,16 @@ public sealed class WarehouseController(IWarehouseService warehouseService)
 
     [Authorize(PolicyEnum.SeniorSupport)]
     [HttpGet]
-    public Task<List<WarehouseDto>> GetAllByProductionSite([FromQuery(Name = "productionSite")] Guid productionSiteId) =>
-        warehouseService.GetAllByProductionSiteAsync(productionSiteId);
+    public Task<WarehouseDto[]> GetAllByProdSite([FromQuery(Name = "productionSite")] Guid productionSiteId) =>
+        warehouseService.GetAllByProdSiteAsync(productionSiteId);
 
     [Authorize(PolicyEnum.SeniorSupport)]
     [HttpGet("{id:guid}")]
     public Task<WarehouseDto> GetById([FromRoute] Guid id) => warehouseService.GetByIdAsync(id);
 
     [HttpGet("proxy")]
-    public Task<List<ProxyDto>> GetProxiesByProductionSite([FromQuery(Name = "productionSite")] Guid productionSiteId) =>
-        warehouseService.GetProxiesByProductionSiteAsync(productionSiteId);
+    public Task<ProxyDto[]> GetProxiesByProdSite([FromQuery(Name = "productionSite")] Guid productionSiteId) =>
+        warehouseService.GetProxiesByProdSiteAsync(productionSiteId);
 
     #endregion
 

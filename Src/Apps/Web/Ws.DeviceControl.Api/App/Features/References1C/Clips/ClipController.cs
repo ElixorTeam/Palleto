@@ -9,7 +9,7 @@ public sealed class ClipController(IClipService clipService)
     #region Queries
 
     [HttpGet]
-    public Task<List<PackageDto>> GetAll() => clipService.GetAllAsync();
+    public Task<PackageDto[]> GetAll() => clipService.GetAllAsync();
 
     [HttpGet("{id:guid}")]
     public Task<PackageDto> GetById([FromRoute] Guid id) => clipService.GetByIdAsync(id);

@@ -20,14 +20,13 @@ internal sealed class PluApiService(WsDbContext dbContext) : IPluService
         return PluExpressions.ToDto.Compile().Invoke(entity);
     }
 
-
-    public Task<List<PluDto>> GetAllAsync()
+    public Task<PluDto[]> GetAllAsync()
     {
         return dbContext.Plus
             .AsNoTracking()
             .OrderBy(i => i.Number)
             .Select(PluExpressions.ToDto)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     public async Task<List<CharacteristicDto>> GetCharacteristics(Guid id)

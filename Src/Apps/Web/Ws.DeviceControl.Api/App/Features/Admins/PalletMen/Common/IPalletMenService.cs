@@ -3,15 +3,11 @@ using Ws.DeviceControl.Models.Features.Admins.PalletMen.Queries;
 
 namespace Ws.DeviceControl.Api.App.Features.Admins.PalletMen.Common;
 
-public interface IPalletManService : IDeleteService<Guid>
+public interface IPalletManService :
+    IDeleteById,
+    IGetById<PalletManDto>,
+    IGetByProdSite<PalletManDto>
 {
-    #region Queries
-
-    Task<PalletManDto> GetByIdAsync(Guid id);
-    Task<List<PalletManDto>> GetAllByProductionSiteAsync(Guid productionSiteId);
-
-    #endregion
-
     #region Commands
 
     Task<PalletManDto> CreateAsync(PalletManCreateDto dto);

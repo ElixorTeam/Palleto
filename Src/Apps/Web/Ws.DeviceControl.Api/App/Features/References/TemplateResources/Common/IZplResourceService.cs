@@ -3,7 +3,10 @@ using Ws.DeviceControl.Models.Features.References.TemplateResources.Queries;
 
 namespace Ws.DeviceControl.Api.App.Features.References.TemplateResources.Common;
 
-public interface IZplResourceService : IGetApiService<TemplateResourceDto>, IDeleteService<Guid>
+public interface IZplResourceService :
+    IGetById<TemplateResourceDto>,
+    IGetAll<TemplateResourceDto>,
+    IDeleteById
 {
     #region Queries
 

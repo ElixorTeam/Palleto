@@ -21,14 +21,14 @@ internal sealed class ArmApiService(
 {
     #region Queries
 
-    public Task<List<ArmDto>> GetAllByProductionSiteAsync(Guid productionSiteId)
+    public Task<ArmDto[]> GetAllByProdSiteAsync(Guid prodSiteId)
     {
         return dbContext.Lines
             .AsNoTracking()
-            .Where(i => i.Warehouse.ProductionSite.Id == productionSiteId)
+            .Where(i => i.Warehouse.ProductionSite.Id == prodSiteId)
             .OrderBy(i => i.Name)
             .Select(ArmExpressions.ToDto)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     public async Task<ArmDto> GetByIdAsync(Guid id)
@@ -37,7 +37,7 @@ internal sealed class ArmApiService(
         return await GetArmDto(entity);
     }
 
-    public async Task<List<PluArmDto>> GetArmPlus(Guid id)
+    public async Task<PluArmDto[]> GetArmPlus(Guid id)
     {
         LineEntity entity = await dbContext.Lines.SafeGetById(id, FkProperty.Line);
 
@@ -48,19 +48,19 @@ internal sealed class ArmApiService(
             _ => null
         };
 
-        List<Guid> linePluId = await dbContext.Lines
+        Guid[] linePluId = await dbContext.Lines
             .AsNoTracking()
             .Where(i => i.Id == id)
             .SelectMany(i => i.Plus)
             .Select(i => i.Id)
-            .ToListAsync();
+            .ToArrayAsync();
 
         return await dbContext.Plus
             .AsNoTracking()
             .IfWhere(isWeightFilter != null, p => p.IsWeight == isWeightFilter)
             .OrderBy(i => i.Number)
             .Select(ArmExpressions.ToPluDto(linePluId))
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     #endregion

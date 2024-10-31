@@ -1,4 +1,4 @@
-using Ws.DeviceControl.Api.App.Features.Exceptions;
+using Ws.DeviceControl.Api.App.Shared.Exceptions;
 using Ws.Shared.Web.ValueTypes;
 
 namespace Ws.DeviceControl.Api.App.Shared.Middlewares;

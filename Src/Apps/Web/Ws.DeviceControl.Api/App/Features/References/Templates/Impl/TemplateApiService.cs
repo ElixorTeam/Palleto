@@ -18,6 +18,16 @@ internal sealed class TemplateApiService(
 {
     #region Queries
 
+    public async Task<TemplateDto> GetByIdAsync(Guid id) =>
+        TemplateExpressions.ToDto.Compile().Invoke(await dbContext.Templates.SafeGetById(id, FkProperty.Template));
+
+    public Task<TemplateDto[]> GetAllAsync() => dbContext.Templates
+        .AsNoTracking()
+        .OrderBy(i => i.IsWeight)
+        .ThenBy(i => i.Name)
+        .Select(TemplateExpressions.ToDto)
+        .ToArrayAsync();
+
     public async Task<List<ProxyDto>> GetProxiesByIsWeightAsync(bool isWeight)
     {
         return await dbContext.Templates
@@ -27,16 +37,6 @@ internal sealed class TemplateApiService(
             .Select(TemplateExpressions.ToProxy)
             .ToListAsync();
     }
-
-    public async Task<TemplateDto> GetByIdAsync(Guid id) =>
-        TemplateExpressions.ToDto.Compile().Invoke(await dbContext.Templates.SafeGetById(id, FkProperty.Template));
-
-    public Task<List<TemplateDto>> GetAllAsync() => dbContext.Templates
-        .AsNoTracking()
-        .OrderBy(i => i.IsWeight)
-        .ThenBy(i => i.Name)
-        .Select(TemplateExpressions.ToDto)
-        .ToListAsync();
 
     public async Task<TemplateBodyDto> GetBodyByIdAsync(Guid id)
     {

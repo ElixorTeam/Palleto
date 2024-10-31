@@ -3,13 +3,14 @@ using Ws.DeviceControl.Models.Features.References.Warehouses.Queries;
 
 namespace Ws.DeviceControl.Api.App.Features.References.Warehouses.Common;
 
-public interface IWarehouseService : IDeleteService<Guid>
+public interface IWarehouseService :
+    IDeleteById,
+    IGetByProdSite<WarehouseDto>,
+    IGetProxiesByProdSite
 {
     #region Queries
 
     Task<WarehouseDto> GetByIdAsync(Guid id);
-    Task<List<ProxyDto>> GetProxiesByProductionSiteAsync(Guid productionSiteId);
-    Task<List<WarehouseDto>> GetAllByProductionSiteAsync(Guid productionSiteId);
 
     #endregion
 

@@ -12,7 +12,7 @@ public sealed class ZplResourceController(IZplResourceService zplResourceService
 
     [Authorize(PolicyEnum.SeniorSupport)]
     [HttpGet]
-    public Task<List<TemplateResourceDto>> GetAll() =>
+    public Task<TemplateResourceDto[]> GetAll() =>
         zplResourceService.GetAllAsync();
 
     [Authorize(PolicyEnum.SeniorSupport)]

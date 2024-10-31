@@ -11,13 +11,13 @@ internal sealed class BoxApiService(WsDbContext dbContext) : IBoxService
     public async Task<PackageDto> GetByIdAsync(Guid id) =>
         BoxExpressions.ToDto.Compile().Invoke(await dbContext.Boxes.SafeGetById(id, FkProperty.Box));
 
-    public Task<List<PackageDto>> GetAllAsync()
+    public Task<PackageDto[]> GetAllAsync()
     {
         return dbContext.Boxes
             .AsNoTracking()
             .OrderBy(i => i.Weight).ThenBy(i => i.Name)
             .Select(BoxExpressions.ToDto)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     #endregion

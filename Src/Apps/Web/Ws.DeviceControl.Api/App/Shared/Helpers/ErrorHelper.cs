@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Localization;
-using Ws.DeviceControl.Api.App.Features.Exceptions;
+using Ws.DeviceControl.Api.App.Shared.Exceptions;
 using Ws.DeviceControl.Api.App.Shared.Localization;
 using Ws.Shared.Resources;
 

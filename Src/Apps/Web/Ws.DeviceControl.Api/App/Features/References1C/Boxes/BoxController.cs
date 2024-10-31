@@ -9,7 +9,7 @@ public sealed class BoxController(IBoxService boxService)
     #region Queries
 
     [HttpGet]
-    public Task<List<PackageDto>> GetAll() => boxService.GetAllAsync();
+    public Task<PackageDto[]> GetAll() => boxService.GetAllAsync();
 
     [HttpGet("{id:guid}")]
     public Task<PackageDto> GetById([FromRoute] Guid id) => boxService.GetByIdAsync(id);

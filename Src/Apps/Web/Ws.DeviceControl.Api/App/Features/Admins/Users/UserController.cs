@@ -12,7 +12,7 @@ public sealed class UserController(IUserService userService)
     #region Queries
 
     [HttpGet]
-    public Task<List<UserDto>> GetAllUsers() => userService.GetAllUsers();
+    public Task<UserDto[]> GetAllUsers() => userService.GetAllAsync();
 
     [HttpGet("{id:guid}")]
     public Task<UserDto> GetById([FromRoute] Guid id) => userService.GetByIdAsync(id);

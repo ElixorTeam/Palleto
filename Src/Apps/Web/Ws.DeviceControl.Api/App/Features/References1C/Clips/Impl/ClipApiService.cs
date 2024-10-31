@@ -11,13 +11,13 @@ internal sealed class ClipApiService(WsDbContext dbContext) : IClipService
     public async Task<PackageDto> GetByIdAsync(Guid id) =>
         ClipExpressions.ToDto.Compile().Invoke(await dbContext.Clips.SafeGetById(id, FkProperty.Clip));
 
-    public Task<List<PackageDto>> GetAllAsync()
+    public Task<PackageDto[]> GetAllAsync()
     {
         return dbContext.Clips
             .AsNoTracking()
             .OrderBy(i => i.Weight).ThenBy(i => i.Name)
             .Select(ClipExpressions.ToDto)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     #endregion

@@ -12,12 +12,12 @@ public sealed class PrinterController(IPrinterService printerService)
     #region Queries
 
     [HttpGet("proxy")]
-    public Task<List<ProxyDto>> GetProxiesByProductionSite([FromQuery(Name = "productionSite")] Guid productionSiteId) =>
-        printerService.GetProxiesByProductionSiteAsync(productionSiteId);
+    public Task<ProxyDto[]> GetProxiesByProdSite([FromQuery(Name = "productionSite")] Guid productionSiteId) =>
+        printerService.GetProxiesByProdSiteAsync(productionSiteId);
 
     [HttpGet]
-    public Task<List<PrinterDto>> GetAllByProductionSite([FromQuery(Name = "productionSite")] Guid productionSiteId) =>
-        printerService.GetAllByProductionSiteAsync(productionSiteId);
+    public Task<PrinterDto[]> GetAllByProductionSite([FromQuery(Name = "productionSite")] Guid productionSiteId) =>
+        printerService.GetAllByProdSiteAsync(productionSiteId);
 
     [HttpGet("{id:guid}")]
     public Task<PrinterDto> GetById([FromRoute] Guid id) => printerService.GetByIdAsync(id);

@@ -3,11 +3,14 @@ using Ws.DeviceControl.Models.Features.References.ProductionSites.Queries;
 
 namespace Ws.DeviceControl.Api.App.Features.References.ProductionSites.Common;
 
-public interface IProductionSiteService : IGetApiService<ProductionSiteDto>, IDeleteService<Guid>
+public interface IProductionSiteService :
+    IGetById<ProductionSiteDto>,
+    IGetAll<ProductionSiteDto>,
+    IDeleteById
 {
     #region Queries
 
-    Task<ProxyDto> GetProxyByUser();
+    Task<ProxyDto> GetProxyByUserAsync();
     Task<List<ProxyDto>> GetProxiesAsync();
 
     #endregion

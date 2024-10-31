@@ -14,7 +14,7 @@ public sealed class ProductionSiteController(IProductionSiteService productionSi
 
     [Authorize(PolicyEnum.SeniorSupport)]
     [HttpGet]
-    public Task<List<ProductionSiteDto>> GetAll() => productionSiteService.GetAllAsync();
+    public Task<ProductionSiteDto[]> GetAll() => productionSiteService.GetAllAsync();
 
     [Authorize(PolicyEnum.SeniorSupport)]
     [HttpGet("{id:guid}")]
@@ -23,7 +23,7 @@ public sealed class ProductionSiteController(IProductionSiteService productionSi
     #endregion
 
     [HttpGet("user-proxy")]
-    public Task<ProxyDto> GetProxyByUser() => productionSiteService.GetProxyByUser();
+    public Task<ProxyDto> GetProxyByUser() => productionSiteService.GetProxyByUserAsync();
 
     [HttpGet("proxy")]
     public Task<List<ProxyDto>> GetProxies() => productionSiteService.GetProxiesAsync();
