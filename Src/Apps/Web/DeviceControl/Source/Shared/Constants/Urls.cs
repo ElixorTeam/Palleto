@@ -12,6 +12,7 @@ public static class Urls
     # region Operations
 
     public const string Labels = "/labels";
+    public const string Pallets = "/pallets";
 
     # endregion
 

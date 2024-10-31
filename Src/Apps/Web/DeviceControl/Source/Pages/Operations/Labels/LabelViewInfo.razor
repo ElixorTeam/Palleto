@@ -1,0 +1,36 @@
+@using Ws.DeviceControl.Models.Features.Print.Labels
+
+<h2 class="text-xl font-medium pb-2 px-2">Общая информация</h2>
+<div class="w-full grid grid-cols-3 gap-4 pb-6 xl:grid-cols-4 2xl:grid-cols-5 px-2 border-b">
+  @if (Label.Plu != null)
+  {
+    <ViewField Label="Номенклатура" Value="@Label.Plu?.Name" />
+    <ViewField Label="Тип номенклатуры" Value="@(Label.IsWeight ? "Весовая" : "Штучная")" />
+  }
+  <ViewField Label="Линия" Value="@Label.Arm.Name" />
+  <ViewField Label="Склад" Value="@Label.Warehouse.Name" />
+</div>
+
+<h2 class="text-xl font-medium pt-4 pb-2 px-2">Параметры этикетки</h2>
+<div class="w-full grid grid-cols-3 gap-4 pb-6 xl:grid-cols-4 2xl:grid-cols-5 px-2 border-b">
+  <ViewField Label="Замес" Value="@Label.Kneading.ToString()" />
+  <ViewField Label="Кол-во вложений" Value="@Label.BundleCount.ToString()" />
+
+  <ViewField Label="Дата производства" Value="@Label.ProductDt.ToString()"/>
+  <ViewField Label="Срок годности" Value="@Label.ExpirationDt.ToString()"/>
+
+  <ViewField Label="Вес нетто" Value="@Label.WeightNet.ToString(CultureInfo.InvariantCulture)"/>
+  <ViewField Label="Вес тары" Value="@Label.WeightTare.ToString(CultureInfo.InvariantCulture)"/>
+</div>
+
+<h2 class="text-xl font-medium pt-4 pb-2 px-2">Штрихкоды</h2>
+<div class="w-full grid grid-cols-3 gap-4 xl:grid-cols-4 2xl:grid-cols-5 px-2">
+  <ViewField Label="Верхний штрихкод" Value="@Label.BarcodeTop" />
+  <ViewField Label="Нижний штрихкод" Value="@Label.BarcodeBottom" />
+  <ViewField Label="Правый штрихкод" Value="@Label.BarcodeRight" />
+</div>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Parameter, EditorRequired] public LabelDto Label { get; set; } = default!;
+}

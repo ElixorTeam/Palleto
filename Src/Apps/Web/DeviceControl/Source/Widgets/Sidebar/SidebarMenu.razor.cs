@@ -34,10 +34,6 @@ public sealed partial class SidebarMenu : ComponentBase
             new(Localizer["SectionPrinters"], Urls.Printers)
         ], PolicyEnum.Support),
 
-        new(Localizer["MenuOperations"], HeroiconName.Clipboard, [
-            new(Localizer["SectionLabels"], Urls.Labels)
-        ]),
-
         new(Localizer["Menu1CReferences"], HeroiconName.CurrencyEuro, [
             new(Localizer["SectionPLU"], Urls.Plus),
             new(Localizer["SectionBoxes"], Urls.Boxes),

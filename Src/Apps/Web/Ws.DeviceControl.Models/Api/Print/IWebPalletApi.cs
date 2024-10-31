@@ -16,7 +16,7 @@ public interface IWebPalletApi
     Task<PalletDto[]> GetPalletsWorkShiftByArm(Guid armId);
 
     [Get("/pallets/{id}/labels")]
-    Task<List<LabelPalletDto>> GetPalletLabels(Guid id);
+    Task<LabelPalletDto[]> GetPalletLabels(Guid id);
 
     #endregion
 }
