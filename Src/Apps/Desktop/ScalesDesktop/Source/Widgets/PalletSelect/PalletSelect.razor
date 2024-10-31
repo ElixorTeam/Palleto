@@ -10,13 +10,13 @@
       <div class="flex items-center justify-center pt-px gap-1">
         <CompactDatePicker
           @bind-Value="@StartDate"
-          DisabledDateFunc="@(date => date < EndDate.AddDays(-4) || date >= EndDate.AddDays(-1))"
+          DisabledDateFunc="@(date => date < EndDate?.AddDays(-4) || date >= EndDate?.AddDays(-1))"
           IsDisabled="@(!string.IsNullOrWhiteSpace(InputSearchCounter))"
         />
         <span>-</span>
         <CompactDatePicker
           @bind-Value="@EndDate"
-          @bind-Value:after="@(() => StartDate = EndDate.AddDays(-1))"
+          @bind-Value:after="@(() => StartDate = EndDate?.AddDays(-1))"
           DisabledDateFunc="@(date => date < DateTime.Today.AddDays(-2) || date > DateTime.Today.AddDays(1))"
           IsDisabled="@(!string.IsNullOrWhiteSpace(InputSearchCounter))"
         />
@@ -123,8 +123,8 @@
 
   # endregion
 
-  private DateTime StartDate { get; set; }
-  private DateTime EndDate { get; set; }
+  private DateTime? StartDate { get; set; }
+  private DateTime? EndDate { get; set; }
 
   private PalletFilterType PalletFilter { get; set; } = PalletFilterType.NotShipped;
   private string InputSearchCounter { get; set; } = string.Empty;
