@@ -12,12 +12,12 @@ public sealed class LabelController(ILabelService labelService)
     [HttpGet]
     public Task<List<LabelDto>> GetAll() => labelService.GetAllAsync();
 
-    [HttpGet]
-    public Task<List<LabelDto>> GetLabelsWorkShiftByArm([FromQuery(Name = "armId")] Guid armId) =>
+    [HttpGet("arm/{armId:guid}")]
+    public Task<List<LabelDto>> GetLabelsWorkShiftByArm(Guid armId) =>
         labelService.GetLabelsWorkShiftByArmAsync(armId);
 
-    [HttpGet]
-    public Task<LabelDto> GetLabelsWorkShiftByArm([FromQuery(Name = "barcode")] string barcode) =>
+    [HttpGet("barcode/{barcode}")]
+    public Task<LabelDto> GetLabelByBarcodeAsync(string barcode) =>
         labelService.GetLabelByBarcodeAsync(barcode);
 
     [HttpGet("{id:guid}")]

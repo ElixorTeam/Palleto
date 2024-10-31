@@ -1,29 +1,34 @@
-using Ws.Desktop.Models.Shared.Models;
+namespace Ws.DeviceControl.Models.Features.Print.Pallets;
 
-namespace Ws.Desktop.Models.Features.Pallets.Output;
-
-public sealed record PalletInfo
+public class PalletDto
 {
+    #region Identification
+
     [JsonPropertyName("Id")]
     public required Guid Id { get; init; }
 
     [JsonPropertyName("number")]
     public required string Number { get; init; }
 
-    [JsonPropertyName("palletMan")]
-    public required Fio PalletMan { get; init; }
+    [JsonPropertyName("barcode")]
+    public required string Barcode { get; init; }
+
+    #endregion
+
+    #region Proxies
 
     [JsonPropertyName("arm")]
-    public required string Arm { get; init; }
+    public required ProxyDto Arm { get; init; }
 
     [JsonPropertyName("warehouse")]
     public required ProxyDto Warehouse { get; init; }
 
-    [JsonPropertyName("plus")]
-    public required HashSet<PluPalletInfo> Plus { get; init; }
+    [JsonPropertyName("palletMan")]
+    public required ProxyDto PalletMan { get; init; }
 
-    [JsonPropertyName("barcode")]
-    public required string Barcode { get; init; }
+    #endregion
+
+    #region Props
 
     [JsonPropertyName("prodDt")]
     public required DateTime ProdDt { get; init; }
@@ -39,6 +44,11 @@ public sealed record PalletInfo
 
     [JsonPropertyName("weightTray")]
     public required decimal WeightTray { get; init; }
+
+    [JsonPropertyName("plus")]
+    public required HashSet<PluPalletDto> Plus { get; init; }
+
+    #endregion
 
     #region JsonIgnore
 

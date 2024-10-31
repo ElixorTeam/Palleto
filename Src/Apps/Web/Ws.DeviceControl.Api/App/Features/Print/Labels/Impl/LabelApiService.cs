@@ -43,7 +43,7 @@ internal sealed class LabelApiService(
 
         return await dbContext.Labels
             .AsNoTracking()
-            .Where(i => i.CreateDt > workShift.Start && i.CreateDt < workShift.End && i.LineId == amrId)
+            .Where(i => i.CreateDt > workShift.Start && i.CreateDt < workShift.End && i.LineId == amrId && i.IsWeight)
             .OrderByDescending(i => i.CreateDt)
             .Select(LabelExpressions.ToLabelDto)
             .ToListAsync();

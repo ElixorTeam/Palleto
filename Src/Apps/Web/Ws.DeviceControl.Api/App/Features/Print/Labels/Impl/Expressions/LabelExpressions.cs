@@ -18,7 +18,7 @@ internal static class LabelExpressions
             Arm = new(label.Line.Id, label.Line.Name),
             Warehouse = new(label.Line.Warehouse.Id, label.Line.Warehouse.Name),
             ProductionSite = new(label.Line.Warehouse.ProductionSite.Id, label.Line.Warehouse.ProductionSite.Name),
-            Plu = label.Plu != null ? new(label.Plu.Id, label.Plu.Name) : null,
+            Plu = label.Plu != null ? new(label.Plu.Id, $"{label.Plu.Number} | {label.Plu.Name}") : null,
             Pallet = label.PalletId != null ? new(label.Pallet.Id, label.Pallet.Number) : null,
             BarcodeTop = label.BarcodeTop,
             BarcodeBottom = label.BarcodeBottom,

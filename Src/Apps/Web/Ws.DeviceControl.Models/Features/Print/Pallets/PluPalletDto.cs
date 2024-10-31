@@ -1,12 +1,9 @@
-namespace Ws.Desktop.Models.Features.Pallets.Output;
+namespace Ws.DeviceControl.Models.Features.Print.Pallets;
 
-public record PluPalletInfo
+public class PluPalletDto
 {
-    [JsonPropertyName("name")]
-    public required string Name { get; init; }
-
-    [JsonPropertyName("number")]
-    public required ushort Number { get; init; }
+    [JsonPropertyName("Plu")]
+    public required ProxyDto Plu { get; init; }
 
     [JsonPropertyName("boxCount")]
     public required ushort BoxCount { get; init; }
@@ -22,4 +19,4 @@ public record PluPalletInfo
 
     [JsonPropertyName("kneading")]
     public required ushort Kneading { get; init; }
-};
+}

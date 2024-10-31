@@ -2,6 +2,8 @@ namespace Ws.DeviceControl.Api.App.Shared.Enums;
 
 public enum FkProperty
 {
+    [Description("Pallet")]
+    Pallet,
     [Description("User")]
     User,
     [Description("Line")]

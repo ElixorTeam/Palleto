@@ -9,6 +9,7 @@ public static class ApiEndpoints
     public const string Clips = "api/clips";
     public const string Database = "api/database";
     public const string Labels = "api/labels";
+    public const string Pallets = "api/pallets";
     public const string PalletMen = "api/pallet-men";
     public const string Plu = "api/plu";
     public const string Printers = "api/printers";
