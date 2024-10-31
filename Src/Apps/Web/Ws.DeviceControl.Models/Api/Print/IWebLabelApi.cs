@@ -7,6 +7,13 @@ public interface IWebLabelApi
     #region Queries
 
     [Get("/labels")]
+    Task<LabelDto[]> GetLabelsWorkShiftByArm(Guid armId);
+
+    [Get("/labels")]
+    Task<LabelDto> GetLabelByBarcode(string barcode);
+
+    [Obsolete("Use GetLabelsWorkShiftByArm instead")]
+    [Get("/labels")]
     Task<LabelDto[]> GetLabels();
 
     [Get("/labels/{uid}")]

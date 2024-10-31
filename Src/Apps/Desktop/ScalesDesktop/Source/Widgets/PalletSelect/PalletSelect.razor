@@ -1,6 +1,7 @@
 @using Blazor.Heroicons.Outline
 @using ScalesDesktop.Source.Features.PalletCreate
 @using Ws.Desktop.Models.Features.Pallets.Output
+@using Ws.Shared.ValueTypes
 
 <div class="size-full bg-background overflow-hidden flex flex-col">
   <div class="size-full grow flex flex-col overflow-hidden">
@@ -9,13 +10,13 @@
       <div class="flex items-center justify-center pt-px gap-1">
         <CompactDatePicker
           @bind-Value="@StartDate"
-          DisabledDateFunc="@(date => date < EndDate?.AddDays(-4) || date >= EndDate?.AddDays(-1))"
+          DisabledDateFunc="@(date => date < EndDate.AddDays(-4) || date >= EndDate.AddDays(-1))"
           IsDisabled="@(!string.IsNullOrWhiteSpace(InputSearchCounter))"
         />
         <span>-</span>
         <CompactDatePicker
           @bind-Value="@EndDate"
-          @bind-Value:after="@(() => StartDate = EndDate?.AddDays(-1))"
+          @bind-Value:after="@(() => StartDate = EndDate.AddDays(-1))"
           DisabledDateFunc="@(date => date < DateTime.Today.AddDays(-2) || date > DateTime.Today.AddDays(1))"
           IsDisabled="@(!string.IsNullOrWhiteSpace(InputSearchCounter))"
         />
@@ -122,11 +123,22 @@
 
   # endregion
 
+  private DateTime StartDate { get; set; }
+  private DateTime EndDate { get; set; }
+
   private PalletFilterType PalletFilter { get; set; } = PalletFilterType.NotShipped;
-  private DateTime? StartDate { get; set; } = GetStartOfWorkingShift();
-  private DateTime? EndDate { get; set; } = GetEndOfWorkingShift();
   private string InputSearchCounter { get; set; } = string.Empty;
   private const ushort PalletsToDisplay = 100;
+
+  protected override void OnInitialized()
+  {
+    WorkShift workShift = new();
+
+    StartDate = workShift.Start;
+    EndDate = workShift.End;
+
+    base.OnInitialized();
+  }
 
   private IEnumerable<PalletInfo> GetFilteredPalletList(PalletInfo[] pallets)
   {
@@ -160,24 +172,13 @@
 
   private void ResetSortsAndFilters()
   {
-    StartDate = GetStartOfWorkingShift();
-    EndDate = GetEndOfWorkingShift();
+    WorkShift workShift = new();
+
+    StartDate = workShift.Start;
+    EndDate = workShift.End;
+
     PalletFilter = PalletFilterType.NotShipped;
     InputSearchCounter = string.Empty;
-  }
-
-  private static DateTime GetStartOfWorkingShift()
-  {
-    DateTime dateNow = DateTime.Now;
-    if (dateNow.Hour < 8) dateNow = dateNow.AddDays(-1);
-    return new(dateNow.Year, dateNow.Month, dateNow.Day, 8, 0, 0);
-  }
-
-  private static DateTime GetEndOfWorkingShift()
-  {
-    DateTime dateNow = DateTime.Now;
-    if (dateNow.Hour >= 8) dateNow = dateNow.AddDays(1);
-    return new(dateNow.Year, dateNow.Month, dateNow.Day, 8, 0, 0);
   }
 
   private async Task ShowCreateFormDialog()
@@ -186,7 +187,8 @@
     DialogResult result = await dialog.Result;
     if (result is { Cancelled: false, Data: PalletInfo newPallet })
     {
-      PalletEndpoints.InsertPiecePallet(new(GetStartOfWorkingShift(), GetEndOfWorkingShift()), newPallet);
+      WorkShift workShift = new();
+      PalletEndpoints.InsertPiecePallet(new(workShift.Start, workShift.End), newPallet);
       Dispatcher.Dispatch(new ChangePalletAction(newPallet));
       Dispatcher.Dispatch(new ChangePalletViewTabAction(PalletViewTabType.Labels));
       ResetSortsAndFilters();
