@@ -28,7 +28,7 @@
       IEnumerable<UserWithProductionSite> usersData = userRelationshipQuery.HasData && keycloakUsersQuery.HasData ?
         GetAllUsers(keycloakUsersQuery.Data, userRelationshipQuery.Data) : [];
     }
-    <PageHeader>
+    <DataGridHeader>
       <span>@Localizer["SectionUsers"]</span>
       <DataGridItemsCounter
         ItemsCount="@(usersData.Count(x => x.ProductionSiteId == ProductionSiteState.Value.ProductionSite.Id))"
@@ -38,7 +38,7 @@
         OnClick="@(() => { userRelationshipQuery.RefetchAsync(); keycloakUsersQuery.RefetchAsync(); })"
         IsLoading="@(userRelationshipQuery.IsFetching || keycloakUsersQuery.IsFetching)"
       />
-    </PageHeader>
+    </DataGridHeader>
 
     <DataGridWrapper>
       <DataGridContainer

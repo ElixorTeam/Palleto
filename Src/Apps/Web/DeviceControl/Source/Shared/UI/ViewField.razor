@@ -1,0 +1,11 @@
+<div class="w-full overflow-hidden flex flex-col p-3">
+  <span class="truncate text-muted-foreground">
+    @Label
+  </span>
+  <span class="line-clamp-2">@Value</span>
+</div>
+
+@code {
+  [Parameter] public string Label { get; set; } = string.Empty;
+  [Parameter] public string Value { get; set; } = string.Empty;
+}

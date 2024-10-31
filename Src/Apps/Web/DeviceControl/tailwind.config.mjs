@@ -1,5 +1,6 @@
 import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette"
 import svgToDataUri from "mini-svg-data-uri"
+import { fontFamily } from "tailwindcss/defaultTheme"
 
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -53,6 +54,9 @@ const config = {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+      },
+      fontFamily: {
+        sans: ["Geist Sans", ...fontFamily.sans],
       },
       keyframes: {
         'accordion-down': {

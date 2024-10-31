@@ -6,16 +6,16 @@ public interface IWebPalletApi
 {
     #region Queries
 
-    [Get("/pallets/{id:guid}")]
-    Task<PalletDto> GetById(Guid id);
+    [Get("/pallets/{id}")]
+    Task<PalletDto> GetPalletById(Guid id);
 
     [Get("/pallets/number/{number}")]
-    Task<PalletDto> GetByNumber(string number);
+    Task<PalletDto> GetPalletByNumber(string number);
 
-    [Get("/pallets/arm/{armId:guid}")]
-    Task<List<PalletDto>> GetPalletsWorkShiftByArmAsync(Guid armId);
+    [Get("/pallets/arm/{armId}")]
+    Task<PalletDto[]> GetPalletsWorkShiftByArm(Guid armId);
 
-    [Get("/pallets/{id:guid}/labels")]
+    [Get("/pallets/{id}/labels")]
     Task<List<LabelPalletDto>> GetPalletLabels(Guid id);
 
     #endregion

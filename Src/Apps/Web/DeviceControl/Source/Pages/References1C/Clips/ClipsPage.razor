@@ -9,11 +9,11 @@
 <PageTitle>DeviceControl - @Localizer["SectionClips"]</PageTitle>
 
 <UseParameterlessEndpoint Endpoint="@References1CEndpoints.ClipsEndpoint" Options="@(DefaultEndpointOptions)" Context="clipsQuery">
-  <PageHeader>
+  <DataGridHeader>
     <span>@Localizer["SectionClips"]</span>
     <DataGridItemsCounter ItemsCount="@(clipsQuery.Data?.Length ?? 0)" IsLoading="clipsQuery.IsLoading"/>
     <DataGridActionReload OnClick="@clipsQuery.RefetchAsync" IsLoading="clipsQuery.IsFetching" />
-  </PageHeader>
+  </DataGridHeader>
   <DataGridWrapper>
     <DataGridContainer
       TItem="PackageDto"

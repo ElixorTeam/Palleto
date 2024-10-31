@@ -22,4 +22,5 @@ public interface IWebApi :
     IWebLabelApi,
     IWebDatabaseApi,
     IWebTemplateApi,
-    IWebTemplateResourceApi;
+    IWebTemplateResourceApi,
+    IWebPalletApi;

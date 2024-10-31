@@ -19,91 +19,90 @@
     Options="@DefaultEndpointOptions"
     Context="armsQuery"
   >
-    <PageHeader>
-      <span>@Localizer["SectionLines"]</span>
-      <DataGridItemsCounter ItemsCount="@(armsQuery.Data?.Length ?? 0)" IsLoading="armsQuery.IsLoading"/>
+    <Breadcrumbs Class="!pb-5">
+      <Breadcrumb Label="Линия" Link="@Urls.Lines" />
+    </Breadcrumbs>
+
+    <DataGridHeader>
+      <DataGridLabelWithCounter Label="@Localizer["SectionLines"]" ItemsCount="@(armsQuery.Data?.Length ?? 0)" IsLoading="armsQuery.IsLoading"/>
       <DataGridActionReload OnClick="@armsQuery.RefetchAsync" IsLoading="armsQuery.IsFetching" />
       <AuthorizeView Policy="@PolicyEnum.SeniorSupport">
         <DataGridActionCreate OnClick="@OpenCreateFormModal"/>
       </AuthorizeView>
-    </PageHeader>
+    </DataGridHeader>
 
-    <DataGridWrapper>
-      <DataGridContainer
-        TItem="ArmDto"
-        Items="@(armsQuery.HasData ? armsQuery.Data : [])"
-        OnItemSelect="@(item => OpenUpdateFormModal(item))"
-        IsFilterable
-      >
-        <ColumnsContent>
-          <DataGridColumn
-            Field="@(nameof(ArmDto.Type))"
-            Caption="@WsDataLocalizer["ColType"]"
-            Width="1rem"
-            Filterable="false"
-          >
-            <DisplayTemplate>
-              <div class="size-full flex items-center justify-center">
-                @switch (context.Type)
-                {
-                  case ArmType.Pc:
-                    <ComputerDesktopIcon class="size-5"/>
-                    break;
-                  case ArmType.Tablet:
-                    <DeviceTabletIcon class="size-5"/>
-                    break;
-                  case ArmType.Universal:
-                    <ServerIcon class="size-5"/>
-                    break;
-                  default:
-                    <ExclamationTriangleIcon class="size-5 text-destructive"/>
-                    break;
-                }
-              </div>
-            </DisplayTemplate>
-          </DataGridColumn>
-          <DataGridColumn
-            Caption="@WsDataLocalizer["ColVersion"]"
-            Field="@nameof(ArmDto.Version)"
-            Width="2rem"
-            Filterable="false"
-          />
-          <DataGridColumn
-            Caption="@WsDataLocalizer["ColLine"]"
-            Field="@nameof(ArmDto.Name)"
-            Width="20%"
-          />
-          <DataGridColumn
-            Caption="@WsDataLocalizer["ColPrinter"]"
-            Field="Printer.Name"
-            Width="20%"
-          />
-          <DataGridColumn
-            Caption="@WsDataLocalizer["ColWarehouse"]"
-            Field="@($"{nameof(ArmDto.Warehouse)}.{nameof(ProxyDto.Name)}")"
-            Width="20%"
-          >
-          </DataGridColumn>
-          <DataGridColumn
-            Caption="@WsDataLocalizer["ColProductionSite"]"
-            Field="@($"{nameof(ArmDto.ProductionSite)}.{nameof(ProxyDto.Name)}")"
-            Width="20%"
-            FilterCellClass="!font-normal"
-          >
-            <FilterTemplate>
-              <ProductionSiteSelect />
-            </FilterTemplate>
-          </DataGridColumn>
-        </ColumnsContent>
-        <ContextMenuContent>
-          <DataGridActionViewItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenUpdateFormModal(item)))" />
-          <DataGridActionOpenInNewTab OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenItemInNewTab(item)))" />
-          <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
-            <DataGridActionDeleteItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => DeleteItem(item)))" />
-          </AuthorizeView>
-        </ContextMenuContent>
-      </DataGridContainer>
-    </DataGridWrapper>
+    <DataGridContainer
+      TItem="ArmDto"
+      Items="@(armsQuery.HasData ? armsQuery.Data : [])"
+      OnItemSelect="@(item => OpenItemInNewTab(item))"
+      IsFilterable
+    >
+      <ColumnsContent>
+        <DataGridColumn
+          Field="@(nameof(ArmDto.Type))"
+          Caption="@WsDataLocalizer["ColType"]"
+          Width="7%"
+          Filterable="false"
+        >
+          <DisplayTemplate>
+            @switch (context.Type)
+            {
+              case ArmType.Pc:
+                <ComputerDesktopIcon class="size-5"/>
+                break;
+              case ArmType.Tablet:
+                <DeviceTabletIcon class="size-5"/>
+                break;
+              case ArmType.Universal:
+                <ServerIcon class="size-5"/>
+                break;
+              default:
+                <ExclamationTriangleIcon class="size-5 text-destructive"/>
+                break;
+            }
+          </DisplayTemplate>
+        </DataGridColumn>
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColVersion"]"
+          Field="@nameof(ArmDto.Version)"
+          Width="2rem"
+          Filterable="false"
+        />
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColLine"]"
+          Field="@nameof(ArmDto.Name)"
+          Width="20%"
+        />
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColPrinter"]"
+          Field="Printer.Name"
+          Width="20%"
+        />
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColWarehouse"]"
+          Field="@($"{nameof(ArmDto.Warehouse)}.{nameof(ProxyDto.Name)}")"
+          Width="20%"
+        >
+        </DataGridColumn>
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColProductionSite"]"
+          Field="@($"{nameof(ArmDto.ProductionSite)}.{nameof(ProxyDto.Name)}")"
+          Width="20%"
+          FilterCellClass="!font-normal"
+        >
+          <FilterTemplate>
+            <ProductionSiteSelect />
+          </FilterTemplate>
+        </DataGridColumn>
+      </ColumnsContent>
+      <ContextMenuContent>
+        <DataGridActionViewItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenUpdateFormModal(item)))" />
+        <DataGridActionOpenInNewTab OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenItemInNewTab(item)))" />
+        <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
+          <DataGridActionDeleteItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => DeleteItem(item)))" />
+        </AuthorizeView>
+      </ContextMenuContent>
+    </DataGridContainer>
   </UseEndpoint>
 </UserProductionSiteErrorSuspense>
 
@@ -125,7 +124,7 @@
     await OpenModalWithItem<ArmsUpdateDialog>(item);
 
   protected override async Task OpenItemInNewTab(ArmDto item) =>
-    await OpenLinkInNewTab($"{Urls.Lines}?id={item.Id}");
+    await OpenLinkInNewTab($"{Urls.Lines}/{item.Id}");
 
   protected override Task<ArmDto> SearchByUidAction(Guid uid) =>
     WebApi.GetArmByUid(uid);

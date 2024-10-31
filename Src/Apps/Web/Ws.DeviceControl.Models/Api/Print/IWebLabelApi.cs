@@ -6,10 +6,10 @@ public interface IWebLabelApi
 {
     #region Queries
 
-    [Get("/labels")]
+    [Get("/labels/arm/{armId}")]
     Task<LabelDto[]> GetLabelsWorkShiftByArm(Guid armId);
 
-    [Get("/labels")]
+    [Get("/labels/barcode/{barcode}")]
     Task<LabelDto> GetLabelByBarcode(string barcode);
 
     [Obsolete("Use GetLabelsWorkShiftByArm instead")]

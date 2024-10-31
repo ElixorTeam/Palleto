@@ -1,7 +1,7 @@
 using Blazor.Heroicons;
 using DeviceControl.Source.Shared.Constants;
 
-namespace DeviceControl.Source.Widgets.NavMenu;
+namespace DeviceControl.Source.Widgets.Sidebar;
 
 #region Records
 
@@ -10,7 +10,7 @@ public record MenuSection(string Label, string Icon, NavMenuItemModel[] Items, s
 
 #endregion
 
-public sealed partial class NavMenu : ComponentBase
+public sealed partial class SidebarMenu : ComponentBase
 {
     [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
     [CascadingParameter] private Task<AuthenticationState> AuthState { get; set; } = default!;
@@ -64,15 +64,7 @@ public sealed partial class NavMenu : ComponentBase
         new(Localizer["MenuDiagnostics"], HeroiconName.Wrench, [
             new(Localizer["SectionMigrations"], Urls.Migrations),
             new(Localizer["SectionTables"], Urls.Tables),
-            // new(Localizer["SectionAnalytics"], Urls.Analytics)
+            new(Localizer["SectionAnalytics"], Urls.Analytics)
         ], PolicyEnum.Admin),
     ];
-
-    private string GetUserShortName()
-    {
-        string fullName = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value ?? "";
-        string[] nameParts = fullName.Split(" ");
-        IEnumerable<string> initialChar = nameParts.Skip(1).Select(s => string.IsNullOrWhiteSpace(s) ? "" : $"{char.ToUpper(s[0])}.");
-        return $"{nameParts[0]} {string.Concat(initialChar)}".Capitalize();
-    }
 }

@@ -15,14 +15,14 @@
   Options="DefaultEndpointOptions"
   Context="templatesQuery"
 >
-  <PageHeader>
+  <DataGridHeader>
     <span>@Localizer["SectionTemplates"]</span>
     <DataGridItemsCounter ItemsCount="@(templatesQuery.Data?.Length ?? 0)" IsLoading="templatesQuery.IsLoading"/>
     <DataGridActionReload OnClick="@templatesQuery.RefetchAsync" IsLoading="templatesQuery.IsFetching" />
     <AuthorizeView Policy="@PolicyEnum.Admin">
       <DataGridActionCreate OnClick="@OpenCreateFormModal"/>
     </AuthorizeView>
-  </PageHeader>
+  </DataGridHeader>
 
   <DataGridWrapper>
     <DataGridContainer

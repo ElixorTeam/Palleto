@@ -10,11 +10,11 @@
 <PageTitle>DeviceControl - @Localizer["SectionBrands"]</PageTitle>
 
 <UseParameterlessEndpoint Endpoint="@References1CEndpoints.BrandsEndpoint" Options="@(DefaultEndpointOptions)" Context="brandsQuery">
-  <PageHeader>
+  <DataGridHeader>
     <span>@Localizer["SectionBrands"]</span>
     <DataGridItemsCounter ItemsCount="@(brandsQuery.Data?.Length ?? 0)" IsLoading="brandsQuery.IsLoading"/>
     <DataGridActionReload OnClick="@brandsQuery.RefetchAsync" IsLoading="brandsQuery.IsFetching" />
-  </PageHeader>
+  </DataGridHeader>
   <DataGridWrapper>
     <DataGridContainer
       TItem="BrandDto"

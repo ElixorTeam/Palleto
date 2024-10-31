@@ -9,11 +9,11 @@
 <PageTitle>DeviceControl - @Localizer["SectionBundles"]</PageTitle>
 
 <UseParameterlessEndpoint Endpoint="@References1CEndpoints.BundlesEndpoint" Options="@(DefaultEndpointOptions)" Context="bundlesQuery">
-  <PageHeader>
+  <DataGridHeader>
     <span>@Localizer["SectionBundles"]</span>
     <DataGridItemsCounter ItemsCount="@(bundlesQuery.Data?.Length ?? 0)" IsLoading="bundlesQuery.IsLoading"/>
     <DataGridActionReload OnClick="@bundlesQuery.RefetchAsync" IsLoading="bundlesQuery.IsFetching" />
-  </PageHeader>
+  </DataGridHeader>
 
   <DataGridWrapper>
     <DataGridContainer

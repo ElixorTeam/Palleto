@@ -20,69 +20,71 @@
     Options="@DefaultEndpointOptions"
     Context="printersQuery"
   >
-    <PageHeader>
-      <span>@Localizer["SectionPrinters"]</span>
-      <DataGridItemsCounter ItemsCount="@(printersQuery.Data?.Length ?? 0)" IsLoading="printersQuery.IsLoading"/>
+    <Breadcrumbs Class="!pb-5">
+      <Breadcrumb Label="@Localizer["SectionPrinters"]" Link="@Urls.Printers" />
+    </Breadcrumbs>
+
+    <DataGridHeader>
+      <DataGridLabelWithCounter Label="@Localizer["SectionPrinters"]" ItemsCount="@(printersQuery.Data?.Length ?? 0)" IsLoading="printersQuery.IsLoading"/>
       <DataGridActionReload OnClick="@printersQuery.RefetchAsync" IsLoading="printersQuery.IsFetching" />
       <DataGridActionCreate OnClick="@OpenCreateFormModal"/>
-    </PageHeader>
-    <DataGridWrapper>
-      <DataGridContainer
-        TItem="PrinterDto"
-        Items="@(printersQuery.HasData ? printersQuery.Data : [])"
-        OnItemSelect="@(item => OpenUpdateFormModal(item))"
-        IsFilterable
-      >
-        <ColumnsContent>
-          <DataGridColumn
-            Caption="@WsDataLocalizer["ColType"]"
-            Field="@nameof(PrinterDto.Type)"
-            Width="10%"
-            FilterCellClass="!font-normal"
-          >
-            <FilterTemplate>
-              @{ context.SearchValue = Type; }
-              <SelectSingle
-                TItem="PrinterTypes?"
-                Items="@(Enum.GetValues(typeof(PrinterTypes)).Cast<PrinterTypes?>().Union([null]))"
-                @bind-Value="@Type"
-                @bind-Value:after="@(() => context.TriggerFilterChange(Type))"
-                Placeholder="@Localizer["SelectItemNotSelected"]"
-                ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] : item.Value.ToString())"
-              />
-            </FilterTemplate>
-          </DataGridColumn>
-          <DataGridColumn
-            Caption="@WsDataLocalizer["ColName"]"
-            Field="@nameof(PrinterDto.Name)"
-            Width="25%"
-          />
-          <DataGridColumn
-            Caption="@WsDataLocalizer["ColIp"]"
-            Field="@nameof(PrinterDto.Ip)"
-            Width="20%"
-            Sortable="false"
-          />
-          <DataGridColumn
-            Caption="@WsDataLocalizer["ColProductionSite"]"
-            Field="@($"{nameof(PrinterDto.ProductionSite)}.{nameof(ProxyDto.Name)}")"
-            Width="35%"
-            FilterCellClass="!font-normal"
-          >
-            <FilterTemplate>
-              <ProductionSiteSelect />
-            </FilterTemplate>
-          </DataGridColumn>
-        </ColumnsContent>
-        <ContextMenuContent>
-          <DataGridActionViewItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, async item => await OpenUpdateFormModal(item)))"/>
-          <DataGridActionOpenInNewTab OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, async item => await OpenItemInNewTab(item)))"/>
-          <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
-            <DataGridActionDeleteItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => DeleteItem(item)))"/>
-          </AuthorizeView>
-        </ContextMenuContent>
-      </DataGridContainer>
-    </DataGridWrapper>
+    </DataGridHeader>
+
+    <DataGridContainer
+      TItem="PrinterDto"
+      Items="@(printersQuery.HasData ? printersQuery.Data : [])"
+      OnItemSelect="@(item => OpenUpdateFormModal(item))"
+      IsFilterable
+    >
+      <ColumnsContent>
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColType"]"
+          Field="@nameof(PrinterDto.Type)"
+          Width="10%"
+          FilterCellClass="!font-normal"
+        >
+          <FilterTemplate>
+            @{ context.SearchValue = Type; }
+            <SelectSingle
+              TItem="PrinterTypes?"
+              Items="@(Enum.GetValues(typeof(PrinterTypes)).Cast<PrinterTypes?>().Union([null]))"
+              @bind-Value="@Type"
+              @bind-Value:after="@(() => context.TriggerFilterChange(Type))"
+              Placeholder="@Localizer["SelectItemNotSelected"]"
+              ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] : item.Value.ToString())"
+            />
+          </FilterTemplate>
+        </DataGridColumn>
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColName"]"
+          Field="@nameof(PrinterDto.Name)"
+          Width="25%"
+        />
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColIp"]"
+          Field="@nameof(PrinterDto.Ip)"
+          Width="20%"
+          Sortable="false"
+        />
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColProductionSite"]"
+          Field="@($"{nameof(PrinterDto.ProductionSite)}.{nameof(ProxyDto.Name)}")"
+          Width="35%"
+          FilterCellClass="!font-normal"
+        >
+          <FilterTemplate>
+            <ProductionSiteSelect />
+          </FilterTemplate>
+        </DataGridColumn>
+      </ColumnsContent>
+      <ContextMenuContent>
+        <DataGridActionViewItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, async item => await OpenUpdateFormModal(item)))"/>
+        <DataGridActionOpenInNewTab OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, async item => await OpenItemInNewTab(item)))"/>
+        <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
+          <DataGridActionDeleteItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => DeleteItem(item)))"/>
+        </AuthorizeView>
+      </ContextMenuContent>
+    </DataGridContainer>
   </UseEndpoint>
 </UserProductionSiteErrorSuspense>
 

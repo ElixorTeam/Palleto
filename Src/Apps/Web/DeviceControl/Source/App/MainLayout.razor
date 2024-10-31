@@ -1,10 +1,10 @@
-﻿@using DeviceControl.Source.Widgets.NavMenu
+﻿@using DeviceControl.Source.Widgets.Sidebar
 @inherits LayoutComponentBase
 
-<div class="@Css.Class("flex w-full relative h-screen bg-secondary overflow-x-hidden", IsProduction ? "bg-dot-black/[.25] dark:bg-dot-white/[.2] dark:bg-inherit" : "dark:bg-secondary/10")">
-  <div class="grid w-full min-h-full h-fit grid-cols-[17rem,1fr] grid-rows-1 grow">
-    <NavMenu />
-    <main class="size-full">
+<div class="w-full min-h-screen">
+  <div class="grid w-full grid-cols-[auto,1fr] grid-rows-1">
+    <Sidebar />
+    <main class="size-full p-6">
       @Body
     </main>
   </div>
@@ -17,7 +17,7 @@
 <Fluxor.Blazor.Web.StoreInitializer/>
 
 @code {
-  private bool IsProduction { get; set; }
-
-  protected override void OnInitialized() => IsProduction = !ConfigurationUtils.IsDevelop;
+  // private bool IsProduction { get; set; }
+  //
+  // protected override void OnInitialized() => IsProduction = !ConfigurationUtils.IsDevelop;
 }

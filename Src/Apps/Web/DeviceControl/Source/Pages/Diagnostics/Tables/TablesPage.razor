@@ -7,11 +7,11 @@
 @rendermode InteractiveServer
 
 <UseParameterlessEndpoint Endpoint="@DiagnosticEndpoints.TablesEndpoint" Context="tablesQuery">
-  <PageHeader>
+  <DataGridHeader>
     <span>@Localizer["SectionTables"]</span>
     <DataGridItemsCounter ItemsCount="@(tablesQuery.Data?.Length ?? 0)" IsLoading="tablesQuery.IsFetching" />
     <DataGridActionReload OnClick="@tablesQuery.RefetchAsync" IsLoading="tablesQuery.IsFetching" />
-  </PageHeader>
+  </DataGridHeader>
 
   <DataGridWrapper>
     <DataGridContainer

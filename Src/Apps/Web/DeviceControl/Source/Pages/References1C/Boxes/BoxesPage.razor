@@ -9,11 +9,11 @@
 <PageTitle>DeviceControl - @Localizer["SectionBoxes"]</PageTitle>
 
 <UseParameterlessEndpoint Endpoint="@References1CEndpoints.BoxesEndpoint" Options="@(DefaultEndpointOptions)" Context="boxesQuery">
-  <PageHeader>
+  <DataGridHeader>
     <span>@Localizer["SectionBoxes"]</span>
     <DataGridItemsCounter ItemsCount="@(boxesQuery.Data?.Length ?? 0)" IsLoading="boxesQuery.IsLoading"/>
     <DataGridActionReload OnClick="@boxesQuery.RefetchAsync" IsLoading="boxesQuery.IsFetching" />
-  </PageHeader>
+  </DataGridHeader>
   <DataGridWrapper>
     <DataGridContainer
       TItem="PackageDto"

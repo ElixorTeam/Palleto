@@ -7,9 +7,9 @@
 >
   @if (userProductionSiteQuery.IsLoading)
   {
-    <PageHeader>
+    <DataGridHeader>
       <Skeleton Class="h-8 w-32" />
-    </PageHeader>
+    </DataGridHeader>
   }
   else if (userProductionSiteQuery.IsError || !userProductionSiteQuery.HasData)
   {

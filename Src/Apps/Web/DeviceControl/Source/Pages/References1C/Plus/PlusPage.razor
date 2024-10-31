@@ -11,11 +11,11 @@
 <PageTitle>DeviceControl - @Localizer["SectionPLU"]</PageTitle>
 
 <UseParameterlessEndpoint Endpoint="@References1CEndpoints.PlusEndpoint" Options="@(DefaultEndpointOptions)" Context="plusQuery">
-  <PageHeader>
+  <DataGridHeader>
     <span>@Localizer["SectionPLU"]</span>
     <DataGridItemsCounter ItemsCount="@(plusQuery.Data?.Length ?? 0)" IsLoading="plusQuery.IsLoading"/>
     <DataGridActionReload OnClick="@plusQuery.RefetchAsync" IsLoading="plusQuery.IsFetching" />
-  </PageHeader>
+  </DataGridHeader>
 
   <DataGridWrapper>
     <DataGridContainer

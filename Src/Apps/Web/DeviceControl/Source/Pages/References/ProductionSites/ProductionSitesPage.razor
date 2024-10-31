@@ -11,14 +11,14 @@
 <PageTitle>DeviceControl - @Localizer["SectionProductionSites"]</PageTitle>
 
 <UseParameterlessEndpoint Endpoint="@ReferencesEndpoints.ProductionSitesEndpoint" Options="@(DefaultEndpointOptions)" Context="sitesQuery">
-  <PageHeader>
+  <DataGridHeader>
     <span>@Localizer["SectionProductionSites"]</span>
     <DataGridItemsCounter ItemsCount="@(sitesQuery.Data?.Length ?? 0)" IsLoading="sitesQuery.IsLoading"/>
     <DataGridActionReload OnClick="@sitesQuery.RefetchAsync" IsLoading="sitesQuery.IsFetching" />
     <AuthorizeView Policy="@PolicyEnum.Admin">
       <DataGridActionCreate OnClick="@OpenCreateFormModal" />
     </AuthorizeView>
-  </PageHeader>
+  </DataGridHeader>
   <DataGridWrapper>
     <DataGridContainer
       TItem="ProductionSiteDto"

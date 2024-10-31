@@ -1,0 +1,11 @@
+@using Blazor.Heroicons.Outline
+
+<ChevronRightIcon class="size-3" />
+<a href="@Link" class="hover:text-foreground">
+  @Label
+</a>
+
+@code {
+  [Parameter] public string Link { get; set; } = "#";
+  [Parameter] public string Label { get; set; } = string.Empty;
+}

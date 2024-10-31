@@ -14,10 +14,11 @@ public abstract class SectionDataGridBase<TItem> : FluxorComponent where TItem :
     [Inject] protected IDialogService DialogService { get; set; } = default!;
     [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
     [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
 
     # endregion
 
-    [Parameter, SupplyParameterFromQuery] public Guid? Id { get; set; }
+    [Parameter] public Guid? Id { get; set; }
 
     protected QueryOptions DefaultEndpointOptions { get; } =
         new() { RefetchInterval = TimeSpan.FromMinutes(1), StaleTime = TimeSpan.FromMinutes(1) };
@@ -86,8 +87,11 @@ public abstract class SectionDataGridBase<TItem> : FluxorComponent where TItem :
         await action(item);
     }
 
-    protected async Task OpenLinkInNewTab(string url) =>
-        await JsRuntime.InvokeVoidAsync("open", url, "_blank");
+    protected Task OpenLinkInNewTab(string url)
+    {
+        NavigationManager.NavigateTo(url);
+        return Task.CompletedTask;
+    }
 
     protected virtual Task OpenUpdateFormModal(TItem item) =>
         throw new NotImplementedException();

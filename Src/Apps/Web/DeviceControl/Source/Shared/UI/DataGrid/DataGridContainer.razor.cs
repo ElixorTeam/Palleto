@@ -14,7 +14,7 @@ public sealed partial class DataGridContainer<TItem> : ComponentBase
     [Parameter] public int ItemsPerPage { get; set; } = 13;
     [Parameter] public bool IsGroupable { get; set; }
     [Parameter] public bool IsFilterable { get; set; }
-    [Parameter] public bool IsForcePagination { get; set; }
+    [Parameter] public bool IsForcePagination { get; set; } = true;
     private TItem? SelectedItem { get; set; }
     private TItem? ContextMenuItem { get; set; }
     private bool IsContextMenuOpen { get; set; }

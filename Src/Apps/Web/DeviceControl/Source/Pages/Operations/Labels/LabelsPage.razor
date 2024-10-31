@@ -14,81 +14,83 @@
   Options="@(new() { RefetchInterval=TimeSpan.FromMinutes(5) })"
   Context="labelsQuery"
 >
-  <PageHeader>
-    <span>@Localizer["SectionLabels"]</span>
-    <DataGridItemsCounter ItemsCount="@(labelsQuery.Data?.Length ?? 0)" IsLoading="labelsQuery.IsLoading"/>
+
+  <Breadcrumbs Class="!pb-5">
+    <Breadcrumb Label="@Localizer["SectionLabels"]" Link="@Urls.Labels" />
+  </Breadcrumbs>
+
+  <DataGridHeader>
+    <DataGridLabelWithCounter Label="@Localizer["SectionLabels"]" ItemsCount="@(labelsQuery.Data?.Length ?? 0)" IsLoading="labelsQuery.IsLoading" />
     <DataGridActionReload OnClick="@labelsQuery.RefetchAsync" IsLoading="labelsQuery.IsFetching" />
-  </PageHeader>
+  </DataGridHeader>
 
-  <DataGridWrapper>
-    <DataGridContainer
-      TItem="LabelDto"
-      Items="@(labelsQuery.HasData ? labelsQuery.Data : [])"
-      OnItemSelect="@(item => OpenUpdateFormModal(item))"
-      IsFilterable
-    >
-      <ColumnsContent>
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColCreateDt"]"
-          Field="@nameof(LabelDto.CreateDt)"
-          Filterable="false"
-          Width="10%"
-        />
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColProductDt"]"
-          Field="@nameof(LabelDto.ProductDt)"
-          DisplayFormat="{0:dd.MM.yyyy}"
-          Filterable="false"
-          Width="10%"
-        />
+  <DataGridContainer
+    TItem="LabelDto"
+    Items="@(labelsQuery.HasData ? labelsQuery.Data : [])"
+    OnItemSelect="@(item => OpenUpdateFormModal(item))"
+    IsFilterable
+  >
+    <ColumnsContent>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColCreateDt"]"
+        Field="@nameof(LabelDto.CreateDt)"
+        Filterable="false"
+        Width="10%"
+      />
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColProductDt"]"
+        Field="@nameof(LabelDto.ProductDt)"
+        DisplayFormat="{0:dd.MM.yyyy}"
+        Filterable="false"
+        Width="10%"
+      />
 
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColPluNumber"]"
-          Field="@($"{nameof(LabelDto.Plu)}.{nameof(ProxyDto.Name)}")"
-          Width="18%"
-        />
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColPluNumber"]"
+        Field="@($"{nameof(LabelDto.Plu)}.{nameof(ProxyDto.Name)}")"
+        Width="18%"
+      />
 
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColBarcodeTop"]"
-          Field="@nameof(LabelDto.BarcodeTop)"
-          Sortable="false"
-          Width="20%"
-        />
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColBarcodeTop"]"
+        Field="@nameof(LabelDto.BarcodeTop)"
+        Sortable="false"
+        Width="20%"
+      />
 
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColLine"]"
-          Field="@($"{nameof(LabelDto.Arm)}.{nameof(ProxyDto.Name)}")"
-          Width="15%"
-        />
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColWarehouse"]"
-          Field="@($"{nameof(LabelDto.Warehouse)}.{nameof(ProxyDto.Name)}")"
-          Width="15%"
-        />
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColLine"]"
+        Field="@($"{nameof(LabelDto.Arm)}.{nameof(ProxyDto.Name)}")"
+        Width="15%"
+      />
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColWarehouse"]"
+        Field="@($"{nameof(LabelDto.Warehouse)}.{nameof(ProxyDto.Name)}")"
+        Width="15%"
+      />
 
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColType"]"
-          Field="@nameof(LabelDto.IsWeight)"
-          Filterable="false"
-          Width="7%"
-        >
-          <DisplayTemplate>
-            @if (context.Plu != null)
-            {
-            <p>
-              @(context.IsWeight ?
-              WsDataLocalizer["ColPluWeight"] : WsDataLocalizer["ColPluPiece"])
-            </p>
-            }
-          </DisplayTemplate>
-        </DataGridColumn>
-      </ColumnsContent>
-      <ContextMenuContent>
-        <DataGridActionViewItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, async item => await OpenUpdateFormModal(item)))" />
-        <DataGridActionOpenInNewTab OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, async item => await OpenItemInNewTab(item)))" />
-      </ContextMenuContent>
-    </DataGridContainer>
-  </DataGridWrapper>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColType"]"
+        Field="@nameof(LabelDto.IsWeight)"
+        Filterable="false"
+        Width="7%"
+      >
+        <DisplayTemplate>
+          @if (context.Plu != null)
+          {
+          <p>
+            @(context.IsWeight ?
+            WsDataLocalizer["ColPluWeight"] : WsDataLocalizer["ColPluPiece"])
+          </p>
+          }
+        </DisplayTemplate>
+      </DataGridColumn>
+    </ColumnsContent>
+    <ContextMenuContent>
+      <DataGridActionViewItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, async item => await OpenUpdateFormModal(item)))" />
+      <DataGridActionOpenInNewTab OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, async item => await OpenItemInNewTab(item)))" />
+    </ContextMenuContent>
+  </DataGridContainer>
 </UseParameterlessEndpoint>
 
 @code {

@@ -6,11 +6,11 @@
 @rendermode InteractiveServer
 
 <UseParameterlessEndpoint Endpoint="@DiagnosticEndpoints.MigrationsEndpoint" Context="migrationsQuery">
-  <PageHeader>
+  <DataGridHeader>
     <span>@Localizer["SectionMigrations"]</span>
     <DataGridItemsCounter ItemsCount="@(migrationsQuery.Data?.Length ?? 0)" IsLoading="migrationsQuery.IsFetching" />
     <DataGridActionReload OnClick="@migrationsQuery.RefetchAsync" IsLoading="migrationsQuery.IsFetching" />
-  </PageHeader>
+  </DataGridHeader>
 
   <DataGridWrapper>
     <DataGridContainer

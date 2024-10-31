@@ -18,14 +18,14 @@
     Options="@(DefaultEndpointOptions)"
     Context="warehousesQuery"
   >
-    <PageHeader>
+    <DataGridHeader>
       <span>@Localizer["SectionWarehouses"]</span>
       <DataGridItemsCounter ItemsCount="@(warehousesQuery.Data?.Length ?? 0)" IsLoading="warehousesQuery.IsLoading"/>
       <DataGridActionReload OnClick="@warehousesQuery.RefetchAsync" IsLoading="warehousesQuery.IsFetching" />
       <AuthorizeView Policy="@PolicyEnum.Admin">
         <DataGridActionCreate OnClick="@OpenCreateFormModal" />
       </AuthorizeView>
-    </PageHeader>
+    </DataGridHeader>
 
   <DataGridWrapper>
     <DataGridContainer

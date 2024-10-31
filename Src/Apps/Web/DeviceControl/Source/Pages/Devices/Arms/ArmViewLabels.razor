@@ -1,0 +1,86 @@
+@using DeviceControl.Source.Shared.Api.Web.Endpoints
+@using Ws.DeviceControl.Models.Features.Devices.Arms.Queries
+@using Ws.DeviceControl.Models.Features.Print.Labels
+
+<UseEndpoint
+  Endpoint="@DevicesEndpoints.ArmLabels"
+  Arg="@Arm.Id"
+  Options="@(new() { RefetchInterval=TimeSpan.FromMinutes(5) })"
+  Context="labelsQuery"
+>
+  <DataGridHeader>
+    <DataGridLabelWithCounter Label="Этикетки смены" ItemsCount="@(labelsQuery.Data?.Length ?? 0)" IsLoading="labelsQuery.IsLoading"/>
+    <DataGridActionReload OnClick="@labelsQuery.RefetchAsync" IsLoading="labelsQuery.IsFetching" />
+  </DataGridHeader>
+
+  <DataGridContainer
+    TItem="LabelDto"
+    Items="@(labelsQuery.HasData ? labelsQuery.Data : [])"
+    IsFilterable
+  >
+    <ColumnsContent>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColCreateDt"]"
+        Field="@nameof(LabelDto.CreateDt)"
+        Filterable="false"
+        Width="10%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColProductDt"]"
+        Field="@nameof(LabelDto.ProductDt)"
+        DisplayFormat="{0:dd.MM.yyyy}"
+        Filterable="false"
+        Width="10%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColPlu"]"
+        Field="@($"{nameof(LabelDto.Plu)}.{nameof(ProxyDto.Name)}")"
+        Width="20%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColBarcodeTop"]"
+        Field="@nameof(LabelDto.BarcodeTop)"
+        Sortable="false"
+        Width="30%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColBundle"]"
+        Field="@nameof(LabelDto.BundleCount)"
+        Filterable="false"
+        Width="7%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColKneading"]"
+        Field="@nameof(LabelDto.Kneading)"
+        Filterable="false"
+        Width="7%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColNetWeight"]"
+        Field="@nameof(LabelDto.WeightNet)"
+        Filterable="false"
+        Width="8%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColTareWeight"]"
+        Field="@nameof(LabelDto.WeightTare)"
+        Filterable="false"
+        Width="8%"
+      />
+    </ColumnsContent>
+  </DataGridContainer>
+</UseEndpoint>
+
+@code {
+  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+
+  [Parameter, EditorRequired] public ArmDto Arm { get; set; } = default!;
+}

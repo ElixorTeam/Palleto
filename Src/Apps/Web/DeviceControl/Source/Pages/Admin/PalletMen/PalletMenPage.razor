@@ -19,14 +19,14 @@
     Options="@DefaultEndpointOptions"
     Context="palletManQuery"
   >
-    <PageHeader>
+    <DataGridHeader>
       <span>@Localizer["SectionPalletMen"]</span>
       <DataGridItemsCounter ItemsCount="@(palletManQuery.Data?.Length ?? 0)" IsLoading="palletManQuery.IsLoading"/>
       <DataGridActionReload OnClick="@palletManQuery.RefetchAsync" IsLoading="palletManQuery.IsFetching" />
       <AuthorizeView Policy="@PolicyEnum.SeniorSupport">
         <DataGridActionCreate OnClick="@OpenCreateFormModal" />
       </AuthorizeView>
-    </PageHeader>
+    </DataGridHeader>
 
     <DataGridWrapper>
       <DataGridContainer

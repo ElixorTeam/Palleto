@@ -2,6 +2,9 @@ using Phetch.Core;
 using Ws.DeviceControl.Models;
 using Ws.DeviceControl.Models.Features.Devices.Arms.Queries;
 using Ws.DeviceControl.Models.Features.Devices.Printers.Queries;
+using Ws.DeviceControl.Models.Features.Print.Labels;
+using Ws.DeviceControl.Models.Features.Print.Pallets;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace DeviceControl.Source.Shared.Api.Web.Endpoints;
@@ -9,6 +12,18 @@ namespace DeviceControl.Source.Shared.Api.Web.Endpoints;
 public class DevicesEndpoints(IWebApi webApi)
 {
     # region Arm
+
+    public Endpoint<Guid, ArmDto> ArmEndpoint { get; } = new(
+        webApi.GetArmByUid,
+        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+
+    public Endpoint<Guid, LabelDto[]> ArmLabels { get; } = new(
+        webApi.GetLabelsWorkShiftByArm,
+        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+
+    public Endpoint<Guid, PalletDto[]> ArmPallets { get; } = new(
+        webApi.GetPalletsWorkShiftByArm,
+        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
     public Endpoint<Guid, ArmDto[]> ArmsEndpoint { get; } = new(
         webApi.GetArmsByProductionSite,
