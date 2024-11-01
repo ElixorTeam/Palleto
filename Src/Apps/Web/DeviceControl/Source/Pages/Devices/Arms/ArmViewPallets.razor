@@ -20,6 +20,7 @@
     TItem="PalletDto"
     Items="@(labelsQuery.HasData ? labelsQuery.Data : [])"
     OnItemSelect="@(item => NavigationManager.NavigateTo($"{Urls.Pallets}/{item.Id}"))"
+    ItemsPerPage="11"
     IsFilterable
   >
     <ColumnsContent>

@@ -3,7 +3,7 @@
 
 <div class="grid w-full gap-6 grid-cols-1 xl:grid-cols-2">
   <div class="w-full h-96 flex flex-col rounded-md overflow-hidden border p-6">
-    <h2 class="text-lg shrink-0 font-medium">Нагрузка (@DateTime.Today.ToString("dd.MM.yy"))</h2>
+    <h2 class="text-lg shrink-0 pb-4 font-medium">Нагрузка (@DateTime.Today.ToString("dd.MM.yy"))</h2>
     <UseEndpoint
       Endpoint="@DevicesEndpoints.ArmAnalytics"
       Arg="@(new ArmAnalyticsArg(Arm.Id, DateOnly.FromDateTime(DateTime.Today)))"
@@ -23,7 +23,7 @@
     </UseEndpoint>
   </div>
   <div class="w-full h-96 flex flex-col rounded-md overflow-hidden border p-6">
-    <h2 class="text-lg shrink-0 font-medium">Нагрузка (@DateTime.Today.AddDays(-1).ToString("dd.MM.yy"))</h2>
+    <h2 class="text-lg shrink-0 pb-4 font-medium">Нагрузка (@DateTime.Today.AddDays(-1).ToString("dd.MM.yy"))</h2>
     <UseEndpoint
       Endpoint="@DevicesEndpoints.ArmAnalytics"
       Arg="@(new ArmAnalyticsArg(Arm.Id, DateOnly.FromDateTime(DateTime.Today.AddDays(-1))))"

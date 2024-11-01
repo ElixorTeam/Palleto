@@ -1,18 +1,34 @@
 @using PSC.Blazor.Components.Chartjs.Models.Line
+@using PSC.Blazor.Components.Chartjs.Models.Common
 @using PSC.Blazor.Components.Chartjs
 
-<Chart @ref="Chart" Config="@ChartConfig" Class="size-full" />
+<Chart
+  Config="@(new LineChartConfig { Data = new() { Labels = Labels, Datasets = [MainDataset] }, Options = ChartOptions })"
+  Class="size-full"
+/>
 
 @code {
   [Parameter] public List<string> Labels { get; set; } = [];
   [Parameter] public List<decimal?> Data { get; set; } = [];
 
   private Chart Chart { get; set; } = new();
-  private LineChartConfig ChartConfig { get; } = new() { Options = new() { Responsive = true, MaintainAspectRatio = false }};
 
-  protected override void OnInitialized()
+  private Options ChartOptions { get; } = new()
   {
-    ChartConfig.Data.Labels = Labels;
-    ChartConfig.Data.Datasets.Add(new() { Data = Data });
-  }
+    Responsive = true,
+    MaintainAspectRatio = false,
+    Plugins = new() { Legend = new() {Display = false }},
+    Scales = new()
+    {
+      {"x", new() { Grid = new() { Display = false } }},
+      {"y", new() { Grid = new() { Color = "rgba(201, 201, 201, 0.5)", DrawBorder = false } }}
+    }
+  };
+
+  private LineDataset MainDataset => new()
+  {
+    Data = Data,
+    BorderColor = "#2662d9",
+    CubicInterpolationMode = CubicInterpolationMode.Monotone
+  };
 }
