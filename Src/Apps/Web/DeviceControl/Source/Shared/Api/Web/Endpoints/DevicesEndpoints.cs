@@ -25,6 +25,10 @@ public class DevicesEndpoints(IWebApi webApi)
         webApi.GetPalletsWorkShiftByArm,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
+    public Endpoint<ArmAnalyticsArg, AnalyticDto[]> ArmAnalytics { get; } = new(
+        arg => webApi.GetArmAnalytic(arg.ArmId, arg.Date),
+        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+
     public Endpoint<Guid, ArmDto[]> ArmsEndpoint { get; } = new(
         webApi.GetArmsByProductionSite,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
@@ -116,3 +120,5 @@ public class DevicesEndpoints(IWebApi webApi)
 
     # endregion
 }
+
+public record ArmAnalyticsArg(Guid ArmId, DateOnly Date);

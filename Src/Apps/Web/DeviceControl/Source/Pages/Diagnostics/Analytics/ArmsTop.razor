@@ -1,46 +1,46 @@
-<div class="w-full h-96 border bg-background rounded-md overflow-hidden p-6">
-  <BarChart @ref="BarChart" Options="@(new() { Responsive = true, MaintainAspectRatio = false })" TItem="double" />
-</div>
-
-@code {
-  private BarChart<double> BarChart { get; set; } = default!;
-  private string[] Labels { get; } = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"];
-  private List<string> BackgroundColors { get; } = [ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(54, 162, 235, 0.2f), ChartColor.FromRgba(255, 206, 86, 0.2f), ChartColor.FromRgba(75, 192, 192, 0.2f), ChartColor.FromRgba(153, 102, 255, 0.2f), ChartColor.FromRgba(255, 159, 64, 0.2f)];
-  List<string> BorderColors { get; } = [ChartColor.FromRgba(255, 99, 132, 1f), ChartColor.FromRgba(54, 162, 235, 1f), ChartColor.FromRgba(255, 206, 86, 1f), ChartColor.FromRgba(75, 192, 192, 1f), ChartColor.FromRgba(153, 102, 255, 1f), ChartColor.FromRgba(255, 159, 64, 1f)];
-
-  protected override async Task OnAfterRenderAsync(bool firstRender)
-  {
-    if (!firstRender) return;
-    await HandleRedraw();
-  }
-
-  private async Task HandleRedraw()
-  {
-    await BarChart.Clear();
-    await BarChart.AddLabelsDatasetsAndUpdate(Labels, GetBarChartDataset());
-  }
-
-  private BarChartDataset<double> GetBarChartDataset() =>
-    new()
-    {
-      Label = "# of randoms",
-      Data = RandomizeData(),
-      BackgroundColor = BackgroundColors,
-      BorderColor = BorderColors,
-      BorderWidth = 1
-    };
-
-  private List<double> RandomizeData()
-  {
-    Random r = new( DateTime.Now.Millisecond );
-    return
-    [
-      r.Next(3, 50) * r.NextDouble(),
-      r.Next(3, 50) * r.NextDouble(),
-      r.Next(3, 50) * r.NextDouble(),
-      r.Next(3, 50) * r.NextDouble(),
-      r.Next(3, 50) * r.NextDouble(),
-      r.Next(3, 50) * r.NextDouble()
-    ];
-  }
-}
+@* <div class="w-full h-96 border bg-background rounded-md overflow-hidden p-6"> *@
+@*   <BarChart @ref="BarChart" Options="@(new() { Responsive = true, MaintainAspectRatio = false })" TItem="double" /> *@
+@* </div> *@
+@* *@
+@* @code { *@
+@*   private BarChart<double> BarChart { get; set; } = default!; *@
+@*   private string[] Labels { get; } = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"]; *@
+@*   private List<string> BackgroundColors { get; } = [ChartColor.FromRgba(255, 99, 132, 0.2f), ChartColor.FromRgba(54, 162, 235, 0.2f), ChartColor.FromRgba(255, 206, 86, 0.2f), ChartColor.FromRgba(75, 192, 192, 0.2f), ChartColor.FromRgba(153, 102, 255, 0.2f), ChartColor.FromRgba(255, 159, 64, 0.2f)]; *@
+@*   List<string> BorderColors { get; } = [ChartColor.FromRgba(255, 99, 132, 1f), ChartColor.FromRgba(54, 162, 235, 1f), ChartColor.FromRgba(255, 206, 86, 1f), ChartColor.FromRgba(75, 192, 192, 1f), ChartColor.FromRgba(153, 102, 255, 1f), ChartColor.FromRgba(255, 159, 64, 1f)]; *@
+@* *@
+@*   protected override async Task OnAfterRenderAsync(bool firstRender) *@
+@*   { *@
+@*     if (!firstRender) return; *@
+@*     await HandleRedraw(); *@
+@*   } *@
+@* *@
+@*   private async Task HandleRedraw() *@
+@*   { *@
+@*     await BarChart.Clear(); *@
+@*     await BarChart.AddLabelsDatasetsAndUpdate(Labels, GetBarChartDataset()); *@
+@*   } *@
+@* *@
+@*   private BarChartDataset<double> GetBarChartDataset() => *@
+@*     new() *@
+@*     { *@
+@*       Label = "# of randoms", *@
+@*       Data = RandomizeData(), *@
+@*       BackgroundColor = BackgroundColors, *@
+@*       BorderColor = BorderColors, *@
+@*       BorderWidth = 1 *@
+@*     }; *@
+@* *@
+@*   private List<double> RandomizeData() *@
+@*   { *@
+@*     Random r = new( DateTime.Now.Millisecond ); *@
+@*     return *@
+@*     [ *@
+@*       r.Next(3, 50) * r.NextDouble(), *@
+@*       r.Next(3, 50) * r.NextDouble(), *@
+@*       r.Next(3, 50) * r.NextDouble(), *@
+@*       r.Next(3, 50) * r.NextDouble(), *@
+@*       r.Next(3, 50) * r.NextDouble(), *@
+@*       r.Next(3, 50) * r.NextDouble() *@
+@*     ]; *@
+@*   } *@
+@* } *@

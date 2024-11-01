@@ -1,0 +1,14 @@
+@inherits InputBase<bool>
+
+<FluentSwitch
+  Id="@HtmlId"
+  @bind-Value="Value"
+  @bind-Value:after="OnValueChanged"
+  Class="@Css.Class("[&::part(switch)]:!border-transparent", Class)"
+  Autofocus="AutoFocus"
+  Disabled="Disabled"
+  ReadOnly="ReadOnly"
+  AdditionalAttributes="AdditionalAttributes"
+/>
+
+@* Class="@Css.Class("[&::part(switch)]:!border-transparent [&::part(switch)]:!bg-input [&.checked::part(switch)]:!bg-primary [&::part(switch)]:!fill-background", Class)" *@

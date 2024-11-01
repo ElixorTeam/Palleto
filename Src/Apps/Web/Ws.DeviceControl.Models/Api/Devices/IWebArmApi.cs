@@ -17,7 +17,7 @@ public interface IWebArmApi
     Task<PluArmDto[]> GetArmPlus(Guid uid);
 
     [Get("/arms/{uid}/analytics")]
-    Task<PluArmDto[]> GetArmAnalytic(Guid uid, DateOnly date);
+    Task<AnalyticDto[]> GetArmAnalytic(Guid uid, DateOnly date);
 
     #endregion
 

@@ -85,6 +85,21 @@
     --type-ramp-base-font-variations: 0;
   }
 
+  fluent-switch {
+    --accent-fill-rest: hsl(var(--primary));
+    --accent-fill-hover: hsl(var(--primary));
+    --accent-fill-active: hsl(var(--primary));
+    --neutral-fill-input-alt-rest: hsl(var(--input));
+    --neutral-fill-input-alt-hover: hsl(var(--input));
+    --neutral-fill-input-alt-active: hsl(var(--input));
+    --foreground-on-accent-rest: hsl(var(--background));
+    --foreground-on-accent-hover: hsl(var(--background));
+    --foreground-on-accent-active: hsl(var(--background));
+    --neutral-foreground-rest: hsl(var(--background));
+    --neutral-foreground-hover: hsl(var(--background));
+    --neutral-foreground-active: hsl(var(--background));
+  }
+
   fluent-dialog {
     --dialog-width: unset !important;
     --fill-color: 0;

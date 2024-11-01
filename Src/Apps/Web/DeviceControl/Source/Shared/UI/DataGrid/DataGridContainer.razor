@@ -1,7 +1,7 @@
 @using Blazor.Heroicons.Outline
 @typeparam TItem
 
-<div class="w-full [&>form>table]:w-full [&>div>div>ul]:flex [&>div>div>ul]:bg-primary-foreground [&>div>div>ul]:overflow-hidden [&>div>div>ul]:rounded-md [&>div>div>ul]:justify-center [&>div>div>ul]:gap-1 [&>div>div>ul]:py-2 [&>div>div>ul_li:empty]:hidden">
+<div class="w-full [&>form>table]:w-full [&>div>div>ul]:flex [&>div>div>ul]:bg-secondary [&>div>div>ul]:overflow-hidden [&>div>div>ul]:rounded-md [&>div>div>ul]:justify-center [&>div>div>ul]:gap-1 [&>div>div>ul]:py-2 [&>div>div>ul_li:empty]:hidden">
   <DataGrid
     TItem="TItem"
     Data="Items"
@@ -11,11 +11,11 @@
     RowContextMenu="OnRowContextMenu"
     RowContextMenuPreventDefault
 
-    HeaderRowStyling="@(new DataGridRowStyling{ Class="h-12 text-left cursor-pointer items-center px-4 [&_th]:transition-colors [&_th]:font-medium [&_th]:text-muted-foreground [&_th:hover]:text-foreground [&_th:first-child]:rounded-l-md [&_th:last-child]:rounded-r-md [&_th]:bg-primary-foreground [&_th]:truncate [&_th]:px-4 [&_th]:text-sm [&_th_div]:flex [&_th_div]:gap-1.5 [&_i]:pt-1" })"
+    HeaderRowStyling="@(new DataGridRowStyling{ Class="h-12 text-left cursor-pointer items-center px-4 [&_th]:transition-colors [&_th]:font-medium [&_th]:text-muted-foreground [&_th:hover]:text-foreground [&_th:first-child]:rounded-l-md [&_th:last-child]:rounded-r-md [&_th]:bg-secondary [&_th]:truncate [&_th]:px-4 [&_th]:text-sm [&_th_div]:flex [&_th_div]:gap-1.5 [&_i]:pt-1" })"
     CellStyling="@((_, _, style) => style.Class = "px-4 py-3 text-sm truncate")"
     RowStyling="@((_, style) => style.Class = "transition-colors font-light text-muted-foreground hover:bg-secondary/[.5] hover:cursor-pointer [&_td:first-child]:rounded-l-md [&_td:last-child]:rounded-r-md")"
     SelectedRowStyling="@((_, style) => style.Class = "bg-secondary/[.8] text-sm text-primary font-normal [&_td]:px-4 [&_td]:py-3 [&_td]:overflow-hidden [&_td:first-child]:rounded-l-md [&_td:last-child]:rounded-r-md hover:cursor-pointer")"
-    Class="table-fixed [&_thead>tr:last-child:not(:first-child)]:h-16 [&_thead>tr:last-child_th]:px-4 [&_thead>tr:last-child_th>input]:h-10 [&_thead>tr:last-child_th>input]:w-full [&_thead>tr:last-child_th>input]:overflow-hidden [&_thead>tr:last-child_th>input]:text-sm [&_thead>tr:last-child_th>input]:bg-secondary/[.2] [&_thead>tr:last-child_th>input]:border [&_thead>tr:last-child_th>input]:rounded-md [&_thead>tr:last-child_th>input]:px-3 [&_thead>tr:last-child_th>input]:font-light [&_thead>tr:last-child_th>input:focus]:outline-none [&_thead>tr:last-child_th>input:focus]:ring-0 [&_tbody>tr>td[colspan='1000']]:h-12 [&_tbody>tr>td[colspan='1000']]:px-4 [&_tbody>tr>td[colspan='1000']]:space-x-3"
+    Class="table-fixed [&_thead>tr:last-child:not(:first-child)]:h-16 [&_thead>tr:last-child_th]:px-4 [&_thead>tr:last-child_th>input]:h-10 [&_thead>tr:last-child_th>input]:w-full [&_thead>tr:last-child_th>input]:overflow-hidden [&_thead>tr:last-child_th>input]:text-sm [&_thead>tr:last-child_th>input]:border [&_thead>tr:last-child_th>input]:rounded-md [&_thead>tr:last-child_th>input]:px-3 [&_thead>tr:last-child_th>input]:font-light [&_thead>tr:last-child_th>input:focus]:outline-none [&_thead>tr:last-child_th>input:focus]:ring-0 [&_tbody>tr>td[colspan='1000']]:h-12 [&_tbody>tr>td[colspan='1000']]:px-4 [&_tbody>tr>td[colspan='1000']]:space-x-3"
 
     PagerPosition="DataGridPagerPosition.Bottom"
     PagerOptions="@(new () { PaginationPosition = PagerElementPosition.Center })"

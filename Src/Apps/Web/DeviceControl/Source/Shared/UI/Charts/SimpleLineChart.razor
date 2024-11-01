@@ -1,0 +1,18 @@
+@using PSC.Blazor.Components.Chartjs.Models.Line
+@using PSC.Blazor.Components.Chartjs
+
+<Chart @ref="Chart" Config="@ChartConfig" Class="size-full" />
+
+@code {
+  [Parameter] public List<string> Labels { get; set; } = [];
+  [Parameter] public List<decimal?> Data { get; set; } = [];
+
+  private Chart Chart { get; set; } = new();
+  private LineChartConfig ChartConfig { get; } = new() { Options = new() { Responsive = true, MaintainAspectRatio = false }};
+
+  protected override void OnInitialized()
+  {
+    ChartConfig.Data.Labels = Labels;
+    ChartConfig.Data.Datasets.Add(new() { Data = Data });
+  }
+}

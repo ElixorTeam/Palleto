@@ -45,8 +45,8 @@
         <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
           Информация
         </ViewTabButton>
-        <ViewTabButton Value="analytics" @bind-CurrentTab="CurrentTab">
-          Аналитика
+        <ViewTabButton Value="plus" @bind-CurrentTab="CurrentTab">
+          ПЛУ
         </ViewTabButton>
         <ViewTabButton Value="labels" @bind-CurrentTab="CurrentTab">
           Этикетки
@@ -54,8 +54,8 @@
         <ViewTabButton Value="pallets" @bind-CurrentTab="CurrentTab">
           Паллеты
         </ViewTabButton>
-        <ViewTabButton Value="plus" @bind-CurrentTab="CurrentTab">
-          ПЛУ
+        <ViewTabButton Value="analytics" @bind-CurrentTab="CurrentTab">
+          Аналитика
         </ViewTabButton>
       </div>
     </div>
@@ -64,10 +64,10 @@
         @if (armQuery.HasData)
         {
           <Tab Id="info">
-            <ArmViewInfo Arm="armQuery.Data"/>
+            <ArmViewInfo Arm="@armQuery.Data"/>
           </Tab>
           <Tab Id="analytics">
-            <h3 class="font-medium text-lg">Нет аналитики :(</h3>
+            <ArmViewAnalytics Arm="@armQuery.Data" />
           </Tab>
           <Tab Id="labels">
             <ArmViewLabels Arm="@armQuery.Data" />
@@ -76,7 +76,7 @@
             <ArmViewPallets Arm="@armQuery.Data" />
           </Tab>
           <Tab Id="plus">
-            <h3 class="font-medium text-lg">Нет плушек :(</h3>
+            <ArmViewPlu Arm="@armQuery.Data" />
           </Tab>
         }
         else

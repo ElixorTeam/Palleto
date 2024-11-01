@@ -34,7 +34,7 @@
     <DataGridContainer
       TItem="ArmDto"
       Items="@(armsQuery.HasData ? armsQuery.Data : [])"
-      OnItemSelect="@(item => OpenItemInNewTab(item))"
+      OnItemSelect="@(item => OpenItem(item))"
       IsFilterable
     >
       <ColumnsContent>
@@ -96,7 +96,8 @@
         </DataGridColumn>
       </ColumnsContent>
       <ContextMenuContent>
-        <DataGridActionViewItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenUpdateFormModal(item)))" />
+        <DataGridActionUpdateItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenUpdateFormModal(item)))" />
+        <DataGridActionViewItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenItem(item)))" />
         <DataGridActionOpenInNewTab OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenItemInNewTab(item)))" />
         <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
           <DataGridActionDeleteItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => DeleteItem(item)))" />
@@ -125,6 +126,9 @@
 
   protected override async Task OpenItemInNewTab(ArmDto item) =>
     await OpenLinkInNewTab($"{Urls.Lines}/{item.Id}");
+
+  protected async Task OpenItem(ArmDto item) =>
+    await OpenLink($"{Urls.Lines}/{item.Id}");
 
   protected override Task<ArmDto> SearchByUidAction(Guid uid) =>
     WebApi.GetArmByUid(uid);

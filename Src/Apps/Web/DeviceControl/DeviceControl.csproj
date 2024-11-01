@@ -9,15 +9,15 @@
         <PackageReference Include="Phetch.Blazor" />
         <PackageReference Include="FluentValidation" />
         <PackageReference Include="Fluxor.Blazor.Web" />
+        <PackageReference Include="PSC.Blazor.Components.Chartjs" />
         <PackageReference Include="Refit" />
         <PackageReference Include="Refit.HttpClientFactory" />
         <PackageReference Include="vNext.BlazorComponents.FluentValidation" />
     </ItemGroup>
 
     <ItemGroup Label="Packages">
-        <PackageReference Include="DNTCaptcha.Blazor" VersionOverride="1.2.3"/>
+        <PackageReference Include="DNTCaptcha.Blazor" VersionOverride="1.2.3" />
         <PackageReference Include="Blazorise" VersionOverride="1.6.2" />
-        <PackageReference Include="Blazorise.Charts" VersionOverride="1.6.2" />
         <PackageReference Include="Blazorise.DataGrid" VersionOverride="1.6.2" />
         <PackageReference Include="Blazorise.Icons.FontAwesome" VersionOverride="1.6.2" />
         <PackageReference Include="DeepCloner" VersionOverride="0.10.4" />
@@ -57,6 +57,10 @@
 
     <ItemGroup Label="Shared blazor imports">
         <Content Include="..\..\..\Libs\Ws.Components\Shared\_Imports.razor" Link="_Imports.razor" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageVersion Update="PSC.Blazor.Components.Chartjs" Version="8.0.8" />
     </ItemGroup>
 
     <Target Name="StaticsBuild" BeforeTargets="PreBuildEvent">

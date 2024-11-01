@@ -1,0 +1,52 @@
+@using DeviceControl.Source.Shared.Api.Web.Endpoints
+@using Ws.DeviceControl.Models.Features.Devices.Arms.Queries
+
+<div class="grid w-full gap-6 grid-cols-1 xl:grid-cols-2">
+  <div class="w-full h-96 flex flex-col rounded-md overflow-hidden border p-6">
+    <h2 class="text-lg shrink-0 font-medium">Нагрузка (@DateTime.Today.ToString("dd.MM.yy"))</h2>
+    <UseEndpoint
+      Endpoint="@DevicesEndpoints.ArmAnalytics"
+      Arg="@(new ArmAnalyticsArg(Arm.Id, DateOnly.FromDateTime(DateTime.Today)))"
+      Context="armAnalyticsQuery"
+    >
+      @if (armAnalyticsQuery.HasData)
+      {
+        <SimpleLineChart
+          Labels="@(armAnalyticsQuery.Data.Select(x => x.Date.ToString("HH:mm")).ToList())"
+          Data="@(armAnalyticsQuery.Data.Select(x => (decimal?)Convert.ToDecimal(x.Count)).ToList())"
+        />
+      }
+      else
+      {
+        <Skeleton Class="size-full" />
+      }
+    </UseEndpoint>
+  </div>
+  <div class="w-full h-96 flex flex-col rounded-md overflow-hidden border p-6">
+    <h2 class="text-lg shrink-0 font-medium">Нагрузка (@DateTime.Today.AddDays(-1).ToString("dd.MM.yy"))</h2>
+    <UseEndpoint
+      Endpoint="@DevicesEndpoints.ArmAnalytics"
+      Arg="@(new ArmAnalyticsArg(Arm.Id, DateOnly.FromDateTime(DateTime.Today.AddDays(-1))))"
+      Context="armAnalyticsQuery"
+    >
+      @if (armAnalyticsQuery.HasData)
+      {
+        <SimpleLineChart
+          Labels="@(armAnalyticsQuery.Data.Select(x => x.Date.ToString("HH:mm")).ToList())"
+          Data="@(armAnalyticsQuery.Data.Select(x => (decimal?)Convert.ToDecimal(x.Count)).ToList())"
+        />
+      }
+      else
+      {
+        <Skeleton Class="size-full" />
+      }
+    </UseEndpoint>
+  </div>
+</div>
+
+@code {
+
+  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+  [Parameter] public ArmDto Arm { get; set; } = default!;
+
+}

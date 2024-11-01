@@ -1,0 +1,191 @@
+@using DeviceControl.Source.Shared.Api.Web.Endpoints
+@using Refit
+@using Ws.DeviceControl.Models
+@using Ws.DeviceControl.Models.Features.Devices.Arms.Queries
+@using Ws.DeviceControl.Models.Features.References1C.Brands
+
+@inherits SectionDataGridBase<PluArmDto>
+
+<UseEndpoint Endpoint="@DevicesEndpoints.ArmPluEndpoint" Arg="Arm.Id" Options="@(DefaultEndpointOptions)" Context="plusQuery">
+  <DataGridHeader>
+    <span class="text-xl font-medium">@Localizer["SectionLinePLU"]</span>
+    <DataGridItemsSelected
+      Count="@(plusQuery.Data?.Length ?? 0)"
+      SelectedCount="@(plusQuery.Data?.Where(x => x.IsActive).Count() ?? 0)"
+      IsLoading="plusQuery.IsLoading"
+    />
+    <DataGridActionReload OnClick="@plusQuery.RefetchAsync" IsLoading="plusQuery.IsFetching"/>
+  </DataGridHeader>
+  <DataGridContainer
+    TItem="PluArmDto"
+    Items="@(plusQuery.HasData ? plusQuery.Data : [])"
+    ItemsPerPage="6"
+    IsForcePagination
+    IsFilterable
+  >
+    <ColumnsContent>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColPluActive"]"
+        Field="@($"{nameof(PluArmDto.IsActive)}")"
+        Width="8%"
+        Sortable="false"
+        FilterMethod="DataGridColumnFilterMethod.Equals"
+        FilterCellClass="!font-normal"
+      >
+        <FilterTemplate>
+          @{ context.SearchValue = IsActiveFilter; }
+          <SelectSingle
+            TItem="bool?"
+            Items="@( [false, true, null])"
+            @bind-Value="@IsActiveFilter"
+            @bind-Value:after="@(() => context.TriggerFilterChange(IsActiveFilter))"
+            Placeholder="@Localizer["SelectItemNotSelected"]"
+            ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] :
+                               item.Value ? Localizer["StateOn"] : Localizer["StateOff"])"
+          />
+        </FilterTemplate>
+        <DisplayTemplate>
+          <div class="size-full flex items-center justify-center">
+            <Switch
+              Value="@context.IsActive"
+              ValueChanged="@(value => value ? AddArmPlu(context) : DeleteArmPlu(context))"
+            />
+          </div>
+        </DisplayTemplate>
+      </DataGridColumn>
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColNumber"]"
+        Field="@($"{nameof(PluArmDto.Number)}")"
+        Width="10%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColType"]"
+        Field="@nameof(PluArmDto.IsWeight)"
+        Width="15%"
+        Sortable="false"
+        FilterCellClass="!font-normal"
+      >
+        <FilterTemplate>
+          @{ context.SearchValue = IsWeightFilter; }
+          <SelectSingle
+            TItem="bool?"
+            Items="@( [false, true, null])"
+            @bind-Value="@IsWeightFilter"
+            @bind-Value:after="@(() => context.TriggerFilterChange(IsWeightFilter))"
+            Placeholder="@Localizer["SelectItemNotSelected"]"
+            ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] :
+                               item.Value ? WsDataLocalizer["ColPluWeight"] : WsDataLocalizer["ColPluPiece"])"
+          />
+        </FilterTemplate>
+        <DisplayTemplate>
+          <span>
+            @(context.IsWeight ? WsDataLocalizer["ColPluWeight"] : WsDataLocalizer["ColPluPiece"])
+          </span>
+        </DisplayTemplate>
+      </DataGridColumn>
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColName"]"
+        Field="@($"{nameof(PluArmDto.Name)}")"
+        Width="30%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColBrand"]"
+        Field="@($"{nameof(PluArmDto.Brand)}")"
+        Width="30%"
+        Sortable="false"
+        FilterMethod="DataGridColumnFilterMethod.Equals"
+        FilterCellClass="!font-normal"
+      >
+        <FilterTemplate>
+          <UseParameterlessEndpoint Endpoint="@References1CEndpoints.BrandsEndpoint" Context="brandsQuery">
+            @if (brandsQuery.HasData)
+            {
+              <SelectSingle
+                TItem="BrandDto?"
+                Items="@(brandsQuery.Data.Concat([null]))"
+                @bind-Value="@BrandFilter"
+                @bind-Value:after="@(() => context.TriggerFilterChange(BrandFilter?.Name))"
+                Placeholder="@Localizer["SelectItemNotSelected"]"
+                ItemDisplayName="@(item => item?.Name ?? Localizer["SelectItemNotSelected"])"
+                Filterable
+              />
+            }
+            else
+            {
+              <Skeleton Class="h-10 w-full" />
+            }
+          </UseParameterlessEndpoint>
+        </FilterTemplate>
+      </DataGridColumn>
+    </ColumnsContent>
+    <ContextMenuContent>
+      <DataGridActionOpenInNewTab OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenItemInNewTab(item)))"/>
+      <DataGridActionDeleteItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => DeleteArmPlu(item)))" />
+    </ContextMenuContent>
+  </DataGridContainer>
+</UseEndpoint>
+
+@code {
+
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
+  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+  [Inject] private IToastService ToastService { get; set; } = default!;
+
+  # endregion
+
+  [Parameter, EditorRequired] public ArmDto Arm { get; set; } = default!;
+
+  private BrandDto? BrandFilter { get; set; }
+  private bool? IsWeightFilter { get; set; }
+  private bool? IsActiveFilter { get; set; }
+
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    IsWeightFilter = Arm.Type switch
+    {
+      ArmType.Pc => false,
+      ArmType.Tablet => true,
+      _ => IsWeightFilter
+    };
+  }
+
+  private async Task DeleteArmPlu(PluArmDto item)
+  {
+    try
+    {
+      await WebApi.DeleteArmPlu(Arm.Id, item.Id);
+      DevicesEndpoints.DeleteArmPlu(Arm.Id, item.Id);
+    }
+    catch (ApiException ex)
+    {
+      ToastService.ShowError(ex.GetMessage(string.Format(Localizer["ArmPluRemovedUnsuccessfully"], item.Number)));
+    }
+  }
+
+  private async Task AddArmPlu(PluArmDto item)
+  {
+    try
+    {
+      await WebApi.AddArmPlu(Arm.Id, item.Id);
+      DevicesEndpoints.AddArmPlu(Arm.Id, item.Id);
+    }
+    catch (ApiException ex)
+    {
+      ToastService.ShowError(ex.GetMessage(string.Format(Localizer["ArmPluAddedUnsuccessfully"], item.Number)));
+    }
+  }
+
+  protected override async Task OpenItemInNewTab(PluArmDto item) =>
+    await OpenLinkInNewTab(RedirectHelper.ToPlu(item.Id));
+}

@@ -5,7 +5,7 @@
   tabindex="0"
   @ref="DivRef"
   @onblur="@CloseContextMenuAsync"
-  class="@Css.Class("flex-col shadow-md rounded-md p-1 border bg-background overflow-hidden focus:outline-none", IsContextMenuOpen ? "fixed" : "hidden")"
+  class="@Css.Class("flex-col shadow-md rounded-md p-1 border bg-popover overflow-hidden focus:outline-none", IsContextMenuOpen ? "fixed" : "hidden")"
   style="@($"left:{ContextMenuPos.X}px;top:{ContextMenuPos.Y}px;")"
 >
   @ChildContent

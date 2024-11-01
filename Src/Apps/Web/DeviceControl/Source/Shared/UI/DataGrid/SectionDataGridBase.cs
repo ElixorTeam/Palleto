@@ -18,8 +18,6 @@ public abstract class SectionDataGridBase<TItem> : FluxorComponent where TItem :
 
     # endregion
 
-    [Parameter] public Guid? Id { get; set; }
-
     protected QueryOptions DefaultEndpointOptions { get; } =
         new() { RefetchInterval = TimeSpan.FromMinutes(1), StaleTime = TimeSpan.FromMinutes(1) };
 
@@ -37,20 +35,6 @@ public abstract class SectionDataGridBase<TItem> : FluxorComponent where TItem :
                 await JsRuntime.InvokeVoidAsync("animateDialogOpening", instance.Id)
             )
         };
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (Id == null) return;
-        try
-        {
-            TItem item = await SearchByUidAction(Id.Value);
-            await OpenUpdateFormModal(item);
-        }
-        catch
-        {
-            ToastService.ShowError(Localizer["ToastErrorGettingData"]);
-        }
     }
 
     protected async Task DeleteItem(TItem item) =>
@@ -87,7 +71,10 @@ public abstract class SectionDataGridBase<TItem> : FluxorComponent where TItem :
         await action(item);
     }
 
-    protected Task OpenLinkInNewTab(string url)
+    protected async Task OpenLinkInNewTab(string url) =>
+        await JsRuntime.InvokeVoidAsync("open", url, "_blank");
+
+    protected Task OpenLink(string url)
     {
         NavigationManager.NavigateTo(url);
         return Task.CompletedTask;
