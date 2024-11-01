@@ -31,7 +31,8 @@ internal sealed class UserApiService(WsDbContext dbContext) : IUserService
 
     #region Commands
 
-    public Task DeleteAsync(Guid id) => dbContext.Users.SafeDeleteAsync(i => i.Id == id, FkProperty.User);
+    public Task DeleteAsync(Guid id) =>
+        dbContext.Users.SafeDeleteAsync(i => i.Id == id, FkProperty.User);
 
     public async Task<UserDto> SaveOrUpdateUser(Guid uid, UserUpdateDto updateDto)
     {

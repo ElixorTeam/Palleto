@@ -7,13 +7,13 @@ public interface IArmService
 {
     #region Queries
 
-    public ArmValue? Get();
+    public Task<ArmValue> GetCurrentAsync();
 
     #endregion
 
     #region Commands
 
-    public bool Update(UpdateArmDto dto);
+    public Task UpdateAsync(UpdateArmDto dto);
 
     #endregion
 }

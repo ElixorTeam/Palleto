@@ -12,15 +12,16 @@ public sealed class PrinterController(IPrinterService printerService)
     #region Queries
 
     [HttpGet("proxy")]
-    public Task<ProxyDto[]> GetProxiesByProdSite([FromQuery(Name = "productionSite")] Guid productionSiteId) =>
-        printerService.GetProxiesByProdSiteAsync(productionSiteId);
+    public Task<ProxyDto[]> GetProxiesByProdSite([FromQuery(Name = "productionSite")] Guid prodSiteId) =>
+        printerService.GetProxiesByProdSiteAsync(prodSiteId);
 
     [HttpGet]
-    public Task<PrinterDto[]> GetAllByProductionSite([FromQuery(Name = "productionSite")] Guid productionSiteId) =>
-        printerService.GetAllByProdSiteAsync(productionSiteId);
+    public Task<PrinterDto[]> GetAllByProdSite([FromQuery(Name = "productionSite")] Guid prodSiteId) =>
+        printerService.GetAllByProdSiteAsync(prodSiteId);
 
     [HttpGet("{id:guid}")]
-    public Task<PrinterDto> GetById([FromRoute] Guid id) => printerService.GetByIdAsync(id);
+    public Task<PrinterDto> GetById([FromRoute] Guid id) =>
+        printerService.GetByIdAsync(id);
 
     #endregion
 
@@ -35,7 +36,8 @@ public sealed class PrinterController(IPrinterService printerService)
         printerService.UpdateAsync(id, dto);
 
     [HttpDelete("{id:guid}")]
-    public Task Delete([FromRoute] Guid id) => printerService.DeleteAsync(id);
+    public Task Delete([FromRoute] Guid id) =>
+        printerService.DeleteAsync(id);
 
     #endregion
 }

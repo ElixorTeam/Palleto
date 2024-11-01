@@ -11,20 +11,24 @@ public sealed class PluController(IPluService pluService)
     #region Queries
 
     [HttpGet]
-    public Task<PluDto[]> GetAll() => pluService.GetAllAsync();
+    public Task<PluDto[]> GetAll() =>
+        pluService.GetAllAsync();
 
     [HttpGet("{id:guid}")]
-    public Task<PluDto> GetById([FromRoute] Guid id) => pluService.GetByIdAsync(id);
+    public Task<PluDto> GetById([FromRoute] Guid id) =>
+        pluService.GetByIdAsync(id);
 
     [HttpGet("{id:guid}/characteristics")]
-    public Task<List<CharacteristicDto>> GetCharacteristics([FromRoute] Guid id) => pluService.GetCharacteristics(id);
+    public Task<List<CharacteristicDto>> GetCharacteristics([FromRoute] Guid id) =>
+        pluService.GetCharacteristics(id);
 
     #endregion
 
     #region Commands
 
     [HttpPut("{id:guid}")]
-    public Task<PluDto> Update([FromRoute] Guid id, [FromBody] PluUpdateDto dto) => pluService.Update(id, dto);
+    public Task<PluDto> Update([FromRoute] Guid id, [FromBody] PluUpdateDto dto) =>
+        pluService.Update(id, dto);
 
     #endregion
 }

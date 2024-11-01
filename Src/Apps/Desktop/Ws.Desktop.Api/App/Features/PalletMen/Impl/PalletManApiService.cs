@@ -10,12 +10,15 @@ internal sealed class PalletManApiService(WsDbContext dbContext, UserHelper user
 {
     #region Queries
 
-    public PalletMan GetByCode(string code)
+    public async Task<PalletMan> GetByCodeAsync(string code)
     {
-        return dbContext.PalletMen
+        PalletMan? palletMan = await dbContext.PalletMen
             .AsNoTracking()
             .Where(i => i.Warehouse.Id == userHelper.WarehouseId && i.Password == code)
-            .Select(PalletManExpressions.ToDto).FirstOrDefault() ?? throw new ApiInternalException
+            .Select(PalletManExpressions.ToDto)
+            .FirstOrDefaultAsync();
+
+        return palletMan ?? throw new ApiInternalException
         {
             ErrorDisplayMessage = "Пользователь не найден",
             StatusCode = HttpStatusCode.NotFound

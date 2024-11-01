@@ -13,7 +13,8 @@ public sealed class TemplateController(ITemplateService templateService)
 
     [Authorize(PolicyEnum.SeniorSupport)]
     [HttpGet]
-    public Task<TemplateDto[]> GetAll() => templateService.GetAllAsync();
+    public Task<TemplateDto[]> GetAll() =>
+        templateService.GetAllAsync();
 
     [Authorize(PolicyEnum.SeniorSupport)]
     [HttpGet("{id:guid}")]

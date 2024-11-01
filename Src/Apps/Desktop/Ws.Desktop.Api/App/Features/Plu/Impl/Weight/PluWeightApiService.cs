@@ -21,7 +21,7 @@ internal sealed class PluWeightApiService(
 {
     #region Queries
 
-    public Task<List<PluWeight>> GetAllWeightByArm()
+    public Task<PluWeight[]> GetAllWeightByArmAsync()
     {
         return dbContext.Lines
             .AsNoTracking()
@@ -42,7 +42,7 @@ internal sealed class PluWeightApiService(
                 Bundle = plu.Bundle.Name,
                 TareWeight = (decimal)Math.Round((double)(plu.Weight + plu.Clip.Weight + plu.Bundle.Weight) * nesting.BundleCount + (double)nesting.Box.Weight, 3)
             })
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     #endregion

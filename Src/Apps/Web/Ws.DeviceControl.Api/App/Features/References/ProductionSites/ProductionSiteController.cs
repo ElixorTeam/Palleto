@@ -14,19 +14,23 @@ public sealed class ProductionSiteController(IProductionSiteService productionSi
 
     [Authorize(PolicyEnum.SeniorSupport)]
     [HttpGet]
-    public Task<ProductionSiteDto[]> GetAll() => productionSiteService.GetAllAsync();
+    public Task<ProductionSiteDto[]> GetAll() =>
+        productionSiteService.GetAllAsync();
 
     [Authorize(PolicyEnum.SeniorSupport)]
     [HttpGet("{id:guid}")]
-    public Task<ProductionSiteDto> GetById([FromRoute] Guid id) => productionSiteService.GetByIdAsync(id);
+    public Task<ProductionSiteDto> GetById([FromRoute] Guid id) =>
+        productionSiteService.GetByIdAsync(id);
 
     #endregion
 
     [HttpGet("user-proxy")]
-    public Task<ProxyDto> GetProxyByUser() => productionSiteService.GetProxyByUserAsync();
+    public Task<ProxyDto> GetProxyByUser() =>
+        productionSiteService.GetProxyByUserAsync();
 
     [HttpGet("proxy")]
-    public Task<List<ProxyDto>> GetProxies() => productionSiteService.GetProxiesAsync();
+    public Task<List<ProxyDto>> GetProxies() =>
+        productionSiteService.GetProxiesAsync();
 
     #endregion
 
@@ -44,7 +48,8 @@ public sealed class ProductionSiteController(IProductionSiteService productionSi
 
     [Authorize(PolicyEnum.Admin)]
     [HttpDelete("{id:guid}")]
-    public Task Delete([FromRoute] Guid id) => productionSiteService.DeleteAsync(id);
+    public Task Delete([FromRoute] Guid id) =>
+        productionSiteService.DeleteAsync(id);
 
     #endregion
 }

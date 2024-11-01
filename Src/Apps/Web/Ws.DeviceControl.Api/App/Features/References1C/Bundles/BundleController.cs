@@ -9,10 +9,12 @@ public sealed class BundleController(IBundleService bundleService)
     #region Queries
 
     [HttpGet]
-    public Task<PackageDto[]> GetAll() => bundleService.GetAllAsync();
+    public Task<PackageDto[]> GetAll() =>
+        bundleService.GetAllAsync();
 
     [HttpGet("{id:guid}")]
-    public Task<PackageDto> GetById([FromRoute] Guid id) => bundleService.GetByIdAsync(id);
+    public Task<PackageDto> GetById([FromRoute] Guid id) =>
+        bundleService.GetByIdAsync(id);
 
     #endregion
 }

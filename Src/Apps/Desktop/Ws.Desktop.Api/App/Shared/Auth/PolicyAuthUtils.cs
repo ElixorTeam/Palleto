@@ -1,3 +1,5 @@
+using Ws.Shared.Web.Extensions;
+
 namespace Ws.Desktop.Api.App.Shared.Auth;
 
 public static class PolicyAuthUtils
@@ -22,7 +24,4 @@ public static class PolicyAuthUtils
             )
         );
     }
-
-    private static bool HasRole(this ClaimsPrincipal user, params string[] roles) =>
-        roles.Any(role => user.HasClaim(ClaimTypes.Role, role));
 }

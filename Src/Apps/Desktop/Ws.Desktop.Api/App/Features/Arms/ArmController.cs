@@ -12,16 +12,16 @@ public sealed class ArmController(IArmService armService) : ControllerBase
     #region Queries
 
     [HttpGet]
-    public ActionResult<ArmValue> Get() =>
-        armService.Get() is { } arm ? Ok(arm) : NotFound();
+    public Task<ArmValue> GetCurrent() =>
+        armService.GetCurrentAsync();
 
     #endregion
 
     #region Commands
 
     [HttpPut]
-    public ActionResult Update([FromBody] UpdateArmDto dto) =>
-        armService.Update(dto) ? Ok() : NotFound();
+    public Task Update([FromBody] UpdateArmDto dto) =>
+        armService.UpdateAsync(dto);
 
     #endregion
 }

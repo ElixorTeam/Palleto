@@ -18,10 +18,12 @@ public sealed class LabelController(ILabelService labelService)
         labelService.GetLabelByBarcodeAsync(barcode);
 
     [HttpGet("{id:guid}")]
-    public Task<LabelDto> GetById([FromRoute] Guid id) => labelService.GetByIdAsync(id);
+    public Task<LabelDto> GetById([FromRoute] Guid id) =>
+        labelService.GetByIdAsync(id);
 
     [HttpGet("{id:guid}/zpl")]
-    public Task<ZplDto> GetZplById([FromRoute] Guid id) => labelService.GetZplByIdAsync(id);
+    public Task<ZplDto> GetZplById([FromRoute] Guid id) =>
+        labelService.GetZplByIdAsync(id);
 
     #endregion
 }

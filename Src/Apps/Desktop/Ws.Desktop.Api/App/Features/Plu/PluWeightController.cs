@@ -15,13 +15,13 @@ public sealed class PluWeightController(IPluWeightService pluWeightService, IPlu
 
     [Authorize(PolicyEnum.Pc)]
     [HttpGet("piece")]
-    public Task<List<PluPiece>> GetAllPieceByArm()
-        => pluPieceService.GetAllPieceByArm();
+    public Task<PluPiece[]> GetAllPieceByArm()
+        => pluPieceService.GetAllPieceByArmAsync();
 
     [Authorize(PolicyEnum.Tablet)]
     [HttpGet("weight")]
-    public Task<List<PluWeight>> GetAllWeightByArm()
-        => pluWeightService.GetAllWeightByArm();
+    public Task<PluWeight[]> GetAllWeightByArm()
+        => pluWeightService.GetAllWeightByArmAsync();
 
     #endregion
 

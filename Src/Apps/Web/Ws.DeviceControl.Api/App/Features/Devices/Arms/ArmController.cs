@@ -12,14 +12,16 @@ public sealed class ArmController(IArmService armService)
     #region Queries
 
     [HttpGet]
-    public Task<ArmDto[]> GetAllByProdSite([FromQuery(Name = "productionSite")] Guid productionSiteId) =>
-        armService.GetAllByProdSiteAsync(productionSiteId);
+    public Task<ArmDto[]> GetAllByProdSite([FromQuery(Name = "productionSite")] Guid prodSiteId) =>
+        armService.GetAllByProdSiteAsync(prodSiteId);
 
     [HttpGet("{id:guid}")]
-    public Task<ArmDto> GetById([FromRoute] Guid id) => armService.GetByIdAsync(id);
+    public Task<ArmDto> GetById([FromRoute] Guid id) =>
+        armService.GetByIdAsync(id);
 
     [HttpGet("{id:guid}/plus")]
-    public Task<PluArmDto[]> GetArmPlus([FromRoute] Guid id) => armService.GetArmPlus(id);
+    public Task<PluArmDto[]> GetArmPlus([FromRoute] Guid id) =>
+        armService.GetArmPlus(id);
 
     #endregion
 

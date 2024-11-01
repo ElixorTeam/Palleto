@@ -13,7 +13,7 @@ internal sealed class PluPieceApiService(WsDbContext dbContext, UserHelper userH
 {
     #region Queries
 
-    public async Task<List<PluPiece>> GetAllPieceByArm()
+    public async Task<PluPiece[]> GetAllPieceByArmAsync()
     {
         LineEntity line = await dbContext.Lines
             .AsNoTracking()
@@ -52,8 +52,7 @@ internal sealed class PluPieceApiService(WsDbContext dbContext, UserHelper userH
             data.Add(plu, pluNesting);
         }
 
-        List<PluPiece> plusPiece = [];
-        plusPiece.AddRange(data.Select(plu =>
+        return data.Select(plu =>
             new PluPiece
             {
                 Id = plu.Key.Id,
@@ -63,8 +62,7 @@ internal sealed class PluPieceApiService(WsDbContext dbContext, UserHelper userH
                 Bundle = plu.Key.Bundle.Name,
                 WeightNet = plu.Key.Weight,
                 Nestings = plu.Value
-            }));
-        return plusPiece;
+            }).ToArray();
     }
 
     #endregion

@@ -25,32 +25,42 @@ internal sealed class PalletApiService(
 {
     #region Quieries
 
-    public List<LabelInfo> GetAllZplByPallet(Guid palletId)
+    public Task<LabelInfo[]> GetAllZplByPalletAsync(Guid palletId)
     {
-        List<LabelInfo> labels = dbContext.Pallets
+        return dbContext.Pallets
             .AsNoTracking()
             .Where(p => p.Id == palletId)
             .ToLabelInfo(dbContext.Labels)
-            .ToList();
-        return labels;
+            .ToArrayAsync();
     }
 
-    public List<PalletInfo> GetAllByDate(DateTime startTime, DateTime endTime)
+    public Task<PalletInfo[]> GetAllByDateAsync(DateTime startTime, DateTime endTime)
     {
-        bool dateCondition =
-            startTime != DateTime.MinValue &&
-            endTime != DateTime.MaxValue &&
-            startTime < endTime;
+        bool dateCondition = startTime != DateTime.MinValue && endTime != DateTime.MaxValue && startTime < endTime;
 
         return dbContext.Pallets
             .AsNoTracking()
             .IfWhere(dateCondition, p => p.CreateDt > startTime && p.CreateDt < endTime)
             .Where(p => p.Warehouse.Id == userHelper.WarehouseId)
             .OrderByDescending(p => p.CreateDt)
-            .ToPalletInfo(dbContext.Labels).ToList();
+            .ToPalletInfo(dbContext.Labels).ToArrayAsync();
     }
 
-    public async Task Delete(Guid id)
+    public Task<PalletInfo[]> GetByNumberAsync(string number)
+    {
+        return dbContext.Pallets
+            .AsNoTracking()
+            .Where(p => p.Number.Contains(number))
+            .ToPalletInfo(dbContext.Labels)
+            .Take(10)
+            .ToArrayAsync();
+    }
+
+    #endregion
+
+    #region Commands
+
+    public async Task DeleteAsync(Guid id)
     {
         PalletEntity? pallet = await dbContext.Pallets
             .Include(i => i.Warehouse)
@@ -83,21 +93,7 @@ internal sealed class PalletApiService(
         await dbContext.SaveChangesAsync();
     }
 
-    public List<PalletInfo> GetByNumber(string number)
-    {
-        return dbContext.Pallets
-            .AsNoTracking()
-            .Where(p => p.Number.Contains(number))
-            .ToPalletInfo(dbContext.Labels)
-            .Take(10)
-            .ToList();
-    }
-
-    #endregion
-
-    #region Commands
-
-    public async Task<PalletInfo> CreatePiecePallet(PalletPieceCreateDto dto)
+    public async Task<PalletInfo> CreatePiecePalletAsync(PalletPieceCreateDto dto)
     {
         uint palletCounter = (dbContext.Pallets.Any() ? dbContext.Pallets.Max(i => i.Counter) : 0) + 1;
 

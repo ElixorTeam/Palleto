@@ -6,7 +6,7 @@ public interface IPalletManService
 {
     #region Queries
 
-    PalletMan GetByCode(string code);
+    Task<PalletMan> GetByCodeAsync(string code);
 
     #endregion
 }

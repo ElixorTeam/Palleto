@@ -12,26 +12,37 @@ internal sealed class ArmApiService(WsDbContext dbContext, UserHelper userHelper
 {
     #region Queries
 
-    public ArmValue? Get() =>
-        dbContext.Lines
+    public async Task<ArmValue> GetCurrentAsync()
+    {
+        ArmValue? arm = await dbContext.Lines
             .AsNoTracking()
             .Where(i => i.Id == userHelper.UserId)
             .Select(ArmExpressions.ToDto)
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
+
+        return arm ?? throw new ApiInternalException
+        {
+            ErrorDisplayMessage = "Линия не зарегестрирована",
+            StatusCode = HttpStatusCode.NotFound
+        };
+    }
 
     #endregion
 
     #region Commands
 
-    public bool Update(UpdateArmDto dto)
+    public async Task UpdateAsync(UpdateArmDto dto)
     {
-        LineEntity? arm = dbContext.Lines.Find(userHelper.UserId);
-        if (arm == null)
-            return false;
+        LineEntity arm =
+            await dbContext.Lines.FindAsync(userHelper.UserId)
+            ?? throw new ApiInternalException
+        {
+            ErrorDisplayMessage = "Линия не зарегестрирована",
+            StatusCode = HttpStatusCode.NotFound
+        };
 
         arm.Version = dto.Version;
-        dbContext.SaveChanges();
-        return true;
+        await dbContext.SaveChangesAsync();
     }
 
     #endregion

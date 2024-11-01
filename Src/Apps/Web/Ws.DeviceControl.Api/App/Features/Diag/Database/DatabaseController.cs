@@ -11,10 +11,12 @@ public sealed class DatabaseController(IDatabaseService databaseService)
     #region Queries
 
     [HttpGet("migrations")]
-    public List<MigrationHistoryDto> GetAllMigrations() => databaseService.GetAllMigrations();
+    public List<MigrationHistoryDto> GetAllMigrations() =>
+        databaseService.GetAllMigrations();
 
     [HttpGet("tables")]
-    public List<DataBaseTableDto> GetAllTables() => databaseService.GetAllTables();
+    public List<DataBaseTableDto> GetAllTables() =>
+        databaseService.GetAllTables();
 
     #endregion
 }
