@@ -9,6 +9,7 @@ using Ws.DeviceControl.Api.App.Features.Devices.Arms.Impl.Validators;
 using Ws.DeviceControl.Api.App.Shared.Enums;
 using Ws.DeviceControl.Models.Features.Devices.Arms.Commands;
 using Ws.DeviceControl.Models.Features.Devices.Arms.Queries;
+using Ws.Shared.ValueTypes;
 
 namespace Ws.DeviceControl.Api.App.Features.Devices.Arms.Impl;
 
@@ -35,6 +36,29 @@ internal sealed class ArmApiService(
     {
         LineEntity entity = await dbContext.Lines.SafeGetById(id, FkProperty.Line);
         return await GetArmDto(entity);
+    }
+
+    public async Task<AnalyticDto[]> GetAnalyticAsync(Guid id, DateOnly date)
+    {
+        WorkShift workShift = new(date);
+
+        List<DateTime> hourlyRanges = Enumerable
+            .Range(0, 24)
+            .Select(i => workShift.Start.AddHours(i))
+            .ToList();
+
+        List<AnalyticDto> labelCounts = await dbContext.Labels
+            .Where(l => l.Line.Id == id && l.CreateDt.AddHours(3) >= workShift.Start
+                                        && l.CreateDt.AddHours(3) < workShift.End)
+            .GroupBy(l => new
+            {
+                CreateDateHour = new DateTime(l.CreateDt.Year, l.CreateDt.Month, l.CreateDt.Day, l.CreateDt.AddHours(3).Hour, 0, 0)
+            })
+            .Select(g => new AnalyticDto(g.Key.CreateDateHour, (uint)g.Count()))
+            .ToListAsync();
+
+        return hourlyRanges.Select(hr =>
+            new AnalyticDto(hr, labelCounts.FirstOrDefault(l => l.Date == hr)?.Count ?? 0)).ToArray();
     }
 
     public async Task<PluArmDto[]> GetArmPlus(Guid id)

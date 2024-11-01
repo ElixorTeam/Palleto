@@ -11,6 +11,13 @@ public readonly struct WorkShift
         End = CalculateEndOfShift(dateTime);
     }
 
+    public WorkShift(DateOnly date)
+    {
+        DateTime dateTime = date.ToDateTime(TimeOnly.MinValue).AddHours(8);
+        Start = CalculateStartOfShift(dateTime);
+        End = CalculateEndOfShift(dateTime);
+    }
+
     public WorkShift()
     {
         Start = CalculateStartOfShift(DateTime.Now);

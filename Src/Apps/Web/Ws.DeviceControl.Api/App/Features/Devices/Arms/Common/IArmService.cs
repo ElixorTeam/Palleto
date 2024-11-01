@@ -10,6 +10,7 @@ public interface IArmService :
 {
     #region Queries
 
+    Task<AnalyticDto[]> GetAnalyticAsync(Guid id, DateOnly date);
     Task<PluArmDto[]> GetArmPlus(Guid id);
 
     #endregion
