@@ -5,18 +5,14 @@ namespace Ws.Desktop.Api.App.Features.Arms.Expressions;
 
 internal static class ArmExpressions
 {
-    public static Expression<Func<LineEntity, ArmValue>> ToDto => arm =>
+    public static Expression<Func<LineEntity, ArmDto>> ToDto => arm =>
         new()
         {
             Id = arm.Id,
             Counter = (uint)arm.Counter,
             Name = arm.Name,
             SystemKey = arm.SystemKey,
-            Warehouse = new()
-            {
-                Id = arm.Warehouse.Id,
-                Name = arm.Warehouse.Name
-            },
+            Warehouse = new(arm.Warehouse.Id, arm.Warehouse.Name),
             Type = arm.Type,
             Printer = new()
             {

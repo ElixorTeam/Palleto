@@ -8,13 +8,13 @@ public interface IPluWeightService
 {
     #region Queries
 
-    public Task<PluWeight[]> GetAllWeightAsync();
+    public Task<PluWeightDto[]> GetAllWeightAsync();
 
     #endregion
 
     #region Commands
 
-    public Task<WeightLabel> GenerateLabel(Guid pluId, CreateWeightLabelDto dto);
+    public Task<PrintSuccessDto> GenerateLabel(Guid pluId, CreateWeightLabelDto dto);
 
     #endregion
 }

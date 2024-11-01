@@ -5,7 +5,7 @@ namespace ScalesDesktop.Source.Shared.Api.Desktop.Endpoints;
 
 public class ArmEndpoints(IDesktopApi desktopApi, IPrinterService printerService)
 {
-    public ParameterlessEndpoint<ArmValue> ArmEndpoint { get; } = new(
+    public ParameterlessEndpoint<ArmDto> ArmEndpoint { get; } = new(
         desktopApi.GetCurrentArm,
         options: new()
         {

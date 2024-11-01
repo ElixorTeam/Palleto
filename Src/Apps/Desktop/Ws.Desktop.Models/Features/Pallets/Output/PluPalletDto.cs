@@ -1,6 +1,6 @@
 namespace Ws.Desktop.Models.Features.Pallets.Output;
 
-public record PluPalletInfo
+public record PluPalletDto
 {
     [JsonPropertyName("name")]
     public required string Name { get; init; }

@@ -27,7 +27,7 @@ public sealed class TemplateController(ITemplateService templateService)
         templateService.GetBodyByIdAsync(id);
 
     [HttpGet("proxy")]
-    public Task<List<ProxyDto>> GetProxiesByIsWeight([FromQuery(Name = "isWeight")] bool isWeight) =>
+    public Task<ProxyDto[]> GetProxiesByIsWeight([FromQuery(Name = "isWeight")] bool isWeight) =>
         templateService.GetProxiesByIsWeightAsync(isWeight);
 
     [HttpGet("{id:guid}/barcodes")]

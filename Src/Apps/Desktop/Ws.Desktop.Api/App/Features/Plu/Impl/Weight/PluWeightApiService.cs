@@ -21,7 +21,7 @@ internal sealed class PluWeightApiService(
 {
     #region Queries
 
-    public Task<PluWeight[]> GetAllWeightAsync()
+    public Task<PluWeightDto[]> GetAllWeightAsync()
     {
         return dbContext.Lines
             .AsNoTracking()
@@ -31,7 +31,7 @@ internal sealed class PluWeightApiService(
             .Join(dbContext.Nestings,
             plu => plu.Id,
             nesting => nesting.Id,
-            (plu, nesting) => new PluWeight
+            (plu, nesting) => new PluWeightDto
             {
                 Id = plu.Id,
                 Name = plu.Name,
@@ -49,7 +49,7 @@ internal sealed class PluWeightApiService(
 
     #region Commands
 
-    public async Task<WeightLabel> GenerateLabel(Guid pluId, CreateWeightLabelDto dto)
+    public async Task<PrintSuccessDto> GenerateLabel(Guid pluId, CreateWeightLabelDto dto)
     {
         NestingEntity nesting = await dbContext.Nestings
             .Include(i => i.Box)

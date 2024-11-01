@@ -11,7 +11,7 @@ public interface ITemplateService :
 {
     #region Queries
 
-    Task<List<ProxyDto>> GetProxiesByIsWeightAsync(bool isWeight);
+    Task<ProxyDto[]> GetProxiesByIsWeightAsync(bool isWeight);
     Task<TemplateBodyDto> GetBodyByIdAsync(Guid id);
     Task<BarcodeItemWrapper> GetBarcodeTemplates(Guid id);
 

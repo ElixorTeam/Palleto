@@ -7,7 +7,7 @@ public interface IPluService : IGetAll<PluDto>, IGetById<PluDto>
 {
     #region Queries
 
-    Task<List<CharacteristicDto>> GetCharacteristics(Guid id);
+    Task<CharacteristicDto[]> GetCharacteristics(Guid id);
 
     #endregion
 

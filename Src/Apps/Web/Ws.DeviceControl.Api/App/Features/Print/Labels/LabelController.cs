@@ -10,7 +10,7 @@ public sealed class LabelController(ILabelService labelService)
     #region Queries
 
     [HttpGet("arm/{armId:guid}")]
-    public Task<List<LabelDto>> GetLabelsWorkShiftByArm(Guid armId) =>
+    public Task<LabelDto[]> GetLabelsWorkShiftByArm(Guid armId) =>
         labelService.GetLabelsWorkShiftByArmAsync(armId);
 
     [HttpGet("barcode/{barcode}")]

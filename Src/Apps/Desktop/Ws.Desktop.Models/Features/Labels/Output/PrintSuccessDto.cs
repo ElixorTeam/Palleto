@@ -1,6 +1,6 @@
 namespace Ws.Desktop.Models.Features.Labels.Output;
 
-public sealed record WeightLabel
+public sealed record PrintSuccessDto
 {
     [JsonPropertyName("armCounter")]
     public required uint ArmCounter { get; init; }

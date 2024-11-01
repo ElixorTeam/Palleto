@@ -25,7 +25,7 @@ internal sealed class PalletApiService(
             ErrorType = ApiErrorType.NotFound
         };
 
-    public async Task<List<PalletDto>> GetPalletsWorkShiftByArmAsync(Guid armId)
+    public async Task<PalletDto[]> GetPalletsWorkShiftByArmAsync(Guid armId)
     {
         WorkShift workShift = new();
 
@@ -35,7 +35,7 @@ internal sealed class PalletApiService(
                 i.CreateDt.AddHours(3) > workShift.Start && i.CreateDt.AddHours(3) < workShift.End && i.Arm.Id == armId)
             .OrderByDescending(i => i.CreateDt)
             .ToPalletDto(dbContext.Labels)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     public async Task<PalletDto> GetByIdAsync(Guid id) =>
@@ -49,12 +49,12 @@ internal sealed class PalletApiService(
             ErrorType = ApiErrorType.NotFound
         };
 
-    public async Task<List<LabelPalletDto>> GetPalletLabels(Guid id) =>
+    public async Task<LabelPalletDto[]> GetPalletLabels(Guid id) =>
         await dbContext.Pallets
         .AsNoTracking()
         .Where(p => p.Id == id)
         .ToLabelPalletDto(dbContext.Labels)
-        .ToListAsync();
+        .ToArrayAsync();
 
     #endregion
 }

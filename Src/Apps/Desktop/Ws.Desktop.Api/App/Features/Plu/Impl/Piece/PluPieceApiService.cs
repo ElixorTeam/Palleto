@@ -13,7 +13,7 @@ internal sealed class PluPieceApiService(WsDbContext dbContext, UserHelper userH
 {
     #region Queries
 
-    public async Task<PluPiece[]> GetAllPieceAsync()
+    public async Task<PluPieceDto[]> GetAllPieceAsync()
     {
         LineEntity line = await dbContext.Lines
             .AsNoTracking()
@@ -21,11 +21,11 @@ internal sealed class PluPieceApiService(WsDbContext dbContext, UserHelper userH
             .ThenInclude(pluEntity => pluEntity.Bundle)
             .SingleAsync(i => i.Id == userHelper.UserId);
 
-        Dictionary<PluEntity, List<Nesting>> data = new();
+        Dictionary<PluEntity, List<NestingDto>> data = new();
 
         foreach (PluEntity plu in line.Plus.Where(i => !i.IsWeight).OrderBy(i => i.Number))
         {
-            List<Nesting> pluNesting = [];
+            List<NestingDto> pluNesting = [];
             NestingEntity nesting = await dbContext.Nestings.AsNoTracking()
                 .Include(i => i.Box).SingleAsync(i => i.Id == plu.Id);
             List<CharacteristicEntity> characteristics = await dbContext.Characteristics.AsNoTracking()
@@ -41,7 +41,7 @@ internal sealed class PluPieceApiService(WsDbContext dbContext, UserHelper userH
                 }
             );
 
-            pluNesting.AddRange(characteristics.Select(characteristic => new Nesting()
+            pluNesting.AddRange(characteristics.Select(characteristic => new NestingDto()
             {
                 Id = characteristic.Id,
                 BundleCount = (byte)characteristic.BundleCount,
@@ -53,7 +53,7 @@ internal sealed class PluPieceApiService(WsDbContext dbContext, UserHelper userH
         }
 
         return data.Select(plu =>
-            new PluPiece
+            new PluPieceDto
             {
                 Id = plu.Key.Id,
                 Number = (ushort)plu.Key.Number,

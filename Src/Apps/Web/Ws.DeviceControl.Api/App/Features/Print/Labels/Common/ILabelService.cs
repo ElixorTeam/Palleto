@@ -7,5 +7,5 @@ public interface ILabelService
     public Task<LabelDto> GetByIdAsync(Guid id);
     public Task<ZplDto> GetZplByIdAsync(Guid id);
     public Task<LabelDto> GetLabelByBarcodeAsync(string barcode);
-    public Task<List<LabelDto>> GetLabelsWorkShiftByArmAsync(Guid amrId);
+    public Task<LabelDto[]> GetLabelsWorkShiftByArmAsync(Guid amrId);
 }

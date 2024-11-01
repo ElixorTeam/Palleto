@@ -18,11 +18,11 @@ public sealed class PalletController(IPalletService palletService)
         palletService.GetByNumber(number);
 
     [HttpGet("arm/{armId:guid}")]
-    public Task<List<PalletDto>> GetPalletsWorkShiftByArmAsync(Guid armId) =>
+    public Task<PalletDto[]> GetPalletsWorkShiftByArmAsync(Guid armId) =>
         palletService.GetPalletsWorkShiftByArmAsync(armId);
 
     [HttpGet("{id:guid}/labels")]
-    public Task<List<LabelPalletDto>> GetPalletLabels(Guid id) =>
+    public Task<LabelPalletDto[]> GetPalletLabels(Guid id) =>
         palletService.GetPalletLabels(id);
 
     #endregion

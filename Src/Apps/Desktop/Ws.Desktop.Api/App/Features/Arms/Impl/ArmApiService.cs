@@ -12,9 +12,9 @@ internal sealed class ArmApiService(WsDbContext dbContext, UserHelper userHelper
 {
     #region Queries
 
-    public async Task<ArmValue> GetCurrentAsync()
+    public async Task<ArmDto> GetCurrentAsync()
     {
-        ArmValue? arm = await dbContext.Lines
+        ArmDto? arm = await dbContext.Lines
             .AsNoTracking()
             .Where(i => i.Id == userHelper.UserId)
             .Select(ArmExpressions.ToDto)

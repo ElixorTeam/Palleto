@@ -19,7 +19,7 @@ public sealed class PluController(IPluService pluService)
         pluService.GetByIdAsync(id);
 
     [HttpGet("{id:guid}/characteristics")]
-    public Task<List<CharacteristicDto>> GetCharacteristics([FromRoute] Guid id) =>
+    public Task<CharacteristicDto[]> GetCharacteristics([FromRoute] Guid id) =>
         pluService.GetCharacteristics(id);
 
     #endregion

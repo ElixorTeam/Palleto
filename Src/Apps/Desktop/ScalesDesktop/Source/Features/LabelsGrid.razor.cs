@@ -23,7 +23,7 @@ public sealed partial class LabelsGrid : ComponentBase
 
     # endregion
 
-    [Parameter, EditorRequired] public PalletInfo Pallet { get; set; } = default!;
+    [Parameter, EditorRequired] public PalletDto Pallet { get; set; } = default!;
 
     private IEnumerable<DataItem> SelectedItems { get; set; } = [];
     private string SearchingNumber { get; set; } = string.Empty;
@@ -31,7 +31,7 @@ public sealed partial class LabelsGrid : ComponentBase
     private const ushort PrinterRequestDelay = 500;
     private const ushort MaxPrinterErrors = 3;
 
-    private PalletInfo PreviousPallet { get; set; } = default!;
+    private PalletDto PreviousPallet { get; set; } = default!;
 
     protected override void OnInitialized()
     {
@@ -64,7 +64,7 @@ public sealed partial class LabelsGrid : ComponentBase
 
     private void SelectAllItems(List<DataItem> labels) => SelectedItems = labels;
 
-    private IQueryable<DataItem> GetOrderedLabels(LabelInfo[] labels)
+    private IQueryable<DataItem> GetOrderedLabels(LabelDto[] labels)
     {
         IEnumerable<DataItem> indexedLabels = labels.Select((label, index) => new DataItem { Id = index + 1, Label = label });
         if (string.IsNullOrWhiteSpace(SearchingNumber)) return indexedLabels.AsQueryable();
@@ -180,5 +180,5 @@ public sealed partial class LabelsGrid : ComponentBase
 internal record DataItem
 {
     public int Id { get; init; }
-    public LabelInfo Label { get; init; } = null!;
+    public LabelDto Label { get; init; } = null!;
 }

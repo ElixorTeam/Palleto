@@ -40,7 +40,7 @@ public sealed partial class PalletManForm : ComponentBase
                 Content = new() { Details = "Подождите пока мы не проверим пользователя по данному коду" }
             });
 
-            PalletMan dto = await DesktopApi.GetPalletManByCode(Model.Password);
+            PalletManDto dto = await DesktopApi.GetPalletManByCode(Model.Password);
 
             Dispatcher.Dispatch(new ChangePalletManAction(dto));
         }

@@ -8,7 +8,7 @@ public interface IDesktopArmApi
     #region Queries
 
     [Get("/arms")]
-    Task<ArmValue> GetCurrentArm();
+    Task<ArmDto> GetCurrentArm();
 
     #endregion
 

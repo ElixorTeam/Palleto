@@ -3,17 +3,17 @@ using Ws.Desktop.Models.Features.PalletMen;
 namespace ScalesDesktop.Source.Shared.Services.Stores;
 
 [FeatureState]
-public record PalletManState(PalletMan? PalletMan)
+public record PalletManState(PalletManDto? PalletMan)
 {
     private PalletManState() : this(PalletMan: null) { }
 }
 
-public record ChangePalletManAction(PalletMan PalletMan);
+public record ChangePalletManAction(PalletManDto PalletManDto);
 
 public class ChangePalletManReducer : Reducer<PalletManState, ChangePalletManAction>
 {
     public override PalletManState Reduce(PalletManState state, ChangePalletManAction action) =>
-        state.PalletMan?.Equals(action.PalletMan) == true ? state : new(action.PalletMan);
+        state.PalletMan?.Equals(action.PalletManDto) == true ? state : new(action.PalletManDto);
 }
 
 public record ResetPalletManAction;

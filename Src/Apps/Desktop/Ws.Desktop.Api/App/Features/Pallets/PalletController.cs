@@ -12,17 +12,17 @@ public sealed class PalletController(IPalletApiService palletApiService) : Contr
     #region Queries
 
     [HttpGet]
-    public Task<PalletInfo[]> GetByDate(
+    public Task<PalletDto[]> GetByDate(
         [FromQuery, DefaultValue(typeof(DateTime), "0001-01-01T00:00:00")] DateTime startDt,
         [FromQuery, DefaultValue(typeof(DateTime), "9999-12-31T23:59:59")] DateTime endDt
-    ) => palletApiService.GetAllByDateAsync(startDt, endDt);
+    ) => palletApiService.GetByDateAsync(startDt, endDt);
 
     [HttpGet("{number}")]
-    public Task<PalletInfo[]> GetByNumber([FromRoute] string number) =>
+    public Task<PalletDto[]> GetByNumber([FromRoute] string number) =>
         palletApiService.GetByNumberAsync(number);
 
     [HttpGet("{palletId:guid}/labels")]
-    public Task<LabelInfo[]> GetLabelsByPallet(Guid palletId) =>
+    public Task<LabelDto[]> GetLabelsByPallet(Guid palletId) =>
         palletApiService.GetAllZplByPalletAsync(palletId);
 
     #endregion
@@ -30,7 +30,7 @@ public sealed class PalletController(IPalletApiService palletApiService) : Contr
     #region Commands
 
     [HttpPost]
-    public async Task<PalletInfo> Create([FromBody] PalletPieceCreateDto dto) =>
+    public async Task<PalletDto> Create([FromBody] PalletPieceCreateDto dto) =>
         await palletApiService.CreatePiecePalletAsync(dto);
 
     [HttpDelete("{palletId:guid}")]

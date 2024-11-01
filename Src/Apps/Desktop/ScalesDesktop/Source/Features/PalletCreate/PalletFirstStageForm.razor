@@ -12,7 +12,7 @@
       @if (pluQuery.HasData)
       {
         <SelectSingle
-          TItem="PluPiece"
+          TItem="PluPieceDto"
           HtmlId="pallet-plu"
           Items="@pluQuery.Data"
           @bind-Value="@FormModel.Plu"
@@ -31,7 +31,7 @@
   </FormFieldWrapper>
   <FormFieldWrapper Label="@($"{Localizer["ColNestingPerBox"]} ({WsDataLocalizer["MeasurePc"]})")" HtmlId="pallet-nesting">
     <SelectSingle
-      TItem="Nesting"
+      TItem="NestingDto"
       HtmlId="pallet-nesting"
       Items="@(FormModel.Plu?.Nestings ?? [])"
       @bind-Value="FormModel.Nesting"

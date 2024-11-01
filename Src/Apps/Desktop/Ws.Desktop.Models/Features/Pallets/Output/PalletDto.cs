@@ -1,8 +1,8 @@
-using Ws.Desktop.Models.Shared.Models;
+using Ws.Desktop.Models.Shared;
 
 namespace Ws.Desktop.Models.Features.Pallets.Output;
 
-public sealed record PalletInfo
+public sealed record PalletDto
 {
     [JsonPropertyName("Id")]
     public required Guid Id { get; init; }
@@ -20,7 +20,7 @@ public sealed record PalletInfo
     public required ProxyDto Warehouse { get; init; }
 
     [JsonPropertyName("plus")]
-    public required HashSet<PluPalletInfo> Plus { get; init; }
+    public required HashSet<PluPalletDto> Plus { get; init; }
 
     [JsonPropertyName("barcode")]
     public required string Barcode { get; init; }

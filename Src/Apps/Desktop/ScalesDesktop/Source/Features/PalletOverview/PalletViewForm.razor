@@ -43,7 +43,7 @@
 
   <FormDivider Class="!pb-0">@WsDataLocalizer["ColPlu"]</FormDivider>
 
-  @foreach (PluPalletInfo item in Pallet.Plus)
+  @foreach (PluPalletDto item in Pallet.Plus)
   {
     <PalletViewFormField
       Label="@WsDataLocalizer["ColNumber"]"
@@ -99,5 +99,5 @@
 
   # endregion
 
-  [Parameter, EditorRequired] public PalletInfo Pallet { get; set; } = default!;
+  [Parameter, EditorRequired] public PalletDto Pallet { get; set; } = default!;
 }

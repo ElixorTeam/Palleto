@@ -28,14 +28,14 @@ internal sealed class TemplateApiService(
         .Select(TemplateExpressions.ToDto)
         .ToArrayAsync();
 
-    public async Task<List<ProxyDto>> GetProxiesByIsWeightAsync(bool isWeight)
+    public async Task<ProxyDto[]> GetProxiesByIsWeightAsync(bool isWeight)
     {
         return await dbContext.Templates
             .AsNoTracking()
             .Where(i => i.IsWeight == isWeight)
             .OrderBy(i => i.Name)
             .Select(TemplateExpressions.ToProxy)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     public async Task<TemplateBodyDto> GetBodyByIdAsync(Guid id)

@@ -28,11 +28,7 @@ public sealed record CharacteristicDto
     }
 }
 
-public sealed record CharacteristicPackageDto
-{
-    [JsonPropertyName("id")]
-    public required Guid Id { get; init; }
-
-    [JsonPropertyName("weight")]
-    public required decimal Weight { get; init; }
-}
+public sealed record CharacteristicPackageDto(
+    [property: JsonPropertyName("id")] Guid Id,
+    [property: JsonPropertyName("weight")] decimal Weight
+);

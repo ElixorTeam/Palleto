@@ -29,7 +29,7 @@ internal sealed class PluApiService(WsDbContext dbContext) : IPluService
             .ToArrayAsync();
     }
 
-    public async Task<List<CharacteristicDto>> GetCharacteristics(Guid id)
+    public async Task<CharacteristicDto[]> GetCharacteristics(Guid id)
     {
         PluEntity plu = await dbContext.Plus.SafeGetById(id, FkProperty.Plu);
 
@@ -42,9 +42,8 @@ internal sealed class PluApiService(WsDbContext dbContext) : IPluService
 
         List<CharacteristicDto> characteristics = [];
 
-        CharacteristicPackageDto bundle = new() { Id = plu.Bundle.Id, Weight = plu.Bundle.Weight };
-        CharacteristicPackageDto clip = new() { Id = plu.Clip.Id, Weight = plu.Clip.Weight };
-
+        CharacteristicPackageDto bundle = new(plu.Bundle.Id, plu.Bundle.Weight);
+        CharacteristicPackageDto clip = new(plu.Clip.Id, plu.Clip.Weight);
 
         if (nesting != null)
             characteristics.Add(new()
@@ -54,11 +53,11 @@ internal sealed class PluApiService(WsDbContext dbContext) : IPluService
                 PluWeight = plu.Weight,
                 Bundle = bundle,
                 Clip = clip,
-                Box = new() { Id = nesting.Box.Id, Weight = nesting.Box.Weight }
+                Box = new(nesting.Box.Id, nesting.Box.Weight)
             });
 
         if (plu.IsWeight)
-            return characteristics;
+            return characteristics.ToArray();
 
         List<CharacteristicEntity> characteristicsEntities = await dbContext.Characteristics
             .Include(i => i.Box)
@@ -72,10 +71,10 @@ internal sealed class PluApiService(WsDbContext dbContext) : IPluService
             PluWeight = plu.Weight,
             Bundle = bundle,
             Clip = clip,
-            Box = new() { Id = characteristic.Box.Id, Weight = characteristic.Box.Weight }
+            Box = new(characteristic.Box.Id, characteristic.Box.Weight)
         }));
 
-        return characteristics;
+        return characteristics.ToArray();
     }
 
     #endregion

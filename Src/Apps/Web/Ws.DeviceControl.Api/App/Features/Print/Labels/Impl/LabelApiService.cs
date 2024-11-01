@@ -31,7 +31,7 @@ internal sealed class LabelApiService(
         return LabelExpressions.ToLabelDto.Compile().Invoke(entity);
     }
 
-    public async Task<List<LabelDto>> GetLabelsWorkShiftByArmAsync(Guid amrId)
+    public async Task<LabelDto[]> GetLabelsWorkShiftByArmAsync(Guid amrId)
     {
         WorkShift workShift = new();
 
@@ -45,7 +45,7 @@ internal sealed class LabelApiService(
             )
             .OrderByDescending(i => i.CreateDt)
             .Select(LabelExpressions.ToLabelDto)
-            .ToListAsync();
+            .ToArrayAsync();
     }
 
     #endregion

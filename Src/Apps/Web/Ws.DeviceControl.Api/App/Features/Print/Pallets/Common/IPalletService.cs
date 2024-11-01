@@ -6,6 +6,6 @@ public interface IPalletService
 {
     public Task<PalletDto> GetByIdAsync(Guid id);
     public Task<PalletDto> GetByNumber(string number);
-    public Task<List<PalletDto>> GetPalletsWorkShiftByArmAsync(Guid armId);
-    public Task<List<LabelPalletDto>> GetPalletLabels(Guid id);
+    public Task<PalletDto[]> GetPalletsWorkShiftByArmAsync(Guid armId);
+    public Task<LabelPalletDto[]> GetPalletLabels(Guid id);
 }

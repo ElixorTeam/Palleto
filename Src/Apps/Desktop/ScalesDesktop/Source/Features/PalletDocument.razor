@@ -60,7 +60,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (PluPalletInfo plu in Pallet.Plus)
+    @foreach (PluPalletDto plu in Pallet.Plus)
     {
       <tr>
         <td style="border: 1px black solid; padding: 0.2rem; font-weight: 600; font-size: 2.5rem;">@plu.Name</td>
@@ -92,7 +92,7 @@
 
 @code {
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Parameter, EditorRequired] public PalletInfo Pallet { get; set; } = default!;
+  [Parameter, EditorRequired] public PalletDto Pallet { get; set; } = default!;
 
   private string Base64BarcodeImage { get; set; } = string.Empty;
 

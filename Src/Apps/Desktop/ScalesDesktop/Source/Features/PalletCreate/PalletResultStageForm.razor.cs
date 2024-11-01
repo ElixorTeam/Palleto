@@ -18,7 +18,7 @@ public sealed partial class PalletResultStageForm : ComponentBase
 
     [Parameter, EditorRequired] public PalletCreateModel FormModel { get; set; } = default!;
     [Parameter] public EventCallback OnCancelAction { get; set; }
-    [Parameter] public EventCallback<PalletInfo> OnSubmitAction { get; set; }
+    [Parameter] public EventCallback<PalletDto> OnSubmitAction { get; set; }
     [Parameter] public EventCallback<bool> OnBlockAction { get; set; }
 
     private bool IsLoading { get; set; }
@@ -52,7 +52,7 @@ public sealed partial class PalletResultStageForm : ComponentBase
 
         try
         {
-            PalletInfo data = await DesktopApi.CreatePiecePallet(createDto);
+            PalletDto data = await DesktopApi.CreatePiecePallet(createDto);
             await OnSubmitAction.InvokeAsync(data);
             ToastService.ShowSuccess(Localizer["PalletCreateDialogSuccess"]);
         }

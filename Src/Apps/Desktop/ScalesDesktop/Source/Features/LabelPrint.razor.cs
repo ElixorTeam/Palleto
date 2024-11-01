@@ -29,7 +29,7 @@ public sealed partial class LabelPrint : FluxorComponent
 
     #endregion
 
-    [Parameter, EditorRequired] public ArmValue Arm { get; set; } = default!;
+    [Parameter, EditorRequired] public ArmDto Arm { get; set; } = default!;
     [Parameter, EditorRequired] public WeightKneadingModel KneadingModel { get; set; } = default!;
 
     private bool IsButtonClicked { get; set; }
@@ -73,7 +73,7 @@ public sealed partial class LabelPrint : FluxorComponent
 
         try
         {
-            WeightLabel label = await DesktopApi.CreatePluWeightLabel(PluState.Value.Plu!.Id, createDto);
+            PrintSuccessDto label = await DesktopApi.CreatePluWeightLabel(PluState.Value.Plu!.Id, createDto);
             ArmEndpoints.UpdateArmCounter(label.ArmCounter);
             await PrinterService.PrintZplAsync(label.Zpl);
         }

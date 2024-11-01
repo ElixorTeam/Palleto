@@ -10,9 +10,9 @@ internal sealed class PalletManApiService(WsDbContext dbContext, UserHelper user
 {
     #region Queries
 
-    public async Task<PalletMan> GetByCodeAsync(string code)
+    public async Task<PalletManDto> GetByCodeAsync(string code)
     {
-        PalletMan? palletMan = await dbContext.PalletMen
+        PalletManDto? palletMan = await dbContext.PalletMen
             .AsNoTracking()
             .Where(i => i.Warehouse.Id == userHelper.WarehouseId && i.Password == code)
             .Select(PalletManExpressions.ToDto)

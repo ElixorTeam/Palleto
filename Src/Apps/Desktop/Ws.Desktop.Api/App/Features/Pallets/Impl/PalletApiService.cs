@@ -25,7 +25,7 @@ internal sealed class PalletApiService(
 {
     #region Quieries
 
-    public Task<LabelInfo[]> GetAllZplByPalletAsync(Guid palletId)
+    public Task<LabelDto[]> GetAllZplByPalletAsync(Guid palletId)
     {
         return dbContext.Pallets
             .AsNoTracking()
@@ -34,7 +34,7 @@ internal sealed class PalletApiService(
             .ToArrayAsync();
     }
 
-    public Task<PalletInfo[]> GetAllByDateAsync(DateTime startTime, DateTime endTime)
+    public Task<PalletDto[]> GetByDateAsync(DateTime startTime, DateTime endTime)
     {
         bool dateCondition = startTime != DateTime.MinValue && endTime != DateTime.MaxValue && startTime < endTime;
         return dbContext.Pallets
@@ -45,7 +45,7 @@ internal sealed class PalletApiService(
             .ToPalletInfo(dbContext.Labels).ToArrayAsync();
     }
 
-    public Task<PalletInfo[]> GetByNumberAsync(string number)
+    public Task<PalletDto[]> GetByNumberAsync(string number)
     {
         return dbContext.Pallets
             .AsNoTracking()
@@ -92,7 +92,7 @@ internal sealed class PalletApiService(
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task<PalletInfo> CreatePiecePalletAsync(PalletPieceCreateDto dto)
+    public async Task<PalletDto> CreatePiecePalletAsync(PalletPieceCreateDto dto)
     {
         uint palletCounter = (dbContext.Pallets.Any() ? dbContext.Pallets.Max(i => i.Counter) : 0) + 1;
 

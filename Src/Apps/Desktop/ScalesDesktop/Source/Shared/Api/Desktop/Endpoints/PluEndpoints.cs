@@ -5,11 +5,11 @@ namespace ScalesDesktop.Source.Shared.Api.Desktop.Endpoints;
 
 public class PluEndpoints(IDesktopApi desktopApi)
 {
-    public ParameterlessEndpoint<PluWeight[]> WeightPlusEndpoint { get; } = new(
+    public ParameterlessEndpoint<PluWeightDto[]> WeightPlusEndpoint { get; } = new(
          desktopApi.GetPlusWeightByArm,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(5) });
 
-    public ParameterlessEndpoint<PluPiece[]> PiecePlusEndpoint { get; } = new(
+    public ParameterlessEndpoint<PluPieceDto[]> PiecePlusEndpoint { get; } = new(
         desktopApi.GetPlusPieceByArm,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(5) });
 }

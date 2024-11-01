@@ -74,7 +74,7 @@
   [Parameter] public EventCallback OnArmRefetch { get; set; }
   [Parameter] public bool IsSmall { get; set; }
 
-  private async Task RefetchArm(Query<ArmValue> query)
+  private async Task RefetchArm(Query<ArmDto> query)
   {
     query.Refetch();
     if (!OnArmRefetch.HasDelegate) return;

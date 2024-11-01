@@ -9,13 +9,13 @@
         <PackageReference Include="Phetch.Blazor" />
         <PackageReference Include="FluentValidation" />
         <PackageReference Include="Fluxor.Blazor.Web" />
-        <PackageReference Include="PSC.Blazor.Components.Chartjs" />
         <PackageReference Include="Refit" />
         <PackageReference Include="Refit.HttpClientFactory" />
         <PackageReference Include="vNext.BlazorComponents.FluentValidation" />
     </ItemGroup>
 
     <ItemGroup Label="Packages">
+        <PackageReference Include="PSC.Blazor.Components.Chartjs" VersionOverride="8.0.8"/>
         <PackageReference Include="DNTCaptcha.Blazor" VersionOverride="1.2.3" />
         <PackageReference Include="Blazorise" VersionOverride="1.6.2" />
         <PackageReference Include="Blazorise.DataGrid" VersionOverride="1.6.2" />

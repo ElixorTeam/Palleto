@@ -2,7 +2,7 @@ using Ws.Shared.Json.Converters;
 
 namespace Ws.Desktop.Models.Features.PalletMen;
 
-public sealed record PalletMan
+public sealed record PalletManDto
 {
     [JsonPropertyName("id")]
     public required Guid Id { get; init; }

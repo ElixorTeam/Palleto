@@ -4,24 +4,24 @@ namespace ScalesDesktop.Source.Shared.Api.Desktop.Endpoints;
 
 public class PalletEndpoints(IDesktopApi desktopApi)
 {
-    public Endpoint<PiecePalletsArgs, PalletInfo[]> PiecePalletsEndpoint { get; } = new(
+    public Endpoint<PiecePalletsArgs, PalletDto[]> PiecePalletsEndpoint { get; } = new(
         value => desktopApi.GetPalletsByArm(value.StartDt, value.EndDt),
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(5) });
 
-    public Endpoint<LabelEndpointArgs, LabelInfo[]> PalletLabelsEndpoint { get; } = new(
+    public Endpoint<LabelEndpointArgs, LabelDto[]> PalletLabelsEndpoint { get; } = new(
         value => desktopApi.GetPalletLabels(value.PalletUid),
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(30) });
 
-    public Endpoint<PiecePalletsNumberArgs, PalletInfo[]> PiecePalletsNumberEndpoint { get; } = new(
+    public Endpoint<PiecePalletsNumberArgs, PalletDto[]> PiecePalletsNumberEndpoint { get; } = new(
         value => desktopApi.GetPalletByNumber(value.Number),
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(5) }
     );
 
-    public void InsertPiecePallet(PiecePalletsArgs args, PalletInfo data) =>
+    public void InsertPiecePallet(PiecePalletsArgs args, PalletDto data) =>
         PiecePalletsEndpoint.UpdateQueryData(args, q =>
         {
             if (q.Data == null) return q.Data!;
-            IEnumerable<PalletInfo> newData = q.Data.Prepend(data);
+            IEnumerable<PalletDto> newData = q.Data.Prepend(data);
             return newData.ToArray();
         });
 }

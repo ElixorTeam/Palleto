@@ -7,7 +7,7 @@ public interface IArmService
 {
     #region Queries
 
-    public Task<ArmValue> GetCurrentAsync();
+    public Task<ArmDto> GetCurrentAsync();
 
     #endregion
 

@@ -11,7 +11,7 @@ public sealed class PalletManController(IPalletManService palletManService)
     #region Queries
 
     [HttpGet]
-    public Task<PalletMan> GetPalletManByCode([FromQuery(Name = "code")] string code) =>
+    public Task<PalletManDto> GetPalletManByCode([FromQuery(Name = "code")] string code) =>
         palletManService.GetByCodeAsync(code);
 
     #endregion

@@ -7,16 +7,16 @@ public interface IPalletApiService
 {
     #region Queries
 
-    public Task<PalletInfo[]> GetByNumberAsync(string number);
-    public Task<LabelInfo[]> GetAllZplByPalletAsync(Guid palletId);
-    public Task<PalletInfo[]> GetAllByDateAsync(DateTime startTime, DateTime endTime);
+    public Task<PalletDto[]> GetByNumberAsync(string number);
+    public Task<LabelDto[]> GetAllZplByPalletAsync(Guid palletId);
+    public Task<PalletDto[]> GetByDateAsync(DateTime startTime, DateTime endTime);
 
     #endregion
 
     #region Commands
 
     public Task DeleteAsync(Guid id);
-    public Task<PalletInfo> CreatePiecePalletAsync(PalletPieceCreateDto dto);
+    public Task<PalletDto> CreatePiecePalletAsync(PalletPieceCreateDto dto);
 
     #endregion
 }

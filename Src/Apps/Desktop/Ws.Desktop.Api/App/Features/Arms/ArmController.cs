@@ -12,7 +12,7 @@ public sealed class ArmController(IArmService armService) : ControllerBase
     #region Queries
 
     [HttpGet]
-    public Task<ArmValue> GetCurrent() =>
+    public Task<ArmDto> GetCurrent() =>
         armService.GetCurrentAsync();
 
     #endregion

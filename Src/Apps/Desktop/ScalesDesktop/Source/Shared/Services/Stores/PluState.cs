@@ -3,12 +3,12 @@ using Ws.Desktop.Models.Features.Plus.Weight.Output;
 namespace ScalesDesktop.Source.Shared.Services.Stores;
 
 [FeatureState]
-public record PluState(PluWeight? Plu)
+public record PluState(PluWeightDto? Plu)
 {
     private PluState() : this(Plu: null) { }
 }
 
-public record ChangePluAction(PluWeight Plu);
+public record ChangePluAction(PluWeightDto Plu);
 
 public class ChangePluReducer : Reducer<PluState, ChangePluAction>
 {

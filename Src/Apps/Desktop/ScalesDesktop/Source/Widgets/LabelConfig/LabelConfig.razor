@@ -51,12 +51,12 @@
 
   # endregion
 
-  private async Task ShowPluSelectDialog(PluWeight[] plu)
+  private async Task ShowPluSelectDialog(PluWeightDto[] plu)
   {
     PluDialogContent data = new() { Data = plu.AsQueryable() };
     IDialogReference dialog = await DialogService.ShowDialogAsync<PluSelectDialog>(data, new());
     DialogResult result = await dialog.Result;
-    if (result is { Cancelled: false, Data: PluWeight pluEntity })
+    if (result is { Cancelled: false, Data: PluWeightDto pluEntity })
       Dispatcher.Dispatch(new ChangePluAction(pluEntity));
   }
 

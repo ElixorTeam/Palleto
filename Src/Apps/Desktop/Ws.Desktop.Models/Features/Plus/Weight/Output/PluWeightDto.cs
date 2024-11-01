@@ -1,6 +1,6 @@
 namespace Ws.Desktop.Models.Features.Plus.Weight.Output;
 
-public record PluWeight
+public record PluWeightDto
 {
     [JsonPropertyName("id")]
     public required Guid Id { get; init; }

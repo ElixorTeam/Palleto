@@ -8,13 +8,13 @@ public interface IDesktopPalletApi
     #region Queries
 
     [Get("/pallets/{number}")]
-    Task<PalletInfo[]> GetPalletByNumber(uint number);
+    Task<PalletDto[]> GetPalletByNumber(uint number);
 
     [Get("/pallets")]
-    Task<PalletInfo[]> GetPalletsByArm(DateTime? startDt, DateTime? endDt);
+    Task<PalletDto[]> GetPalletsByArm(DateTime? startDt, DateTime? endDt);
 
     [Get("/pallets/{palletId}/labels")]
-    Task<LabelInfo[]> GetPalletLabels(Guid palletId);
+    Task<LabelDto[]> GetPalletLabels(Guid palletId);
 
     #endregion
 
@@ -24,7 +24,7 @@ public interface IDesktopPalletApi
     Task DeletePallet(Guid palletId);
 
     [Post("/pallets")]
-    Task<PalletInfo> CreatePiecePallet([Body] PalletPieceCreateDto createDto);
+    Task<PalletDto> CreatePiecePallet([Body] PalletPieceCreateDto createDto);
 
     #endregion
 }

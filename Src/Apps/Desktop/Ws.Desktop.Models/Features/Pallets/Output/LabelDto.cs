@@ -1,6 +1,6 @@
 namespace Ws.Desktop.Models.Features.Pallets.Output;
 
-public sealed record LabelInfo
+public sealed record LabelDto
 {
     [JsonPropertyName("zpl")]
     public required string Zpl { get; init; }

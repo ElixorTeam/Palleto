@@ -55,14 +55,14 @@
           else
           {
             <ul class="w-full space-y-3 grow px-4 pb-3 pr-px overflow-y-scroll">
-              @{ PalletInfo[] filteredPallets = GetFilteredPalletList(palletQuery.Data).ToArray(); }
+              @{ PalletDto[] filteredPallets = GetFilteredPalletList(palletQuery.Data).ToArray(); }
               @if (!filteredPallets.Any())
               {
                 <PalletSelectNotFound />
               }
               else
               {
-                @foreach (PalletInfo item in filteredPallets)
+                @foreach (PalletDto item in filteredPallets)
                 {
                   <li>
                     <PalletSelectItem Pallet="@item"/>
@@ -87,14 +87,14 @@
           else
           {
             <ul class="w-full space-y-3 grow px-4 pb-3 pr-px overflow-y-scroll">
-              @{ PalletInfo[] filteredPallets = GetFilteredPalletList(palletQuery.Data).ToArray(); }
+              @{ PalletDto[] filteredPallets = GetFilteredPalletList(palletQuery.Data).ToArray(); }
               @if (!filteredPallets.Any())
               {
                 <PalletSelectNotFound />
               }
               else
               {
-                @foreach (PalletInfo item in filteredPallets)
+                @foreach (PalletDto item in filteredPallets)
                 {
                   <li>
                     <PalletSelectItem Pallet="@item"/>
@@ -140,9 +140,9 @@
     base.OnInitialized();
   }
 
-  private IEnumerable<PalletInfo> GetFilteredPalletList(PalletInfo[] pallets)
+  private IEnumerable<PalletDto> GetFilteredPalletList(PalletDto[] pallets)
   {
-    IEnumerable<PalletInfo> filteredPallets = pallets.AsEnumerable();
+    IEnumerable<PalletDto> filteredPallets = pallets.AsEnumerable();
 
     if (!string.IsNullOrWhiteSpace(InputSearchCounter))
       filteredPallets = pallets.Where(x => x.Number.ToString().Contains(InputSearchCounter));
@@ -185,7 +185,7 @@
   {
     IDialogReference dialog = await DialogService.ShowDialogAsync<PalletCreateDialog>(new() { PreventDismissOnOverlayClick = true });
     DialogResult result = await dialog.Result;
-    if (result is { Cancelled: false, Data: PalletInfo newPallet })
+    if (result is { Cancelled: false, Data: PalletDto newPallet })
     {
       WorkShift workShift = new();
       PalletEndpoints.InsertPiecePallet(new(workShift.Start, workShift.End), newPallet);

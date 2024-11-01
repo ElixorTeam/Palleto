@@ -3,12 +3,12 @@ using Ws.Desktop.Models.Features.Pallets.Output;
 namespace ScalesDesktop.Source.Shared.Services.Stores;
 
 [FeatureState]
-public record PalletState(PalletInfo? Pallet, PalletViewTabType PalletViewTabType)
+public record PalletState(PalletDto? Pallet, PalletViewTabType PalletViewTabType)
 {
     private PalletState() : this(null, PalletViewTabType.Info) { }
 }
 
-public record ChangePalletAction(PalletInfo Pallet);
+public record ChangePalletAction(PalletDto Pallet);
 
 public class ChangePalletReducer : Reducer<PalletState, ChangePalletAction>
 {
@@ -29,7 +29,7 @@ public class SwitchPalletDeleteFlagReducer : Reducer<PalletState, SwitchPalletDe
 {
     public override PalletState Reduce(PalletState state, SwitchPalletDeleteFlagAction action)
     {
-        PalletInfo? currentPallet = state.Pallet;
+        PalletDto? currentPallet = state.Pallet;
         if (currentPallet == null) return state;
         DateTime? newDeleteFlag = !currentPallet.IsDelete ? DateTime.Now : null;
         return state with { Pallet = currentPallet with { DeletedAt = newDeleteFlag } };

@@ -7,7 +7,7 @@ namespace Ws.Desktop.Api.App.Features.Pallets.Expressions;
 
 internal static class PalletExpressions
 {
-    public static IQueryable<PalletInfo> ToPalletInfo(this IQueryable<PalletEntity> query, DbSet<LabelEntity> labelContext)
+    public static IQueryable<PalletDto> ToPalletInfo(this IQueryable<PalletEntity> query, DbSet<LabelEntity> labelContext)
     {
         return query
             .GroupJoin(
@@ -15,19 +15,15 @@ internal static class PalletExpressions
                 pallet => pallet.Id,
                 label => label.PalletId,
                 (pallet, labels) => new { Pallet = pallet, Labels = labels })
-            .Select(result => new PalletInfo
+            .Select(result => new PalletDto
             {
                 Id = result.Pallet.Id,
                 Arm = result.Pallet.Arm.Name,
-                Warehouse = new()
-                {
-                    Id = result.Pallet.Warehouse.Id,
-                    Name = result.Pallet.Warehouse.Name
-                },
+                Warehouse = new(result.Pallet.Warehouse.Id, result.Pallet.Warehouse.Name),
                 Number = result.Pallet.Number,
                 Plus = result.Labels
                     .GroupBy(label => new { label.Plu!.Id, label.Kneading })
-                    .Select(group => new PluPalletInfo
+                    .Select(group => new PluPalletDto
                     {
                         Name = group.First().Plu!.Name,
                         Number = (ushort)group.First().Plu!.Number,
@@ -49,7 +45,7 @@ internal static class PalletExpressions
             });
     }
 
-    public static IQueryable<LabelInfo> ToLabelInfo(this IQueryable<PalletEntity> query, DbSet<LabelEntity> labelContext)
+    public static IQueryable<LabelDto> ToLabelInfo(this IQueryable<PalletEntity> query, DbSet<LabelEntity> labelContext)
     {
         return query
             .GroupJoin(
@@ -61,7 +57,7 @@ internal static class PalletExpressions
                 result => result.Labels,
                 (result, label) => new { label.Zpl, label.BarcodeTop, label.ProductDt })
             .OrderBy(temp => temp.ProductDt)
-            .Select(temp => new LabelInfo
+            .Select(temp => new LabelDto
             {
                 Zpl = temp.Zpl.Zpl,
                 Barcode = temp.BarcodeTop

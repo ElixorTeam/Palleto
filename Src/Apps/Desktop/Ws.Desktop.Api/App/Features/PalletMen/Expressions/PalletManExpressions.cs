@@ -5,7 +5,7 @@ namespace Ws.Desktop.Api.App.Features.PalletMen.Expressions;
 
 internal static class PalletManExpressions
 {
-    public static Expression<Func<PalletManEntity, PalletMan>> ToDto => palletMan =>
+    public static Expression<Func<PalletManEntity, PalletManDto>> ToDto => palletMan =>
         new()
         {
             Id = palletMan.Id,

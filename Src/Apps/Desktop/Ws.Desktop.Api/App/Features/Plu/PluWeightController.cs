@@ -15,13 +15,13 @@ public sealed class PluWeightController(IPluWeightService pluWeightService, IPlu
 
     [Authorize(PolicyEnum.Pc)]
     [HttpGet("piece")]
-    public Task<PluPiece[]> GetAllPieceByArm()
-        => pluPieceService.GetAllPieceAsync();
+    public Task<PluPieceDto[]> GetAllPieceByArm() =>
+        pluPieceService.GetAllPieceAsync();
 
     [Authorize(PolicyEnum.Tablet)]
     [HttpGet("weight")]
-    public Task<PluWeight[]> GetAllWeightByArm()
-        => pluWeightService.GetAllWeightAsync();
+    public Task<PluWeightDto[]> GetAllWeightByArm() =>
+        pluWeightService.GetAllWeightAsync();
 
     #endregion
 
@@ -29,7 +29,7 @@ public sealed class PluWeightController(IPluWeightService pluWeightService, IPlu
 
     [Authorize(PolicyEnum.Tablet)]
     [HttpPost("weight/{pluId:guid}/label")]
-    public Task<WeightLabel> GenerateLabel(Guid pluId, [FromBody] CreateWeightLabelDto dto) =>
+    public Task<PrintSuccessDto> GenerateLabel(Guid pluId, [FromBody] CreateWeightLabelDto dto) =>
         pluWeightService.GenerateLabel(pluId, dto);
 
     #endregion

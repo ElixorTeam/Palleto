@@ -43,10 +43,11 @@ else
   [Inject] private IState<PalletState> PalletState { get; set; } = default!;
 
   # endregion
-  private bool GetCanDelete(ArmValue armValue) =>
-    armValue.Warehouse.Id == PalletState.Value.Pallet!.Warehouse.Id && PalletState.Value.Pallet.IsShipped == false;
 
-  private async void DeletePallet(PalletInfo pallet)
+  private bool GetCanDelete(ArmDto armDto) =>
+    armDto.Warehouse.Id == PalletState.Value.Pallet!.Warehouse.Id && PalletState.Value.Pallet.IsShipped == false;
+
+  private async void DeletePallet(PalletDto pallet)
   {
     try
     {
