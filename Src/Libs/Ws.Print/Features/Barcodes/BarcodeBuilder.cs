@@ -1,6 +1,6 @@
 using Ws.Print.Features.Barcodes.Common;
 using Ws.Print.Features.Barcodes.Models;
-using Ws.Print.Shared.Models;
+using Ws.Print.Shared.ValueTypes;
 using BarcodeVarUtils=Ws.Print.Features.Barcodes.Utils.BarcodeVarUtils;
 
 namespace Ws.Print.Features.Barcodes;

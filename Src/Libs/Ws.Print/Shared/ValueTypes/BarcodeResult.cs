@@ -1,4 +1,4 @@
-namespace Ws.Print.Shared.Models;
+namespace Ws.Print.Shared.ValueTypes;
 
 public sealed record BarcodeResult(string Barcode)
 {

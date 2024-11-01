@@ -10,7 +10,7 @@ using Ws.Print.Features.Templates;
 using Ws.Print.Features.Templates.Models;
 using Ws.Print.Features.Templates.Utils;
 using Ws.Print.Features.Templates.Variables;
-using Ws.Print.Shared.Models;
+using Ws.Print.Shared.ValueTypes;
 using CacheService=Ws.Desktop.Api.App.Shared.Labels.Generate.Services.CacheService;
 
 namespace Ws.Desktop.Api.App.Shared.Labels.Generate.Features.Piece;

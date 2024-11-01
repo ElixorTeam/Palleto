@@ -1,6 +1,6 @@
 // ReSharper disable NotAccessedPositionalProperty.Global
 
-using Ws.Print.Shared.Models;
+using Ws.Print.Shared.ValueTypes;
 
 namespace Ws.Print.Features.Templates.Variables;
 

@@ -1,7 +1,7 @@
 using Ws.DeviceControl.Models.Features.References.Template.Universal;
 using Ws.Print.Features.Barcodes.Models;
 using Ws.Print.Features.Barcodes.Utils;
-using Ws.Print.Shared.Models;
+using Ws.Print.Shared.ValueTypes;
 
 namespace DeviceControl.Source.Features.BarcodeConfigurator;
 

@@ -1,6 +1,6 @@
 using Ws.Print.Features.Barcodes;
 using Ws.Print.Features.Barcodes.Models;
-using Ws.Print.Shared.Models;
+using Ws.Print.Shared.ValueTypes;
 
 namespace Ws.Print.Tests.Shared;
 
