@@ -4,5 +4,5 @@ namespace Ws.Desktop.Api.App.Features.Plu.Common;
 
 public interface IPluPieceService
 {
-    public Task<PluPiece[]> GetAllPieceByArmAsync();
+    public Task<PluPiece[]> GetAllPieceAsync();
 }

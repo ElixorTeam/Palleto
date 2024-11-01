@@ -32,9 +32,6 @@ public record LabelDto
     [JsonPropertyName("warehouse")]
     public required ProxyDto Warehouse { get; set; }
 
-    [JsonPropertyName("productionSite")]
-    public required ProxyDto ProductionSite { get; set; }
-
     [JsonPropertyName("plu")]
     public required ProxyDto? Plu { get; set; }
 

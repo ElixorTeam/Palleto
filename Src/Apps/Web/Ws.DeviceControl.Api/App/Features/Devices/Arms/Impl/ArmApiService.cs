@@ -61,7 +61,7 @@ internal sealed class ArmApiService(
             new AnalyticDto(hr, labelCounts.FirstOrDefault(l => l.Date == hr)?.Count ?? 0)).ToArray();
     }
 
-    public async Task<PluArmDto[]> GetArmPlus(Guid id)
+    public async Task<PluArmDto[]> GetPlusAsync(Guid id)
     {
         LineEntity entity = await dbContext.Lines.SafeGetById(id, FkProperty.Line);
 

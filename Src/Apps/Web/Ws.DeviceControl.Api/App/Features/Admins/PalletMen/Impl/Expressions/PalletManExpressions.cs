@@ -14,8 +14,8 @@ public static class PalletManExpressions
             Id1C = palletMan.Uid1C,
             Fio = new(palletMan.Surname, palletMan.Name, palletMan.Patronymic),
             Password = palletMan.Password,
-            Warehouse = new(palletMan.Warehouse.Id, palletMan.Warehouse.Name),
-            ProductionSite = new(palletMan.Warehouse.ProductionSite.Id, palletMan.Warehouse.ProductionSite.Name),
+            Warehouse = ProxyUtils.Warehouse(palletMan.Warehouse),
+            ProductionSite =  ProxyUtils.ProductionSite(palletMan.Warehouse.ProductionSite),
             CreateDt = palletMan.CreateDt,
             ChangeDt = palletMan.ChangeDt
         };

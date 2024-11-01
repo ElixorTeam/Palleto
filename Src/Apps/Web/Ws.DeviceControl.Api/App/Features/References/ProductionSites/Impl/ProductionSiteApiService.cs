@@ -29,7 +29,7 @@ internal sealed class ProductionSiteApiService(
         return data;
     }
 
-    public async Task<List<ProxyDto>> GetProxiesAsync()
+    public async Task<ProxyDto[]> GetProxiesAsync()
     {
         bool seniorSupport = await userHelper.ValidatePolicyAsync(PolicyEnum.SeniorSupport);
         if (seniorSupport)
@@ -39,8 +39,8 @@ internal sealed class ProductionSiteApiService(
                 .AsNoTracking()
                 .IfWhere(!developer, entity => entity.Id != DefaultTypes.GuidMax)
                 .OrderBy(i => i.Name)
-                .Select(ProductionSiteCommonExpressions.ToProxy)
-                .ToListAsync();
+                .Select(CommonExpressions.ProductionSite)
+                .ToArrayAsync();
         }
         ProxyDto? userProductionSite = await userHelper.GetUserProductionSiteAsync();
         return userProductionSite != null ? [userProductionSite] : [];

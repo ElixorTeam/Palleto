@@ -17,14 +17,14 @@ internal static class PalletExpressions
             .Select(result => new PalletDto
             {
                 Id = result.Pallet.Id,
-                Arm = new(result.Pallet.Arm.Id, result.Pallet.Arm.Name),
-                Warehouse = new(result.Pallet.Warehouse.Id, result.Pallet.Warehouse.Name),
+                Arm = ProxyUtils.Arm(result.Pallet.Arm),
+                Warehouse = ProxyUtils.Warehouse(result.Pallet.Warehouse),
                 Number = result.Pallet.Number,
                 Plus = result.Labels
                     .GroupBy(label => new { label.Plu!.Id, label.Kneading })
                     .Select(group => new PluPalletDto
                     {
-                        Plu = new (group.First().Plu!.Id, group.First().Plu!.Name),
+                        Plu = ProxyUtils.Plu(group.First().Plu!),
                         Kneading = (ushort)group.First().Kneading,
                         BoxCount = (ushort)group.Count(),
                         BundleCount = (ushort)group.Sum(label => label.BundleCount),
@@ -32,8 +32,7 @@ internal static class PalletExpressions
                         WeightNet = group.Sum(label => label.WeightNet),
                     }).OrderBy(i => i.Kneading)
                     .ToHashSet(),
-                PalletMan = new(result.Pallet.PalletMan.Id,
-                $"{result.Pallet.PalletMan.Surname} {result.Pallet.PalletMan.Name} {result.Pallet.PalletMan.Patronymic}"),
+                PalletMan = ProxyUtils.PalletMan(result.Pallet.PalletMan),
                 WeightTray = result.Pallet.TrayWeight,
                 Barcode = result.Pallet.Barcode,
                 ProdDt = result.Pallet.ProductDt,

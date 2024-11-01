@@ -37,10 +37,9 @@ internal sealed class PalletApiService(
     public Task<PalletInfo[]> GetAllByDateAsync(DateTime startTime, DateTime endTime)
     {
         bool dateCondition = startTime != DateTime.MinValue && endTime != DateTime.MaxValue && startTime < endTime;
-
         return dbContext.Pallets
             .AsNoTracking()
-            .IfWhere(dateCondition, p => p.CreateDt > startTime && p.CreateDt < endTime)
+            .IfWhere(dateCondition, p => p.CreateDt.AddHours(3) > startTime && p.CreateDt.AddHours(3) < endTime)
             .Where(p => p.Warehouse.Id == userHelper.WarehouseId)
             .OrderByDescending(p => p.CreateDt)
             .ToPalletInfo(dbContext.Labels).ToArrayAsync();

@@ -8,7 +8,7 @@ public interface IPluWeightService
 {
     #region Queries
 
-    public Task<PluWeight[]> GetAllWeightByArmAsync();
+    public Task<PluWeight[]> GetAllWeightAsync();
 
     #endregion
 

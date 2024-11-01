@@ -29,7 +29,7 @@ public sealed class ProductionSiteController(IProductionSiteService productionSi
         productionSiteService.GetProxyByUserAsync();
 
     [HttpGet("proxy")]
-    public Task<List<ProxyDto>> GetProxies() =>
+    public Task<ProxyDto[]> GetProxies() =>
         productionSiteService.GetProxiesAsync();
 
     #endregion

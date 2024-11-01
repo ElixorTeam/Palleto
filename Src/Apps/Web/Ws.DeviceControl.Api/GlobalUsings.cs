@@ -16,10 +16,10 @@ global using Ws.DeviceControl.Api.App.Shared;
 global using Ws.DeviceControl.Api.App.Shared.Helpers;
 global using Ws.DeviceControl.Api.App.Shared.Expressions;
 global using Ws.DeviceControl.Api.App.Shared.Extensions;
+global using Ws.DeviceControl.Api.App.Shared.Utils;
 
 // 5. Modules
 global using Ws.DeviceControl.Models.Auth;
 global using Ws.DeviceControl.Models.Shared;
 global using Ws.Database;
-global using Ws.Shared.Constants;
 global using Ws.Shared.Enums;

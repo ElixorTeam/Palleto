@@ -20,8 +20,8 @@ public sealed class ArmController(IArmService armService)
         armService.GetByIdAsync(id);
 
     [HttpGet("{id:guid}/plus")]
-    public Task<PluArmDto[]> GetArmPlus([FromRoute] Guid id) =>
-        armService.GetArmPlus(id);
+    public Task<PluArmDto[]> GetPlus([FromRoute] Guid id) =>
+        armService.GetPlusAsync(id);
 
     [HttpGet("{id:guid}/analytics")]
     public Task<AnalyticDto[]> GetAnalytic([FromRoute] Guid id, [FromQuery(Name = "date")] DateOnly date) =>

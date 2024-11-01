@@ -19,7 +19,7 @@ public sealed class UserHelper(
         dbContext.Users
             .Where(i => i.Id == UserId)
             .Select(i => i.ProductionSite)
-            .Select(ProductionSiteCommonExpressions.ToProxy)
+            .Select(CommonExpressions.ProductionSite)
             .FirstOrDefaultAsync();
 
     public async Task<bool> ValidatePolicyAsync(string policy) =>

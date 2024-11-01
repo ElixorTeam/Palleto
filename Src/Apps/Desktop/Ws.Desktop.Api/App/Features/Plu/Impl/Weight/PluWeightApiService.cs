@@ -21,7 +21,7 @@ internal sealed class PluWeightApiService(
 {
     #region Queries
 
-    public Task<PluWeight[]> GetAllWeightByArmAsync()
+    public Task<PluWeight[]> GetAllWeightAsync()
     {
         return dbContext.Lines
             .AsNoTracking()

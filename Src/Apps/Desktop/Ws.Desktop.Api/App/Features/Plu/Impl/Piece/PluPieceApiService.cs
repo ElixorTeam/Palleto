@@ -13,7 +13,7 @@ internal sealed class PluPieceApiService(WsDbContext dbContext, UserHelper userH
 {
     #region Queries
 
-    public async Task<PluPiece[]> GetAllPieceByArmAsync()
+    public async Task<PluPiece[]> GetAllPieceAsync()
     {
         LineEntity line = await dbContext.Lines
             .AsNoTracking()

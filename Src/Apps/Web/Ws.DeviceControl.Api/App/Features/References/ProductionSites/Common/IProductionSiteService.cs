@@ -11,7 +11,7 @@ public interface IProductionSiteService :
     #region Queries
 
     Task<ProxyDto> GetProxyByUserAsync();
-    Task<List<ProxyDto>> GetProxiesAsync();
+    Task<ProxyDto[]> GetProxiesAsync();
 
     #endregion
 
