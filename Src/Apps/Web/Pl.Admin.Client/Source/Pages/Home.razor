@@ -1,0 +1,13 @@
+@using Pl.Admin.Client.Source.Shared.Constants
+@attribute [Route(Urls.Home)]
+@attribute [Authorize]
+
+<div class="flex flex-col size-full items-center gap-2 justify-center">
+  <div class="text-center font-light text-lg">
+    <span>@Localizer["HomeMsgDescription"]</span>
+  </div>
+</div>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+}

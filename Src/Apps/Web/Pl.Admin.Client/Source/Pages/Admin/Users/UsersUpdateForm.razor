@@ -1,0 +1,91 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.Admins.Users.Commands
+@using Pl.Admin.Models.Features.Admins.Users.Queries
+@using Pl.Admin.Models.Features.References.ProductionSites.Queries
+@inherits SectionFormBase<UserUpdateDto>
+
+<SectionForm
+  FormModel="@FormModel"
+  Validator="@(new UserUpdateValidator(WsDataLocalizer))"
+  OnCancelAction="@OnCancelAction"
+  OnSubmitAction="@UpdateItem"
+>
+  <FieldsContent>
+    <SectionAdminGuidField Value="@Model.User.Id" />
+
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColUser"]"
+      Value="@Model.User.Username"
+    />
+
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColFullName"]"
+      Value="@Model.User.FirstName"
+    />
+
+    <SectionInputWrapper
+      Path="@RedirectHelper.ToProductionSite(Model.ProductionSiteId)"
+      Label="@WsDataLocalizer["ColProductionSite"]"
+      HtmlFor="user-warehouse"
+    >
+      <UseParameterlessEndpoint
+        Endpoint="@ReferencesEndpoints.ProductionSitesEndpoint"
+        Context="productionSitesQuery"
+      >
+        @if (productionSitesQuery.HasData)
+        {
+          <SelectSingle
+            TItem="ProductionSiteDto"
+            HtmlId="user-warehouse"
+            Items="productionSitesQuery.Data"
+            Value="@productionSitesQuery.Data.FirstOrDefault(x => x.Id == FormModel.ProductionSiteId)"
+            ValueChanged="@(value => FormModel.ProductionSiteId = value?.Id ?? Guid.Empty)"
+            Placeholder="@Localizer["FormProductionSiteDefaultPlaceholder"]"
+            EmptyPlaceholder="@Localizer["FormSelectEmptyDefaultPlaceholder"]"
+            SearchPlaceholder="@Localizer["FormSelectSearchDefaultPlaceholder"]"
+            ItemDisplayName="@(item => item.Name)"
+            Filterable
+          />
+        }
+        else
+        {
+          <Skeleton class="h-10 w-full" />
+        }
+      </UseParameterlessEndpoint>
+      <FieldValidation For="@(() => FormModel.ProductionSiteId)" />
+    </SectionInputWrapper>
+  </FieldsContent>
+  <ActionsContent>
+    <SectionFormActionReset OnClick="@ResetAction" />
+    <SectionFormActionRelogin UserUid="Model.User.Id" />
+    <SectionFormActionDelete OnClick="@DeleteItemAction" />
+  </ActionsContent>
+</SectionForm>
+
+@code {
+  #region Inject
+
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
+  [Inject] private AdminEndpoints AdminEndpoints { get; set; } = default!;
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+
+  #endregion
+
+  [Parameter, EditorRequired] public UserWithProductionSite Model { get; set; } = default!;
+
+  protected override async Task UpdateItemAction(UserUpdateDto item)
+  {
+    UserDto dto = await WebApi.SaveOrUpdateUser(Model.User.Id, item);
+    AdminEndpoints.UpdateUserRelationship(dto);
+  }
+
+  protected override async Task DeleteItemAction()
+  {
+    await WebApi.DeleteUser(Model.User.Id);
+    AdminEndpoints.DeleteUserRelationship(Model.User.Id);
+  }
+}

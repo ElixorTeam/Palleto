@@ -1,0 +1,125 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.References.Template.Queries
+
+@inherits SectionDataGridBase<TemplateDto>
+@attribute [Route(Urls.Templates)]
+@attribute [Authorize(Policy = PolicyEnum.SeniorSupport)]
+@rendermode InteractiveServer
+
+<PageTitle>Pl.Admin.Client - @Localizer["SectionTemplates"]</PageTitle>
+
+<UseParameterlessEndpoint
+  Endpoint="PrintSettingsEndpoints.TemplatesEndpoint"
+  Options="DefaultEndpointOptions"
+  Context="templatesQuery"
+>
+  <DataGridHeader>
+    <span>@Localizer["SectionTemplates"]</span>
+    <DataGridItemsCounter ItemsCount="@(templatesQuery.Data?.Length ?? 0)" IsLoading="templatesQuery.IsLoading"/>
+    <DataGridActionReload OnClick="@templatesQuery.RefetchAsync" IsLoading="templatesQuery.IsFetching" />
+    <AuthorizeView Policy="@PolicyEnum.Admin">
+      <DataGridActionCreate OnClick="@OpenCreateFormModal"/>
+    </AuthorizeView>
+  </DataGridHeader>
+
+  <DataGridWrapper>
+    <DataGridContainer
+      TItem="TemplateDto"
+      Items="@(templatesQuery.HasData ? templatesQuery.Data : [])"
+      OnItemSelect="@(item => OpenUpdateFormModal(item))"
+      IsFilterable
+    >
+      <ColumnsContent>
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColChangeDt"]"
+          Field="@nameof(TemplateDto.ChangeDt)"
+          Width="20%"
+          Filterable="false"
+        />
+
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColName"]"
+          Field="@nameof(TemplateDto.Name)"
+          Width="20%"
+        />
+
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColType"]"
+          Width="20%"
+          Field="@nameof(TemplateDto.IsWeight)"
+          FilterCellClass="!font-normal"
+        >
+          <FilterTemplate>
+            @{ context.SearchValue = Type; }
+            <SelectSingle
+              TItem="bool?"
+              Items="@([false, true, null])"
+              @bind-Value="@Type"
+              @bind-Value:after="@(() => context.TriggerFilterChange(Type))"
+              Placeholder="@Localizer["SelectItemNotSelected"]"
+              ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] : GetTemplateTypeName(item.Value))"
+            />
+          </FilterTemplate>
+          <DisplayTemplate>
+          <span>
+            @GetTemplateTypeName(context.IsWeight)
+          </span>
+          </DisplayTemplate>
+        </DataGridColumn>
+
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColSize"]"
+          Width="20%"
+          Filterable="false"
+        >
+          <DisplayTemplate>
+            @context.Width x @context.Height
+          </DisplayTemplate>
+        </DataGridColumn>
+      </ColumnsContent>
+      <ContextMenuContent>
+        <DataGridActionViewItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenUpdateFormModal(item)))" />
+        <DataGridActionOpenInNewTab OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenItemInNewTab(item)))" />
+        <AuthorizeView Policy="@PolicyEnum.Admin" Context="authContext">
+          <DataGridActionDeleteItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => DeleteItem(item)))" />
+        </AuthorizeView>
+      </ContextMenuContent>
+    </DataGridContainer>
+  </DataGridWrapper>
+</UseParameterlessEndpoint>
+
+@code {
+  #region Region
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+
+  #endregion
+
+  private bool? Type { get; set; }
+
+  protected override async Task OpenUpdateFormModal(TemplateDto item) =>
+    await OpenModalWithItem<TemplatesUpdateDialog>(item);
+
+  protected override async Task OpenCreateFormModal() =>
+    await OpenModal<TemplatesCreateDialog>();
+
+  protected override async Task OpenItemInNewTab(TemplateDto item) =>
+    await OpenLinkInNewTab($"{Urls.Templates}?id={item.Id}");
+
+  private string GetTemplateTypeName(bool isWeight) =>
+    isWeight ? WsDataLocalizer["ColTemplateWeight"] : WsDataLocalizer["ColTemplatePiece"];
+
+  protected override Task<TemplateDto> SearchByUidAction(Guid uid) =>
+    WebApi.GetTemplateByUid(uid);
+
+  protected override async Task DeleteItemAction(TemplateDto item)
+  {
+    await WebApi.DeleteTemplate(item.Id);
+    PrintSettingsEndpoints.DeleteTemplate(item.IsWeight, item.Id);
+  }
+}

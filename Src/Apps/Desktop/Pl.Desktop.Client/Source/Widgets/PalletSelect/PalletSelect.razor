@@ -1,0 +1,197 @@
+@using Blazor.Heroicons.Outline
+@using Pl.Desktop.Client.Source.Features.PalletCreate
+@using Pl.Desktop.Models.Features.Pallets.Output
+@using Pl.Shared.ValueTypes
+
+<div class="size-full bg-background overflow-hidden flex flex-col">
+  <div class="size-full grow flex flex-col overflow-hidden">
+    <div class="h-14 flex items-center px-4 shrink-0 border-b justify-between">
+      <h2 class="font-semibold text-lg tracking-tight pb-px">@WsDataLocalizer["ColPallets"]</h2>
+      <div class="flex items-center justify-center pt-px gap-1">
+        <CompactDatePicker
+          @bind-Value="@StartDate"
+          DisabledDateFunc="@(date => date < EndDate?.AddDays(-4) || date >= EndDate?.AddDays(-1))"
+          IsDisabled="@(!string.IsNullOrWhiteSpace(InputSearchCounter))"
+        />
+        <span>-</span>
+        <CompactDatePicker
+          @bind-Value="@EndDate"
+          @bind-Value:after="@(() => StartDate = EndDate?.AddDays(-1))"
+          DisabledDateFunc="@(date => date < DateTime.Today.AddDays(-2) || date > DateTime.Today.AddDays(1))"
+          IsDisabled="@(!string.IsNullOrWhiteSpace(InputSearchCounter))"
+        />
+      </div>
+      <div class="flex items-center gap-2">
+        <UseEndpoint Endpoint="@PalletEndpoints.PiecePalletsEndpoint" Arg="@new(StartDate, EndDate)" Context="palletQuery">
+          <Button
+            Variant="ButtonVariantType.Outline"
+            Size="ButtonSizeType.Icon"
+            OnClick="@(() => { if (string.IsNullOrWhiteSpace(InputSearchCounter)) palletQuery.Refetch(); ResetSortsAndFilters(); PluEndpoints.PiecePlusEndpoint.InvalidateAll(); })"
+            Disabled="@palletQuery.IsFetching"
+          >
+            <ArrowPathIcon class="size-5 mx-2"/>
+          </Button>
+        </UseEndpoint>
+        <Button Size="ButtonSizeType.Icon" OnClick="@(ShowCreateFormDialog)">
+          <PlusIcon class="size-5 mx-2"/>
+        </Button>
+      </div>
+    </div>
+      <PalletSelectSearching
+        @bind-Filter="PalletFilter"
+        @bind-SearchingString="InputSearchCounter"
+      />
+      @if (string.IsNullOrWhiteSpace(InputSearchCounter))
+      {
+        <UseEndpoint Endpoint="@PalletEndpoints.PiecePalletsEndpoint" Arg="@new(StartDate, EndDate)" Context="palletQuery">
+          @if (palletQuery.IsLoading)
+          {
+            <PalletSelectStub />
+          }
+          else if (!palletQuery.HasData || palletQuery.Data.Length == 0)
+          {
+            <PalletSelectNotFound />
+          }
+          else
+          {
+            <ul class="w-full space-y-3 grow px-4 pb-3 pr-px overflow-y-scroll">
+              @{ PalletDto[] filteredPallets = GetFilteredPalletList(palletQuery.Data).ToArray(); }
+              @if (!filteredPallets.Any())
+              {
+                <PalletSelectNotFound />
+              }
+              else
+              {
+                @foreach (PalletDto item in filteredPallets)
+                {
+                  <li>
+                    <PalletSelectItem Pallet="@item"/>
+                  </li>
+                }
+              }
+            </ul>
+          }
+        </UseEndpoint>
+      }
+      else
+      {
+        <UseEndpoint Endpoint="@PalletEndpoints.PiecePalletsNumberEndpoint" Arg="@new(TryGetPalletNumber())" Context="palletQuery">
+          @if (palletQuery.IsLoading)
+          {
+            <PalletSelectStub />
+          }
+          else if (!palletQuery.HasData || palletQuery.Data.Length == 0)
+          {
+            <PalletSelectNotFound />
+          }
+          else
+          {
+            <ul class="w-full space-y-3 grow px-4 pb-3 pr-px overflow-y-scroll">
+              @{ PalletDto[] filteredPallets = GetFilteredPalletList(palletQuery.Data).ToArray(); }
+              @if (!filteredPallets.Any())
+              {
+                <PalletSelectNotFound />
+              }
+              else
+              {
+                @foreach (PalletDto item in filteredPallets)
+                {
+                  <li>
+                    <PalletSelectItem Pallet="@item"/>
+                  </li>
+                }
+              }
+            </ul>
+          }
+        </UseEndpoint>
+      }
+    <div class="w-full border-t px-4 py-2">
+      <PalletManControl />
+    </div>
+  </div>
+</div>
+
+@code {
+
+  # region Injects
+
+  [Inject] private PalletEndpoints PalletEndpoints { get; set; } = default!;
+  [Inject] private PluEndpoints PluEndpoints { get; set; } = default!;
+  [Inject] private IDispatcher Dispatcher { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+
+  # endregion
+
+  private DateTime? StartDate { get; set; }
+  private DateTime? EndDate { get; set; }
+
+  private PalletFilterType PalletFilter { get; set; } = PalletFilterType.NotShipped;
+  private string InputSearchCounter { get; set; } = string.Empty;
+  private const ushort PalletsToDisplay = 100;
+
+  protected override void OnInitialized()
+  {
+    WorkShift workShift = new();
+
+    StartDate = workShift.Start;
+    EndDate = workShift.End;
+
+    base.OnInitialized();
+  }
+
+  private IEnumerable<PalletDto> GetFilteredPalletList(PalletDto[] pallets)
+  {
+    IEnumerable<PalletDto> filteredPallets = pallets.AsEnumerable();
+
+    if (!string.IsNullOrWhiteSpace(InputSearchCounter))
+      filteredPallets = pallets.Where(x => x.Number.ToString().Contains(InputSearchCounter));
+
+    filteredPallets = PalletFilter switch
+    {
+      PalletFilterType.NotShipped => filteredPallets.Where(x => x is { IsShipped: false, IsDelete: false }),
+      PalletFilterType.Shipped => filteredPallets.Where(x => x is { IsShipped: true, IsDelete: false}),
+      PalletFilterType.Deleted => filteredPallets.Where(x => x.IsDelete),
+      _ => filteredPallets
+    };
+
+    return filteredPallets.Take(PalletsToDisplay);
+  }
+
+  private uint TryGetPalletNumber()
+  {
+    try
+    {
+      return uint.Parse(InputSearchCounter);
+    }
+    catch
+    {
+      return 0;
+    }
+  }
+
+  private void ResetSortsAndFilters()
+  {
+    WorkShift workShift = new();
+
+    StartDate = workShift.Start;
+    EndDate = workShift.End;
+
+    PalletFilter = PalletFilterType.NotShipped;
+    InputSearchCounter = string.Empty;
+  }
+
+  private async Task ShowCreateFormDialog()
+  {
+    IDialogReference dialog = await DialogService.ShowDialogAsync<PalletCreateDialog>(new() { PreventDismissOnOverlayClick = true });
+    DialogResult result = await dialog.Result;
+    if (result is { Cancelled: false, Data: PalletDto newPallet })
+    {
+      WorkShift workShift = new();
+      PalletEndpoints.InsertPiecePallet(new(workShift.Start, workShift.End), newPallet);
+      Dispatcher.Dispatch(new ChangePalletAction(newPallet));
+      Dispatcher.Dispatch(new ChangePalletViewTabAction(PalletViewTabType.Labels));
+      ResetSortsAndFilters();
+    }
+  }
+}

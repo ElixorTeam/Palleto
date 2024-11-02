@@ -1,0 +1,76 @@
+@using Blazor.Heroicons.Outline
+@using MassaK.Plugin.Abstractions.Enums
+@using Pl.Desktop.Client.Source.Shared.Services.Devices
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<Button
+  Size="ButtonSizeType.Icon"
+  Variant="ButtonVariantType.Outline"
+  Class="relative"
+  OnClick="@PrintStatusMessage"
+>
+  <div class="@Css.Class("size-3 rounded-full shadow-sm overflow-hidden absolute -top-1 -right-1", GetIndicatorStyle)"></div>
+  <ScaleIcon class="@Css.Class("size-5", GetIconStyle)"/>
+</Button>
+
+@code {
+  # region Injects
+
+  [Inject] private IToastService ToastService { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IState<ScalesState> ScalesState { get; set; } = default!;
+  [Inject] private IScalesService ScalesService { get; set; } = default!;
+
+  # endregion
+
+  private string GetIconStyle
+  {
+    get
+    {
+      if (ScalesService.IsMock()) return "text-blue-500";
+      return ScalesState.Value.Status switch
+      {
+        MassaKStatus.Disabled => "text-muted-foreground",
+        MassaKStatus.Detached => "text-red-500",
+        MassaKStatus.Initializing => "text-amber-500",
+        _ => "text-green-500"
+      };
+    }
+  }
+
+  private string GetIndicatorStyle
+  {
+    get
+    {
+      if (ScalesService.IsMock()) return "bg-blue-500";
+      return ScalesState.Value.Status switch
+      {
+        MassaKStatus.Disabled => "bg-muted-foreground",
+        MassaKStatus.Detached => "bg-red-500 animate-ping",
+        MassaKStatus.Initializing => "bg-amber-500",
+        _ => "bg-green-500"
+      };
+    }
+  }
+
+  private void PrintStatusMessage()
+  {
+    switch (ScalesState.Value.Status)
+    {
+      case MassaKStatus.Detached:
+        ToastService.ShowError(Localizer["ScalesStatusDetached"]);
+        break;
+      case MassaKStatus.Ready:
+        ToastService.ShowSuccess(Localizer["ScalesStatusReady"]);
+        break;
+      case MassaKStatus.Disabled:
+        ToastService.ShowWarning(Localizer["ScalesStatusDisabled"]);
+        break;
+      case MassaKStatus.Initializing:
+        ToastService.ShowWarning(Localizer["ScalesStatusInitializing"]);
+        break;
+      default:
+        throw new ArgumentOutOfRangeException();
+    }
+  }
+}

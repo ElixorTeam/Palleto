@@ -1,0 +1,76 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.References.ProductionSites.Commands
+@using Pl.Admin.Models.Features.References.ProductionSites.Queries
+
+@inherits SectionFormBase<ProductionSiteUpdateDto>
+
+<SectionForm
+  FormModel="@FormModel"
+  ChangeDate="@Model.ChangeDt"
+  CreateDate="@Model.CreateDt"
+  Validator="@(new ProductionSiteUpdateValidator(WsDataLocalizer))"
+  OnCancelAction="@OnCancelAction"
+  OnSubmitAction="@UpdateItem"
+>
+  <FieldsContent>
+    <SectionAdminGuidField Value="@Model.Id" />
+
+    <SectionTextField
+      Label="@WsDataLocalizer["ColName"]"
+      @bind-Value="@FormModel.Name"
+      For="@(() => FormModel.Name)"
+      Disabled="@(!IsAdmin)"
+    />
+
+    <SectionTextAreaField
+      Label="@WsDataLocalizer["ColAddress"]"
+      @bind-Value="@FormModel.Address"
+      For="@(() => FormModel.Address)"
+      Disabled="@(!IsAdmin)"
+    />
+  </FieldsContent>
+  <ActionsContent>
+    <SectionFormActionShare Path="@($"{Urls.ProductionSites}?id={Model.Id}")" />
+    @if (IsAdmin)
+    {
+      <SectionFormActionReset OnClick="@ResetAction" />
+      <SectionFormActionDelete OnClick="@DeleteItem" />
+    }
+  </ActionsContent>
+</SectionForm>
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+
+  [Inject] private UserHelper UserHelper { get; set; } = default!;
+  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
+
+  # endregion
+
+  [Parameter, EditorRequired] public ProductionSiteDto Model { get; set; } = default!;
+
+  private bool IsAdmin { get; set; }
+
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync();
+    IsAdmin = await UserHelper.ValidatePolicyAsync(PolicyEnum.Admin);
+  }
+
+  protected override async Task UpdateItemAction(ProductionSiteUpdateDto item)
+  {
+    ProductionSiteDto dto = await WebApi.UpdateProductionSite(Model.Id, item);
+    ReferencesEndpoints.UpdateProductionSite(dto);
+  }
+
+  protected override async Task DeleteItemAction()
+  {
+    await WebApi.DeleteProductionSite(Model.Id);
+    ReferencesEndpoints.DeleteProductionSite(Model.Id);
+  }
+}

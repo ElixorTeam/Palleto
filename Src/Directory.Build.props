@@ -61,10 +61,10 @@
         <Using Include="System.Diagnostics.CodeAnalysis" />
     </ItemGroup>
 
-    <ItemGroup Label="Ws.Shared">
+    <ItemGroup Label="Pl.Shared">
         <ProjectReference
-            Include="$(MSBuildThisFileDirectory)\Libs\Ws.Shared\Ws.Shared.csproj"
-            Condition="'$(MSBuildProjectName)' != 'Ws.Shared'"
+            Include="$(MSBuildThisFileDirectory)\Libs\Pl.Shared\Pl.Shared.csproj"
+            Condition="'$(MSBuildProjectName)' != 'Pl.Shared'"
             PrivateAssets="All"
             />
     </ItemGroup>

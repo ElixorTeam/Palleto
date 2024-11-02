@@ -1,0 +1,77 @@
+@using Blazor.Heroicons.Outline
+@using Pl.Desktop.Client.Source.Shared.Services.Devices
+@using TscZebra.Plugin.Abstractions.Enums
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<Button
+  Size="ButtonSizeType.Icon"
+  Variant="ButtonVariantType.Outline"
+  Class="relative"
+  OnClick="@PrintStatusMessage"
+>
+  <div class="@Css.Class("size-3 rounded-full shadow-sm overflow-hidden absolute -top-1 -right-1", GetIndicatorStyle)"></div>
+  <PrinterIcon class="@Css.Class("size-5", GetIconStyle)"/>
+</Button>
+
+@code {
+  # region Injects
+
+  [Inject] private IState<PrinterState> PrinterState { get; set; } = default!;
+  [Inject] private IPrinterService PrinterService { get; set; } = default!;
+  [Inject] private IToastService ToastService { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  # endregion
+
+  private string GetIconStyle
+  {
+    get
+    {
+      if (PrinterService.IsMock()) return "text-blue-500";
+      return PrinterState.Value.Status switch
+      {
+        PrinterStatus.Disconnected => "text-red-500",
+        PrinterStatus.Busy or PrinterStatus.Ready => "text-green-500",
+        _ => "text-amber-500"
+      };
+    }
+  }
+
+  private string GetIndicatorStyle
+  {
+    get
+    {
+      if (PrinterService.IsMock()) return "bg-blue-500";
+      return PrinterState.Value.Status switch
+      {
+        PrinterStatus.Disconnected => "bg-red-500 animate-ping",
+        PrinterStatus.Busy or PrinterStatus.Ready => "bg-green-500",
+        _ => "bg-amber-500 animate-ping"
+      };
+    }
+  }
+
+  private async Task PrintStatusMessage()
+  {
+    await PrinterService.RequestStatusAsync();
+    switch (PrinterState.Value.Status)
+    {
+      case PrinterStatus.Disconnected:
+        ToastService.ShowError(Localizer["PrinterStatusDisconnected"]);
+        break;
+      case PrinterStatus.Ready or PrinterStatus.Busy:
+        ToastService.ShowSuccess(Localizer["PrinterStatusReady"]);
+        break;
+      default:
+        ToastService.ShowWarning(PrinterState.Value.Status switch
+        {
+          PrinterStatus.Paused => Localizer["PrinterStatusPaused"],
+          PrinterStatus.HeadOpen => Localizer["PrinterStatusHeadOpen"],
+          PrinterStatus.PaperOut => Localizer["PrinterStatusPaperOut"],
+          PrinterStatus.PaperJam => Localizer["PrinterStatusPaperJam"],
+          _ => Localizer["PrinterStatusUnknown"]
+        });
+        break;
+    }
+  }
+}

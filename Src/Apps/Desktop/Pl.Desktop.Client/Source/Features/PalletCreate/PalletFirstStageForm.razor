@@ -1,0 +1,55 @@
+@using vNext.BlazorComponents.FluentValidation
+@using Pl.Desktop.Models.Features.Plus.Piece.Output
+
+<EditForm
+  Model="FormModel"
+  OnValidSubmit="@OnValidSubmit"
+  class="max-w-md mx-auto w-full flex flex-col space-y-4"
+>
+  <FluentValidationValidator Validator="@(new PalletPluStageFormValidator(WsDataLocalizer, Localizer))" />
+  <FormFieldWrapper Label="@WsDataLocalizer["ColPlu"]" HtmlId="pallet-plu">
+    <UseParameterlessEndpoint Endpoint="@PluEndpoints.PiecePlusEndpoint" Context="pluQuery">
+      @if (pluQuery.HasData)
+      {
+        <SelectSingle
+          TItem="PluPieceDto"
+          HtmlId="pallet-plu"
+          Items="@pluQuery.Data"
+          @bind-Value="@FormModel.Plu"
+          @bind-Value:after="OnPluSelected"
+          Placeholder="@Localizer["PluSelectPlaceholder"]"
+          ItemDisplayName="@(entity => $"{entity.Number} | {entity.Name}")"
+          Filterable
+        />
+      }
+      else
+      {
+        <Skeleton Class="h-10 w-full" />
+      }
+    </UseParameterlessEndpoint>
+    <FieldValidation For="@(() => FormModel.Plu)"/>
+  </FormFieldWrapper>
+  <FormFieldWrapper Label="@($"{Localizer["ColNestingPerBox"]} ({WsDataLocalizer["MeasurePc"]})")" HtmlId="pallet-nesting">
+    <SelectSingle
+      TItem="NestingDto"
+      HtmlId="pallet-nesting"
+      Items="@(FormModel.Plu?.Nestings ?? [])"
+      @bind-Value="FormModel.Nesting"
+      Placeholder="@Localizer["NestingSelectPlaceholder"]"
+      ItemDisplayName="@(item => item.Name)"
+      Disabled="@(FormModel.Plu == null || !FormModel.Plu.Nestings.Any())"
+    />
+    <FieldValidation For="@(() => FormModel.Nesting)" />
+  </FormFieldWrapper>
+  <div class="w-full flex justify-end gap-2 py-2">
+    <Button
+      OnClick="@OnCancelAction"
+      Variant="ButtonVariantType.Outline"
+    >
+      @Localizer["BtnCancel"]
+    </Button>
+    <Button Type="@ButtonType.Submit">
+      @Localizer["BtnNext"]
+    </Button>
+  </div>
+</EditForm>

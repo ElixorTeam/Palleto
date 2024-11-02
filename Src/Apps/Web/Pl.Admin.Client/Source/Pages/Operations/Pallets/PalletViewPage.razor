@@ -1,0 +1,70 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Blazor.Heroicons.Outline
+
+@attribute [Route(Urls.Pallets + "/{Id:guid}")]
+
+<UseEndpoint
+  Endpoint="@OperationsEndpoints.PalletEndpoint"
+  Arg="@Id"
+  Context="palletQuery"
+>
+  <div class="w-full">
+    <Breadcrumbs>
+      @if (palletQuery.HasData)
+      {
+        <Breadcrumb Label="@("Паллета №" + palletQuery.Data.Number)" />
+      }
+    </Breadcrumbs>
+    <div class="w-full border-b">
+      <div class="py-2 flex w-full justify-between items-center">
+        @if (palletQuery.HasData)
+        {
+          <h2 class="font-bold text-3xl truncate tracking-tight">Паллета № @palletQuery.Data.Number</h2>
+        }
+        else
+        {
+          <Skeleton Class="h-8 w-40"/>
+        }
+        <div class="flex gap-2">
+          <Button Variant="ButtonVariantType.Destructive">
+            <TrashIcon class="size-4 mr-2"/>
+            <span>Удалить</span>
+          </Button>
+        </div>
+      </div>
+      <div class="flex gap-6">
+        <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
+          Информация
+        </ViewTabButton>
+        <ViewTabButton Value="labels" @bind-CurrentTab="CurrentTab">
+          Этикетки
+        </ViewTabButton>
+      </div>
+    </div>
+    <div class="flex flex-col w-full pt-4">
+      <Tabs @bind-ActiveTabId="@CurrentTab">
+        @if (palletQuery.HasData)
+        {
+          <Tab Id="info">
+            <PalletViewInfo Pallet="palletQuery.Data"/>
+          </Tab>
+          <Tab Id="labels">
+            <PalletViewLabels Pallet="palletQuery.Data"/>
+          </Tab>
+        }
+        else
+        {
+          <Spinner Class="size-32 text-muted-foreground animate-spin fill-primary mx-auto py-20" />
+        }
+      </Tabs>
+    </div>
+  </div>
+</UseEndpoint>
+
+@code {
+  [Inject] private OperationsEndpoints OperationsEndpoints { get; set; } = default!;
+  [Parameter] public Guid Id { get; set; }
+
+  private string CurrentTab { get; set; } = "info";
+}

@@ -1,0 +1,56 @@
+@using MassaK.Plugin.Abstractions.Enums
+@using Pl.Desktop.Client.Source.Shared.Services.Devices
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<Button
+  Variant="ButtonVariantType.Secondary"
+  Size="ButtonSizeType.Full"
+  OnClick="@HandleButtonOpenScalesTerminal"
+  Disabled="@(!(ScalesState.Value.Status == MassaKStatus.Ready && !IsOnceClicked))"
+  Class="border disabled:!opacity-70"
+>
+  <div class="flex items-center flex-col">
+    <span class="xl:text-xl">@Localizer["BtnScaleCalibration"]</span>
+      @if (IsOnceClicked)
+      {
+        <span class="xl:text-lg">@GetCooldownString()</span>
+      }
+  </div>
+</Button>
+
+@code {
+
+  #region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IState<ScalesState> ScalesState { get; set; } = default!;
+  [Inject] private IScalesService ScalesService { get; set; } = default!;
+
+  # endregion
+
+  private bool IsOnceClicked { get; set; }
+  private int SecToOpen { get; set; } = 0;
+  private const int ButtonDebounceSeconds = 10;
+
+  private string GetCooldownString() =>
+    $"{Localizer["BtnCooldown"]} {SecToOpen} {WsDataLocalizer["MeasureSec"]}";
+
+  private async Task HandleButtonOpenScalesTerminal()
+  {
+    if (IsOnceClicked) return;
+
+    IsOnceClicked = true;
+    SecToOpen = ButtonDebounceSeconds;
+    StateHasChanged();
+    ScalesService.Calibrate();
+    while (SecToOpen > 0)
+    {
+      await Task.Delay(1000);
+      SecToOpen--;
+      StateHasChanged();
+    }
+    IsOnceClicked = false;
+    StateHasChanged();
+  }
+}

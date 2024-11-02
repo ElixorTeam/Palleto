@@ -1,0 +1,15 @@
+@using Pl.Admin.Models.Features.References.ProductionSites
+@using Pl.Admin.Models.Features.References.ProductionSites.Queries
+@implements IDialogContentComponent<ProductionSiteDto>
+
+<SectionDialog>
+  <Tab Id="@typeof(ProductionSitesUpdateForm).ToString()" Title="@Localizer["SectionProductionSites"]">
+    <ProductionSitesUpdateForm Model="Content" FormModel="@ProductionSiteMapper.DtoToUpdateDto(Content)" />
+  </Tab>
+</SectionDialog>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Parameter] public ProductionSiteDto Content { get; set; } = default!;
+}

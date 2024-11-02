@@ -1,0 +1,28 @@
+@using Pl.Admin.Client.Source.Shared.Constants
+@inherits SectionFormBase<PackageDto>
+
+<SectionForm
+  ChangeDate="FormModel.ChangeDt"
+  CreateDate="FormModel.CreateDt"
+>
+  <FieldsContent>
+    <SectionAdminGuidField Value="@FormModel.Id" />
+
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColName"]"
+      Value="@FormModel.Name"
+    />
+
+    <SectionReadOnlyField
+      Label="@($"{WsDataLocalizer["ColWeight"]} ({WsDataLocalizer["MeasureKg"]})")"
+      Value="FormModel.Weight"
+    />
+  </FieldsContent>
+  <ActionsContent>
+    <SectionFormActionShare Path="@($"{Urls.Clips}?id={FormModel.Id}")" />
+  </ActionsContent>
+</SectionForm>
+
+@code {
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+}

@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <ItemGroup Label="Static assets">
+        <MauiIcon Include="Resources\appicon.svg" BaseSize="32,32" Color="#fff" />
+        <MauiSplashScreen Include="Resources\organization_icon.svg" Color="#f5f5f6" />
+    </ItemGroup>
+
+    <PropertyGroup Label="Primary">
+        <TargetFramework>net8.0-android34.0</TargetFramework>
+
+        <OutputType>Exe</OutputType>
+        <UseMaui>true</UseMaui>
+        <SingleProject>true</SingleProject>
+        <EnableDefaultCssItems>false</EnableDefaultCssItems>
+        <SelfContained>false</SelfContained>
+        <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
+
+        <RootNamespace>Pl.Tablet.Client</RootNamespace>
+        <ApplicationTitle>Pl.Tablet.Client</ApplicationTitle>
+        <ApplicationId>ru.vladstandart.scalestablet</ApplicationId>
+
+        <NoWarn>XA4301</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup Label="Directory.Packages.props">
+        <PackageReference Include="CommunityToolkit.Maui" />
+        <PackageReference Include="QRCoder" />
+        <PackageReference Include="TscZebra.Plugin" />
+        <PackageReference Include="Phetch.Blazor" />
+        <PackageReference Include="Fluxor.Blazor.Web" />
+        <PackageReference Include="Refit.HttpClientFactory" />
+        <PackageReference Include="BarcodeScanning.Native.Maui" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+        <PackageReference Include="vNext.BlazorComponents.FluentValidation" />
+        <PackageReference Include="Microsoft.Maui.Controls" />
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" />
+    </ItemGroup>
+
+    <ItemGroup Label="Packages">
+        <PackageReference Include="BarcodeLib" VersionOverride="3.1.4"/>
+    </ItemGroup>
+
+    <ItemGroup Label="Projects">
+      <ProjectReference Include="..\Pl.Tablet.Models\Pl.Tablet.Models.csproj" />
+      <ProjectReference Include="..\..\..\Libs\Pl.Components\Pl.Components.csproj" />
+      <ProjectReference Include="..\..\..\Libs\Pl.Shared.Web\Pl.Shared.Web.csproj" />
+    </ItemGroup>
+
+    <ItemGroup Label="Shared blazor imports">
+        <Content Include="..\..\..\Libs\Pl.Components\Shared\_Imports.razor" Link="_Imports.razor" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
+    <Import Project="..\..\..\.targets\NodePackages.targets" />
+    <Import Project="..\..\..\.targets\AppSettingsForMaui.targets" />
+
+    <Target Name="StaticsBuild" BeforeTargets="PreBuildEvent">
+        <Exec Command="npm run build" />
+    </Target>
+</Project>

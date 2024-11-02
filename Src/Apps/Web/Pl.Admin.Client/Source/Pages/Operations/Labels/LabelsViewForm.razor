@@ -1,0 +1,131 @@
+@using Pl.Admin.Client.Source.Shared.Constants
+@inherits SectionFormBase<Pl.Admin.Models.Features.Print.Labels.LabelDto>
+
+<SectionForm CreateDate="FormModel.CreateDt">
+  <FieldsContent>
+    <SectionAdminGuidField Value="@FormModel.Id" />
+
+    <FormDivider>@WsDataLocalizer["ColLine"]</FormDivider>
+
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColLine"]"
+      Value="@FormModel.Arm.Name"
+      Path="@RedirectHelper.ToArm(FormModel.Arm.Id)"
+    />
+
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColWarehouse"]"
+      Value="@FormModel.Warehouse.Name"
+      Path="@RedirectHelper.ToWarehouse(FormModel.Warehouse.Id)"
+    />
+
+    <FormDivider>@WsDataLocalizer["ColPlu"]</FormDivider>
+
+    @if (FormModel.Plu != null)
+    {
+      <SectionReadOnlyField
+        Label="@WsDataLocalizer["ColPlu"]"
+        Value="@FormModel.Plu.Name"
+        Path="@RedirectHelper.ToPlu(FormModel.Plu.Id)"
+      />
+
+      <SectionReadOnlyField
+        Label="@WsDataLocalizer["ColType"]"
+        Value="@GetPluTypeName(FormModel.IsWeight)"
+      />
+    }
+    else
+    {
+      <SectionReadOnlyField
+        Label="@WsDataLocalizer["ColPlu"]"
+        Value="@("Удалено")"
+      />
+    }
+
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColKneading"]"
+      Value="@FormModel.Kneading"
+    />
+
+    <SectionReadOnlyField
+      Label="@($"{WsDataLocalizer["ColNesting"]} ({WsDataLocalizer["MeasurePc"]})")"
+      Value="@FormModel.BundleCount"
+    />
+
+    @if (FormModel.Pallet != null)
+    {
+      <FormDivider>@WsDataLocalizer["ColPallet"]</FormDivider>
+
+      <SectionReadOnlyField
+        Label="@WsDataLocalizer["ColNumber"]"
+        Value="@FormModel.Pallet.Name"
+      />
+    }
+
+    <FormDivider>@WsDataLocalizer["ColWeight"]</FormDivider>
+
+
+    <SectionReadOnlyField
+      Label="@($"{WsDataLocalizer["ColNetWeight"]} ({WsDataLocalizer["MeasureKg"]})")"
+      Value="@FormModel.WeightNet"
+    />
+
+    <SectionReadOnlyField
+      Label="@($"{WsDataLocalizer["ColTareWeight"]} ({WsDataLocalizer["MeasureKg"]})")"
+      Value="@FormModel.WeightTare"
+    />
+
+    <SectionReadOnlyField
+      Label="@($"{WsDataLocalizer["ColWeightGross"]} ({WsDataLocalizer["MeasureKg"]})")"
+      Value="@(FormModel.WeightNet + FormModel.WeightTare)"
+    />
+
+    <FormDivider>@WsDataLocalizer["ColBarcode"]</FormDivider>
+
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColBarcodeTop"]"
+      Value="@FormModel.BarcodeTop"
+      IsCopyable
+    />
+
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColBarcodeBottom"]"
+      Value="@FormModel.BarcodeBottom"
+      IsCopyable
+    />
+
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColBarcodeRight"]"
+      Value="@FormModel.BarcodeRight"
+      IsCopyable
+    />
+
+    <FormDivider>@WsDataLocalizer["ColShelfLifeDays"]</FormDivider>
+
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColProductDt"]"
+      Value="@FormModel.ProductDt.ToString("dd.MM.yyyy")"
+    />
+
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColExpirationDt"]"
+      Value="@FormModel.ExpirationDt.ToString("dd.MM.yyyy")"
+    />
+
+  </FieldsContent>
+  <ActionsContent>
+    <SectionFormActionShare Path="@($"{Urls.Labels}?id={FormModel.Id}")" />
+  </ActionsContent>
+</SectionForm>
+
+@code {
+  # region Injects
+
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+
+  # endregion
+
+  private string GetPluTypeName(bool isWeight) =>
+    isWeight ? WsDataLocalizer["ColPluWeight"] : WsDataLocalizer["ColPluPiece"];
+}

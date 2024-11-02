@@ -1,0 +1,70 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup Label="Primary">
+        <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+        <NoWarn>CS8669</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup Label="Directory.Packages.props">
+        <PackageReference Include="Phetch.Blazor" />
+        <PackageReference Include="FluentValidation" />
+        <PackageReference Include="Fluxor.Blazor.Web" />
+        <PackageReference Include="Refit" />
+        <PackageReference Include="Refit.HttpClientFactory" />
+        <PackageReference Include="vNext.BlazorComponents.FluentValidation" />
+    </ItemGroup>
+
+    <ItemGroup Label="Packages">
+        <PackageReference Include="PSC.Blazor.Components.Chartjs" VersionOverride="8.0.8"/>
+        <PackageReference Include="DNTCaptcha.Blazor" VersionOverride="1.2.3" />
+        <PackageReference Include="Blazorise" VersionOverride="1.6.2" />
+        <PackageReference Include="Blazorise.DataGrid" VersionOverride="1.6.2" />
+        <PackageReference Include="Blazorise.Icons.FontAwesome" VersionOverride="1.6.2" />
+        <PackageReference Include="DeepCloner" VersionOverride="0.10.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" VersionOverride="8.0.10" />
+        <PackageReference Include="WMBlazorOverlayScrollbars" VersionOverride="1.0.0" />
+    </ItemGroup>
+
+    <ItemGroup Label="Projects">
+        <ProjectReference Include="..\..\..\Libs\Pl.Print\Pl.Print.csproj" />
+        <ProjectReference Include="..\..\..\Libs\Pl.Components\Pl.Components.csproj" />
+        <ProjectReference Include="..\Pl.Admin.Models\Pl.Admin.Models.csproj" />
+        <ProjectReference Include="..\..\..\Libs\Pl.Shared.Web\Pl.Shared.Web.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Source\Shared\Localization\ApplicationResources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ApplicationResources.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="Source\Shared\Localization\ApplicationResources.en-US.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Source\Shared\Localization\ApplicationResources.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>ApplicationResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Source\Shared\Localization\ApplicationResources.ru-RU.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <Import Project="..\..\..\.targets\NodePackages.targets" />
+
+    <ItemGroup Label="Shared blazor imports">
+        <Content Include="..\..\..\Libs\Pl.Components\Shared\_Imports.razor" Link="_Imports.razor" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageVersion Update="PSC.Blazor.Components.Chartjs" Version="8.0.8" />
+    </ItemGroup>
+
+    <Target Name="StaticsBuild" BeforeTargets="PreBuildEvent">
+        <Exec Command="npm run build" />
+    </Target>
+
+</Project>

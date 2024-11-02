@@ -1,0 +1,121 @@
+@using Pl.Admin.Client.Source.Features
+@using Pl.Admin.Client.Source.Shared.Api.Keycloak.Endpoints
+@using Pl.Admin.Client.Source.Shared.Api.Keycloak.Models
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Client.Source.Shared.Services.Stores
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.Admins.Users.Queries
+
+@inherits SectionDataGridBase<UserWithProductionSite>
+@attribute [Route($"{Urls.Users}")]
+@attribute [Authorize(Policy = PolicyEnum.SeniorSupport)]
+@rendermode InteractiveServer
+
+<PageTitle>Pl.Admin.Client - @Localizer["SectionUsers"]</PageTitle>
+
+<UseParameterlessEndpoint
+  Endpoint="AdminEndpoints.UserRelationshipEndpoint"
+  Options="@DefaultEndpointOptions"
+  Context="userRelationshipQuery"
+>
+  <UseParameterlessEndpoint
+    Endpoint="@KeycloakEndpoints.KeycloakUsersEndpoint"
+    Options="@DefaultEndpointOptions"
+    Context="keycloakUsersQuery"
+  >
+    @{
+      IEnumerable<UserWithProductionSite> usersData = userRelationshipQuery.HasData && keycloakUsersQuery.HasData ?
+        GetAllUsers(keycloakUsersQuery.Data, userRelationshipQuery.Data) : [];
+    }
+    <DataGridHeader>
+      <span>@Localizer["SectionUsers"]</span>
+      <DataGridItemsCounter
+        ItemsCount="@(usersData.Count(x => x.ProductionSiteId == ProductionSiteState.Value.ProductionSite.Id))"
+        IsLoading="@(userRelationshipQuery.IsLoading || keycloakUsersQuery.IsLoading)"
+      />
+      <DataGridActionReload
+        OnClick="@(() => { userRelationshipQuery.RefetchAsync(); keycloakUsersQuery.RefetchAsync(); })"
+        IsLoading="@(userRelationshipQuery.IsFetching || keycloakUsersQuery.IsFetching)"
+      />
+    </DataGridHeader>
+
+    <DataGridWrapper>
+      <DataGridContainer
+        TItem="UserWithProductionSite"
+        Items="@(usersData)"
+        OnItemSelect="@(item => OpenUpdateFormModal(item))"
+        IsFilterable>
+        <ColumnsContent>
+          <DataGridColumn
+            Caption="@WsDataLocalizer["ColUser"]"
+            Field="@($"{nameof(UserWithProductionSite.User)}.{nameof(KeycloakUser.Username)}")"
+            Width="30%"/>
+          <DataGridColumn
+            Caption="@WsDataLocalizer["ColFullName"]"
+            Field="@($"{nameof(UserWithProductionSite.User)}.{nameof(KeycloakUser.FirstName)}")"
+            Width="30%"/>
+          <DataGridColumn
+            Caption="@WsDataLocalizer["ColProductionSite"]"
+            Field="@(nameof(UserWithProductionSite.ProductionSiteId))"
+            Width="40%"
+            FilterCellClass="!font-normal"
+            CustomFilter="@((item, _) => ProductionSiteFilter(item))"
+          >
+            <FilterTemplate>
+              <ProductionSiteSelect
+                ValueChanged="@(_ => context.TriggerFilterChange(ProductionSiteState.Value.ProductionSite.Id))"
+                AllowIsNew
+              />
+            </FilterTemplate>
+            <DisplayTemplate>
+              @ProductionSiteState.Value.ProductionSite.Name
+            </DisplayTemplate>
+          </DataGridColumn>
+        </ColumnsContent>
+        <ContextMenuContent>
+          <DataGridActionViewItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenUpdateFormModal(item)))"/>
+          <DataGridActionDeleteItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => DeleteItem(item)))"/>
+        </ContextMenuContent>
+      </DataGridContainer>
+    </DataGridWrapper>
+  </UseParameterlessEndpoint>
+</UseParameterlessEndpoint>
+
+@code {
+
+  #region Inject
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private KeycloakEndpoints KeycloakEndpoints { get; set; } = default!;
+  [Inject] private AdminEndpoints AdminEndpoints { get; set; } = default!;
+  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+
+  #endregion
+
+  protected override async Task OpenUpdateFormModal(UserWithProductionSite item) =>
+    await OpenModalWithItem<UsersUpdateDialog>(item);
+
+  private IEnumerable<UserWithProductionSite> GetAllUsers(IEnumerable<KeycloakUser> keycloakUsers, IEnumerable<UserDto> usersRelations)
+  {
+    Dictionary<Guid, Guid> userRelationDict = usersRelations.ToDictionary(x => x.Id, x => x.ProductionSiteId);
+    return keycloakUsers.Select(keycloakUser => userRelationDict.TryGetValue(keycloakUser.Id, out Guid productionSiteId)
+      ? new UserWithProductionSite(keycloakUser, productionSiteId)
+      : new (keycloakUser, Guid.Empty));
+  }
+
+  private bool ProductionSiteFilter(object dto)
+  {
+    if (dto is Guid userProductionSiteId)
+      return userProductionSiteId.Equals(ProductionSiteState.Value.ProductionSite.Id);
+    return false;
+  }
+
+  protected override async Task DeleteItemAction(UserWithProductionSite item)
+  {
+    await WebApi.DeleteUser(item.User.Id);
+    AdminEndpoints.DeleteUserRelationship(item.User.Id);
+  }
+}

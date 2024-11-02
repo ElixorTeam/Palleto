@@ -1,0 +1,47 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models.Features.Print.Pallets
+
+<UseEndpoint
+  Endpoint="@OperationsEndpoints.PalletLabelsEndpoint"
+  Arg="@Pallet.Id"
+  Options="@(new() { RefetchInterval=TimeSpan.FromMinutes(5) })"
+  Context="labelsQuery"
+>
+  <DataGridHeader>
+    <DataGridLabelWithCounter Label="Этикетки паллеты" ItemsCount="@(labelsQuery.Data?.Length ?? 0)" IsLoading="labelsQuery.IsLoading"/>
+    <DataGridActionReload OnClick="@labelsQuery.RefetchAsync" IsLoading="labelsQuery.IsFetching" />
+  </DataGridHeader>
+
+  <DataGridContainer
+    TItem="OrderedPalletLabel"
+    Items="@(GetOrderedLabels(labelsQuery.Data ?? []))"
+    OnItemSelect="@(item => NavigationManager.NavigateTo($"{Urls.Labels}/{item.Id}"))"
+  >
+    <ColumnsContent>
+      <DataGridColumn
+        Caption="№"
+        Field="@nameof(OrderedPalletLabel.Number)"
+        Width="5%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColBarcode"]"
+        Field="@nameof(OrderedPalletLabel.Barcode)"
+        Width="90%"
+      />
+    </ColumnsContent>
+  </DataGridContainer>
+</UseEndpoint>
+
+@code {
+  [Inject] private OperationsEndpoints OperationsEndpoints { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+
+  [Parameter, EditorRequired] public PalletDto Pallet { get; set; } = default!;
+
+  private IEnumerable<OrderedPalletLabel> GetOrderedLabels(LabelPalletDto[] labels) =>
+    labels.Select((label, index) => new OrderedPalletLabel { Number = index + 1, Id = label.Id, Barcode = label.Barcode });
+
+}

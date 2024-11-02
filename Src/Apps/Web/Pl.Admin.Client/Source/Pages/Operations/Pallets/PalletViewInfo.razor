@@ -1,0 +1,27 @@
+@using Pl.Admin.Models.Features.Print.Pallets
+
+<h2 class="text-xl font-medium pb-3 px-2">Общая информация</h2>
+<div class="w-full grid grid-cols-3 gap-4 pb-8 xl:grid-cols-4 2xl:grid-cols-5 px-2">
+  <ViewField Label="Номер" Value="@Pallet.Number" />
+  <ViewField Label="Штрихкод" Value="@Pallet.Barcode" />
+  <ViewField Label="Создано на устройстве" Value="@Pallet.Arm.Name" />
+  <ViewField Label="Текущий склад" Value="@Pallet.Warehouse.Name" />
+  <ViewField Label="Создан пользователем" Value="@Pallet.PalletMan.Name"/>
+  <ViewField Label="Создан пользователем" Value="@Pallet.PalletMan.Name"/>
+</div>
+
+<h2 class="text-xl font-medium pb-3 px-2">Параметры паллеты</h2>
+<div class="w-full grid grid-cols-3 gap-4 xl:grid-cols-4 2xl:grid-cols-5 px-2">
+  <ViewField Label="ПЛУ" Value="@(Pallet.Plus.FirstOrDefault()?.Plu.Name ?? "Неизвестно")" />
+  <ViewField Label="Замес" Value="@Pallet.Kneadings.FirstOrDefault().ToString()" />
+  <ViewField Label="Вес брутто" Value="@Pallet.WeightBrutto.ToString(CultureInfo.InvariantCulture)"/>
+  <ViewField Label="Вес нетто" Value="@Pallet.WeightNet.ToString(CultureInfo.InvariantCulture)"/>
+  <ViewField Label="Вес тары" Value="@Pallet.WeightTray.ToString(CultureInfo.InvariantCulture)"/>
+  <ViewField Label="Кол-во коробов" Value="@Pallet.BoxCount.ToString()"/>
+  <ViewField Label="Кол-во пакетов" Value="@Pallet.BundleCount.ToString()"/>
+</div>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Parameter, EditorRequired] public PalletDto Pallet { get; set; } = default!;
+}

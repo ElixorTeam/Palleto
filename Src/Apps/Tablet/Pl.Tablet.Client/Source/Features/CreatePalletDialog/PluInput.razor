@@ -1,0 +1,85 @@
+@using Blazor.Heroicons.Outline
+@using Phetch.Core
+@using Pl.Tablet.Client.Source.Shared.Api.Tablet.Endpoints
+@using Pl.Tablet.Models.Features.Plus
+
+<div class="@Css.Class("h-10 w-full border rounded-md flex px-3 bg-background items-center gap-2", Disabled ? "opacity-50 cursor-not-allowed" : "", Class)">
+  <input
+    type="text"
+    value="@Plu.Number"
+    @oninput="@OnPluInput"
+    disabled="@Disabled"
+    inputmode="numeric"
+    placeholder="Номер ПЛУ..."
+    maxlength="4"
+    id="@HtmlId"
+    class="size-full text-sm bg-inherit placeholder:text-muted-foreground focus-visible:outline-none"
+  />
+  @if (Plu.Number.Length == 4)
+  {
+    <UseEndpoint
+      Context="query"
+      Endpoint="@PluEndpoints.PluEndpoint"
+      Arg="@PluNumber"
+      Options="@(new() { OnSuccess = OnSuccess })"
+    >
+      <ExclamationCircleIcon
+        id="@TooltipAnchor"
+        class="@Css.Class("size-6", query.IsLoading ? "text-muted-foreground" : query.HasData ? "text-green-500" : "text-destructive")"
+      />
+      @if (query.IsLoading)
+      {
+        <Tooltip Anchor="@TooltipAnchor">
+          <span>"Загрузка информации..."</span>
+        </Tooltip>
+      }
+      else if (query.HasData)
+      {
+        <Tooltip Anchor="@TooltipAnchor">
+          <span>@query.Data.Name</span>
+        </Tooltip>
+      }
+      else
+      {
+        <Tooltip Anchor="@TooltipAnchor">
+          <span>Ошибка ПЛУ!</span>
+        </Tooltip>
+      }
+    </UseEndpoint>
+  }
+  else
+  {
+    <ExclamationCircleIcon class="size-6 text-muted-foreground" />
+  }
+</div>
+
+@code {
+  [Inject] private PluEndpoints PluEndpoints { get; set; } = default!;
+  [Inject] private IToastService ToastService { get; set; } = default!;
+
+  [Parameter] public PluModel Plu { get; set; } = new();
+  [Parameter] public EventCallback<PluModel> PluChanged { get; set; }
+  [Parameter] public bool Disabled { get; set; }
+  [Parameter] public string Class { get; set; } = default!;
+  [Parameter] public string HtmlId { get; set; } = $"plu-input-{Guid.NewGuid()}";
+
+  private string TooltipAnchor { get; } = $"plu-anchor-{Guid.NewGuid()}";
+
+  private uint PluNumber => uint.TryParse(Plu.Number, out uint result) ? result : default;
+
+  private void OnSuccess(QuerySuccessEventArgs<uint, PluDto> obj)
+  {
+    Plu = Plu with { Id = obj.Result.Id };
+    PluChanged.InvokeAsync(Plu);
+  }
+
+  private async Task OnPluInput(ChangeEventArgs e)
+  {
+    string inputValue = e.Value?.ToString()?.Trim() ?? string.Empty;
+    if (inputValue == Plu.Number) return;
+    inputValue = new(e.Value?.ToString()?.Where(char.IsDigit).ToArray());
+    if (inputValue.Length < 4) Plu.Id = Guid.Empty;
+    Plu.Number = inputValue;
+    await PluChanged.InvokeAsync(Plu);
+  }
+}

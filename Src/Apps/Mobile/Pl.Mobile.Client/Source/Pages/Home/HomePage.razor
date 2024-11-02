@@ -1,0 +1,24 @@
+@using Microsoft.Extensions.Localization
+@attribute [Route(Routes.Home)]
+
+<div class="size-full flex items-center overflow-hidden justify-center px-3 py-4">
+  <div class="max-w-sm w-full max-h-full flex gap-4 flex-col">
+    <div class="flex flex-col space-y-1 items-center justify-center text-center">
+      <div class="w-full shrink-0 flex items-center gap-1.5 justify-center">
+        <div class="size-9 bg-primary rounded-md overflow-hidden p-1.5">
+          <MobileLogo Class="text-background" />
+        </div>
+        <h2 class="text-2xl tracking-[.25rem]">OBILE</h2>
+      </div>
+      <h3 class="text-sm text-muted-foreground">@Localizer["HomeMenuDescription"]</h3>
+    </div>
+    <HomeMenu />
+    <div class="max-w-xs mx-auto w-full flex justify-center px-4">
+      <ArmControl />
+    </div>
+  </div>
+</div>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+}

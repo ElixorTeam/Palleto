@@ -1,0 +1,37 @@
+@using TscZebra.Plugin.Abstractions.Enums
+@using Pl.Tablet.Models.Features.Pallets.Output
+
+@implements IDisposable
+
+@attribute [Route($"{Urls.Create}")]
+
+<div class="size-full flex flex-col justify-between max-w-screen-md mx-auto p-6">
+  <div class="w-full flex flex-col max-h-full overflow-hidden">
+    <InputDocumentNumber @bind-Value="@DocumentNumber" Disabled="@Pallets.Any()" />
+    <PalletDataGrid @bind-Value="Pallets" DocumentNumber="@DocumentNumber" />
+  </div>
+  <div class="w-full flex justify-end pt-3">
+    <Button OnClick="@ShowCreateCompleteDialog">
+      Завершить
+    </Button>
+  </div>
+</div>
+
+@code {
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private IPrinterService PrinterService { get; set; } = default!;
+
+  private List<PalletDto> Pallets { get; set; } = [];
+  private string DocumentNumber { get; set; } = string.Empty;
+
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync();
+    PrinterService.Setup(IPAddress.Parse("10.0.22.73"), 9100, PrinterTypes.Zebra);
+    await PrinterService.ConnectAsync();
+  }
+
+  private Task ShowCreateCompleteDialog() => DialogService.ShowDialogAsync<CompleteCreateDialog>(new());
+
+  public void Dispose() => PrinterService.Disconnect();
+}

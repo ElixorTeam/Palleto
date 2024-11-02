@@ -1,0 +1,74 @@
+@using Blazor.Heroicons.Outline
+@using Pl.Mobile.Client.Source.Shared.Api.Mobile.Endpoints
+@using Pl.Mobile.Models.Features.Warehouses
+
+<div class="flex flex-col size-full justify-between overflow-hidden py-3 px-2">
+  <div class="size-full flex flex-col py-4 gap-1 overflow-hidden">
+    <h3 class="text-sm font-medium">Выберите склад</h3>
+    <ul class="size-full items-center flex flex-col gap-1 overflow-y-auto">
+      <UseParameterlessEndpoint Endpoint="@WarehousesEndpoints.WarehousesEndpoint" Context="query">
+        @if (query.HasData)
+        {
+          @foreach (WarehouseDto item in query.Data)
+          {
+            <li class="w-full">
+              <button
+                @onclick="@(() => SetWarehouseId(item))"
+                class="h-12 w-full rounded-md border flex items-center gap-2 bg-background px-3"
+              >
+                <div class="w-8 shrink-0 flex items-center justify-center">
+                  @if (Warehouse.Id.Equals(item.Id))
+                  {
+                    <CheckIcon class="size-6 shrink-0" />
+                  }
+                  else
+                  {
+                    <span> </span>
+                  }
+                </div>
+                <div class="flex flex-col w-full text-left">
+                  <div class="truncate text-sm">@item.WarehouseName</div>
+                  <div class="text-muted-foreground text-xs truncate">@item.ProductionSiteName</div>
+                </div>
+              </button>
+            </li>
+          }
+        }
+        else
+        {
+          @for (int i = 0; i < 5; i++)
+          {
+            <li class="w-full">
+              <Skeleton Class="h-12 !bg-primary/10" />
+            </li>
+          }
+        }
+      </UseParameterlessEndpoint>
+    </ul>
+  </div>
+  <div class="shrink-0 w-full flex flex-col gap-2">
+    <Button OnClick="@OnCancelAction" Variant="ButtonVariantType.Outline">
+      Назад
+    </Button>
+    <Button OnClick="@OnSuccessAction" Disabled="@Warehouse.Id.Equals(Guid.Empty)">
+      Продолжить
+    </Button>
+  </div>
+</div>
+
+
+@code {
+  [Inject] private WarehousesEndpoints WarehousesEndpoints { get; set; } = default!;
+  [Inject] private IToastService ToastService { get; set; } = default!;
+
+  [Parameter] public EventCallback OnSuccessAction { get; set; }
+  [Parameter] public EventCallback OnCancelAction { get; set; }
+  [Parameter] public WarehouseDto Warehouse { get; set; } = default!;
+  [Parameter] public EventCallback<WarehouseDto> WarehouseChanged { get; set; }
+
+  private async Task SetWarehouseId(WarehouseDto newValue)
+  {
+    Warehouse = newValue;
+    await WarehouseChanged.InvokeAsync(newValue);
+  }
+}

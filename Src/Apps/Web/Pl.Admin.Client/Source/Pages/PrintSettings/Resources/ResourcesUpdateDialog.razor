@@ -1,0 +1,15 @@
+@using Pl.Admin.Models.Features.References.TemplateResources
+@using Pl.Admin.Models.Features.References.TemplateResources.Queries
+@implements IDialogContentComponent<TemplateResourceDto>
+
+<SectionDialog>
+  <Tab Id="@typeof(ResourcesUpdateForm).ToString()" Title="@Localizer["SectionTemplateResources"]">
+    <ResourcesUpdateForm Model="Content" FormModel="@TemplateResourceMapper.DtoToUpdateDto(Content)" />
+  </Tab>
+</SectionDialog>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Parameter] public TemplateResourceDto Content { get; set; } = default!;
+}

@@ -1,0 +1,81 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.References.Template.Commands
+@using Pl.Admin.Models.Features.References.Template.Queries
+@inherits SectionFormBase<TemplateCreateDto>
+
+<SectionForm
+  FormModel="@FormModel"
+  Validator="@(new TemplateCreateValidator(WsDataLocalizer))"
+  OnCancelAction="@OnCancelAction"
+  OnSubmitAction="@CreateItem"
+>
+  <FieldsContent>
+
+    <SectionTextField
+      Label="@WsDataLocalizer["ColName"]"
+      @bind-Value="@FormModel.Name"
+      For="@(() => FormModel.Name)"
+    />
+
+    <SectionSelectSingleField
+      TItem="bool"
+      Items="@(new[] { false, true })"
+      Label="@WsDataLocalizer["ColType"]"
+      @bind-Value="FormModel.IsWeight"
+      ItemDisplayName="GetTemplateTypeName"
+    />
+
+    <FormDivider>@WsDataLocalizer["ColSize"]</FormDivider>
+
+    <SectionNumericField
+      @bind-Value="@FormModel.Width"
+      Max="255"
+      Label="@($"{WsDataLocalizer["ColWidth"]} ({WsDataLocalizer["MeasureMm"]})")"
+      For="@(() => FormModel.Width)"
+    />
+
+    <SectionNumericField
+      @bind-Value="@FormModel.Height"
+      Max="255"
+      Label="@($"{WsDataLocalizer["ColHeight"]} ({WsDataLocalizer["MeasureMm"]})")"
+      For="@(() => FormModel.Height)"
+    />
+
+    <SectionSelectSingleField
+      TItem="short"
+      @bind-Value="@FormModel.Rotate"
+      Items="@( [0, 90])"
+      Label="@($"{WsDataLocalizer["ColRotation"]} (°)")"
+      For="@(() => FormModel.Rotate)"
+    />
+
+    <FormDivider>@WsDataLocalizer["ColTemplate"]</FormDivider>
+
+    <SectionTextAreaField
+      Label="@WsDataLocalizer["ColTemplate"]"
+      @bind-Value="@FormModel.Body"
+      For="@(() => FormModel.Body)"
+    />
+
+  </FieldsContent>
+</SectionForm>
+
+@code {
+  #region Inject
+
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+
+  #endregion
+
+  protected override async Task CreateItemAction(TemplateCreateDto item)
+  {
+    TemplateDto dto = await WebApi.CreateTemplate(item);
+    PrintSettingsEndpoints.AddTemplate(dto, FormModel.Body);
+  }
+
+  private string GetTemplateTypeName(bool isWeight) =>
+    isWeight ? WsDataLocalizer["ColTemplateWeight"] : WsDataLocalizer["ColTemplatePiece"];
+}
