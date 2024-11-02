@@ -11,7 +11,7 @@
     >
       @if (armAnalyticsQuery.HasData)
       {
-        <SimpleLineChart
+        <LineChart
           Labels="@(armAnalyticsQuery.Data.Select(x => x.Date.ToString("HH:mm")).ToList())"
           Data="@(armAnalyticsQuery.Data.Select(x => (decimal?)Convert.ToDecimal(x.Count)).ToList())"
         />
@@ -31,7 +31,7 @@
     >
       @if (armAnalyticsQuery.HasData)
       {
-        <SimpleLineChart
+        <LineChart
           Labels="@(armAnalyticsQuery.Data.Select(x => x.Date.ToString("HH:mm")).ToList())"
           Data="@(armAnalyticsQuery.Data.Select(x => (decimal?)Convert.ToDecimal(x.Count)).ToList())"
         />

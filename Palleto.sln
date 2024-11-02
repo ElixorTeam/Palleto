@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pl.Desktop.Api", "Src\Apps\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pl.Desktop.Models", "Src\Apps\Desktop\Pl.Desktop.Models\Pl.Desktop.Models.csproj", "{63E5057C-1A96-6082-8A15-CA181AF37426}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tsd", "Tsd", "{DCB99C80-2571-36E7-1BAC-6B5807315D40}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{DCB99C80-2571-36E7-1BAC-6B5807315D40}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pl.Mobile.Client", "Src\Apps\Mobile\Pl.Mobile.Client\Pl.Mobile.Client.csproj", "{4462EF01-49EF-8864-AC3D-9925F1A21AF6}"
 EndProject
