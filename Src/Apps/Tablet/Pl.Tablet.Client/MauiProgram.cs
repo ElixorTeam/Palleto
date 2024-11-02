@@ -16,7 +16,7 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         MauiAppBuilder builder = MauiApp.CreateBuilder();
-        builder.Configuration.LoadAppSettings<IScalesTabletAssembly>();
+        builder.Configuration.LoadAppSettings<ITabletAssembly>();
 
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
 
@@ -28,13 +28,13 @@ public static class MauiProgram
 
         builder.Services
             .SetupMauiLocalizer(builder.Configuration)
-            .AddRefitEndpoints<IScalesTabletAssembly>()
-            .AddDelegatingHandlers<IScalesTabletAssembly>();
+            .AddRefitEndpoints<ITabletAssembly>()
+            .AddDelegatingHandlers<ITabletAssembly>();
 
         builder.Services.AddFluxor(options =>
         {
             options.WithLifetime(StoreLifetime.Singleton);
-            options.ScanAssemblies(typeof(IScalesTabletAssembly).Assembly);
+            options.ScanAssemblies(typeof(ITabletAssembly).Assembly);
         });
 
         builder.Services

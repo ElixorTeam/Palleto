@@ -14,7 +14,7 @@ public static class MauiProgram
     public static MauiAppBuilder CreateMauiApp()
     {
         MauiAppBuilder builder = MauiApp.CreateBuilder();
-        builder.Configuration.LoadAppSettings<IScalesDesktopAssembly>();
+        builder.Configuration.LoadAppSettings<IDesktopAssembly>();
 
         builder
             .UseMauiApp<App>()
@@ -25,8 +25,8 @@ public static class MauiProgram
 
         builder.Services
             .SetupMauiLocalizer(builder.Configuration)
-            .AddRefitEndpoints<IScalesDesktopAssembly>()
-            .AddDelegatingHandlers<IScalesDesktopAssembly>()
+            .AddRefitEndpoints<IDesktopAssembly>()
+            .AddDelegatingHandlers<IDesktopAssembly>()
             .AddFluentUIComponents(c => c.ValidateClassNames = false);
 
         builder.Services
@@ -43,7 +43,7 @@ public static class MauiProgram
         builder.Services.AddFluxor(options =>
         {
             options.WithLifetime(StoreLifetime.Singleton);
-            options.ScanAssemblies(typeof(IScalesDesktopAssembly).Assembly);
+            options.ScanAssemblies(typeof(IDesktopAssembly).Assembly);
         });
 
         IConfigurationSection systemSection = builder.Configuration.GetSection("System");

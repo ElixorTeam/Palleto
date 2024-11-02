@@ -1,15 +1,15 @@
 using BF.Utilities.Handlers;
 using Blazorise;
 using Blazorise.Icons.FontAwesome;
+using Fluxor;
 using Pl.Admin.Client;
 using Pl.Admin.Client.Source.App;
 using Pl.Admin.Client.Source.Shared.Api;
 using Pl.Admin.Client.Source.Shared.Auth;
 using Pl.Admin.Client.Source.Shared.Auth.Settings;
 using Pl.Admin.Client.Source.Shared.Constants;
-using Fluxor;
-using Pl.Shared.Web.Extensions;
 using Pl.Shared.Constants;
+using Pl.Shared.Web.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +20,9 @@ builder.RegisterRefitClients();
 
 builder.Services
     .AddUserClaims()
-    .AddHelpers<IDeviceControlAssembly>()
-    .AddRefitEndpoints<IDeviceControlAssembly>()
-    .AddDelegatingHandlers<IDeviceControlAssembly>()
+    .AddHelpers<IAdminAssembly>()
+    .AddRefitEndpoints<IAdminAssembly>()
+    .AddDelegatingHandlers<IAdminAssembly>()
     .AddTransient<AcceptLanguageHandler>();
 
 builder.Services
@@ -36,7 +36,7 @@ builder.Services
     .AddFontAwesomeIcons()
     .AddWMBOS()
     .AddLocalization()
-    .AddFluxor(c => c.ScanAssemblies(typeof(IDeviceControlAssembly).Assembly))
+    .AddFluxor(c => c.ScanAssemblies(typeof(IAdminAssembly).Assembly))
     .AddFluentUIComponents(c => c.ValidateClassNames = false)
     .ConfigureKeycloakAuthorization(oidcSettings);
 

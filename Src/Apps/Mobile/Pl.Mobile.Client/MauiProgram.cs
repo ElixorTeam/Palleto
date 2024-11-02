@@ -13,7 +13,7 @@ public static partial class MauiProgram
         MauiAppBuilder builder = MauiApp.CreateBuilder();
 
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
-        builder.Configuration.LoadAppSettings<IScalesMobileAssembly>();
+        builder.Configuration.LoadAppSettings<IMobileAssembly>();
 
         builder.RegisterRefitClients();
 
@@ -22,13 +22,13 @@ public static partial class MauiProgram
 
         builder.Services
             .SetupMauiLocalizer(builder.Configuration)
-            .AddRefitEndpoints<IScalesMobileAssembly>()
-            .AddDelegatingHandlers<IScalesMobileAssembly>();
+            .AddRefitEndpoints<IMobileAssembly>()
+            .AddDelegatingHandlers<IMobileAssembly>();
 
         builder.Services.AddFluxor(options =>
         {
             options.WithLifetime(StoreLifetime.Singleton);
-            options.ScanAssemblies(typeof(IScalesMobileAssembly).Assembly);
+            options.ScanAssemblies(typeof(IMobileAssembly).Assembly);
         });
 
         ConfigureDebugServices(builder);
