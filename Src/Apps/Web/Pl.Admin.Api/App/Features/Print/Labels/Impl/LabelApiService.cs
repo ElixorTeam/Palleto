@@ -38,9 +38,9 @@ internal sealed class LabelApiService(
         return await dbContext.Labels
             .AsNoTracking()
             .Where(i =>
-                i.CreateDt > workShift.Start &&
-                i.CreateDt < workShift.End &&
-                i.LineId == amrId &&
+                i.CreateDt > workShift.Start.ToUniversalTime() &&
+                i.CreateDt < workShift.End.ToUniversalTime() &&
+                i.ArmId == amrId &&
                 i.PalletId == null
             )
             .OrderByDescending(i => i.CreateDt)
@@ -55,10 +55,10 @@ internal sealed class LabelApiService(
     private async Task LoadDefaultForeignKeysAsync(LabelEntity entity)
     {
         await dbContext.Entry(entity).Reference(e => e.Plu).LoadAsync();
-        await dbContext.Entry(entity).Reference(e => e.Line).LoadAsync();
+        await dbContext.Entry(entity).Reference(e => e.Arm).LoadAsync();
         await dbContext.Entry(entity).Reference(e => e.Pallet).LoadAsync();
-        await dbContext.Entry(entity.Line).Reference(e => e.Warehouse).LoadAsync();
-        await dbContext.Entry(entity.Line.Warehouse).Reference(e => e.ProductionSite).LoadAsync();
+        await dbContext.Entry(entity.Arm).Reference(e => e.Warehouse).LoadAsync();
+        await dbContext.Entry(entity.Arm.Warehouse).Reference(e => e.ProductionSite).LoadAsync();
     }
 
     #endregion

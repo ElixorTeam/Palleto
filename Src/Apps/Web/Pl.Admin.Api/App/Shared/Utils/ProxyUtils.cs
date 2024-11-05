@@ -1,5 +1,5 @@
 using Pl.Database.Entities.Print.Pallets;
-using Pl.Database.Entities.Ref.Lines;
+using Pl.Database.Entities.Ref.Arms;
 using Pl.Database.Entities.Ref.PalletMen;
 using Pl.Database.Entities.Ref.Printers;
 using Pl.Database.Entities.Ref.ProductionSites;
@@ -30,7 +30,7 @@ public static class ProxyUtils
     public static ProxyDto Pallet(PalletEntity i) => new(i.Id,  $"{i.Number}");
 
     [Pure]
-    public static ProxyDto Arm(LineEntity i) => new(i.Id, i.Name);
+    public static ProxyDto Arm(ArmEntity i) => new(i.Id, i.Name);
 
     [Pure]
     public static ProxyDto Printer(PrinterEntity i) => new(i.Id, $"{i.Name} | {i.Ip}");

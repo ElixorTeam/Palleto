@@ -1,13 +1,13 @@
-using Pl.Database.Entities.Ref.Lines;
 using Pl.Database.Entities.Ref.Printers;
 using Pl.Database.Entities.Ref.Warehouses;
 using Pl.Admin.Models.Features.Devices.Arms.Commands;
+using Pl.Database.Entities.Ref.Arms;
 
 namespace Pl.Admin.Api.App.Features.Devices.Arms.Impl.Extensions;
 
 internal static class ArmDtoExtensions
 {
-    public static LineEntity ToEntity(this ArmCreateDto dto, WarehouseEntity warehouse, PrinterEntity printer)
+    public static ArmEntity ToEntity(this ArmCreateDto dto, WarehouseEntity warehouse, PrinterEntity printer)
     {
         return new()
         {
@@ -21,7 +21,7 @@ internal static class ArmDtoExtensions
         };
     }
 
-    public static void UpdateEntity(this ArmUpdateDto dto, LineEntity entity, PrinterEntity printer, WarehouseEntity warehouse)
+    public static void UpdateEntity(this ArmUpdateDto dto, ArmEntity entity, PrinterEntity printer, WarehouseEntity warehouse)
     {
         entity.Name = dto.Name;
         entity.Type = dto.Type;

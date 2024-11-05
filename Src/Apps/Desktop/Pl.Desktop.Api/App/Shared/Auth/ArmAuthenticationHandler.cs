@@ -31,7 +31,7 @@ public class ArmAuthenticationHandler(
         if (!Guid.TryParse(headerValue[1], out Guid systemKey))
             return AuthenticateResult.Fail($"Invalid value in header: {Options.TokenHeaderName}");
 
-        Arm? arm = await dbContext.Lines
+        Arm? arm = await dbContext.Arms
             .Where(i => i.SystemKey == systemKey)
             .Select(i => new Arm(i.Id, i.Type, i.Warehouse.Id))
             .FirstOrDefaultAsync();

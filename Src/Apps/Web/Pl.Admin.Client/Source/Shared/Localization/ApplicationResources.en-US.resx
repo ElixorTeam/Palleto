@@ -69,13 +69,13 @@
     <data name="SectionLabels" xml:space="preserve">
         <value>Labels</value>
     </data>
-    <data name="SectionLines" xml:space="preserve">
-        <value>Lines</value>
+    <data name="SectionArm" xml:space="preserve">
+        <value>ARM</value>
     </data>
     <data name="SectionProductionSites" xml:space="preserve">
         <value>Production Sites</value>
     </data>
-    <data name="SectionPLU" xml:space="preserve">
+    <data name="SectionPlu" xml:space="preserve">
         <value>PLU</value>
     </data>
     <data name="SectionStorageMethods" xml:space="preserve">
@@ -108,8 +108,8 @@
     <data name="BtnSubmit" xml:space="preserve">
         <value>Submit</value>
     </data>
-    <data name="SectionLinePLU" xml:space="preserve">
-        <value>Line PLU</value>
+    <data name="SectionArmPlu" xml:space="preserve">
+        <value>PLU ARM</value>
     </data>
     <data name="InputDefaultPlaceholder" xml:space="preserve">
         <value>Enter value...</value>
@@ -282,14 +282,8 @@
     <data name="ArmPluRemovedUnsuccessfully" xml:space="preserve">
         <value>Failed to remove {0} PLU from the arm</value>
     </data>
-    <data name="ArmPluRemoved" xml:space="preserve">
-        <value>{0} PLU has been removed from the arm</value>
-    </data>
     <data name="ArmPluAddedUnsuccessfully" xml:space="preserve">
         <value>Failed to add {0} PLU to the arm</value>
-    </data>
-    <data name="ArmPluAdded" xml:space="preserve">
-        <value>{0} PLU has been added to the arm</value>
     </data>
     <data name="ZplResourceTypeEnumSign" xml:space="preserve">
         <value>Sign</value>

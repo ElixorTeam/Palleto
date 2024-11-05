@@ -179,11 +179,11 @@
     <data name="BtnNext" xml:space="preserve">
         <value>Далее</value>
     </data>
-    <data name="LineIsNewWarningTitle" xml:space="preserve">
-        <value>Линия не настроена</value>
+    <data name="ArmIsNewWarningTitle" xml:space="preserve">
+        <value>АРМ не настроен</value>
     </data>
-    <data name="LineIsNewWarningDescription" xml:space="preserve">
-        <value>Пожалуйста, обратитесь к технической поддержке для настройки линии. После настройки линии нажмите "Обновить".</value>
+    <data name="ArmIsNewWarningDescription" xml:space="preserve">
+        <value>Пожалуйста, обратитесь к технической поддержке для настройки АРМ. После настройки АРМ нажмите "Обновить".</value>
     </data>
     <data name="ToastErrorWhileGettingData" xml:space="preserve">
         <value>Ошибка получения данных. Попробуйте еще раз позже.</value>

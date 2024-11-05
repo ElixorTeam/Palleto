@@ -39,12 +39,12 @@ internal sealed class LabelMapConfig : IEntityTypeConfiguration<LabelEntity>
 
         //
 
-        builder.Property(e => e.LineId)
+        builder.Property(e => e.ArmId)
             .HasColumnName("ARM_UID").IsRequired();
 
-        builder.HasOne(e => e.Line)
+        builder.HasOne(e => e.Arm)
             .WithMany()
-            .HasForeignKey(e => e.LineId)
+            .HasForeignKey(e => e.ArmId)
             .HasConstraintName($"FK_{SqlTables.Labels}__ARM")
             .OnDelete(DeleteBehavior.Restrict);
 

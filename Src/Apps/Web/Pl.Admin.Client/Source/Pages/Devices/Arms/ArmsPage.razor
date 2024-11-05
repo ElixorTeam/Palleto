@@ -6,11 +6,11 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
 @inherits SectionDataGridBase<ArmDto>
-@attribute [Route(Urls.Lines)]
+@attribute [Route(Urls.Arms)]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
 @rendermode InteractiveServer
 
-<PageTitle>Pl.Admin.Client - @Localizer["SectionLines"]</PageTitle>
+<PageTitle>Pl.Admin.Client - @Localizer["SectionArm"]</PageTitle>
 
 <UserProductionSiteErrorSuspense>
   <UseEndpoint
@@ -20,11 +20,11 @@
     Context="armsQuery"
   >
     <Breadcrumbs Class="!pb-5">
-      <Breadcrumb Label="Линия" Link="@Urls.Lines" />
+      <Breadcrumb Label=@WsDataLocalizer["ColArm"] Link="@Urls.Arms" />
     </Breadcrumbs>
 
     <DataGridHeader>
-      <DataGridLabelWithCounter Label="@Localizer["SectionLines"]" ItemsCount="@(armsQuery.Data?.Length ?? 0)" IsLoading="armsQuery.IsLoading"/>
+      <DataGridLabelWithCounter Label="@Localizer["SectionArm"]" ItemsCount="@(armsQuery.Data?.Length ?? 0)" IsLoading="armsQuery.IsLoading"/>
       <DataGridActionReload OnClick="@armsQuery.RefetchAsync" IsLoading="armsQuery.IsFetching" />
       <AuthorizeView Policy="@PolicyEnum.SeniorSupport">
         <DataGridActionCreate OnClick="@OpenCreateFormModal"/>
@@ -69,7 +69,7 @@
           Filterable="false"
         />
         <DataGridColumn
-          Caption="@WsDataLocalizer["ColLine"]"
+          Caption="@WsDataLocalizer["ColName"]"
           Field="@nameof(ArmDto.Name)"
           Width="20%"
         />
@@ -125,10 +125,10 @@
     await OpenModalWithItem<ArmsUpdateDialog>(item);
 
   protected override async Task OpenItemInNewTab(ArmDto item) =>
-    await OpenLinkInNewTab($"{Urls.Lines}/{item.Id}");
+    await OpenLinkInNewTab($"{Urls.Arms}/{item.Id}");
 
   protected async Task OpenItem(ArmDto item) =>
-    await OpenLink($"{Urls.Lines}/{item.Id}");
+    await OpenLink($"{Urls.Arms}/{item.Id}");
 
   protected override Task<ArmDto> SearchByUidAction(Guid uid) =>
     WebApi.GetArmByUid(uid);

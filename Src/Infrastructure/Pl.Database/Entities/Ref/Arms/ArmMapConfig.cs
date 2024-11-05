@@ -1,8 +1,8 @@
-namespace Pl.Database.Entities.Ref.Lines;
+namespace Pl.Database.Entities.Ref.Arms;
 
-internal sealed class LineMapConfig : IEntityTypeConfiguration<LineEntity>
+internal sealed class ArmMapConfig : IEntityTypeConfiguration<ArmEntity>
 {
-    public void Configure(EntityTypeBuilder<LineEntity> builder)
+    public void Configure(EntityTypeBuilder<ArmEntity> builder)
     {
         #region Base
 
@@ -48,12 +48,12 @@ internal sealed class LineMapConfig : IEntityTypeConfiguration<LineEntity>
                     .HasConstraintName("FK_ARMS_PLUS__PLU")
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasPrincipalKey(nameof(PluEntity.Id)),
-                r => r.HasOne(typeof(LineEntity))
+                r => r.HasOne(typeof(ArmEntity))
                     .WithMany()
                     .HasForeignKey("ARM_UID")
                     .HasConstraintName("FK_ARMS_PLUS__ARM")
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasPrincipalKey(nameof(LineEntity.Id)),
+                    .HasPrincipalKey(nameof(ArmEntity.Id)),
                 j => j.HasKey("PLU_UID", "ARM_UID"));
 
         #endregion

@@ -182,10 +182,10 @@
     <data name="BtnNext" xml:space="preserve">
         <value/>
     </data>
-    <data name="LineIsNewWarningTitle" xml:space="preserve">
+    <data name="ArmIsNewWarningTitle" xml:space="preserve">
         <value/>
     </data>
-    <data name="LineIsNewWarningDescription" xml:space="preserve">
+    <data name="ArmIsNewWarningDescription" xml:space="preserve">
         <value/>
     </data>
     <data name="ToastErrorWhileGettingData" xml:space="preserve">

@@ -32,7 +32,10 @@ internal sealed class PalletApiService(
         return await dbContext.Pallets
             .AsNoTracking()
             .Where(i =>
-                i.CreateDt.AddHours(3) > workShift.Start && i.CreateDt.AddHours(3) < workShift.End && i.Arm.Id == armId)
+                i.CreateDt > workShift.Start.ToUniversalTime() &&
+                i.CreateDt < workShift.End.ToUniversalTime() &&
+                i.Arm.Id == armId
+            )
             .OrderByDescending(i => i.CreateDt)
             .ToPalletDto(dbContext.Labels)
             .ToArrayAsync();

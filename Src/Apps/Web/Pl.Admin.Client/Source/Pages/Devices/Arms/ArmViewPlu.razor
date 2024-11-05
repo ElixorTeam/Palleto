@@ -8,7 +8,7 @@
 
 <UseEndpoint Endpoint="@DevicesEndpoints.ArmPluEndpoint" Arg="Arm.Id" Options="@(DefaultEndpointOptions)" Context="plusQuery">
   <DataGridHeader>
-    <span class="text-xl font-medium">@Localizer["SectionLinePLU"]</span>
+    <span class="text-xl font-medium">@Localizer["SectionArmPlu"]</span>
     <DataGridItemsSelected
       Count="@(plusQuery.Data?.Length ?? 0)"
       SelectedCount="@(plusQuery.Data?.Where(x => x.IsActive).Count() ?? 0)"

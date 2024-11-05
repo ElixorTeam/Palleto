@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Pl.Database;
-using Pl.Database.Entities.Ref.Lines;
+using Pl.Database.Entities.Ref.Arms;
 using Pl.Database.Entities.Ref1C.Characteristics;
 using Pl.Database.Entities.Ref1C.Nestings;
 using Pl.Database.Entities.Ref1C.Plus;
@@ -15,7 +15,7 @@ internal sealed class PluPieceApiService(WsDbContext dbContext, UserHelper userH
 
     public async Task<PluPieceDto[]> GetAllPieceAsync()
     {
-        LineEntity line = await dbContext.Lines
+        ArmEntity arm = await dbContext.Arms
             .AsNoTracking()
             .Include(i => i.Plus)
             .ThenInclude(pluEntity => pluEntity.Bundle)
@@ -23,7 +23,7 @@ internal sealed class PluPieceApiService(WsDbContext dbContext, UserHelper userH
 
         Dictionary<PluEntity, List<NestingDto>> data = new();
 
-        foreach (PluEntity plu in line.Plus.Where(i => !i.IsWeight).OrderBy(i => i.Number))
+        foreach (PluEntity plu in arm.Plus.Where(i => !i.IsWeight).OrderBy(i => i.Number))
         {
             List<NestingDto> pluNesting = [];
             NestingEntity nesting = await dbContext.Nestings.AsNoTracking()

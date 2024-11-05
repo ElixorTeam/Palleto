@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pl.Database;
 using Pl.Database.Entities.Print.Labels;
-using Pl.Database.Entities.Ref.Lines;
+using Pl.Database.Entities.Ref.Arms;
 using Pl.Database.Entities.Ref1C.Nestings;
 using Pl.Database.Entities.Ref1C.Plus;
 using Pl.Desktop.Api.App.Features.Plu.Common;
@@ -23,7 +23,7 @@ internal sealed class PluWeightApiService(
 
     public Task<PluWeightDto[]> GetAllWeightAsync()
     {
-        return dbContext.Lines
+        return dbContext.Arms
             .AsNoTracking()
             .Where(i => i.Id == userHelper.UserId)
             .SelectMany(i => i.Plus.Where(p => p.IsWeight))
@@ -60,7 +60,7 @@ internal sealed class PluWeightApiService(
             .Include(i => i.Bundle)
             .SingleAsync(i => i.Id == pluId);
 
-        LineEntity line = await dbContext.Lines
+        ArmEntity arm = await dbContext.Arms
             .Include(i => i.Warehouse)
             .ThenInclude(i => i.ProductionSite)
             .SingleAsync(i => i.Id == userHelper.UserId);
@@ -81,12 +81,12 @@ internal sealed class PluWeightApiService(
                 plu.Clip.Weight,
                 plu.Bundle.Weight
             ),
-            Line = new(
-                line.Id,
-                (short)line.Number,
-                line.Name,
-                line.Warehouse.ProductionSite.Address,
-                line.Counter % 1000000 + 1
+            Arm = new(
+                arm.Id,
+                (short)arm.Number,
+                arm.Name,
+                arm.Warehouse.ProductionSite.Address,
+                arm.Counter % 1000000 + 1
             ),
             Nesting = new(Guid.Empty, nesting.Box.Weight, nesting.BundleCount),
             Kneading = (short)dto.Kneading,
@@ -95,16 +95,16 @@ internal sealed class PluWeightApiService(
 
         LabelEntity label = printLabelService.GenerateWeightLabel(dtoToCreate);
 
-        line.Counter = dtoToCreate.Line.Counter;
+        arm.Counter = dtoToCreate.Arm.Counter;
 
         label.Plu = plu;
-        label.Line = line;
+        label.Arm = arm;
 
         await dbContext.Labels.AddAsync(label);
 
         await dbContext.SaveChangesAsync();
 
-        return new() { ArmCounter = (uint)line.Counter, Zpl = label.Zpl.Zpl };
+        return new() { ArmCounter = (uint)arm.Counter, Zpl = label.Zpl.Zpl };
     }
 
     #endregion

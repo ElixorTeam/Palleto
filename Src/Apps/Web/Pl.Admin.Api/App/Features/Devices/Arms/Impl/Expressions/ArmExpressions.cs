@@ -1,14 +1,14 @@
 using Pl.Admin.Api.App.Features.Devices.Arms.Impl.Models;
 using Pl.Admin.Api.App.Shared.Validators.Api.Models;
-using Pl.Database.Entities.Ref.Lines;
 using Pl.Database.Entities.Ref1C.Plus;
 using Pl.Admin.Models.Features.Devices.Arms.Queries;
+using Pl.Database.Entities.Ref.Arms;
 
 namespace Pl.Admin.Api.App.Features.Devices.Arms.Impl.Expressions;
 
 public static class ArmExpressions
 {
-    public static Expression<Func<LineEntity, ArmDto>> ToDto =>
+    public static Expression<Func<ArmEntity, ArmDto>> ToDto =>
         arm => new()
         {
             Id = arm.Id,
@@ -36,7 +36,7 @@ public static class ArmExpressions
             IsActive = plusId.Contains(plu.Id)
         };
 
-    public static List<PredicateField<LineEntity>> GetUqPredicates(UqArmProperties uqArmProperties) =>
+    public static List<PredicateField<ArmEntity>> GetUqPredicates(UqArmProperties uqArmProperties) =>
     [
         new(i => i.Name == uqArmProperties.Name, "Name"),
         new(i => i.Number == uqArmProperties.Number, "Number"),

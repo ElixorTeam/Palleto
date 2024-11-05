@@ -39,7 +39,7 @@
     <data name="MenuAdministration" xml:space="preserve">
         <value />
     </data>
-    <data name="SectionLines" xml:space="preserve">
+    <data name="SectionArm" xml:space="preserve">
         <value />
     </data>
     <data name="SectionPrinters" xml:space="preserve">
@@ -57,7 +57,7 @@
     <data name="SectionAggregatedLabels" xml:space="preserve">
         <value />
     </data>
-    <data name="SectionPLU" xml:space="preserve">
+    <data name="SectionPlu" xml:space="preserve">
         <value />
     </data>
     <data name="SectionBoxes" xml:space="preserve">
@@ -108,7 +108,7 @@
     <data name="BtnSubmit" xml:space="preserve">
         <value />
     </data>
-    <data name="SectionLinePLU" xml:space="preserve">
+    <data name="SectionArmPlu" xml:space="preserve">
         <value />
     </data>
     <data name="InputDefaultPlaceholder" xml:space="preserve">
@@ -277,12 +277,6 @@
         <value />
     </data>
     <data name="SectionAnalytics" xml:space="preserve">
-        <value />
-    </data>
-    <data name="ArmPluRemoved" xml:space="preserve">
-        <value />
-    </data>
-    <data name="ArmPluAdded" xml:space="preserve">
         <value />
     </data>
     <data name="ArmPluRemovedUnsuccessfully" xml:space="preserve">

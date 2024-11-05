@@ -3,7 +3,7 @@
 @implements IDialogContentComponent<PluDto>
 
 <SectionDialog>
-  <Tab Id="@typeof(PlusUpdateForm).ToString()" Title="@Localizer["SectionPLU"]">
+  <Tab Id="@typeof(PlusUpdateForm).ToString()" Title="@Localizer["SectionPlu"]">
     <PlusUpdateForm Model="Content" FormModel="@PluMapper.DtoToUpdateDto(Content)" />
   </Tab>
   <Tab Id="@typeof(PluCharacteristsDataGrid).ToString()" Title="@Localizer["SectionPluCharacteristics"]">

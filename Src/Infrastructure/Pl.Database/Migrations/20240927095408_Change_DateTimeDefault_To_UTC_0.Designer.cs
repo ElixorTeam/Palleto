@@ -84,7 +84,7 @@ namespace Pl.Database.Migrations
                         .HasColumnType("smallint")
                         .HasColumnName("KNEADING");
 
-                    b.Property<Guid>("LineId")
+                    b.Property<Guid>("ArmId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("ARM_UID");
 
@@ -116,7 +116,7 @@ namespace Pl.Database.Migrations
                         .IsUnique()
                         .HasDatabaseName("UQ_LABELS__BARCODE_TOP");
 
-                    b.HasIndex("LineId");
+                    b.HasIndex("ArmId");
 
                     b.HasIndex("PalletId");
 
@@ -226,7 +226,7 @@ namespace Pl.Database.Migrations
                     b.ToTable("PALLETS", "PRINT");
                 });
 
-            modelBuilder.Entity("Pl.Database.Entities.Ref.Lines.LineEntity", b =>
+            modelBuilder.Entity("Pl.Database.Entities.Ref.Arms.ArmEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -975,7 +975,7 @@ namespace Pl.Database.Migrations
 
             modelBuilder.Entity("ARMS_PLUS_FK", b =>
                 {
-                    b.HasOne("Pl.Database.Entities.Ref.Lines.LineEntity", null)
+                    b.HasOne("Pl.Database.Entities.Ref.Arms.ArmEntity", null)
                         .WithMany()
                         .HasForeignKey("ARM_UID")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -992,9 +992,9 @@ namespace Pl.Database.Migrations
 
             modelBuilder.Entity("Pl.Database.Entities.Print.Labels.LabelEntity", b =>
                 {
-                    b.HasOne("Pl.Database.Entities.Ref.Lines.LineEntity", "Line")
+                    b.HasOne("Pl.Database.Entities.Ref.Arms.ArmEntity", "Arm")
                         .WithMany()
-                        .HasForeignKey("LineId")
+                        .HasForeignKey("ArmId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_LABELS__ARM");
@@ -1011,7 +1011,7 @@ namespace Pl.Database.Migrations
                         .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK_LABELS__PLU");
 
-                    b.Navigation("Line");
+                    b.Navigation("Arm");
 
                     b.Navigation("Pallet");
 
@@ -1030,7 +1030,7 @@ namespace Pl.Database.Migrations
 
             modelBuilder.Entity("Pl.Database.Entities.Print.Pallets.PalletEntity", b =>
                 {
-                    b.HasOne("Pl.Database.Entities.Ref.Lines.LineEntity", "Arm")
+                    b.HasOne("Pl.Database.Entities.Ref.Arms.ArmEntity", "Arm")
                         .WithMany()
                         .HasForeignKey("ARM_UID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1049,7 +1049,7 @@ namespace Pl.Database.Migrations
                     b.Navigation("PalletMan");
                 });
 
-            modelBuilder.Entity("Pl.Database.Entities.Ref.Lines.LineEntity", b =>
+            modelBuilder.Entity("Pl.Database.Entities.Ref.Arms.ArmEntity", b =>
                 {
                     b.HasOne("Pl.Database.Entities.Ref.Printers.PrinterEntity", "Printer")
                         .WithMany()

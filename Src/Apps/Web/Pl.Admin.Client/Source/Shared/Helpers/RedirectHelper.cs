@@ -22,7 +22,7 @@ public sealed class RedirectHelper(IAuthorizationService authorizationService, C
         Link(uid, Urls.Templates, CheckPolicy(PolicyEnum.Support));
 
     public string ToArm(Guid uid) =>
-        Link(uid, Urls.Lines, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Urls.Arms, CheckPolicy(PolicyEnum.Support));
 
     public string ToPrinter(Guid uid) =>
         Link(uid, Urls.Printers, CheckPolicy(PolicyEnum.Support));

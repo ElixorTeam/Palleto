@@ -4,7 +4,7 @@ public static class Urls
 {
     # region Devices
 
-    public const string Lines = "/lines";
+    public const string Arms = "/arms";
     public const string Printers = "/printers";
 
     # endregion

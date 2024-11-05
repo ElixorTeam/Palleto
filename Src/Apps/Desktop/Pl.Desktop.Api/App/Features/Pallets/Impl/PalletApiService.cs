@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pl.Database;
 using Pl.Database.Entities.Print.Pallets;
-using Pl.Database.Entities.Ref.Lines;
+using Pl.Database.Entities.Ref.Arms;
 using Pl.Database.Entities.Ref.PalletMen;
 using Pl.Database.Entities.Ref1C.Characteristics;
 using Pl.Database.Entities.Ref1C.Nestings;
@@ -115,7 +115,7 @@ internal sealed class PalletApiService(
             nestingForLabel = new(dto.CharacteristicId, data2.Box.Weight, data2.BundleCount);
         }
 
-        LineEntity line = await dbContext.Lines
+        ArmEntity arm = await dbContext.Arms
             .Include(i => i.Warehouse)
             .ThenInclude(i => i.ProductionSite)
             .SingleAsync(i => i.Id == userHelper.UserId);
@@ -130,11 +130,11 @@ internal sealed class PalletApiService(
 
         PalletEntity pallet = new()
         {
-            Arm = line,
+            Arm = arm,
             PalletMan = palletMan,
             Counter = palletCounter,
             IsShipped = false,
-            Warehouse = line.Warehouse,
+            Warehouse = arm.Warehouse,
             TrayWeight = dto.WeightTray,
             ProductDt = dto.ProdDt,
             Barcode = $"001460910023{palletCounter:D7}",
@@ -156,15 +156,15 @@ internal sealed class PalletApiService(
                 plu.Clip.Weight,
                 plu.Bundle.Weight
             ),
-            Line = new(
-                line.Id,
-                (short)line.Number,
-                line.Name,
-                line.Warehouse.ProductionSite.Address,
-                line.Counter
+            Arm = new(
+                arm.Id,
+                (short)arm.Number,
+                arm.Name,
+                arm.Warehouse.ProductionSite.Address,
+                arm.Counter
                 ),
             Nesting = nestingForLabel,
-            Pallet = new(pallet.Barcode, line.Warehouse.Uid1C, palletMan.Uid1C),
+            Pallet = new(pallet.Barcode, arm.Warehouse.Uid1C, palletMan.Uid1C),
             Kneading = (short)dto.Kneading,
             TrayWeight = dto.WeightTray,
             ProductDt = dto.ProdDt
@@ -174,7 +174,7 @@ internal sealed class PalletApiService(
         pallet.Id = palletData.Id;
         pallet.Number = palletData.Number;
 
-        line.Counter += dto.LabelCount;
+        arm.Counter += dto.LabelCount;
 
         await dbContext.Pallets.AddAsync(pallet);
         await dbContext.Labels.AddRangeAsync(palletData.Labels);

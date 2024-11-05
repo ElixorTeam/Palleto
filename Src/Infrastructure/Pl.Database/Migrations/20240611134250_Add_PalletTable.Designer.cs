@@ -221,7 +221,7 @@ namespace Pl.Database.Migrations
                     b.ToTable("CLAIMS", "REF");
                 });
 
-            modelBuilder.Entity("Pl.Database.Entities.Ref.Lines.LineEntity", b =>
+            modelBuilder.Entity("Pl.Database.Entities.Ref.Arms.ArmEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -981,7 +981,7 @@ namespace Pl.Database.Migrations
 
             modelBuilder.Entity("ARMS_PLUS_FK", b =>
                 {
-                    b.HasOne("Pl.Database.Entities.Ref.Lines.LineEntity", null)
+                    b.HasOne("Pl.Database.Entities.Ref.Arms.ArmEntity", null)
                         .WithMany()
                         .HasForeignKey("ARM_UID")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1011,7 +1011,7 @@ namespace Pl.Database.Migrations
 
             modelBuilder.Entity("Pl.Database.Entities.Print.LabelEntity", b =>
                 {
-                    b.HasOne("Pl.Database.Entities.Ref.Lines.LineEntity", "Line")
+                    b.HasOne("Pl.Database.Entities.Ref.Arms.ArmEntity", "Arm")
                         .WithMany()
                         .HasForeignKey("ARM_UID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1021,14 +1021,14 @@ namespace Pl.Database.Migrations
                         .WithMany()
                         .HasForeignKey("PLU_UID");
 
-                    b.Navigation("Line");
+                    b.Navigation("Arm");
 
                     b.Navigation("Plu");
                 });
 
             modelBuilder.Entity("Pl.Database.Entities.Print.PalletEntity", b =>
                 {
-                    b.HasOne("Pl.Database.Entities.Ref.Lines.LineEntity", "Arm")
+                    b.HasOne("Pl.Database.Entities.Ref.Arms.ArmEntity", "Arm")
                         .WithMany()
                         .HasForeignKey("ARM_UID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1053,7 +1053,7 @@ namespace Pl.Database.Migrations
                     b.Navigation("Plu");
                 });
 
-            modelBuilder.Entity("Pl.Database.Entities.Ref.Lines.LineEntity", b =>
+            modelBuilder.Entity("Pl.Database.Entities.Ref.Arms.ArmEntity", b =>
                 {
                     b.HasOne("Pl.Database.Entities.Ref.Printers.PrinterEntity", "Printer")
                         .WithMany()

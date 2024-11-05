@@ -1,3 +1,4 @@
+using Pl.Database.Entities.Ref.Arms;
 using Pl.Database.Shared.Interceptors;
 using Pl.Database.Shared.Models;
 using Pl.Database.Shared.Extensions;
@@ -20,7 +21,7 @@ public class WsDbContext : DbContext
     public DbSet<WarehouseEntity> Warehouses { get; init; }
     public DbSet<PrinterEntity> Printers { get; init; }
     public DbSet<UserEntity> Users { get; init; }
-    public DbSet<LineEntity> Lines { get; init; }
+    public DbSet<ArmEntity> Arms { get; init; }
     public DbSet<PluEntity> Plus { get; init; }
     public DbSet<NestingEntity> Nestings { get; init; }
     public DbSet<CharacteristicEntity> Characteristics { get; init; }

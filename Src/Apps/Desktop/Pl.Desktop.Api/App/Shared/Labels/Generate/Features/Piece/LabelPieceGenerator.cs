@@ -68,7 +68,7 @@ internal class LabelPieceGenerator(
             WarehouseUid = dto.Pallet.WarehouseId1C,
             CharacteristicUid = dto.Nesting.Id,
             Barcode = dto.Pallet.Barcode,
-            ArmNumber = (uint)dto.Line.Number,
+            ArmNumber = (uint)dto.Arm.Number,
             TrayWeightKg = dto.TrayWeight,
             Labels = labelsFor1C,
             ProductDt = dto.ProductDt,
@@ -102,7 +102,7 @@ internal class LabelPieceGenerator(
     {
         BarcodeBuilder barcode = barcodeTemplates with
         {
-            LineCounter = (uint)(dto.Line.Counter + index + 1),
+            ArmCounter = (uint)(dto.Arm.Counter + index + 1),
             ProductDt = barcodeTemplates.ProductDt.AddSeconds(index)
         };
 
@@ -128,7 +128,7 @@ internal class LabelPieceGenerator(
 
         TemplateVars data = new(
             plu: new(dto.Plu.FullName, (ushort)dto.Plu.Number, dto.Plu.Description),
-            arm: new(dto.Line.Number, dto.Line.Name, dto.Line.Address),
+            arm: new(dto.Arm.Number, dto.Arm.Name, dto.Arm.Address),
             pallet: new((ushort)(index + 1), string.Empty),
             barcodes: new(barcodeTop, barcodeBottom, barcodeRight),
 
@@ -152,7 +152,7 @@ internal class LabelPieceGenerator(
             Kneading = dto.Kneading,
             ProductDt = barcode.ProductDt,
             ExpirationDt = dto.ExpirationDt,
-            LineId = dto.Line.Id,
+            ArmId = dto.Arm.Id,
             PluId = dto.Plu.Id,
             BundleCount = (ushort)dto.Nesting.BundleCount,
             IsWeight = false,

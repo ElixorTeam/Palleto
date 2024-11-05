@@ -8,11 +8,11 @@
 @attribute [Route(Urls.Plus)]
 @rendermode InteractiveServer
 
-<PageTitle>Pl.Admin.Client - @Localizer["SectionPLU"]</PageTitle>
+<PageTitle>Pl.Admin.Client - @Localizer["SectionPlu"]</PageTitle>
 
 <UseParameterlessEndpoint Endpoint="@References1CEndpoints.PlusEndpoint" Options="@(DefaultEndpointOptions)" Context="plusQuery">
   <DataGridHeader>
-    <span>@Localizer["SectionPLU"]</span>
+    <span>@Localizer["SectionPlu"]</span>
     <DataGridItemsCounter ItemsCount="@(plusQuery.Data?.Length ?? 0)" IsLoading="plusQuery.IsLoading"/>
     <DataGridActionReload OnClick="@plusQuery.RefetchAsync" IsLoading="plusQuery.IsFetching" />
   </DataGridHeader>

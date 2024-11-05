@@ -1,11 +1,11 @@
-using Pl.Database.Entities.Ref.Lines;
+using Pl.Database.Entities.Ref.Arms;
 using Pl.Desktop.Models.Features.Arms.Output;
 
 namespace Pl.Desktop.Api.App.Features.Arms.Expressions;
 
 internal static class ArmExpressions
 {
-    public static Expression<Func<LineEntity, ArmDto>> ToDto => arm =>
+    public static Expression<Func<ArmEntity, ArmDto>> ToDto => arm =>
         new()
         {
             Id = arm.Id,

@@ -1,3 +1,5 @@
+using Pl.Database.Entities.Ref.Arms;
+
 namespace Pl.Database.Entities.Print.Labels;
 
 public sealed class LabelEntity : EfEntityBase
@@ -10,8 +12,8 @@ public sealed class LabelEntity : EfEntityBase
     public Guid? PluId { get; set; }
     public PluEntity? Plu { get; set; }
 
-    public Guid LineId { get; set; }
-    public LineEntity Line { get; set; } = null!;
+    public Guid ArmId { get; set; }
+    public ArmEntity Arm { get; set; } = null!;
 
     public LabelZplEntity Zpl { get; set; } = new();
 

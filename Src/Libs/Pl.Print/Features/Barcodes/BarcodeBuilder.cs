@@ -9,8 +9,8 @@ public record BarcodeBuilder : IBarcodeVariables
 {
     #region Variables
 
-    public required uint LineNumber { get; init; }
-    public required uint LineCounter { get; init; }
+    public required uint ArmNumber { get; init; }
+    public required uint ArmCounter { get; init; }
 
     public required string PluGtin { get; init; }
     public required string PluEan13 { get; init; }

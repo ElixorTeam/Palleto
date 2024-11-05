@@ -69,13 +69,13 @@
     <data name="SectionLabels" xml:space="preserve">
         <value>Этикетки</value>
     </data>
-    <data name="SectionLines" xml:space="preserve">
-        <value>Линии</value>
+    <data name="SectionArm" xml:space="preserve">
+        <value>АРМ</value>
     </data>
     <data name="SectionProductionSites" xml:space="preserve">
         <value>Площадки</value>
     </data>
-    <data name="SectionPLU" xml:space="preserve">
+    <data name="SectionPlu" xml:space="preserve">
         <value>ПЛУ</value>
     </data>
     <data name="SectionStorageMethods" xml:space="preserve">
@@ -108,8 +108,8 @@
     <data name="BtnSubmit" xml:space="preserve">
         <value>Подтвердить</value>
     </data>
-    <data name="SectionLinePLU" xml:space="preserve">
-        <value>ПЛУ Линии</value>
+    <data name="SectionArmPlu" xml:space="preserve">
+        <value>ПЛУ АРМ</value>
     </data>
     <data name="InputDefaultPlaceholder" xml:space="preserve">
         <value>Введите значение...</value>
@@ -280,16 +280,10 @@
         <value>Аналитика</value>
     </data>
     <data name="ArmPluRemovedUnsuccessfully" xml:space="preserve">
-        <value>Не удалось убрать {0} ПЛУ с линии</value>
-    </data>
-    <data name="ArmPluRemoved" xml:space="preserve">
-        <value>{0} ПЛУ убрана с линии</value>
+        <value>Не удалось убрать {0} ПЛУ с АРМ</value>
     </data>
     <data name="ArmPluAddedUnsuccessfully" xml:space="preserve">
-        <value>Не удалось добавить {0} ПЛУ к линии</value>
-    </data>
-    <data name="ArmPluAdded" xml:space="preserve">
-        <value>{0} ПЛУ добавлена к линии</value>
+        <value>Не удалось добавить {0} ПЛУ к АРМ</value>
     </data>
     <data name="ZplResourceTypeEnumSign" xml:space="preserve">
         <value>Значок</value>

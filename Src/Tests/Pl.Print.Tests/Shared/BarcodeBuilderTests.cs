@@ -28,8 +28,8 @@ file static class TestCases
 {
     public static readonly BarcodeBuilder BarcodeBuilder = new()
     {
-        LineNumber = 96446,
-        LineCounter = 507602,
+        ArmNumber = 96446,
+        ArmCounter = 507602,
         PluGtin = "14607100238871",
         PluEan13 = "4607100238874",
         PluNumber = 331,
@@ -60,8 +60,8 @@ file static class TestCases
                 new("10", "#({0:C})"),
                 new(nameof(BarcodeBuilder.ProductDt), "{0:MMdd}"),
                 new("250", "#({0:C})"),
-                new(nameof(BarcodeBuilder.LineNumber), "{0:D5}"),
-                new(nameof(BarcodeBuilder.LineCounter), "{0:D6}"),
+                new(nameof(BarcodeBuilder.ArmNumber), "{0:D5}"),
+                new(nameof(BarcodeBuilder.ArmCounter), "{0:D6}"),
             },
             "(01)14607100238871(3103)021500(11)240919(17)241019(37)20#(10)0919#(250)96446507602"
         ];
@@ -71,9 +71,9 @@ file static class TestCases
             new List<BarcodeVar>
             {
                 new("233", "{0:C}"),
-                new(nameof(BarcodeBuilder.LineNumber), "{0:D5}"),
+                new(nameof(BarcodeBuilder.ArmNumber), "{0:D5}"),
                 new(nameof(BarcodeBuilder.BundleCount), "{0:D2}"),
-                new(nameof(BarcodeBuilder.LineCounter), "{0:D6}"),
+                new(nameof(BarcodeBuilder.ArmCounter), "{0:D6}"),
                 new(nameof(BarcodeBuilder.ProductDt), "{0:yyMMddHHmmss}"),
                 new(nameof(BarcodeBuilder.PluNumber), "{0:D3}"),
                 new(nameof(BarcodeBuilder.Kneading), "{0:D8}"),
@@ -86,9 +86,9 @@ file static class TestCases
             new List<BarcodeVar>
             {
                 new("233", "{0:C}"),
-                new(nameof(BarcodeBuilder.LineNumber), "{0:D5}"),
+                new(nameof(BarcodeBuilder.ArmNumber), "{0:D5}"),
                 new(nameof(BarcodeBuilder.BundleCount), "{0:D2}"),
-                new(nameof(BarcodeBuilder.LineCounter), "{0:D6}"),
+                new(nameof(BarcodeBuilder.ArmCounter), "{0:D6}"),
                 new(nameof(BarcodeBuilder.ProductDt), "{0:yyMMddHHmmss}"),
                 new(nameof(BarcodeBuilder.PluNumber), "{0:D3}"),
                 new(nameof(BarcodeBuilder.Kneading), "{0:D8}"),
@@ -101,8 +101,8 @@ file static class TestCases
             new List<BarcodeVar>
             {
                 new("234", "{0:C}"),
-                new(nameof(BarcodeBuilder.LineNumber), "{0:D5}"),
-                new(nameof(BarcodeBuilder.LineCounter), "{0:D6}"),
+                new(nameof(BarcodeBuilder.ArmNumber), "{0:D5}"),
+                new(nameof(BarcodeBuilder.ArmCounter), "{0:D6}"),
                 new(nameof(BarcodeBuilder.ProductDt), "{0:yyMMdd}"),
             },
             "23496446507602240919"
@@ -112,8 +112,8 @@ file static class TestCases
             new List<BarcodeVar>
             {
                 new("298", "{0:C}"),
-                new(nameof(BarcodeBuilder.LineNumber), "{0:D5}"),
-                new(nameof(BarcodeBuilder.LineCounter), "{0:D8}"),
+                new(nameof(BarcodeBuilder.ArmNumber), "{0:D5}"),
+                new(nameof(BarcodeBuilder.ArmCounter), "{0:D8}"),
                 new(nameof(BarcodeBuilder.ProductDt), "{0:yyMMddHHmmss}"),
                 new(nameof(BarcodeBuilder.PluNumber), "{0:D3}"),
                 new(nameof(BarcodeBuilder.WeightNet), "{0:D5}"),

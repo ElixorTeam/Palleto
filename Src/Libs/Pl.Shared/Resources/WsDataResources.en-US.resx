@@ -75,8 +75,8 @@
     <data name="ColFullName" xml:space="preserve">
         <value>Full name</value>
     </data>
-    <data name="ColLine" xml:space="preserve">
-        <value>Line</value>
+    <data name="ColArm" xml:space="preserve">
+        <value>ARM</value>
     </data>
     <data name="ColPluWeight" xml:space="preserve">
         <value>Weight</value>

@@ -6,8 +6,8 @@ public enum FkProperty
     Pallet,
     [Description("User")]
     User,
-    [Description("Line")]
-    Line,
+    [Description("Arm")]
+    Arm,
     [Description("Warehouse")]
     Warehouse,
     [Description("ProductionSite")]

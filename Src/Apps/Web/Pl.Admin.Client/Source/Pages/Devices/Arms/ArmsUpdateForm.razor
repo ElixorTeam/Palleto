@@ -53,7 +53,7 @@
       <SectionSelectSingleField
         TItem="ArmType"
         Label="@WsDataLocalizer["ColType"]"
-        Items="LineTypes"
+        Items="ArmTypes"
         @bind-Value="@FormModel.Type"
         ItemDisplayName="item => Localizer[item.GetDescription()]"
         For="@(() => FormModel.Type)"
@@ -172,7 +172,7 @@
 
   [Parameter, EditorRequired] public ArmDto Model { get; set; } = default!;
 
-  private IEnumerable<ArmType> LineTypes { get; } = Enum.GetValues(typeof(ArmType)).Cast<ArmType>().ToList();
+  private IEnumerable<ArmType> ArmTypes { get; } = Enum.GetValues(typeof(ArmType)).Cast<ArmType>().ToList();
   private bool IsSeniorSupport { get; set; }
   private bool IsSupport { get; set; }
 

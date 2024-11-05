@@ -2,7 +2,7 @@
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Blazor.Heroicons.Outline
 
-@attribute [Route(Urls.Lines + "/{Id:guid}")]
+@attribute [Route(Urls.Arms + "/{Id:guid}")]
 
 <UseEndpoint
   Endpoint="@DevicesEndpoints.ArmEndpoint"
@@ -11,7 +11,7 @@
 >
   <div class="w-full">
     <Breadcrumbs>
-      <Breadcrumb Label="Линия" Link="@Urls.Lines" />
+      <Breadcrumb Label="Линия" Link="@Urls.Arms" />
       @if (armQuery.HasData)
       {
         <Breadcrumb Label="@armQuery.Data.Name" />

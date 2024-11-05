@@ -182,11 +182,11 @@
     <data name="BtnNext" xml:space="preserve">
         <value>Next</value>
     </data>
-    <data name="LineIsNewWarningTitle" xml:space="preserve">
-        <value>The line is not set up</value>
+    <data name="ArmIsNewWarningTitle" xml:space="preserve">
+        <value>The ARM is not set up</value>
     </data>
-    <data name="LineIsNewWarningDescription" xml:space="preserve">
-        <value>Please contact technical support to set up the line. After setting up the line, click "Update".</value>
+    <data name="ArmIsNewWarningDescription" xml:space="preserve">
+        <value>Please contact technical support to set up the ARM. After setting up the ARM, click "Update".</value>
     </data>
     <data name="ToastErrorWhileGettingData" xml:space="preserve">
         <value>Data acquisition error. Try again later.</value>

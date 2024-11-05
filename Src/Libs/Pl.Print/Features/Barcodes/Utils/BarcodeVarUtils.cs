@@ -38,8 +38,8 @@ public static partial class BarcodeVarUtils
     {
         BarcodeBuilder barcodeBuilder = new()
         {
-            LineNumber = 12345,
-            LineCounter = 123456,
+            ArmNumber = 12345,
+            ArmCounter = 123456,
             PluGtin = "14607100238871",
             PluEan13 = "4607100238874",
             PluNumber = 301,
@@ -52,8 +52,8 @@ public static partial class BarcodeVarUtils
         };
         return
         [
-            CreateVariable(() => barcodeBuilder.LineNumber, "{0:D5}"),
-            CreateVariable(() => barcodeBuilder.LineCounter, "{0:D6}"),
+            CreateVariable(() => barcodeBuilder.ArmNumber, "{0:D5}"),
+            CreateVariable(() => barcodeBuilder.ArmCounter, "{0:D6}"),
             CreateVariable(() => barcodeBuilder.PluNumber, "{0:D3}"),
             CreateVariable(() => barcodeBuilder.PluGtin, "{0:D14}"),
             CreateVariable(() => barcodeBuilder.PluEan13, "{0:D13}"),

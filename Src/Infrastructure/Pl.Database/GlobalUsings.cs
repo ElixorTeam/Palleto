@@ -18,7 +18,6 @@ global using Pl.Database.Shared.Constants;
 global using Pl.Database.Entities.Print.Labels;
 global using Pl.Database.Entities.Print.LabelsZpl;
 global using Pl.Database.Entities.Print.Pallets;
-global using Pl.Database.Entities.Ref.Lines;
 global using Pl.Database.Entities.Ref.PalletMen;
 global using Pl.Database.Entities.Ref.Printers;
 global using Pl.Database.Entities.Ref.ProductionSites;

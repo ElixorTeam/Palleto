@@ -5,7 +5,7 @@ namespace Pl.Desktop.Api.App.Shared.Labels.Generate.Features.Piece.Dto;
 public record GeneratePiecePalletDto
 {
     public required PluFolLabel Plu { get; init; }
-    public required ArmForLabel Line { get; init; }
+    public required ArmForLabel Arm { get; init; }
     public required NestingForLabel Nesting { get; init; }
     public required PalletForLabel Pallet { get; init; }
     public required short Kneading { get; init; }

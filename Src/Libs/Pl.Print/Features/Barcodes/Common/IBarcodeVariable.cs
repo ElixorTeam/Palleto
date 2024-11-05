@@ -2,8 +2,8 @@ namespace Pl.Print.Features.Barcodes.Common;
 
 internal interface IBarcodeVariables
 {
-    public uint LineCounter { get; init; }
-    public uint LineNumber { get; init; }
+    public uint ArmCounter { get; init; }
+    public uint ArmNumber { get; init; }
 
     public string PluGtin { get; init; }
     public string PluEan13 { get; init; }

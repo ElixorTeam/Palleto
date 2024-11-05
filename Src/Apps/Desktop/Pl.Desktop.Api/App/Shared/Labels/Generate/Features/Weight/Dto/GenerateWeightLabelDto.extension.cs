@@ -7,8 +7,8 @@ internal static class GenerateWeightPluDtoExtension
     internal static BarcodeBuilder ToBarcodeBuilder(this GenerateWeightLabelDto dto) =>
         new()
         {
-            LineNumber = (uint)dto.Line.Number,
-            LineCounter = (uint)dto.Line.Counter,
+            ArmNumber = (uint)dto.Arm.Number,
+            ArmCounter = (uint)dto.Arm.Counter,
             ProductDt = dto.ProductDt,
             PluGtin = dto.Plu.Gtin,
             PluNumber = (ushort)dto.Plu.Number,

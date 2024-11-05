@@ -1,3 +1,5 @@
+using Pl.Database.Entities.Ref.Arms;
+
 namespace Pl.Database.Entities.Print.Pallets;
 
 public class PalletEntity
@@ -6,7 +8,7 @@ public class PalletEntity
 
     #region FK
 
-    public LineEntity Arm { get; set; } = new();
+    public ArmEntity Arm { get; set; } = new();
     public WarehouseEntity Warehouse { get; set; } = new();
     public PalletManEntity PalletMan { get; set; } = new();
 

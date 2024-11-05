@@ -30,12 +30,12 @@ public sealed partial class SidebarMenu : ComponentBase
     private IEnumerable<MenuSection> CreateNavMenus() =>
     [
         new(Localizer["MenuDevices"], HeroiconName.ComputerDesktop, [
-            new(Localizer["SectionLines"], Urls.Lines),
+            new(Localizer["SectionArm"], Urls.Arms),
             new(Localizer["SectionPrinters"], Urls.Printers)
         ], PolicyEnum.Support),
 
         new(Localizer["Menu1CReferences"], HeroiconName.CurrencyEuro, [
-            new(Localizer["SectionPLU"], Urls.Plus),
+            new(Localizer["SectionPlu"], Urls.Plus),
             new(Localizer["SectionBoxes"], Urls.Boxes),
             new(Localizer["SectionClips"], Urls.Clips),
             new(Localizer["SectionBundles"], Urls.Bundles),

@@ -2,13 +2,13 @@ using Pl.Admin.Api.App.Features.Devices.Arms.Common;
 using Pl.Admin.Api.App.Features.Devices.Arms.Impl.Expressions;
 using Pl.Admin.Api.App.Features.Devices.Arms.Impl.Validators;
 using Pl.Admin.Api.App.Shared.Enums;
-using Pl.Database.Entities.Ref.Lines;
 using Pl.Database.Entities.Ref.Printers;
 using Pl.Database.Entities.Ref.Warehouses;
 using Pl.Database.Entities.Ref1C.Plus;
 using Pl.Admin.Api.App.Features.Devices.Arms.Impl.Extensions;
 using Pl.Admin.Models.Features.Devices.Arms.Commands;
 using Pl.Admin.Models.Features.Devices.Arms.Queries;
+using Pl.Database.Entities.Ref.Arms;
 using Pl.Shared.ValueTypes;
 
 namespace Pl.Admin.Api.App.Features.Devices.Arms.Impl;
@@ -24,7 +24,7 @@ internal sealed class ArmApiService(
 
     public Task<ArmDto[]> GetAllByProdSiteAsync(Guid prodSiteId)
     {
-        return dbContext.Lines
+        return dbContext.Arms
             .AsNoTracking()
             .Where(i => i.Warehouse.ProductionSite.Id == prodSiteId)
             .OrderBy(i => i.Name)
@@ -34,7 +34,7 @@ internal sealed class ArmApiService(
 
     public async Task<ArmDto> GetByIdAsync(Guid id)
     {
-        LineEntity entity = await dbContext.Lines.SafeGetById(id, FkProperty.Line);
+        ArmEntity entity = await dbContext.Arms.SafeGetById(id, FkProperty.Arm);
         return await GetArmDto(entity);
     }
 
@@ -48,7 +48,7 @@ internal sealed class ArmApiService(
             .ToList();
 
         List<AnalyticDto> labelCounts = await dbContext.Labels
-            .Where(l => l.Line.Id == id && l.CreateDt.AddHours(3) >= workShift.Start
+            .Where(l => l.Arm.Id == id && l.CreateDt.AddHours(3) >= workShift.Start
                                         && l.CreateDt.AddHours(3) < workShift.End)
             .GroupBy(l => new
             {
@@ -63,7 +63,7 @@ internal sealed class ArmApiService(
 
     public async Task<PluArmDto[]> GetPlusAsync(Guid id)
     {
-        LineEntity entity = await dbContext.Lines.SafeGetById(id, FkProperty.Line);
+        ArmEntity entity = await dbContext.Arms.SafeGetById(id, FkProperty.Arm);
 
         bool? isWeightFilter = entity.Type switch
         {
@@ -72,7 +72,7 @@ internal sealed class ArmApiService(
             _ => null
         };
 
-        Guid[] linePluId = await dbContext.Lines
+        Guid[] linePluId = await dbContext.Arms
             .AsNoTracking()
             .Where(i => i.Id == id)
             .SelectMany(i => i.Plus)
@@ -93,16 +93,16 @@ internal sealed class ArmApiService(
 
     public async Task<ArmDto> CreateAsync(ArmCreateDto dto)
     {
-        await createValidator.ValidateAsync(dbContext.Lines, dto);
+        await createValidator.ValidateAsync(dbContext.Arms, dto);
 
         PrinterEntity printer = await dbContext.Printers.SafeGetById(dto.PrinterId,  FkProperty.Printer);
         WarehouseEntity warehouse = await dbContext.Warehouses.SafeGetById(dto.WarehouseId, FkProperty.Warehouse);
 
-        LineEntity entity = dto.ToEntity(warehouse, printer);
+        ArmEntity entity = dto.ToEntity(warehouse, printer);
 
         await userHelper.ValidateUserProductionSiteAsync(warehouse.ProductionSiteId);
 
-        await dbContext.Lines.AddAsync(entity);
+        await dbContext.Arms.AddAsync(entity);
         await dbContext.SaveChangesAsync();
 
         return await GetArmDto(entity);
@@ -110,7 +110,7 @@ internal sealed class ArmApiService(
 
     public async Task<ArmDto> UpdateAsync(Guid id, ArmUpdateDto dto)
     {
-        LineEntity entity = await updateValidator.ValidateAndGetAsync(dbContext.Lines, dto, id);
+        ArmEntity entity = await updateValidator.ValidateAndGetAsync(dbContext.Arms, dto, id);
 
         PrinterEntity printer = await dbContext.Printers.SafeGetById(dto.PrinterId,  FkProperty.Printer);
         WarehouseEntity warehouse = await dbContext.Warehouses.SafeGetById(dto.WarehouseId, FkProperty.Warehouse);
@@ -125,40 +125,40 @@ internal sealed class ArmApiService(
 
     public async Task DeletePluAsync(Guid armId, Guid pluId)
     {
-        LineEntity line = await dbContext.Lines
+        ArmEntity arm = await dbContext.Arms
           .Include(l => l.Plus)
           .FirstOrDefaultAsync(l => l.Id == armId)
                 ?? throw new("АРМ не найдено");
 
         PluEntity plu = await dbContext.Plus.SafeGetById(pluId, FkProperty.Plu);
-        line.Plus.Remove(plu);
+        arm.Plus.Remove(plu);
         await dbContext.SaveChangesAsync();
     }
 
     public async Task AddPluAsync(Guid armId, Guid pluId)
     {
-        LineEntity line = await dbContext.Lines
+        ArmEntity arm = await dbContext.Arms
           .Include(l => l.Plus)
           .FirstOrDefaultAsync(l => l.Id == armId)
                 ?? throw new("АРМ не найдено");
 
         PluEntity plu = await dbContext.Plus.SafeGetById(pluId, FkProperty.Plu);
 
-        if (line.Plus.Any(i => i.Id == pluId))
+        if (arm.Plus.Any(i => i.Id == pluId))
             return;
 
-        line.Plus.Add(plu);
+        arm.Plus.Add(plu);
 
         await dbContext.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(Guid id) => dbContext.Lines.SafeDeleteAsync(i => i.Id == id, FkProperty.Line);
+    public Task DeleteAsync(Guid id) => dbContext.Arms.SafeDeleteAsync(i => i.Id == id, FkProperty.Arm);
 
     #endregion
 
     #region Private
 
-    private async Task<ArmDto> GetArmDto(LineEntity entity)
+    private async Task<ArmDto> GetArmDto(ArmEntity entity)
     {
         await dbContext.Entry(entity).Reference(e => e.Printer).LoadAsync();
         await dbContext.Entry(entity).Reference(e => e.Warehouse).LoadAsync();

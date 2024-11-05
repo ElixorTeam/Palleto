@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Pl.Database;
-using Pl.Database.Entities.Ref.Lines;
+using Pl.Database.Entities.Ref.Arms;
 using Pl.Desktop.Api.App.Features.Arms.Common;
 using Pl.Desktop.Api.App.Features.Arms.Expressions;
 using Pl.Desktop.Models.Features.Arms.Input;
@@ -14,7 +14,7 @@ internal sealed class ArmApiService(WsDbContext dbContext, UserHelper userHelper
 
     public async Task<ArmDto> GetCurrentAsync()
     {
-        ArmDto? arm = await dbContext.Lines
+        ArmDto? arm = await dbContext.Arms
             .AsNoTracking()
             .Where(i => i.Id == userHelper.UserId)
             .Select(ArmExpressions.ToDto)
@@ -33,8 +33,8 @@ internal sealed class ArmApiService(WsDbContext dbContext, UserHelper userHelper
 
     public async Task UpdateAsync(UpdateArmDto dto)
     {
-        LineEntity arm =
-            await dbContext.Lines.FindAsync(userHelper.UserId)
+        ArmEntity arm =
+            await dbContext.Arms.FindAsync(userHelper.UserId)
             ?? throw new ApiInternalException
         {
             ErrorDisplayMessage = "Линия не зарегестрирована",

@@ -75,9 +75,6 @@
     <data name="ColFullName" xml:space="preserve">
         <value>Полное наименование</value>
     </data>
-    <data name="ColLine" xml:space="preserve">
-        <value>Линия</value>
-    </data>
     <data name="ColPluWeight" xml:space="preserve">
         <value>Весовая</value>
     </data>
@@ -323,5 +320,8 @@
     </data>
     <data name="ColZplResource" xml:space="preserve">
         <value>ZPL Ресурс</value>
+    </data>
+    <data name="ColArm" xml:space="preserve">
+        <value>АРМ</value>
     </data>
 </root>

@@ -41,8 +41,8 @@ file static class TestCases
         yield return [nameof(BarcodeBuilder.Kneading), "{0:D3}"];
         yield return [nameof(BarcodeBuilder.PluEan13), "{0:D13}"];
         yield return [nameof(BarcodeBuilder.WeightNet), "{0:D5}"];
-        yield return [nameof(BarcodeBuilder.LineNumber), "{0:D5}"];
-        yield return [nameof(BarcodeBuilder.LineCounter), "{0:D6}"];
+        yield return [nameof(BarcodeBuilder.ArmNumber), "{0:D5}"];
+        yield return [nameof(BarcodeBuilder.ArmCounter), "{0:D6}"];
         yield return [nameof(BarcodeBuilder.BundleCount), "{0:D2}"];
         yield return [nameof(BarcodeBuilder.ExpirationDay), "{0:D3}"];
 
@@ -60,8 +60,8 @@ file static class TestCases
         yield return [nameof(BarcodeBuilder.Kneading), "{0:D2}"];
         yield return [nameof(BarcodeBuilder.PluEan13), "{0:D12}"];
         yield return [nameof(BarcodeBuilder.WeightNet), "{0:D2}"];
-        yield return [nameof(BarcodeBuilder.LineNumber), "{0:D4}"];
-        yield return [nameof(BarcodeBuilder.LineCounter), "{0:D5}"];
+        yield return [nameof(BarcodeBuilder.ArmNumber), "{0:D4}"];
+        yield return [nameof(BarcodeBuilder.ArmCounter), "{0:D5}"];
         yield return [nameof(BarcodeBuilder.BundleCount), "{0:D1}"];
         yield return [nameof(BarcodeBuilder.ExpirationDay), "{0:D2}"];
 

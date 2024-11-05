@@ -9,8 +9,8 @@
 
 namespace Pl.Admin.Client.Source.Shared.Localization {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,15 +22,15 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ApplicationResources_ru_RU {
-
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal ApplicationResources_ru_RU() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -44,7 +44,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -58,7 +58,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Управление устройствами.
         /// </summary>
@@ -67,43 +67,25 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ApplicationName", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to {0} ПЛУ добавлена к линии.
-        /// </summary>
-        public static string ArmPluAdded {
-            get {
-                return ResourceManager.GetString("ArmPluAdded", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Не удалось добавить {0} ПЛУ к линии.
+        ///   Looks up a localized string similar to Не удалось добавить {0} ПЛУ к АРМ.
         /// </summary>
         public static string ArmPluAddedUnsuccessfully {
             get {
                 return ResourceManager.GetString("ArmPluAddedUnsuccessfully", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to {0} ПЛУ убрана с линии.
-        /// </summary>
-        public static string ArmPluRemoved {
-            get {
-                return ResourceManager.GetString("ArmPluRemoved", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Не удалось убрать {0} ПЛУ с линии.
+        ///   Looks up a localized string similar to Не удалось убрать {0} ПЛУ с АРМ.
         /// </summary>
         public static string ArmPluRemovedUnsuccessfully {
             get {
                 return ResourceManager.GetString("ArmPluRemovedUnsuccessfully", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Компьютер.
         /// </summary>
@@ -112,7 +94,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ArmTypeEnumPc", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Моноблок.
         /// </summary>
@@ -121,7 +103,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ArmTypeEnumTablet", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Универсальный.
         /// </summary>
@@ -130,7 +112,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ArmTypeEnumUniversal", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Введите константу....
         /// </summary>
@@ -139,7 +121,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BarcodeEditorConstInputPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Отсутствуют поля.
         /// </summary>
@@ -148,7 +130,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BarcodeEditorEmptyPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Введите маску....
         /// </summary>
@@ -157,7 +139,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BarcodeEditorMaskPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Выберите переменную....
         /// </summary>
@@ -166,7 +148,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BarcodeEditorVariableSelectPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Добавить.
         /// </summary>
@@ -175,7 +157,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnAdd", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Назад.
         /// </summary>
@@ -184,7 +166,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnBack", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Отмена.
         /// </summary>
@@ -193,7 +175,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnCancel", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Очистить.
         /// </summary>
@@ -202,7 +184,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnClear", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Восстановить.
         /// </summary>
@@ -211,7 +193,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnReset", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Подтвердить.
         /// </summary>
@@ -220,7 +202,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnSubmit", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Удалить.
         /// </summary>
@@ -229,7 +211,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("DataGridContextMenuDelete", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Открыть в окне.
         /// </summary>
@@ -238,7 +220,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("DataGridContextMenuOpenInDialog", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Открыть во вкладке.
         /// </summary>
@@ -247,7 +229,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("DataGridContextMenuOpenInNewTab", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to элементов.
         /// </summary>
@@ -256,7 +238,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("DataGridTotalItems", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Это действие невозможно отменить. Это приведет к безвозвратному удалению элемента с сервера..
         /// </summary>
@@ -265,7 +247,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("DeleteDialogDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Вы уверен что хотите удалить элемент?.
         /// </summary>
@@ -274,7 +256,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("DeleteDialogTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Местоположение.
         /// </summary>
@@ -283,7 +265,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FieldLocation", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Упаковка.
         /// </summary>
@@ -292,7 +274,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FieldPackaging", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Удалить.
         /// </summary>
@@ -301,7 +283,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormActionDelete", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Заблокировать.
         /// </summary>
@@ -310,7 +292,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormActionLock", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Переавторизировать.
         /// </summary>
@@ -319,7 +301,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormActionRelogin", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Сброс.
         /// </summary>
@@ -328,7 +310,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormActionReset", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Поделиться.
         /// </summary>
@@ -337,7 +319,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormActionShare", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Действия.
         /// </summary>
@@ -346,7 +328,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormActionsTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Разблокировать.
         /// </summary>
@@ -355,7 +337,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormActionUnlock", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Пусто.
         /// </summary>
@@ -364,7 +346,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormEmptyItemPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to {0} не выбран.
         /// </summary>
@@ -373,7 +355,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormFieldNotSelected", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Управление принтером.
         /// </summary>
@@ -382,7 +364,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormPrinterControl", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Выберите принтер.
         /// </summary>
@@ -391,7 +373,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormPrinterDefaultPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Выберите площадку.
         /// </summary>
@@ -400,7 +382,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormProductionSiteDefaultPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Пустой результат.
         /// </summary>
@@ -409,7 +391,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormSelectEmptyDefaultPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Поиск....
         /// </summary>
@@ -418,7 +400,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormSelectSearchDefaultPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Выберите шаблон.
         /// </summary>
@@ -427,7 +409,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormTemplateDefaultPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Выберите склад.
         /// </summary>
@@ -436,7 +418,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FormWarehouseDefaultPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Нажмите на раздел меню, чтобы продолжить.
         /// </summary>
@@ -445,7 +427,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("HomeMsgDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Введите значение....
         /// </summary>
@@ -454,7 +436,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("InputDefaultPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Ошибка ковертации zpl кода в изображение.
         /// </summary>
@@ -463,7 +445,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("LabelsPreviewErrorMsg", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Изображение отсутствует.
         /// </summary>
@@ -472,7 +454,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("LabelsPreviewNoData", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Предпросмотр.
         /// </summary>
@@ -481,7 +463,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("LabelsPreviewTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Данные из 1С.
         /// </summary>
@@ -490,7 +472,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("Menu1CReferences", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Администрирование.
         /// </summary>
@@ -499,7 +481,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("MenuAdministration", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Устройства.
         /// </summary>
@@ -508,7 +490,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("MenuDevices", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Диагностика.
         /// </summary>
@@ -517,7 +499,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("MenuDiagnostics", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Операции.
         /// </summary>
@@ -526,7 +508,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("MenuOperations", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Настройки печати.
         /// </summary>
@@ -535,7 +517,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("MenuPrintSettings", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Справочник.
         /// </summary>
@@ -544,7 +526,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("MenuReferences", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Версия разработчика.
         /// </summary>
@@ -553,7 +535,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("NavMenuDeveloperVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Площадка не настроена для данного аккаунта. Обратитесь к поддержке..
         /// </summary>
@@ -562,7 +544,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ProductionSiteSuspenseDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Логи 1С.
         /// </summary>
@@ -571,7 +553,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("Section1CLogs", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Агр. этикетки.
         /// </summary>
@@ -580,7 +562,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionAggregatedLabels", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Аналитика.
         /// </summary>
@@ -589,7 +571,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionAnalytics", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Логи приложения.
         /// </summary>
@@ -598,7 +580,25 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionAppsLogs", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to АРМ.
+        /// </summary>
+        public static string SectionArm {
+            get {
+                return ResourceManager.GetString("SectionArm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ПЛУ АРМ.
+        /// </summary>
+        public static string SectionArmPlu {
+            get {
+                return ResourceManager.GetString("SectionArmPlu", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Штрихкоды.
         /// </summary>
@@ -607,7 +607,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionBarcodes", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Коробки.
         /// </summary>
@@ -616,7 +616,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionBoxes", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Бренды.
         /// </summary>
@@ -625,7 +625,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionBrands", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Пакеты.
         /// </summary>
@@ -634,7 +634,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionBundles", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Клипсы.
         /// </summary>
@@ -643,7 +643,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionClips", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to База данных.
         /// </summary>
@@ -652,7 +652,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionDatabase", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Этикетки.
         /// </summary>
@@ -661,25 +661,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionLabels", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to ПЛУ Линии.
-        /// </summary>
-        public static string SectionLinePLU {
-            get {
-                return ResourceManager.GetString("SectionLinePLU", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Линии.
-        /// </summary>
-        public static string SectionLines {
-            get {
-                return ResourceManager.GetString("SectionLines", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Миграции.
         /// </summary>
@@ -688,7 +670,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionMigrations", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Сдатчик.
         /// </summary>
@@ -697,16 +679,16 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionPalletMen", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to ПЛУ.
         /// </summary>
-        public static string SectionPLU {
+        public static string SectionPlu {
             get {
-                return ResourceManager.GetString("SectionPLU", resourceCulture);
+                return ResourceManager.GetString("SectionPlu", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Характеристики.
         /// </summary>
@@ -715,7 +697,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionPluCharacteristics", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Вложенность.
         /// </summary>
@@ -724,7 +706,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionPluNesting", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Принтеры.
         /// </summary>
@@ -733,7 +715,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionPrinters", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Площадки.
         /// </summary>
@@ -742,7 +724,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionProductionSites", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Роли.
         /// </summary>
@@ -751,7 +733,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionRoles", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Способы хранения.
         /// </summary>
@@ -760,7 +742,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionStorageMethods", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Таблицы.
         /// </summary>
@@ -769,7 +751,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionTables", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Ресурсы шаблонов.
         /// </summary>
@@ -778,7 +760,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionTemplateResources", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Шаблоны.
         /// </summary>
@@ -787,7 +769,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionTemplates", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Пользователи.
         /// </summary>
@@ -796,7 +778,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionUsers", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Версии.
         /// </summary>
@@ -805,7 +787,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionVersions", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Склады.
         /// </summary>
@@ -814,7 +796,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionWarehouses", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Взвешивания.
         /// </summary>
@@ -823,7 +805,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SectionWeightings", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Не выбран.
         /// </summary>
@@ -832,7 +814,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SelectItemNotSelected", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Выкл.
         /// </summary>
@@ -841,7 +823,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("StateOff", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Вкл.
         /// </summary>
@@ -850,7 +832,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("StateOn", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Темная.
         /// </summary>
@@ -859,7 +841,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ThemeDark", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Светлая.
         /// </summary>
@@ -868,7 +850,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ThemeLight", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Системная.
         /// </summary>
@@ -877,7 +859,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ThemeSystem", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Значение сохранено в буфер обмена.
         /// </summary>
@@ -886,7 +868,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastCopyToClipboard", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Объект успешно создан.
         /// </summary>
@@ -895,7 +877,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastCreateItem", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Объект успешно удален.
         /// </summary>
@@ -904,7 +886,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastDeleteItem", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Ошибка при удалении элемента. Попробуйте еще раз позже..
         /// </summary>
@@ -913,7 +895,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastDeleteItemError", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to При попытке получить данные произошла ошибка. Попробуйте еще раз позже.
         /// </summary>
@@ -922,7 +904,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastErrorGettingData", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Повторных вход систему выполнен.
         /// </summary>
@@ -931,7 +913,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastReloginUser", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Исходные значения восстановлены.
         /// </summary>
@@ -940,7 +922,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastResetItem", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Объект успешно обновлен.
         /// </summary>
@@ -949,7 +931,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastUpdateItem", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Ссылка сохранена в буфер обмена.
         /// </summary>
@@ -958,7 +940,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastUrlCopyToClipboard", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Неизвестная ошибка.
         /// </summary>
@@ -967,7 +949,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("UnknownError", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Значок.
         /// </summary>
@@ -976,7 +958,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ZplResourceTypeEnumSign", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Текст.
         /// </summary>

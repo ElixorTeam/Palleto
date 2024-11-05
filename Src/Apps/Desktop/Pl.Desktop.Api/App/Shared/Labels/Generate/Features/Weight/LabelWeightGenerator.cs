@@ -50,7 +50,7 @@ internal class LabelWeightGenerator(CacheService cacheService, IStringLocalizer<
 
         TemplateVars data = new(
             plu: new(dto.Plu.FullName, (ushort)dto.Plu.Number, dto.Plu.Description),
-            arm: new(dto.Line.Number, dto.Line.Name, dto.Line.Address),
+            arm: new(dto.Arm.Number, dto.Arm.Name, dto.Arm.Address),
             pallet: new(0,string.Empty),
             barcodes: new(barcodeTop, barcodeBottom, barcodeRight),
 

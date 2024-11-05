@@ -8,8 +8,9 @@
 //------------------------------------------------------------------------------
 
 namespace Pl.Desktop.Client.Source.Shared.Localization {
-
-
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -21,19 +22,19 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ApplicationResources {
-
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal ApplicationResources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
-        [EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
@@ -43,12 +44,12 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
-        [EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
@@ -57,7 +58,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -66,7 +67,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ApiResponseError", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -75,7 +76,25 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("AppName", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ArmIsNewWarningDescription {
+            get {
+                return ResourceManager.GetString("ArmIsNewWarningDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ArmIsNewWarningTitle {
+            get {
+                return ResourceManager.GetString("ArmIsNewWarningTitle", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -84,7 +103,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnBack", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -93,7 +112,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnCancel", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -102,7 +121,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnCooldown", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -111,7 +130,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnCreate", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -120,7 +139,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnDelete", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -129,7 +148,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnEnter", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -138,7 +157,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnExit", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -147,7 +166,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnLabelPrint", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -156,7 +175,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnLogIn", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -165,7 +184,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnMenu", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -174,7 +193,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnNext", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -183,7 +202,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnPaginationNext", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -192,7 +211,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnPaginationPrev", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -201,7 +220,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnPrintPC", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -210,7 +229,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnReconnect", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -219,7 +238,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnRestore", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -228,7 +247,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnScaleCalibration", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -237,7 +256,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnSelect", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -246,7 +265,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnSelectAllLabels", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -255,7 +274,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnSelectedLabelsPrinting", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -264,7 +283,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnUnselectAllLabels", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -273,7 +292,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("BtnUpdate", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -282,7 +301,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ColNestingPerBox", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -291,7 +310,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ColPrint", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -300,7 +319,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("CreatePalletFormHeader", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -309,7 +328,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ExitAppDialogDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -318,7 +337,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ExitAppDialogTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -327,7 +346,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FuncCardCreationDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -336,7 +355,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FuncCardCreationTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -345,7 +364,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FuncCardDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -354,7 +373,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FuncCardHeader", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -363,7 +382,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FuncCardLabelPrintingDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -372,7 +391,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FuncCardLabelPrintingTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -381,7 +400,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FuncCardPCPrintingDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -390,7 +409,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FuncCardPCPrintingTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -399,7 +418,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FuncCardViewingDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -408,7 +427,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("FuncCardViewingTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -417,7 +436,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("HomePageCardDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -426,7 +445,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("IndexedLabelNotPrinted", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -435,7 +454,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("KneadingInputPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -444,7 +463,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("LabelConfigHeader", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -453,7 +472,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("LabelCountInputPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -462,7 +481,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("LabelsDataGridSelectedInfo", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -471,7 +490,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("LabelsPrintingSuccess", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -480,7 +499,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("LabelsPrintingToastDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -489,25 +508,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("LabelsPrintingToastTitle", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string LineIsNewWarningDescription {
-            get {
-                return ResourceManager.GetString("LineIsNewWarningDescription", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string LineIsNewWarningTitle {
-            get {
-                return ResourceManager.GetString("LineIsNewWarningTitle", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -516,7 +517,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("NestingSelectPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -525,7 +526,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletCreateDialogProgressToastDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -534,7 +535,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletCreateDialogProgressToastTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -543,7 +544,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletCreateDialogSuccess", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -552,7 +553,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletCreateFinalTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -561,7 +562,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletDocumentGenerationError", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -570,7 +571,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletFilterAll", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -579,7 +580,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletFilterDeleted", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -588,7 +589,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletFilterNotShipped", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -597,7 +598,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletFilterShipped", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -606,7 +607,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletFlagNotShipped", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -615,7 +616,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletFlagShipped", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -624,7 +625,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletManFormHeader", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -633,7 +634,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletManFormInvalidPassword", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -642,7 +643,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletOverviewDividerCommon", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -651,7 +652,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PalletSelectEmpty", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -660,7 +661,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PasswordInputPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -669,7 +670,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PluDescriptionNoDataDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -678,7 +679,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PluDescriptionNoDataTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -687,7 +688,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PluDisplayUnselectedDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -696,7 +697,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PluDisplayUnselectedStatusesInfo", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -705,7 +706,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PluDisplayUnselectedTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -714,7 +715,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PluSelectHeader", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -723,7 +724,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PluSelectPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -732,7 +733,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PrinterStatusCommonError", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -741,7 +742,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PrinterStatusDisconnected", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -750,7 +751,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PrinterStatusHeadOpen", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -759,7 +760,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PrinterStatusPaperJam", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -768,7 +769,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PrinterStatusPaperOut", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -777,7 +778,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PrinterStatusPaused", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -786,7 +787,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PrinterStatusReady", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -795,7 +796,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PrinterStatusUnknown", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -804,7 +805,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("PrintingStoppedDueToErrors", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -813,7 +814,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ScalesStatusDetached", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -822,7 +823,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ScalesStatusDisabled", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -831,7 +832,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ScalesStatusInitializing", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -840,7 +841,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ScalesStatusReady", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -849,7 +850,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ScalesStatusTooLight", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -858,7 +859,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ScalesStatusUnstable", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -867,7 +868,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("SearchByNumberPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -876,7 +877,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastErrorWhileGettingData", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -885,7 +886,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastPalletCreateError", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -894,7 +895,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastPalletMarkedDeleted", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -903,7 +904,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastPalletMarkedNotDeleted", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -912,7 +913,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastValueCopiedToClipboard", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -921,7 +922,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ToastValueCopiedToClipboardUnsuccessful", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -930,7 +931,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("TrayWeightInputPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -939,7 +940,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("UserSelectEmptyPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -948,7 +949,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("UserSelectPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -957,7 +958,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("UserSelectSearchPlaceholder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
@@ -966,7 +967,7 @@ namespace Pl.Desktop.Client.Source.Shared.Localization {
                 return ResourceManager.GetString("ZplCodeError", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>

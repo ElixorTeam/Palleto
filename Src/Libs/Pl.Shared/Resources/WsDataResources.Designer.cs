@@ -323,9 +323,9 @@ namespace Pl.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string ColLine {
+        public static string ColArm {
             get {
-                return ResourceManager.GetString("ColLine", resourceCulture);
+                return ResourceManager.GetString("ColArm", resourceCulture);
             }
         }
 
