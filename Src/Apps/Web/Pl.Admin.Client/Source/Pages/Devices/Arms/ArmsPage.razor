@@ -5,18 +5,19 @@
 @using Pl.Admin.Client.Source.Shared.Services.Stores
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
-@inherits SectionDataGridBase<ArmDto>
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @attribute [Route(Urls.Arms)]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
 @rendermode InteractiveServer
 
-<PageTitle>Pl.Admin.Client - @Localizer["SectionArm"]</PageTitle>
+<PageTitle>Admin - @Localizer["SectionArm"]</PageTitle>
 
 <UserProductionSiteErrorSuspense>
   <UseEndpoint
     Endpoint="@DevicesEndpoints.ArmsEndpoint"
     Arg="@ProductionSiteState.Value.ProductionSite.Id"
-    Options="@DefaultEndpointOptions"
+    Options="@PageHelper.DefaultEndpointOptions"
     Context="armsQuery"
   >
     <Breadcrumbs Class="!pb-5">
@@ -24,17 +25,17 @@
     </Breadcrumbs>
 
     <DataGridHeader>
-      <DataGridLabelWithCounter Label="@Localizer["SectionArm"]" ItemsCount="@(armsQuery.Data?.Length ?? 0)" IsLoading="armsQuery.IsLoading"/>
+      <DataGridLabelWithCounter Label="@Localizer["SectionArm"]" ItemsCount="@armsQuery.Data?.Length" IsLoading="armsQuery.IsLoading"/>
       <DataGridActionReload OnClick="@armsQuery.RefetchAsync" IsLoading="armsQuery.IsFetching" />
       <AuthorizeView Policy="@PolicyEnum.SeniorSupport">
-        <DataGridActionCreate OnClick="@OpenCreateFormModal"/>
+        <DataGridActionCreate OnClick="@OpenCreateDialog"/>
       </AuthorizeView>
     </DataGridHeader>
 
     <DataGridContainer
       TItem="ArmDto"
       Items="@(armsQuery.HasData ? armsQuery.Data : [])"
-      OnItemSelect="@(item => OpenItem(item))"
+      OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToArm(item.Id)))"
       IsFilterable
     >
       <ColumnsContent>
@@ -96,11 +97,11 @@
         </DataGridColumn>
       </ColumnsContent>
       <ContextMenuContent>
-        <DataGridActionUpdateItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenUpdateFormModal(item)))" />
-        <DataGridActionViewItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenItem(item)))" />
-        <DataGridActionOpenInNewTab OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenItemInNewTab(item)))" />
+        <DataGridActionUpdateItem TItem="ArmDto" Action="@OpenUpdateDialog" />
+        <DataGridActionOpenItem Link="@(RedirectHelper.ToArm(context.Item.Id))" />
+        <DataGridActionOpenInNewTab TItem="ArmDto" Link="@(RedirectHelper.ToArm(context.Item.Id))" />
         <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
-          <DataGridActionDeleteItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => DeleteItem(item)))" />
+          <DataGridActionDeleteItem TItem="ArmDto" Action="@DeleteItem" />
         </AuthorizeView>
       </ContextMenuContent>
     </DataGridContainer>
@@ -115,25 +116,19 @@
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
   [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
 
   #endregion
 
-  protected override async Task OpenCreateFormModal() =>
-    await OpenModal<ArmsCreateDialog>();
+  private Task OpenCreateDialog() =>
+    DialogService.ShowDialogAsync<ArmCreateDialog>(PageHelper.DialogParameters);
 
-  protected override async Task OpenUpdateFormModal(ArmDto item) =>
-    await OpenModalWithItem<ArmsUpdateDialog>(item);
+  private Task OpenUpdateDialog(ArmDto item) =>
+    DialogService.ShowDialogAsync<ArmUpdateDialog>(item, PageHelper.DialogParameters);
 
-  protected override async Task OpenItemInNewTab(ArmDto item) =>
-    await OpenLinkInNewTab($"{Urls.Arms}/{item.Id}");
-
-  protected async Task OpenItem(ArmDto item) =>
-    await OpenLink($"{Urls.Arms}/{item.Id}");
-
-  protected override Task<ArmDto> SearchByUidAction(Guid uid) =>
-    WebApi.GetArmByUid(uid);
-
-  protected override async Task DeleteItemAction(ArmDto item)
+  private async Task DeleteItem(ArmDto item)
   {
     await WebApi.DeleteArm(item.Id);
     DevicesEndpoints.DeleteArm(item.ProductionSite.Id, item.Id);

@@ -1,0 +1,14 @@
+@using Pl.Admin.Models.Features.Devices.Printers.Queries
+
+<h2 class="text-xl font-medium pb-3 px-2">Общая информация</h2>
+<div class="w-full grid grid-cols-3 gap-4 xl:grid-cols-4 2xl:grid-cols-5 px-2">
+  <ViewField Label="Наименование" Value="@Printer.Name" />
+  <ViewField Label="IP" Value="@Printer.Ip.ToString()" />
+  <ViewField Label="Бренд" Value="@Printer.Type.ToString()" />
+  <ViewField Label="Склад" Value="@Printer.ProductionSite.Name" />
+</div>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Parameter, EditorRequired] public PrinterDto Printer { get; set; } = default!;
+}

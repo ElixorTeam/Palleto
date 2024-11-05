@@ -4,8 +4,8 @@
 @implements IDialogContentComponent<ArmDto>
 
 <SectionDialog>
-  <Tab Id="@typeof(ArmsUpdateForm).ToString()" Title="@Localizer["SectionArm"]">
-    <ArmsUpdateForm Model="Content" FormModel="@ArmMapper.DtoToUpdateDto(Content)" />
+  <Tab Id="@typeof(ArmUpdateForm).ToString()" Title="@Localizer["SectionArm"]">
+    <ArmUpdateForm Model="Content" FormModel="@ArmMapper.DtoToUpdateDto(Content)" />
   </Tab>
 </SectionDialog>
 

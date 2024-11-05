@@ -122,8 +122,8 @@
       </DataGridColumn>
     </ColumnsContent>
     <ContextMenuContent>
-      <DataGridActionOpenInNewTab OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => OpenItemInNewTab(item)))"/>
-      <DataGridActionDeleteItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => DeleteArmPlu(item)))" />
+      <DataGridActionOpenItem Link="@(RedirectHelper.ToPlu(context.Item.Id))" />
+      <DataGridActionOpenInNewTab TItem="ArmDto" Link="@(RedirectHelper.ToPlu(context.Item.Id))" />
     </ContextMenuContent>
   </DataGridContainer>
 </UseEndpoint>

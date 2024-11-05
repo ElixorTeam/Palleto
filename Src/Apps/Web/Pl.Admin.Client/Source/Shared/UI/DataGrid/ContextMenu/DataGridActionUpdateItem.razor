@@ -1,11 +1,19 @@
+@typeparam TItem
 @using Blazor.Heroicons.Outline
 
-<DropdownItem OnClick="@OnClick">
+<DropdownItem OnClick="@OnClickAction">
   <PencilIcon class="size-4 mr-4" />
   Изменить
 </DropdownItem>
 
 @code {
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Parameter] public EventCallback OnClick { get; set; }
+  [CascadingParameter] public ContextMenuContext<TItem> Context { get; set; } = default!;
+  [Parameter] public EventCallback<TItem> Action { get; set; }
+
+  private async Task OnClickAction()
+  {
+    await Action.InvokeAsync(Context.Item);
+    await Context.CloseContextMenu.InvokeAsync();
+  }
 }

@@ -37,13 +37,19 @@ public class DevicesEndpoints(IWebApi webApi)
         ArmsEndpoint.UpdateQueryData(productionSiteId, query =>
             query.Data == null ? query.Data! : query.Data.Prepend(arm).ToArray());
 
-    public void UpdateArm(Guid productionSiteId, ArmDto arm) =>
+    public void UpdateArm(Guid productionSiteId, ArmDto arm)
+    {
         ArmsEndpoint.UpdateQueryData(productionSiteId, query =>
             query.Data == null ? query.Data! : query.Data.ReplaceItemBy(arm, p => p.Id == arm.Id).ToArray());
+        ArmEndpoint.UpdateQueryData(arm.Id, query => query.Data == null ? query.Data! : arm);
+    }
 
-    public void DeleteArm(Guid productionSiteId, Guid armId) =>
+    public void DeleteArm(Guid productionSiteId, Guid armId)
+    {
         ArmsEndpoint.UpdateQueryData(productionSiteId, query =>
             query.Data == null ? query.Data! : query.Data.Where(x => x.Id != armId).ToArray());
+        ArmEndpoint.Invalidate(armId);
+    }
 
     # endregion
 
@@ -75,6 +81,10 @@ public class DevicesEndpoints(IWebApi webApi)
 
     public Endpoint<Guid, PrinterDto[]> PrintersEndpoint { get; } = new(
         webApi.GetPrintersByProductionSite,
+        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+
+    public Endpoint<Guid, PrinterDto> PrinterEndpoint { get; } = new(
+        webApi.GetPrinterByUid,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
     public void AddPrinter(Guid productionSiteId, PrinterDto printer)

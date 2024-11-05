@@ -1,29 +1,38 @@
 @using System.Drawing
-@inject IJSRuntime JsRuntime
 
 <div
   tabindex="0"
   @ref="DivRef"
-  @onblur="@CloseContextMenuAsync"
-  class="@Css.Class("flex-col shadow-md rounded-md p-1 border bg-popover overflow-hidden focus:outline-none", IsContextMenuOpen ? "fixed" : "hidden")"
+  @onblur="@CloseContextMenuOnBlur"
+  class="@Css.Class("flex-col shadow-md rounded-md p-1 border bg-popover overflow-hidden focus:outline-none", IsOpen ? "fixed" : "hidden")"
   style="@($"left:{ContextMenuPos.X}px;top:{ContextMenuPos.Y}px;")"
 >
   @ChildContent
 </div>
 
 @code {
+  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
+
   [Parameter] public RenderFragment? ChildContent { get; set; }
-  [Parameter] public Point ContextMenuPos { get; set; }
-  [Parameter] public bool IsContextMenuOpen { get; set; }
-  [Parameter] public EventCallback<bool> IsContextMenuOpenChanged { get; set; }
 
-  public ElementReference DivRef { get; private set; }
+  private bool IsOpen { get; set; }
+  private Point ContextMenuPos { get; set; }
+  private ElementReference DivRef { get; set; }
 
-  private async Task CloseContextMenuAsync(FocusEventArgs args)
+  public async Task OpenContextMenu(Point position)
   {
-    if (ChildContent == null || IsContextMenuOpen == false) return;
+    ContextMenuPos = position;
+    IsOpen = true;
+    await Task.Yield();
+    await DivRef.FocusAsync();
+  }
+
+  public void CloseContextMenu() => IsOpen = false;
+
+  private async Task CloseContextMenuOnBlur()
+  {
+    if (ChildContent == null || IsOpen == false) return;
     if (await JsRuntime.InvokeAsync<bool>("isElementContainsFocusedItem", DivRef)) return;
-    IsContextMenuOpen = false;
-    await IsContextMenuOpenChanged.InvokeAsync(IsContextMenuOpen);
+    CloseContextMenu();
   }
 }

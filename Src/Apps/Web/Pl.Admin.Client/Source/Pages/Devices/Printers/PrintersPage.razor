@@ -6,18 +6,18 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Printers.Queries
 
-@inherits SectionDataGridBase<PrinterDto>
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @attribute [Route(Urls.Printers)]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
 @rendermode InteractiveServer
 
-<PageTitle>Pl.Admin.Client - @Localizer["SectionPrinters"]</PageTitle>
+<PageTitle>Admin - @Localizer["SectionPrinters"]</PageTitle>
 
 <UserProductionSiteErrorSuspense>
   <UseEndpoint
     Endpoint="@DevicesEndpoints.PrintersEndpoint"
     Arg="@ProductionSiteState.Value.ProductionSite.Id"
-    Options="@DefaultEndpointOptions"
+    Options="@PageHelper.DefaultEndpointOptions"
     Context="printersQuery"
   >
     <Breadcrumbs Class="!pb-5">
@@ -25,15 +25,15 @@
     </Breadcrumbs>
 
     <DataGridHeader>
-      <DataGridLabelWithCounter Label="@Localizer["SectionPrinters"]" ItemsCount="@(printersQuery.Data?.Length ?? 0)" IsLoading="printersQuery.IsLoading"/>
+      <DataGridLabelWithCounter Label="@Localizer["SectionPrinters"]" ItemsCount="@printersQuery.Data?.Length" IsLoading="printersQuery.IsLoading"/>
       <DataGridActionReload OnClick="@printersQuery.RefetchAsync" IsLoading="printersQuery.IsFetching" />
-      <DataGridActionCreate OnClick="@OpenCreateFormModal"/>
+      <DataGridActionCreate OnClick="@OpenCreateDialog"/>
     </DataGridHeader>
 
     <DataGridContainer
       TItem="PrinterDto"
       Items="@(printersQuery.HasData ? printersQuery.Data : [])"
-      OnItemSelect="@(item => OpenUpdateFormModal(item))"
+      OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToPrinter(item.Id)))"
       IsFilterable
     >
       <ColumnsContent>
@@ -78,10 +78,10 @@
         </DataGridColumn>
       </ColumnsContent>
       <ContextMenuContent>
-        <DataGridActionViewItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, async item => await OpenUpdateFormModal(item)))"/>
-        <DataGridActionOpenInNewTab OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, async item => await OpenItemInNewTab(item)))"/>
+        <DataGridActionUpdateItem TItem="PrinterDto" Action="@OpenUpdateDialog" />
+        <DataGridActionOpenInNewTab TItem="PrinterDto" Link="@RedirectHelper.ToPrinter(context.Item.Id)"/>
         <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
-          <DataGridActionDeleteItem OnClick="@(() => ContextFuncWrapper(context.Item, context.CloseContextMenu, item => DeleteItem(item)))"/>
+          <DataGridActionDeleteItem TItem="PrinterDto" Action="@DeleteItem"/>
         </AuthorizeView>
       </ContextMenuContent>
     </DataGridContainer>
@@ -94,27 +94,23 @@
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
-  [CascadingParameter] private Task<AuthenticationState> AuthState { get; set; } = default!;
   [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
 
   #endregion
 
   private PrinterTypes? Type { get; set; }
 
-  protected override async Task OpenCreateFormModal() =>
-    await OpenModal<PrintersCreateDialog>();
+  private Task OpenCreateDialog() =>
+    DialogService.ShowDialogAsync<PrinterCreateDialog>(PageHelper.DialogParameters);
 
-  protected override async Task OpenUpdateFormModal(PrinterDto item) =>
-    await OpenModalWithItem<PrintersUpdateDialog>(item);
+  private Task OpenUpdateDialog(PrinterDto item) =>
+    DialogService.ShowDialogAsync<PrinterUpdateDialog>(item, PageHelper.DialogParameters);
 
-  protected override async Task OpenItemInNewTab(PrinterDto item) =>
-    await OpenLinkInNewTab($"{Urls.Printers}?id={item.Id}");
-
-  protected override Task<PrinterDto> SearchByUidAction(Guid uid) =>
-    WebApi.GetPrinterByUid(uid);
-
-  protected override async Task DeleteItemAction(PrinterDto item)
+  private async Task DeleteItem(PrinterDto item)
   {
     await WebApi.DeletePrinter(item.Id);
     DevicesEndpoints.DeletePrinter(item.ProductionSite.Id, item.Id);

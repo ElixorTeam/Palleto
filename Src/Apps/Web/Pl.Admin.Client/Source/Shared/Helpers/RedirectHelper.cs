@@ -4,13 +4,15 @@ using Pl.Admin.Client.Source.Shared.Extensions;
 
 namespace Pl.Admin.Client.Source.Shared.Helpers;
 
-public sealed class RedirectHelper(IAuthorizationService authorizationService, ClaimsPrincipal user)
+public sealed class RedirectHelper(IAuthorizationService authorizationService, NavigationManager navigationManager, ClaimsPrincipal user)
 {
+    public string ToAbsoluteUrl(string relativePath) => new Uri(new(navigationManager.BaseUri), relativePath).AbsoluteUri;
+
     #region Private
 
     private static string Link(Guid uid, string baseUrl) => Link(uid, baseUrl, true);
 
-    private static string Link(Guid uid, string baseUrl, bool isActive) => !isActive || uid.IsEmpty() ? string.Empty : $"{baseUrl}?id={uid}";
+    private static string Link(Guid uid, string baseUrl, bool isActive) => !isActive || uid.IsEmpty() ? string.Empty : $"{baseUrl}/{uid}";
 
     private bool CheckPolicy(string policyName) => authorizationService.ValidatePolicy(user, policyName);
 
@@ -48,6 +50,10 @@ public sealed class RedirectHelper(IAuthorizationService authorizationService, C
     public string ToBundle(Guid uid) => Link(uid, Urls.Bundles);
 
     public string ToClip(Guid uid) => Link(uid, Urls.Clips);
+
+    public string ToLabel(Guid uid) => Link(uid, Urls.Labels);
+
+    public string ToPallet(Guid uid) => Link(uid, Urls.Pallets);
 
     #endregion
 }

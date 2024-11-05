@@ -31,6 +31,10 @@
         Width="90%"
       />
     </ColumnsContent>
+    <ContextMenuContent>
+      <DataGridActionOpenItem TItem="OrderedPalletLabel" Link="@(RedirectHelper.ToLabel(context.Item.Id))" />
+      <DataGridActionOpenInNewTab TItem="OrderedPalletLabel" Link="@(RedirectHelper.ToPallet(context.Item.Id))" />
+    </ContextMenuContent>
   </DataGridContainer>
 </UseEndpoint>
 
@@ -38,6 +42,7 @@
   [Inject] private OperationsEndpoints OperationsEndpoints { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
 
   [Parameter, EditorRequired] public PalletDto Pallet { get; set; } = default!;
 

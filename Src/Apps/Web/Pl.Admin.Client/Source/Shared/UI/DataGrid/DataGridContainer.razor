@@ -6,9 +6,9 @@
     TItem="TItem"
     Data="Items"
 
-    RowDoubleClicked="@(obj => HandleRowDoubleClick(obj.Item))"
-    SelectedRow="SelectedItem"
-    RowContextMenu="OnRowContextMenu"
+    SelectedRow="ContextMenuItem"
+    RowDoubleClicked="@OnRowDoubleClick"
+    RowContextMenu="@OnRowContextMenu"
     RowContextMenuPreventDefault
 
     HeaderRowStyling="@(new DataGridRowStyling{ Class="h-12 text-left cursor-pointer items-center px-4 [&_th]:transition-colors [&_th]:font-medium [&_th]:text-muted-foreground [&_th:hover]:text-foreground [&_th:first-child]:rounded-l-md [&_th:last-child]:rounded-r-md [&_th]:bg-secondary [&_th]:truncate [&_th]:px-4 [&_th]:text-sm [&_th_div]:flex [&_th_div]:gap-1.5 [&_i]:pt-1" })"
@@ -17,14 +17,14 @@
     SelectedRowStyling="@((_, style) => style.Class = "bg-secondary/[.8] text-sm text-primary font-normal [&_td]:px-4 [&_td]:py-3 [&_td]:overflow-hidden [&_td:first-child]:rounded-l-md [&_td:last-child]:rounded-r-md hover:cursor-pointer")"
     Class="table-fixed [&_thead>tr:last-child:not(:first-child)]:h-16 [&_thead>tr:last-child_th]:px-4 [&_thead>tr:last-child_th>input]:h-10 [&_thead>tr:last-child_th>input]:w-full [&_thead>tr:last-child_th>input]:overflow-hidden [&_thead>tr:last-child_th>input]:text-sm [&_thead>tr:last-child_th>input]:border [&_thead>tr:last-child_th>input]:rounded-md [&_thead>tr:last-child_th>input]:px-3 [&_thead>tr:last-child_th>input]:font-light [&_thead>tr:last-child_th>input:focus]:outline-none [&_thead>tr:last-child_th>input:focus]:ring-0 [&_tbody>tr>td[colspan='1000']]:h-12 [&_tbody>tr>td[colspan='1000']]:px-4 [&_tbody>tr>td[colspan='1000']]:space-x-3"
 
-    PagerPosition="DataGridPagerPosition.Bottom"
+    PagerPosition="@DataGridPagerPosition.Bottom"
     PagerOptions="@(new () { PaginationPosition = PagerElementPosition.Center })"
     PageSize="@(IsGroupable ? 1000 : ItemsPerPage)"
     ShowPager="@((!IsGroupable && Items.Count() > ItemsPerPage) || IsForcePagination)"
 
     Groupable="@IsGroupable"
     Filterable="@IsFilterable"
-    SortMode="DataGridSortMode.Single"
+    SortMode="@DataGridSortMode.Single"
   >
     <DataGridColumns>
       @ColumnsContent
@@ -92,14 +92,11 @@
   </DataGrid>
 </div>
 
-
-<DataGridContextMenu
-  @ref="ContextMenuRef"
-  ContextMenuPos="ContextMenuPos"
-  @bind-IsContextMenuOpen="IsContextMenuOpen"
->
-  @if (ContextMenuContent != null)
+<DataGridContextMenu @ref="ContextMenuRef">
+  @if (ContextMenuContent != null && ContextMenuItem != null)
   {
-    @ContextMenuContent(new(ContextMenuItem, EventCallback.Factory.Create(this, CloseContextMenu)))
+    <CascadingValue Value="@(new ContextMenuContext<TItem>(ContextMenuItem, EventCallback.Factory.Create(this, ContextMenuRef.CloseContextMenu)))">
+      @ContextMenuContent(new(ContextMenuItem, EventCallback.Factory.Create(this, ContextMenuRef.CloseContextMenu)))
+    </CascadingValue>
   }
 </DataGridContextMenu>

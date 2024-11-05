@@ -1,11 +1,21 @@
 @using Blazor.Heroicons.Outline
+@typeparam TItem
 
-<DropdownItem OnClick="@OnClick">
+<DropdownItem OnClick="@OnClickAction">
   <ArrowTopRightOnSquareIcon class="size-4 mr-4" />
   Открыть в новой странице
 </DropdownItem>
 
 @code {
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Parameter] public EventCallback OnClick { get; set; }
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+
+  [CascadingParameter] public ContextMenuContext<TItem> Context { get; set; } = default!;
+  [Parameter] public string Link { get; set; } = "/";
+
+  private async Task OnClickAction()
+  {
+    await PageHelper.OpenLinkInNewTab(Link);
+    await Context.CloseContextMenu.InvokeAsync();
+  }
 }

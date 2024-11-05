@@ -2,8 +2,8 @@
 @implements IDialogContentComponent
 
 <SectionDialog>
-  <Tab Id="@typeof(PrintersCreateForm).ToString()" Title="@Localizer["SectionPrinters"]">
-    <PrintersCreateForm FormModel="@(new() { ProductionSiteId = ProductionSiteState.Value.ProductionSite.Id })" />
+  <Tab Id="@typeof(PrinterCreateForm).ToString()" Title="@Localizer["SectionPrinters"]">
+    <PrinterCreateForm FormModel="@(new() { ProductionSiteId = ProductionSiteState.Value.ProductionSite.Id })" />
   </Tab>
 </SectionDialog>
 

@@ -52,10 +52,6 @@ public abstract class SectionDataGridBase<TItem> : FluxorComponent where TItem :
         {
             ToastService.ShowError(ex.GetMessage(Localizer["ToastDeleteItemError"]));
         }
-        catch
-        {
-            ToastService.ShowError(Localizer["ToastDeleteItemError"]);
-        }
     }
 
     protected async Task OpenModalWithItem<T>(TItem sectionEntity) where T : IDialogContentComponent<TItem> =>

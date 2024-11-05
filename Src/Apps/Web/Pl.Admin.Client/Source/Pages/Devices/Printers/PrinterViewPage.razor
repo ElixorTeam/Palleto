@@ -1,0 +1,81 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models.Features.Devices.Printers.Queries
+@using Blazor.Heroicons.Outline
+
+@attribute [Route(Urls.Printers + "/{Id:guid}")]
+
+<UseEndpoint
+  Endpoint="@DevicesEndpoints.PrinterEndpoint"
+  Arg="@Id"
+  Context="printerQuery"
+>
+  <div class="w-full">
+    <Breadcrumbs>
+      <Breadcrumb Label="Принтеры" Link="@Urls.Printers" />
+      @if (printerQuery.HasData)
+      {
+        <Breadcrumb Label="@printerQuery.Data.Name" />
+      }
+    </Breadcrumbs>
+    <div class="w-full border-b">
+      <div class="py-2 flex w-full justify-between items-center">
+        @if (printerQuery.HasData)
+        {
+        <h2 class="font-bold text-3xl truncate tracking-tight">@printerQuery.Data.Name</h2>
+          <div class="flex gap-2">
+            <Button Variant="ButtonVariantType.Outline" OnClick="@(() => OpenUpdateDialog(printerQuery.Data))">
+              <PencilIcon class="size-4 mr-2"/>
+              <span>Изменить</span>
+            </Button>
+            <Button Variant="ButtonVariantType.Destructive">
+              <TrashIcon class="size-4 mr-2"/>
+              <span>Удалить</span>
+            </Button>
+          </div>
+          }
+        else
+        {
+          <Skeleton Class="h-8 w-40"/>
+        }
+      </div>
+      <div class="flex gap-6">
+        <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
+          Информация
+        </ViewTabButton>
+        <ViewTabButton Value="control" @bind-CurrentTab="CurrentTab">
+          Управление
+        </ViewTabButton>
+      </div>
+    </div>
+    <div class="flex flex-col w-full pt-4">
+      <Tabs @bind-ActiveTabId="@CurrentTab">
+        @if (printerQuery.HasData)
+        {
+          <Tab Id="info">
+            <PrinterViewInfo Printer="@printerQuery.Data"/>
+          </Tab>
+          <Tab Id="control">
+            <PrinterViewControl Printer="@printerQuery.Data" />
+          </Tab>
+        }
+        else
+        {
+          <Spinner Class="inline size-32 text-muted-foreground animate-spin fill-primary mx-auto py-20" />
+        }
+      </Tabs>
+    </div>
+  </div>
+</UseEndpoint>
+
+@code {
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+  [Parameter] public Guid Id { get; set; }
+
+  private string CurrentTab { get; set; } = "info";
+
+  private Task OpenUpdateDialog(PrinterDto item) =>
+    DialogService.ShowDialogAsync<PrinterUpdateDialog>(item, PageHelper.DialogParameters);
+}

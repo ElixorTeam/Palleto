@@ -12,7 +12,7 @@
 >
   <DataGridHeader>
     <DataGridLabelWithCounter Label="@($"Этикетки смены ({WorkShift.Start:dd.MM.yy} - {WorkShift.End:dd.MM.yy})")"
-                              ItemsCount="@(labelsQuery.Data?.Length ?? 0)" IsLoading="labelsQuery.IsLoading"/>
+                              ItemsCount="@labelsQuery.Data?.Length" IsLoading="labelsQuery.IsLoading"/>
     <DataGridActionReload OnClick="@labelsQuery.RefetchAsync" IsLoading="labelsQuery.IsFetching" />
   </DataGridHeader>
 
@@ -80,6 +80,10 @@
         Width="8%"
       />
     </ColumnsContent>
+    <ContextMenuContent>
+      <DataGridActionOpenItem Link="@(RedirectHelper.ToLabel(context.Item.Id))" />
+      <DataGridActionOpenInNewTab TItem="ArmDto" Link="@(RedirectHelper.ToLabel(context.Item.Id))" />
+    </ContextMenuContent>
   </DataGridContainer>
 </UseEndpoint>
 
@@ -87,6 +91,7 @@
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
 
   private WorkShift WorkShift { get; set; } = new();
 

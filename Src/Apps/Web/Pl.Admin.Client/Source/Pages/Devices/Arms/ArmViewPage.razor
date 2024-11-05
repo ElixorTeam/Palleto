@@ -1,5 +1,6 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models.Features.Devices.Arms.Queries
 @using Blazor.Heroicons.Outline
 
 @attribute [Route(Urls.Arms + "/{Id:guid}")]
@@ -11,7 +12,7 @@
 >
   <div class="w-full">
     <Breadcrumbs>
-      <Breadcrumb Label="Линия" Link="@Urls.Arms" />
+      <Breadcrumb Label="Линии" Link="@Urls.Arms" />
       @if (armQuery.HasData)
       {
         <Breadcrumb Label="@armQuery.Data.Name" />
@@ -25,22 +26,26 @@
             <h2 class="font-bold text-3xl truncate tracking-tight">@armQuery.Data.Name</h2>
             <div class="@Css.Class("size-4 rounded-full overflow-hidden", (DateTime.Now - armQuery.Data.ChangeDt).TotalMinutes < 5 ? "bg-green-500" : "bg-muted-foreground")"></div>
           </div>
-          }
-          else
-          {
-            <Skeleton Class="h-8 w-40"/>
-          }
-            <div class="flex gap-2">
-              <Button Variant="ButtonVariantType.Outline">
-                <PencilIcon class="size-4 mr-2"/>
-                <span>Изменить</span>
-              </Button>
-              <Button Variant="ButtonVariantType.Destructive">
-                <TrashIcon class="size-4 mr-2"/>
-                <span>Удалить</span>
-              </Button>
-            </div>
+          <div class="flex gap-2">
+            <Button Variant="ButtonVariantType.Outline" OnClick="@(() => OpenShareDialog(armQuery.Data))">
+              <ShareIcon class="size-4 mr-2"/>
+              <span>Поделиться</span>
+            </Button>
+            <Button Variant="ButtonVariantType.Outline" OnClick="@(() => OpenUpdateDialog(armQuery.Data))">
+              <PencilIcon class="size-4 mr-2"/>
+              <span>Изменить</span>
+            </Button>
+            <Button Variant="ButtonVariantType.Destructive">
+              <TrashIcon class="size-4 mr-2"/>
+              <span>Удалить</span>
+            </Button>
           </div>
+          }
+        else
+        {
+          <Skeleton Class="h-8 w-40"/>
+        }
+      </div>
       <div class="flex gap-6">
         <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
           Информация
@@ -91,8 +96,21 @@
 
 
 @code {
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Parameter] public Guid Id { get; set; }
 
   private string CurrentTab { get; set; } = "info";
+
+  private Task OpenUpdateDialog(ArmDto item) =>
+    DialogService.ShowDialogAsync<ArmUpdateDialog>(item, PageHelper.DialogParameters);
+
+  private async Task OpenShareDialog(ArmDto item)
+  {
+    string url = RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToArm(item.Id));
+    await DialogService.ShowDialogAsync<ShareUrlDialog>(url, PageHelper.DialogParameters);
+  }
+
 }
