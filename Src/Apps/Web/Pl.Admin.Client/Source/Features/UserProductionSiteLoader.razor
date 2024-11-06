@@ -1,4 +1,3 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Services.Stores
 @using IToastService = Microsoft.FluentUI.AspNetCore.Components.IToastService
@@ -6,27 +5,9 @@
 
 <UseParameterlessEndpoint
   Endpoint="ReferencesEndpoints.ProxyUserProductionSiteEndpoint"
-  Context="userProductionSiteQuery"
+  Options="@(new() { OnSuccess = OnSuccess, OnFailure = OnFailure })"
 >
-  @if (userProductionSiteQuery.IsLoading)
-  {
-    <DataGridHeader>
-      <Skeleton Class="h-8 w-32" />
-    </DataGridHeader>
-  }
-  else if (userProductionSiteQuery.IsError || !userProductionSiteQuery.HasData)
-  {
-    <div class="size-full flex items-center justify-center p-6">
-      <div class="max-w-md flex flex-col gap-2 text-center items-center">
-        <ExclamationTriangleIcon class="size-16"/>
-        @Localizer["ProductionSiteSuspenseDescription"]
-      </div>
-    </div>
-  }
-  else
-  {
-    @ChildContent
-  }
+  @ChildContent
 </UseParameterlessEndpoint>
 
 
@@ -38,4 +19,19 @@
   [Inject] private IToastService ToastService { get; set; } = default!;
 
   [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  private void OnSuccess(QuerySuccessEventArgs<Unit, ProxyDto> querySuccessEventArgs)
+  {
+    if (!ProductionSiteState.Value.ProductionSite.Id.IsEmpty()) return;
+    Dispatcher.Dispatch(new ChangeProductionSiteAction(querySuccessEventArgs.Result));
+  }
+
+  private void OnFailure(QueryFailureEventArgs<Unit> obj)
+  {
+    String message;
+    if (obj.Exception is ApiException apiException)
+      message = apiException.GetMessage("Неизвестная ошибка сервера");
+    else message = obj.Exception.Message;
+    ToastService.ShowError(message);
+  }
 }

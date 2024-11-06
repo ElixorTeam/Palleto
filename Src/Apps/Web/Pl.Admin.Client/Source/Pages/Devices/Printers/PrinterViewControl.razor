@@ -4,7 +4,7 @@
 <div class="flex flex-col pb-2 px-2">
   <div class="flex gap-1 items-center">
     <h2 class="text-xl font-medium">Удаленное управление принтером</h2>
-    <a href="@PrinterUrl" class="pt-1">
+    <a href="@PrinterUrl" target="_blank" class="pt-1">
       <Button Size="ButtonSizeType.Icon" Variant="ButtonVariantType.Ghost" Class="!size-7">
         <ArrowTopRightOnSquareIcon class="size-[1.1rem]" />
       </Button>
@@ -12,11 +12,10 @@
   </div>
   <span class="text-muted-foreground text-sm">
     Если вы видите пустой блок, это означает, что браузер блокирует запрос к принтеру через сайт. Вы можете перейти по
-    <a href="@PrinterUrl" class="underline text-primary hover:cursor-pointer">прямой ссылке</a> на устройство или отключить
+    <a href="@PrinterUrl" target="_blank" class="underline text-primary hover:cursor-pointer">прямой ссылке</a> на устройство или отключить
     настройки защиты браузера для сайта, следуя <a href="/" class="underline text-primary hover:cursor-pointer">данному руководству</a>.
   </span>
 </div>
-
 
 <div class="w-full py-4 flex items-center justify-center">
   <iframe src="@PrinterUrl" class="rounded-md overflow-hidden border w-full max-w-screen-2xl h-96 lg:h-[36rem]"></iframe>

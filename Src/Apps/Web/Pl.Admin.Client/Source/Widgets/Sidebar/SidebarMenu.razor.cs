@@ -60,7 +60,6 @@ public sealed partial class SidebarMenu : ComponentBase
         new(Localizer["MenuDiagnostics"], HeroiconName.Wrench, [
             new(Localizer["SectionMigrations"], Urls.Migrations),
             new(Localizer["SectionTables"], Urls.Tables),
-            new(Localizer["SectionAnalytics"], Urls.Analytics)
         ], PolicyEnum.Admin),
     ];
 }

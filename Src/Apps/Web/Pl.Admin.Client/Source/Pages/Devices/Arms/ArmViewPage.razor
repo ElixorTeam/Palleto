@@ -1,6 +1,7 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
+@using Pl.Admin.Models
 @using Blazor.Heroicons.Outline
 
 @attribute [Route(Urls.Arms + "/{Id:guid}")]
@@ -35,7 +36,7 @@
               <PencilIcon class="size-4 mr-2"/>
               <span>Изменить</span>
             </Button>
-            <Button Variant="ButtonVariantType.Destructive">
+            <Button Variant="ButtonVariantType.Destructive" OnClick="@(() => OpenDeleteDialog(armQuery.Data))">
               <TrashIcon class="size-4 mr-2"/>
               <span>Удалить</span>
             </Button>
@@ -100,6 +101,7 @@
   [Inject] private IDialogService DialogService { get; set; } = default!;
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private IWebApi WebApi { get; set; } = default!;
   [Parameter] public Guid Id { get; set; }
 
   private string CurrentTab { get; set; } = "info";
@@ -107,10 +109,22 @@
   private Task OpenUpdateDialog(ArmDto item) =>
     DialogService.ShowDialogAsync<ArmUpdateDialog>(item, PageHelper.DialogParameters);
 
+  private async Task OpenDeleteDialog(ArmDto item)
+  {
+    EventCallback action = EventCallback.Factory.Create(this, () => DeleteItem(item));
+    await DialogService.ShowDialogAsync<DeleteItemDialog>(action, PageHelper.DialogParameters);
+  }
+
   private async Task OpenShareDialog(ArmDto item)
   {
     string url = RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToArm(item.Id));
     await DialogService.ShowDialogAsync<ShareUrlDialog>(url, PageHelper.DialogParameters);
   }
 
+  private async Task DeleteItem(ArmDto item)
+  {
+    await WebApi.DeleteArm(item.Id);
+    DevicesEndpoints.DeleteArm(item.ProductionSite.Id, item.Id);
+    await PageHelper.OpenLink(Urls.Arms);
+  }
 }

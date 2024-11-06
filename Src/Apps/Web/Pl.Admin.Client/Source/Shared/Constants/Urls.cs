@@ -48,7 +48,6 @@ public static class Urls
 
     public const string Migrations = "/migrations";
     public const string Tables = "/tables";
-    public const string Analytics = "/analytics";
 
     # endregion
 

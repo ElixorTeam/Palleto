@@ -1,6 +1,7 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Models.Features.Devices.Printers.Queries
+@using Pl.Admin.Models
 @using Blazor.Heroicons.Outline
 
 @attribute [Route(Urls.Printers + "/{Id:guid}")]
@@ -24,11 +25,15 @@
         {
         <h2 class="font-bold text-3xl truncate tracking-tight">@printerQuery.Data.Name</h2>
           <div class="flex gap-2">
+            <Button Variant="ButtonVariantType.Outline" OnClick="@(() => OpenShareDialog(printerQuery.Data))">
+              <ShareIcon class="size-4 mr-2"/>
+              <span>Поделиться</span>
+            </Button>
             <Button Variant="ButtonVariantType.Outline" OnClick="@(() => OpenUpdateDialog(printerQuery.Data))">
               <PencilIcon class="size-4 mr-2"/>
               <span>Изменить</span>
             </Button>
-            <Button Variant="ButtonVariantType.Destructive">
+            <Button Variant="ButtonVariantType.Destructive" OnClick="@(() => OpenDeleteDialog(printerQuery.Data))">
               <TrashIcon class="size-4 mr-2"/>
               <span>Удалить</span>
             </Button>
@@ -72,10 +77,31 @@
   [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private IDialogService DialogService { get; set; } = default!;
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private IWebApi WebApi { get; set; } = default!;
   [Parameter] public Guid Id { get; set; }
 
   private string CurrentTab { get; set; } = "info";
 
   private Task OpenUpdateDialog(PrinterDto item) =>
     DialogService.ShowDialogAsync<PrinterUpdateDialog>(item, PageHelper.DialogParameters);
+
+  private async Task OpenDeleteDialog(PrinterDto item)
+  {
+    EventCallback action = EventCallback.Factory.Create(this, () => DeleteItem(item));
+    await DialogService.ShowDialogAsync<DeleteItemDialog>(action, PageHelper.DialogParameters);
+  }
+
+  private async Task OpenShareDialog(PrinterDto item)
+  {
+    string url = RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPrinter(item.Id));
+    await DialogService.ShowDialogAsync<ShareUrlDialog>(url, PageHelper.DialogParameters);
+  }
+
+  private async Task DeleteItem(PrinterDto item)
+  {
+    await WebApi.DeletePrinter(item.Id);
+    DevicesEndpoints.DeletePrinter(item.ProductionSite.Id, item.Id);
+    await PageHelper.OpenLink(Urls.Printers);
+  }
 }

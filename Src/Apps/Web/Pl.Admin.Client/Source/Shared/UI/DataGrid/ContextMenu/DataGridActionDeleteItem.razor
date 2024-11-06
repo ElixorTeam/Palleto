@@ -8,6 +8,7 @@
 
 @code {
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
   [Inject] private PageHelper PageHelper { get; set; } = default!;
 
   [CascadingParameter] public ContextMenuContext<TItem> Context { get; set; } = default!;
@@ -15,7 +16,10 @@
 
   private async Task OnClickAction()
   {
-    await PageHelper.ApiActionWrapper(() => Action.InvokeAsync(Context.Item));
+    EventCallback action = EventCallback.Factory.Create(this, DeleteAction);
+    await DialogService.ShowDialogAsync<DeleteItemDialog>(action, PageHelper.DialogParameters);
     await Context.CloseContextMenu.InvokeAsync();
   }
+
+  private Task DeleteAction() => PageHelper.ApiActionWrapper(() => Action.InvokeAsync(Context.Item));
 }

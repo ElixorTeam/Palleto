@@ -40,7 +40,7 @@
         <DataGridColumn
           Caption="@WsDataLocalizer["ColType"]"
           Field="@nameof(PrinterDto.Type)"
-          Width="10%"
+          Width="20%"
           FilterCellClass="!font-normal"
         >
           <FilterTemplate>
@@ -58,24 +58,14 @@
         <DataGridColumn
           Caption="@WsDataLocalizer["ColName"]"
           Field="@nameof(PrinterDto.Name)"
-          Width="25%"
+          Width="40%"
         />
         <DataGridColumn
           Caption="@WsDataLocalizer["ColIp"]"
           Field="@nameof(PrinterDto.Ip)"
-          Width="20%"
+          Width="40%"
           Sortable="false"
         />
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColProductionSite"]"
-          Field="@($"{nameof(PrinterDto.ProductionSite)}.{nameof(ProxyDto.Name)}")"
-          Width="35%"
-          FilterCellClass="!font-normal"
-        >
-          <FilterTemplate>
-            <ProductionSiteSelect />
-          </FilterTemplate>
-        </DataGridColumn>
       </ColumnsContent>
       <ContextMenuContent>
         <DataGridActionUpdateItem TItem="PrinterDto" Action="@OpenUpdateDialog" />

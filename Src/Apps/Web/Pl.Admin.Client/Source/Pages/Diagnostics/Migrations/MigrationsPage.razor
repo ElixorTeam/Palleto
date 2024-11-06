@@ -7,30 +7,27 @@
 
 <UseParameterlessEndpoint Endpoint="@DiagnosticEndpoints.MigrationsEndpoint" Context="migrationsQuery">
   <DataGridHeader>
-    <span>@Localizer["SectionMigrations"]</span>
-    <DataGridItemsCounter ItemsCount="@(migrationsQuery.Data?.Length ?? 0)" IsLoading="migrationsQuery.IsFetching" />
-    <DataGridActionReload OnClick="@migrationsQuery.RefetchAsync" IsLoading="migrationsQuery.IsFetching" />
+    <DataGridLabelWithCounter Label="@Localizer["SectionMigrations"]" ItemsCount="@migrationsQuery.Data?.Length" IsLoading="migrationsQuery.IsLoading"/>
+    <DataGridActionReload OnClick="@migrationsQuery.RefetchAsync" IsLoading="migrationsQuery.IsFetching"/>
   </DataGridHeader>
 
-  <DataGridWrapper>
-    <DataGridContainer
-      TItem="MigrationHistoryDto"
-      Items="@(migrationsQuery.HasData ? migrationsQuery.Data : [])"
-    >
-      <ColumnsContent>
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColVersion"]"
-          Field="@nameof(MigrationHistoryDto.ProductVersion)"
-          Width="10%"
-        />
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColName"]"
-          Field="@nameof(MigrationHistoryDto.MigrationId)"
-          Width="90%"
-        />
-      </ColumnsContent>
-    </DataGridContainer>
-  </DataGridWrapper>
+  <DataGridContainer
+    TItem="MigrationHistoryDto"
+    Items="@(migrationsQuery.HasData ? migrationsQuery.Data : [])"
+  >
+    <ColumnsContent>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColVersion"]"
+        Field="@nameof(MigrationHistoryDto.ProductVersion)"
+        Width="10%"
+      />
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColName"]"
+        Field="@nameof(MigrationHistoryDto.MigrationId)"
+        Width="90%"
+      />
+    </ColumnsContent>
+  </DataGridContainer>
 </UseParameterlessEndpoint>
 
 @code {

@@ -63,6 +63,12 @@
       <PackageVersion Update="PSC.Blazor.Components.Chartjs" Version="8.0.8" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Source\Pages\Diagnostics\Analytics\AnalyticsPage.razor" />
+      <_ContentIncludedByDefault Remove="Source\Pages\Diagnostics\Analytics\ArmDayPerfomance.razor" />
+      <_ContentIncludedByDefault Remove="Source\Pages\Diagnostics\Analytics\ArmsTop.razor" />
+    </ItemGroup>
+
     <Target Name="StaticsBuild" BeforeTargets="PreBuildEvent">
         <Exec Command="npm run build" />
     </Target>

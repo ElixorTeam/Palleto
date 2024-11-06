@@ -4,9 +4,7 @@
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
 @using Pl.Admin.Models.Features.References1C.Brands
 
-@inherits SectionDataGridBase<PluArmDto>
-
-<UseEndpoint Endpoint="@DevicesEndpoints.ArmPluEndpoint" Arg="Arm.Id" Options="@(DefaultEndpointOptions)" Context="plusQuery">
+<UseEndpoint Endpoint="@DevicesEndpoints.ArmPluEndpoint" Arg="Arm.Id" Options="@(PageHelper.DefaultEndpointOptions)" Context="plusQuery">
   <DataGridHeader>
     <span class="text-xl font-medium">@Localizer["SectionArmPlu"]</span>
     <DataGridItemsSelected
@@ -16,6 +14,7 @@
     />
     <DataGridActionReload OnClick="@plusQuery.RefetchAsync" IsLoading="plusQuery.IsFetching"/>
   </DataGridHeader>
+
   <DataGridContainer
     TItem="PluArmDto"
     Items="@(plusQuery.HasData ? plusQuery.Data : [])"
@@ -135,6 +134,7 @@
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
   [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
@@ -184,7 +184,4 @@
       ToastService.ShowError(ex.GetMessage(string.Format(Localizer["ArmPluAddedUnsuccessfully"], item.Number)));
     }
   }
-
-  protected override async Task OpenItemInNewTab(PluArmDto item) =>
-    await OpenLinkInNewTab(RedirectHelper.ToPlu(item.Id));
 }

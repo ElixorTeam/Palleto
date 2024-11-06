@@ -8,67 +8,64 @@
 
 <UseParameterlessEndpoint Endpoint="@DiagnosticEndpoints.TablesEndpoint" Context="tablesQuery">
   <DataGridHeader>
-    <span>@Localizer["SectionTables"]</span>
-    <DataGridItemsCounter ItemsCount="@(tablesQuery.Data?.Length ?? 0)" IsLoading="tablesQuery.IsFetching" />
-    <DataGridActionReload OnClick="@tablesQuery.RefetchAsync" IsLoading="tablesQuery.IsFetching" />
+    <DataGridLabelWithCounter Label="@Localizer["SectionTables"]" ItemsCount="@tablesQuery.Data?.Length" IsLoading="tablesQuery.IsLoading"/>
+    <DataGridActionReload OnClick="@tablesQuery.RefetchAsync" IsLoading="tablesQuery.IsFetching"/>
   </DataGridHeader>
 
-  <DataGridWrapper>
-    <DataGridContainer
-      TItem="DataBaseTableDto"
-      Items="@(tablesQuery.HasData ? tablesQuery.Data : [])"
-      IsFilterable
-    >
-      <ColumnsContent>
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColScheme"]"
-          Field="@nameof(DataBaseTableDto.Schema)"
-          Width="20%"
-          Sortable="false"
-          FilterMethod="DataGridColumnFilterMethod.Equals"
-          FilterCellClass="!font-normal"
-        >
-          <FilterTemplate>
-            @{ context.SearchValue = Scheme; }
-            @if (tablesQuery.HasData)
-            {
-              <SelectSingle
-                TItem="string?"
-                Items="@(tablesQuery.Data.Select(x => x.Schema).ToHashSet().Union([null]))"
-                @bind-Value="@Scheme"
-                @bind-Value:after="@(() => context.TriggerFilterChange(Scheme))"
-                Placeholder="@Localizer["SelectItemNotSelected"]"
-                ItemDisplayName="@(item => item ?? Localizer["SelectItemNotSelected"])"
-              />
-            }
-            else
-            {
-              <Skeleton Class="h-10 w-full" />
-            }
-          </FilterTemplate>
-        </DataGridColumn>
+  <DataGridContainer
+    TItem="DataBaseTableDto"
+    Items="@(tablesQuery.HasData ? tablesQuery.Data : [])"
+    IsFilterable
+  >
+    <ColumnsContent>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColScheme"]"
+        Field="@nameof(DataBaseTableDto.Schema)"
+        Width="20%"
+        Sortable="false"
+        FilterMethod="DataGridColumnFilterMethod.Equals"
+        FilterCellClass="!font-normal"
+      >
+        <FilterTemplate>
+          @{ context.SearchValue = Scheme; }
+          @if (tablesQuery.HasData)
+          {
+            <SelectSingle
+              TItem="string?"
+              Items="@(tablesQuery.Data.Select(x => x.Schema).ToHashSet().Union([null]))"
+              @bind-Value="@Scheme"
+              @bind-Value:after="@(() => context.TriggerFilterChange(Scheme))"
+              Placeholder="@Localizer["SelectItemNotSelected"]"
+              ItemDisplayName="@(item => item ?? Localizer["SelectItemNotSelected"])"
+            />
+          }
+          else
+          {
+            <Skeleton Class="h-10 w-full" />
+          }
+        </FilterTemplate>
+      </DataGridColumn>
 
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColName"]"
-          Field="@nameof(DataBaseTableDto.Table)"
-          Width="30%"
-        />
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColName"]"
+        Field="@nameof(DataBaseTableDto.Table)"
+        Width="30%"
+      />
 
-        <DataGridColumn
-          Caption="Количество записей"
-          Field="@nameof(DataBaseTableDto.Rows)"
-          Width="25%"
-          Filterable="false"
-        />
-        <DataGridColumn
-          Caption="@($"{WsDataLocalizer["ColSize"]} ({WsDataLocalizer["MeasureMb"]})")"
-          Field="@nameof(DataBaseTableDto.UsedMb)"
-          Width="25%"
-          Filterable="false"
-        />
-      </ColumnsContent>
-    </DataGridContainer>
-  </DataGridWrapper>
+      <DataGridColumn
+        Caption="Количество записей"
+        Field="@nameof(DataBaseTableDto.Rows)"
+        Width="25%"
+        Filterable="false"
+      />
+      <DataGridColumn
+        Caption="@($"{WsDataLocalizer["ColSize"]} ({WsDataLocalizer["MeasureMb"]})")"
+        Field="@nameof(DataBaseTableDto.UsedMb)"
+        Width="25%"
+        Filterable="false"
+      />
+    </ColumnsContent>
+  </DataGridContainer>
 </UseParameterlessEndpoint>
 
 @code {

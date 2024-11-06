@@ -42,7 +42,7 @@
         <DataGridColumn
           Field="@(nameof(ArmDto.Type))"
           Caption="@WsDataLocalizer["ColType"]"
-          Width="7%"
+          Width="10%"
           Filterable="false"
         >
           <DisplayTemplate>
@@ -66,34 +66,24 @@
         <DataGridColumn
           Caption="@WsDataLocalizer["ColVersion"]"
           Field="@nameof(ArmDto.Version)"
-          Width="2rem"
+          Width="10%"
           Filterable="false"
         />
         <DataGridColumn
           Caption="@WsDataLocalizer["ColName"]"
           Field="@nameof(ArmDto.Name)"
-          Width="20%"
+          Width="25%"
         />
         <DataGridColumn
           Caption="@WsDataLocalizer["ColPrinter"]"
           Field="Printer.Name"
-          Width="20%"
+          Width="25%"
         />
         <DataGridColumn
           Caption="@WsDataLocalizer["ColWarehouse"]"
           Field="@($"{nameof(ArmDto.Warehouse)}.{nameof(ProxyDto.Name)}")"
-          Width="20%"
+          Width="25%"
         >
-        </DataGridColumn>
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColProductionSite"]"
-          Field="@($"{nameof(ArmDto.ProductionSite)}.{nameof(ProxyDto.Name)}")"
-          Width="20%"
-          FilterCellClass="!font-normal"
-        >
-          <FilterTemplate>
-            <ProductionSiteSelect />
-          </FilterTemplate>
         </DataGridColumn>
       </ColumnsContent>
       <ContextMenuContent>

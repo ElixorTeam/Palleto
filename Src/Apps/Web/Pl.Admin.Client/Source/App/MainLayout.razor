@@ -1,23 +1,20 @@
 ﻿@using Pl.Admin.Client.Source.Widgets.Sidebar
+@using Pl.Admin.Client.Source.Features
 @inherits LayoutComponentBase
 
-<div class="w-full min-h-screen">
-  <div class="grid w-full grid-cols-[auto,1fr] grid-rows-1">
-    <Sidebar />
-    <main class="size-full overflow-x-hidden p-6">
-      @Body
-    </main>
+<UserProductionSiteLoader>
+  <div class="w-full min-h-screen">
+    <div class="grid w-full grid-cols-[auto,1fr] grid-rows-1">
+      <Sidebar />
+      <main class="size-full overflow-x-hidden p-6">
+        @Body
+      </main>
+    </div>
   </div>
-</div>
+</UserProductionSiteLoader>
 
 <FluentDialogProvider @rendermode="InteractiveServer" />
 <FluentToastProvider @rendermode="InteractiveServer" />
 <FluentTooltipProvider @rendermode="InteractiveServer" />
 
 <Fluxor.Blazor.Web.StoreInitializer/>
-
-@code {
-  // private bool IsProduction { get; set; }
-  //
-  // protected override void OnInitialized() => IsProduction = !ConfigurationUtils.IsDevelop;
-}
