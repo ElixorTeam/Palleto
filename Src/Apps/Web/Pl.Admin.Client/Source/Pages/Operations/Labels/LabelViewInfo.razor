@@ -1,36 +1,39 @@
 @using Pl.Admin.Models.Features.Print.Labels
 
-<h2 class="text-xl font-medium pb-2 px-2">Общая информация</h2>
-<div class="w-full grid grid-cols-3 gap-4 pb-6 xl:grid-cols-4 2xl:grid-cols-5 px-2 border-b">
-  @if (Label.Plu != null)
+<ViewFieldGrid Title="Общая информация" Border>
+  <ViewFieldGuid Value="@Model.Id" />
+
+  @if (Model.Plu != null)
   {
-    <ViewField Label="Номенклатура" Value="@Label.Plu?.Name" />
-    <ViewField Label="Тип номенклатуры" Value="@(Label.IsWeight ? "Весовая" : "Штучная")" />
+    <ViewField Label="@WsDataLocalizer["ColPlu"]" Value="@Model.Plu?.Name" />
+    <ViewField Label="@WsDataLocalizer["ColType"]" Value="@(Model.IsWeight ? "Весовая" : "Штучная")" />
   }
-  <ViewField Label="Линия" Value="@Label.Arm.Name" />
-  <ViewField Label="Склад" Value="@Label.Warehouse.Name" />
-</div>
 
-<h2 class="text-xl font-medium pt-4 pb-2 px-2">Параметры этикетки</h2>
-<div class="w-full grid grid-cols-3 gap-4 pb-6 xl:grid-cols-4 2xl:grid-cols-5 px-2 border-b">
-  <ViewField Label="Замес" Value="@Label.Kneading.ToString()" />
-  <ViewField Label="Кол-во вложений" Value="@Label.BundleCount.ToString()" />
+  <ViewField Label="@WsDataLocalizer["ColArm"]" Value="@Model.Arm.Name" Link="@RedirectHelper.ToArm(Model.Arm.Id)" />
+  <ViewField Label="@WsDataLocalizer["ColWarehouse"]" Value="@Model.Warehouse.Name" Link="@RedirectHelper.ToArm(Model.Warehouse.Id)" />
+</ViewFieldGrid>
 
-  <ViewField Label="Дата производства" Value="@Label.ProductDt.ToString()"/>
-  <ViewField Label="Срок годности" Value="@Label.ExpirationDt.ToString()"/>
+<ViewFieldGrid Title="Параметры этикетки" Border>
+  <ViewField Label="@WsDataLocalizer["ColKneading"]" Value="@Model.Kneading.ToString()" />
+  <ViewField Label="@WsDataLocalizer["ColCount"]" Value="@Model.BundleCount.ToString()" />
 
-  <ViewField Label="Вес нетто" Value="@Label.WeightNet.ToString(CultureInfo.InvariantCulture)"/>
-  <ViewField Label="Вес тары" Value="@Label.WeightTare.ToString(CultureInfo.InvariantCulture)"/>
-</div>
+  <ViewField Label="@WsDataLocalizer["ColProductDt"]" Value="@Model.ProductDt.ToString()"/>
+  <ViewField Label="@WsDataLocalizer["ColExpirationDt"]" Value="@Model.ExpirationDt.ToString()"/>
 
-<h2 class="text-xl font-medium pt-4 pb-2 px-2">Штрихкоды</h2>
-<div class="w-full grid grid-cols-3 gap-4 xl:grid-cols-4 2xl:grid-cols-5 px-2">
-  <ViewField Label="Верхний штрихкод" Value="@Label.BarcodeTop" />
-  <ViewField Label="Нижний штрихкод" Value="@Label.BarcodeBottom" />
-  <ViewField Label="Правый штрихкод" Value="@Label.BarcodeRight" />
-</div>
+  <ViewField Label="@WsDataLocalizer["ColNetWeight"]" Value="@Model.WeightNet.ToString(CultureInfo.InvariantCulture)"/>
+  <ViewField Label="@WsDataLocalizer["ColTareWeight"]" Value="@Model.WeightTare.ToString(CultureInfo.InvariantCulture)"/>
+</ViewFieldGrid>
+
+<ViewFieldGrid Title="Штрихкоды">
+  <ViewField Label="@WsDataLocalizer["ColBarcodeTop"]" Value="@Model.BarcodeTop" Copyable />
+  <ViewField Label="@WsDataLocalizer["ColBarcodeBottom"]" Value="@Model.BarcodeBottom" Copyable />
+  <ViewField Label="@WsDataLocalizer["ColBarcodeRight"]" Value="@Model.BarcodeRight" Copyable />
+</ViewFieldGrid>
 
 @code {
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Parameter, EditorRequired] public LabelDto Label { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+
+  [Parameter, EditorRequired] public LabelDto Model { get; set; } = default!;
 }

@@ -1,20 +1,7 @@
 @using Pl.Admin.Client.Source.Shared.Constants
 
-@* <div class="flex flex-col items-center shrink-0 justify-center p-2" data-sidebar="header"> *@
-@*   <a class="flex gap-1 scale-[0.8]" href="@Urls.Home"> *@
-@*     <AdminLogo Class="size-7"/> *@
-@*     <h2 class="text-2xl pt-px tracking-[.25rem]">DMIN</h2> *@
-     @* @if (!IsProduction) *@
-     @* { *@
-     @*   <Badge Class="ml-1 mb-0.5" Type="BadgeType.Secondary"> *@
-     @*     DEV *@
-     @*   </Badge> *@
-     @* } *@
-@*   </a> *@
-@* </div> *@
-
-<div data-sidebar="header" class="flex flex-col gap-2 p-2">
-  <a href="@Urls.Home" data-sidebar="menu-button" class="flex h-12 w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+<div data-sidebar="header" class="flex flex-col gap-2 px-2 pt-2">
+  <a href="@Urls.Home" data-sidebar="menu-button" class="flex h-14 w-full items-center transition-colors gap-2 overflow-hidden rounded-md px-2 text-left hover:bg-secondary">
     <div class="size-10 flex shrink-0 rounded-lg items-center justify-center bg-primary">
       <AdminLogo Class="size-6 text-background" />
     </div>

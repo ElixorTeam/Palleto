@@ -1,15 +1,19 @@
-@using Pl.Admin.Client.Source.Shared.Constants
-@using Blazor.Heroicons.Outline
-
 <div class="@Css.Class("pb-2 flex gap-2 text-sm text-muted-foreground items-center", Class)">
-  <a href="@Urls.Home" class="flex gap-2 items-center hover:text-foreground">
-    <HomeIcon class="size-4" />
-    <span>Домашняя</span>
-  </a>
+  @if (Start == BreadcrumbStart.Home)
+  {
+    <BreadcrumbHome />
+  }
+  else if (Start == BreadcrumbStart.Back)
+  {
+    <BreadcrumbBack />
+  }
+
   @ChildContent
+
 </div>
 
 @code {
   [Parameter] public string Class { get; set; } = string.Empty;
   [Parameter] public RenderFragment? ChildContent { get; set; }
+  [Parameter] public BreadcrumbStart Start { get; set; } = BreadcrumbStart.Home;
 }

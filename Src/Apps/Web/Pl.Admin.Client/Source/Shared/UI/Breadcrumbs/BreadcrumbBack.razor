@@ -1,0 +1,12 @@
+@using Blazor.Heroicons.Outline
+
+<button type="button" @onclick="GoBack" class="flex gap-2 items-center hover:text-foreground">
+  <ArrowLeftIcon class="size-4" />
+  <span>Назад</span>
+</button>
+
+@code {
+  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
+
+  private async Task GoBack() => await JsRuntime.InvokeVoidAsync("history.back");
+}

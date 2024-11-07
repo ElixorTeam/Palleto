@@ -6,7 +6,7 @@
 
 <UseEndpoint
   Endpoint="@DevicesEndpoints.ArmPallets"
-  Arg="@Arm.Id"
+  Arg="@Model.Id"
   Options="@(new() { RefetchInterval=TimeSpan.FromMinutes(5) })"
   Context="labelsQuery"
 >
@@ -102,7 +102,7 @@
   [Inject] private NavigationManager NavigationManager { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
 
-  private WorkShift WorkShift { get; set; } = new();
+  [Parameter, EditorRequired] public ArmDto Model { get; set; } = default!;
 
-  [Parameter, EditorRequired] public ArmDto Arm { get; set; } = default!;
+  private WorkShift WorkShift { get; set; } = new();
 }

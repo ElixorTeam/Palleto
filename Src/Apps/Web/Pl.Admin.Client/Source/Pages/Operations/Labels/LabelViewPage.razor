@@ -8,55 +8,46 @@
   Arg="@Id"
   Context="labelQuery"
 >
-  <div class="w-full">
-    <Breadcrumbs>
+  <Breadcrumbs Start="BreadcrumbStart.Back">
+    @if (labelQuery.HasData)
+    {
+      <Breadcrumb Label="@("Этикетка №" + labelQuery.Data.Id)" />
+    }
+  </Breadcrumbs>
+
+  <ViewHeader Title="@(labelQuery.HasData ? "Этикетка №" + labelQuery.Data.Id : string.Empty)">
+    <ButtonsContent>
       @if (labelQuery.HasData)
       {
-        <Breadcrumb Label="@("Этикетка №" + labelQuery.Data.Id)" />
+        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToLabel(labelQuery.Data.Id))" />
       }
-    </Breadcrumbs>
-    <div class="w-full border-b">
-      <div class="py-2 flex w-full items-center">
-        @if (labelQuery.HasData)
-        {
-          <h2 class="font-bold text-3xl truncate tracking-tight">Этикетка № @labelQuery.Data.Id</h2>
-        }
-        else
-        {
-          <Skeleton Class="h-8 w-40"/>
-        }
-      </div>
-      <div class="flex gap-6">
-        <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-          Информация
-        </ViewTabButton>
-        <ViewTabButton Value="preview" @bind-CurrentTab="CurrentTab">
-          Предпросмотр
-        </ViewTabButton>
-      </div>
-    </div>
-    <div class="flex flex-col w-full pt-4">
-      <Tabs @bind-ActiveTabId="@CurrentTab">
-        @if (labelQuery.HasData)
-        {
-          <Tab Id="info">
-            <LabelViewInfo Label="labelQuery.Data"/>
-          </Tab>
-          <Tab Id="preview">
-            <LabelViewPreview Model="labelQuery.Data"/>
-          </Tab>
-        }
-        else
-        {
-          <Spinner Class="size-32 text-muted-foreground animate-spin fill-primary mx-auto py-20" />
-        }
-      </Tabs>
-    </div>
-  </div>
+    </ButtonsContent>
+    <TabsContent>
+      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
+        Информация
+      </ViewTabButton>
+      <ViewTabButton Value="preview" @bind-CurrentTab="CurrentTab">
+        Предпросмотр
+      </ViewTabButton>
+    </TabsContent>
+  </ViewHeader>
+
+  <Tabs @bind-ActiveTabId="@CurrentTab">
+    @if (labelQuery.HasData)
+    {
+      <Tab Id="info">
+        <LabelViewInfo Model="labelQuery.Data"/>
+      </Tab>
+      <Tab Id="preview">
+        <LabelViewPreview Model="labelQuery.Data"/>
+      </Tab>
+    }
+  </Tabs>
 </UseEndpoint>
 
 @code {
   [Inject] private OperationsEndpoints OperationsEndpoints { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Parameter] public Guid Id { get; set; }
 
   private string CurrentTab { get; set; } = "info";

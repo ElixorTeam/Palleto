@@ -4,7 +4,7 @@
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
 @using Pl.Admin.Models.Features.References1C.Brands
 
-<UseEndpoint Endpoint="@DevicesEndpoints.ArmPluEndpoint" Arg="Arm.Id" Options="@(PageHelper.DefaultEndpointOptions)" Context="plusQuery">
+<UseEndpoint Endpoint="@DevicesEndpoints.ArmPluEndpoint" Arg="Model.Id" Options="@(PageHelper.DefaultEndpointOptions)" Context="plusQuery">
   <DataGridHeader>
     <span class="text-xl font-medium">@Localizer["SectionArmPlu"]</span>
     <DataGridItemsSelected
@@ -142,7 +142,7 @@
 
   # endregion
 
-  [Parameter, EditorRequired] public ArmDto Arm { get; set; } = default!;
+  [Parameter, EditorRequired] public ArmDto Model { get; set; } = default!;
 
   private BrandDto? BrandFilter { get; set; }
   private bool? IsWeightFilter { get; set; }
@@ -151,7 +151,7 @@
   protected override void OnInitialized()
   {
     base.OnInitialized();
-    IsWeightFilter = Arm.Type switch
+    IsWeightFilter = Model.Type switch
     {
       ArmType.Pc => false,
       ArmType.Tablet => true,
@@ -163,8 +163,8 @@
   {
     try
     {
-      await WebApi.DeleteArmPlu(Arm.Id, item.Id);
-      DevicesEndpoints.DeleteArmPlu(Arm.Id, item.Id);
+      await WebApi.DeleteArmPlu(Model.Id, item.Id);
+      DevicesEndpoints.DeleteArmPlu(Model.Id, item.Id);
     }
     catch (ApiException ex)
     {
@@ -176,8 +176,8 @@
   {
     try
     {
-      await WebApi.AddArmPlu(Arm.Id, item.Id);
-      DevicesEndpoints.AddArmPlu(Arm.Id, item.Id);
+      await WebApi.AddArmPlu(Model.Id, item.Id);
+      DevicesEndpoints.AddArmPlu(Model.Id, item.Id);
     }
     catch (ApiException ex)
     {

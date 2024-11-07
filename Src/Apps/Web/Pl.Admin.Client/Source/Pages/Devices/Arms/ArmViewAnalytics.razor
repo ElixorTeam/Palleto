@@ -7,7 +7,7 @@
     <h2 class="text-lg shrink-0 pb-4 font-medium">Нагрузка (@DateTime.Today.ToString("dd.MM.yy"))</h2>
     <UseEndpoint
       Endpoint="@DevicesEndpoints.ArmAnalytics"
-      Arg="@(new ArmAnalyticsArg(Arm.Id, DateOnly.FromDateTime(DateTime.Today)))"
+      Arg="@(new ArmAnalyticsArg(Model.Id, DateOnly.FromDateTime(DateTime.Today)))"
       Context="armAnalyticsQuery"
     >
       @if (armAnalyticsQuery.HasData)
@@ -27,7 +27,7 @@
     <h2 class="text-lg shrink-0 pb-4 font-medium">Нагрузка (@DateTime.Today.AddDays(-1).ToString("dd.MM.yy"))</h2>
     <UseEndpoint
       Endpoint="@DevicesEndpoints.ArmAnalytics"
-      Arg="@(new ArmAnalyticsArg(Arm.Id, DateOnly.FromDateTime(DateTime.Today.AddDays(-1))))"
+      Arg="@(new ArmAnalyticsArg(Model.Id, DateOnly.FromDateTime(DateTime.Today.AddDays(-1))))"
       Context="armAnalyticsQuery"
     >
       @if (armAnalyticsQuery.HasData)
@@ -46,8 +46,6 @@
 </div>
 
 @code {
-
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
-  [Parameter] public ArmDto Arm { get; set; } = default!;
-
+  [Parameter] public ArmDto Model { get; set; } = default!;
 }

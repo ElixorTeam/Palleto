@@ -1,0 +1,15 @@
+@using Blazor.Heroicons.Outline
+@typeparam TDialog where TDialog: IDialogContentComponent
+
+<Button Variant="ButtonVariantType.Outline" OnClick="@OpenUpdateDialog">
+  <PencilIcon class="size-4 mr-2"/>
+  <span class="sr-only sm:not-sr-only">Изменить</span>
+</Button>
+
+@code {
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Parameter, EditorRequired] public object Model { get; set; } = default!;
+
+  private Task OpenUpdateDialog() => DialogService.ShowDialogAsync<TDialog>(Model, PageHelper.DialogParameters);
+}

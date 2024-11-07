@@ -1,0 +1,16 @@
+@using Blazor.Heroicons.Outline
+
+<Button Variant="ButtonVariantType.Destructive" OnClick="@OpenDeleteDialog">
+  <TrashIcon class="size-4 mr-2"/>
+  <span class="sr-only sm:not-sr-only">Удалить</span>
+</Button>
+
+@code {
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Parameter, EditorRequired] public EventCallback Action { get; set; }
+
+  private Task OpenDeleteDialog() => DialogService.ShowDialogAsync<DeleteItemDialog>(
+    EventCallback.Factory.Create(this, () => PageHelper.ApiActionWrapper(() => Action.InvokeAsync())),
+    PageHelper.DialogParameters);
+}

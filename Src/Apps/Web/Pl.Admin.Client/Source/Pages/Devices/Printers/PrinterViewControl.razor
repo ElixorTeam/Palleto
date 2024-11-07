@@ -22,7 +22,7 @@
 </div>
 
 @code {
-  [Parameter, EditorRequired] public PrinterDto Printer { get; set; } = default!;
+  [Parameter, EditorRequired] public PrinterDto Model { get; set; } = default!;
 
-  private string PrinterUrl => $"http://{Printer.Ip}";
+  private string PrinterUrl => $"http://{Model.Ip}";
 }

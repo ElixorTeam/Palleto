@@ -1,6 +1,7 @@
 @using Pl.Admin.Client.Source.Shared.Api.Labelary
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Models.Features.Print.Labels
+@using Blazor.Heroicons.Outline
 
 <div class="flex items-center min-h-72 max-w-screen-lg w-full overflow-hidden justify-center mx-auto p-4">
   <UseEndpoint Endpoint="OperationsEndpoints.LabelZplEndpoint" Arg="Model.Id" Context="labelZplQuery">
@@ -34,16 +35,26 @@
             <div class="flex justify-between items-center gap-2">
               <div class="flex gap-2 pb-1 items-center">
                 <span class="pb-1px">Размер:</span>
-                <Badge>
+                <Badge Type="BadgeType.Outline">
                   @($"{labelZplQuery.Data.Width}x{labelZplQuery.Data.Height}")
                 </Badge>
               </div>
-              <div class="flex items-center gap-3">
-                <Button OnClick="@(() => CopyToClipboard(labelZplQuery.Data.Zpl))">
-                  Скопировать zpl
+              <div class="flex items-center gap-2">
+                <Button
+                  Size="ButtonSizeType.Small"
+                  Variant="ButtonVariantType.Outline"
+                  OnClick="@(() => CopyToClipboard(labelZplQuery.Data.Zpl))"
+                >
+                  <ClipboardIcon class="size-4 mr-2" />
+                  <span>ZPL</span>
                 </Button>
-                <Button OnClick="@(() => CopyBase64ToClipboard($"data:image/png;base64,{zplQuery.Data}"))">
-                  Скопировать картинку
+                <Button
+                  Size="ButtonSizeType.Small"
+                  Variant="ButtonVariantType.Outline"
+                  OnClick="@(() => CopyBase64ToClipboard($"data:image/png;base64,{zplQuery.Data}"))"
+                >
+                  <ClipboardIcon class="size-4 mr-2" />
+                  <span>Фото</span>
                 </Button>
               </div>
             </div>
@@ -82,7 +93,6 @@
     try
     {
       await JsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", valueToCopy);
-      ToastService.ShowInfo("Zpl код сохранен в буфер обмена");
     }
     catch
     {
@@ -95,7 +105,6 @@
     try
     {
       await JsRuntime.InvokeVoidAsync("copyBase64ToClipboard", valueToCopy);
-      ToastService.ShowInfo("Изображение сохранено в буфер обмена");
     }
     catch
     {

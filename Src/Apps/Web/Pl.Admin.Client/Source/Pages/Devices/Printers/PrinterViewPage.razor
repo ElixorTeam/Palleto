@@ -11,92 +11,55 @@
   Arg="@Id"
   Context="printerQuery"
 >
-  <div class="w-full">
-    <Breadcrumbs>
-      <Breadcrumb Label="Принтеры" Link="@Urls.Printers" />
+  <Breadcrumbs>
+    <Breadcrumb Label="Принтеры" Link="@Urls.Printers" />
+    @if (printerQuery.HasData)
+    {
+      <Breadcrumb Label="@printerQuery.Data.Name" />
+    }
+  </Breadcrumbs>
+
+  <ViewHeader Title="@printerQuery.Data?.Name">
+    <ButtonsContent>
       @if (printerQuery.HasData)
       {
-        <Breadcrumb Label="@printerQuery.Data.Name" />
+        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPrinter(printerQuery.Data.Id))" />
+        <ViewButtonUpdate TDialog="PrinterUpdateDialog" Model="printerQuery.Data" />
+        <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(printerQuery.Data))" />
       }
-    </Breadcrumbs>
-    <div class="w-full border-b">
-      <div class="py-2 flex w-full justify-between items-center">
-        @if (printerQuery.HasData)
-        {
-        <h2 class="font-bold text-3xl truncate tracking-tight">@printerQuery.Data.Name</h2>
-          <div class="flex gap-2">
-            <Button Variant="ButtonVariantType.Outline" OnClick="@(() => OpenShareDialog(printerQuery.Data))">
-              <ShareIcon class="size-4 mr-2"/>
-              <span>Поделиться</span>
-            </Button>
-            <Button Variant="ButtonVariantType.Outline" OnClick="@(() => OpenUpdateDialog(printerQuery.Data))">
-              <PencilIcon class="size-4 mr-2"/>
-              <span>Изменить</span>
-            </Button>
-            <Button Variant="ButtonVariantType.Destructive" OnClick="@(() => OpenDeleteDialog(printerQuery.Data))">
-              <TrashIcon class="size-4 mr-2"/>
-              <span>Удалить</span>
-            </Button>
-          </div>
-          }
-        else
-        {
-          <Skeleton Class="h-8 w-40"/>
-        }
-      </div>
-      <div class="flex gap-6">
-        <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-          Информация
-        </ViewTabButton>
-        <ViewTabButton Value="control" @bind-CurrentTab="CurrentTab">
-          Управление
-        </ViewTabButton>
-      </div>
-    </div>
-    <div class="flex flex-col w-full pt-4">
-      <Tabs @bind-ActiveTabId="@CurrentTab">
-        @if (printerQuery.HasData)
-        {
-          <Tab Id="info">
-            <PrinterViewInfo Printer="@printerQuery.Data"/>
-          </Tab>
-          <Tab Id="control">
-            <PrinterViewControl Printer="@printerQuery.Data" />
-          </Tab>
-        }
-        else
-        {
-          <Spinner Class="inline size-32 text-muted-foreground animate-spin fill-primary mx-auto py-20" />
-        }
-      </Tabs>
-    </div>
-  </div>
+    </ButtonsContent>
+
+    <TabsContent>
+      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
+        Информация
+      </ViewTabButton>
+      <ViewTabButton Value="control" @bind-CurrentTab="CurrentTab">
+        Управление
+      </ViewTabButton>
+    </TabsContent>
+  </ViewHeader>
+
+  <Tabs @bind-ActiveTabId="@CurrentTab">
+    @if (printerQuery.HasData)
+    {
+      <Tab Id="info">
+        <PrinterViewInfo Model="@printerQuery.Data"/>
+      </Tab>
+      <Tab Id="control">
+        <PrinterViewControl Model="@printerQuery.Data" />
+      </Tab>
+    }
+  </Tabs>
 </UseEndpoint>
 
 @code {
   [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private IDialogService DialogService { get; set; } = default!;
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
   [Parameter] public Guid Id { get; set; }
 
   private string CurrentTab { get; set; } = "info";
-
-  private Task OpenUpdateDialog(PrinterDto item) =>
-    DialogService.ShowDialogAsync<PrinterUpdateDialog>(item, PageHelper.DialogParameters);
-
-  private async Task OpenDeleteDialog(PrinterDto item)
-  {
-    EventCallback action = EventCallback.Factory.Create(this, () => DeleteItem(item));
-    await DialogService.ShowDialogAsync<DeleteItemDialog>(action, PageHelper.DialogParameters);
-  }
-
-  private async Task OpenShareDialog(PrinterDto item)
-  {
-    string url = RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPrinter(item.Id));
-    await DialogService.ShowDialogAsync<ShareUrlDialog>(url, PageHelper.DialogParameters);
-  }
 
   private async Task DeleteItem(PrinterDto item)
   {

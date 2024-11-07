@@ -1,0 +1,8 @@
+<AuthorizeView Policy="@PolicyEnum.Admin">
+  <ViewField Label="@Label" Value="@Value.ToString()" Copyable />
+</AuthorizeView>
+
+@code {
+  [Parameter] public Guid Value { get; set; }
+  [Parameter] public string Label { get; set; } = "UID";
+}

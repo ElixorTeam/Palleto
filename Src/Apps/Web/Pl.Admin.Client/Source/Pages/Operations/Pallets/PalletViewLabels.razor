@@ -4,7 +4,7 @@
 
 <UseEndpoint
   Endpoint="@OperationsEndpoints.PalletLabelsEndpoint"
-  Arg="@Pallet.Id"
+  Arg="@Model.Id"
   Options="@(new() { RefetchInterval=TimeSpan.FromMinutes(5) })"
   Context="labelsQuery"
 >
@@ -44,7 +44,7 @@
   [Inject] private NavigationManager NavigationManager { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
 
-  [Parameter, EditorRequired] public PalletDto Pallet { get; set; } = default!;
+  [Parameter, EditorRequired] public PalletDto Model { get; set; } = default!;
 
   private IEnumerable<OrderedPalletLabel> GetOrderedLabels(LabelPalletDto[] labels) =>
     labels.Select((label, index) => new OrderedPalletLabel { Number = index + 1, Id = label.Id, Barcode = label.Barcode });
