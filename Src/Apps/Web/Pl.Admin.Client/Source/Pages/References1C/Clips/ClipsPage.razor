@@ -8,6 +8,10 @@
 <PageTitle>Admin - @Localizer["SectionClips"]</PageTitle>
 
 <UseParameterlessEndpoint Endpoint="@References1CEndpoints.ClipsEndpoint" Options="@(PageHelper.DefaultEndpointOptions)" Context="clipsQuery">
+  <Breadcrumbs Class="!pb-5">
+    <Breadcrumb Label="@Localizer["SectionClips"]" Link="@Urls.Clips" />
+  </Breadcrumbs>
+
   <DataGridHeader>
     <DataGridLabelWithCounter Label="@Localizer["SectionClips"]" ItemsCount="@clipsQuery.Data?.Length" IsLoading="clipsQuery.IsLoading" />
     <DataGridActionReload OnClick="@clipsQuery.RefetchAsync" IsLoading="clipsQuery.IsFetching" />
@@ -16,7 +20,7 @@
   <DataGridContainer
     TItem="PackageDto"
     Items="@(clipsQuery.HasData ? clipsQuery.Data : [])"
-    OnItemSelect="@(item => OpenUpdateDialog(item))"
+    OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToClip(item.Id)))"
   >
     <ColumnsContent>
       <DataGridColumn
@@ -47,7 +51,8 @@
         Width="20%"/>
     </ColumnsContent>
     <ContextMenuContent>
-      <DataGridActionUpdateItem TItem="PackageDto" Action="@OpenUpdateDialog" />
+      <DataGridActionOpenItem Link="@RedirectHelper.ToClip(context.Item.Id)" />
+      <DataGridActionOpenInNewTab TItem="PackageDto" Link="@RedirectHelper.ToClip(context.Item.Id)" />
     </ContextMenuContent>
   </DataGridContainer>
 </UseParameterlessEndpoint>
@@ -59,10 +64,8 @@
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
   [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
 
   #endregion
 
-  private Task OpenUpdateDialog(PackageDto item) =>
-    DialogService.ShowDialogAsync<ClipsViewDialog>(item, PageHelper.DialogParameters);
 }

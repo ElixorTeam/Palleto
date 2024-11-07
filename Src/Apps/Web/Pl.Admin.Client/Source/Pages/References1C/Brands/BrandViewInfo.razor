@@ -1,0 +1,16 @@
+@using Pl.Admin.Models.Features.References1C.Brands
+
+<ViewFieldGrid Title="Общая информация">
+  <ViewFieldGuid Value="@Model.Id" />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColName"]"
+    Value="@Model.Name"
+  />
+</ViewFieldGrid>
+
+@code {
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+
+  [Parameter, EditorRequired] public BrandDto Model { get; set; } = default!;
+}

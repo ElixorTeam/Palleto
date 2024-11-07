@@ -17,29 +17,13 @@
     <SectionAdminGuidField Value="@Model.Id" />
 
     <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColName"]"
+      Value="@Model.Name"
+    />
+
+    <SectionReadOnlyField
       Label="@WsDataLocalizer["ColNumber"]"
       Value="@Model.Number"
-    />
-
-    <SectionReadOnlyField
-      Label="@WsDataLocalizer["ColType"]"
-      Value="@GetPluTypeName(Model.IsWeight)"
-    />
-
-    <SectionReadOnlyField
-      Label="@($"{WsDataLocalizer["ColWeight"]} ({WsDataLocalizer["MeasureKg"]})")"
-      Value="@Model.Weight"
-    />
-
-    <SectionReadOnlyField
-      Label="@WsDataLocalizer["ColBrand"]"
-      Value="@Model.Brand.Name"
-      Path="@RedirectHelper.ToBrand(Model.Brand.Id)"
-    />
-
-    <SectionReadOnlyField
-      Label="@WsDataLocalizer["ColShelfLifeDays"]"
-      Value="@Model.ShelfLifeDays"
     />
 
     <SectionInputWrapper
@@ -65,7 +49,6 @@
             SearchPlaceholder="@Localizer["FormSelectSearchDefaultPlaceholder"]"
             ItemDisplayName="@(item => item!.Name)"
             Disabled="@(!IsSupport)"
-            Filterable
           />
         }
         else
@@ -75,65 +58,8 @@
       </UseEndpoint>
       <FieldValidation For="@(() => FormModel.TemplateId)" />
     </SectionInputWrapper>
-
-    <SectionReadOnlyField
-      Label="@WsDataLocalizer["ColStorageMethod"]"
-      Value="@Model.StorageMethod"
-    />
-
-    <FormDivider>@WsDataLocalizer["ColDescription"]</FormDivider>
-
-    <SectionReadOnlyField
-      Label="@WsDataLocalizer["ColName"]"
-      Value="@Model.Name"
-    />
-
-    <SectionReadOnlyField
-      Label="@WsDataLocalizer["ColFullName"]"
-      Value="@Model.FullName"
-    />
-
-    <SectionReadOnlyField
-      Label="@WsDataLocalizer["ColDescription"]"
-      Value="@Model.Description"
-    />
-
-    <FormDivider>@Localizer["FieldPackaging"]</FormDivider>
-
-    @if (Model.Bundle != null)
-    {
-      <SectionReadOnlyField
-        Label="@WsDataLocalizer["ColBundle"]"
-        Value="@Model.Bundle.Name"
-        Path="@RedirectHelper.ToBundle(Model.Bundle.Id)"
-      />
-    }
-
-    @if (Model.Clip != null)
-    {
-      <SectionReadOnlyField
-        Label="@WsDataLocalizer["ColClip"]"
-        Value="@Model.Clip.Name"
-        Path="@RedirectHelper.ToClip(Model.Clip.Id)"
-      />
-    }
-
-    <FormDivider>@WsDataLocalizer["ColBarcode"]</FormDivider>
-
-    <SectionReadOnlyField
-      Label="Ean13"
-      Value="@Model.Ean13"
-    />
-
-    <SectionReadOnlyField
-      Label="Gtin"
-      Value="@Model.Gtin"
-    />
-
   </FieldsContent>
-
   <ActionsContent>
-    <SectionFormActionShare Path="@($"{Urls.Plus}?id={Model.Id}")" />
     @if (IsSupport)
     {
       <SectionFormActionReset OnClick="@ResetAction" />
@@ -171,7 +97,4 @@
     PluDto dto = await WebApi.UpdatePlu(Model.Id, item);
     References1CEndpoints.UpdatePlu(dto);
   }
-
-  private string GetPluTypeName(bool isWeight) =>
-    isWeight ? WsDataLocalizer["ColPluWeight"] : WsDataLocalizer["ColPluPiece"];
 }

@@ -5,18 +5,18 @@
 
 <UseEndpoint
   Endpoint="@References1CEndpoints.CharacteristicsEndpoint"
-  Arg="Plu.Id"
+  Arg="Model.Id"
   Options="@(PageHelper.DefaultEndpointOptions)"
   Context="characteristicsQuery"
 >
-  <FormDataGridHeader>
+  <DataGridHeader>
     <DataGridLabelWithCounter
       Label="@Localizer["SectionPluCharacteristics"]"
       ItemsCount="@characteristicsQuery.Data?.Length"
       IsLoading="characteristicsQuery.IsLoading"
     />
     <DataGridActionReload OnClick="@characteristicsQuery.RefetchAsync" IsLoading="characteristicsQuery.IsFetching"/>
-  </FormDataGridHeader>
+  </DataGridHeader>
 
   <DataGridContainer
     TItem="CharacteristicDto"
@@ -37,7 +37,7 @@
         Field="@nameof(CharacteristicDto.Count)"
         Width="10%"
       />
-      @if (!Plu.IsWeight)
+      @if (!Model.IsWeight)
       {
         <DataGridColumn
           Caption="@($"{WsDataLocalizer["ColWeight"]} ({WsDataLocalizer["MeasureKg"]})")"
@@ -70,7 +70,7 @@
         Sortable="false"
       />
       <DataGridColumn
-        Caption="@((Plu.IsWeight ? WsDataLocalizer["ColTareWeight"] : WsDataLocalizer["ColWeightGross"]) + $" ({WsDataLocalizer["MeasureKg"]})")"
+        Caption="@((Model.IsWeight ? WsDataLocalizer["ColTareWeight"] : WsDataLocalizer["ColWeightGross"]) + $" ({WsDataLocalizer["MeasureKg"]})")"
         Field="@nameof(CharacteristicDto.TotalWeight)"
         Width="15%"
       />
@@ -88,5 +88,5 @@
 
   # endregion
 
-  [Parameter, EditorRequired] public PluDto Plu { get; set; } = default!;
+  [Parameter, EditorRequired] public PluDto Model { get; set; } = default!;
 }

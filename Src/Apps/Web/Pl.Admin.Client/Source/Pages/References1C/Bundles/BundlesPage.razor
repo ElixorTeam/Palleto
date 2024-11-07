@@ -8,6 +8,10 @@
 <PageTitle>Admin - @Localizer["SectionBundles"]</PageTitle>
 
 <UseParameterlessEndpoint Endpoint="@References1CEndpoints.BundlesEndpoint" Options="@(PageHelper.DefaultEndpointOptions)" Context="bundlesQuery">
+  <Breadcrumbs Class="!pb-5">
+    <Breadcrumb Label="@Localizer["SectionBundles"]" Link="@Urls.Bundles" />
+  </Breadcrumbs>
+
   <DataGridHeader>
     <DataGridLabelWithCounter Label="@Localizer["SectionBundles"]" ItemsCount="@bundlesQuery.Data?.Length" IsLoading="bundlesQuery.IsLoading"/>
     <DataGridActionReload OnClick="@bundlesQuery.RefetchAsync" IsLoading="bundlesQuery.IsFetching" />
@@ -16,7 +20,7 @@
   <DataGridContainer
     TItem="PackageDto"
     Items="@(bundlesQuery.HasData ? bundlesQuery.Data : [])"
-    OnItemSelect="@(item => OpenUpdateDialog(item))"
+    OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToBundle(item.Id)))"
   >
     <ColumnsContent>
       <DataGridColumn
@@ -52,7 +56,8 @@
       />
     </ColumnsContent>
     <ContextMenuContent>
-      <DataGridActionUpdateItem TItem="PackageDto" Action="@OpenUpdateDialog" />
+      <DataGridActionOpenItem Link="@RedirectHelper.ToBundle(context.Item.Id)" />
+      <DataGridActionOpenInNewTab TItem="PackageDto" Link="@RedirectHelper.ToBundle(context.Item.Id)" />
     </ContextMenuContent>
   </DataGridContainer>
 </UseParameterlessEndpoint>
@@ -64,10 +69,7 @@
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
   [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
 
   #endregion
-
-  private Task OpenUpdateDialog(PackageDto item) =>
-    DialogService.ShowDialogAsync<BundlesViewDialog>(item, PageHelper.DialogParameters);
 }

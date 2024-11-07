@@ -1,0 +1,59 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+
+@attribute [Route(Urls.Plus + "/{Id:guid}")]
+
+<UseEndpoint
+  Endpoint="@References1CEndpoints.PluEndpoint"
+  Arg="@Id"
+  Context="query"
+>
+  <Breadcrumbs>
+    <Breadcrumb Label="@WsDataLocalizer["ColPlu"]" Link="@Urls.Plus" />
+    @if (query.HasData)
+    {
+      <Breadcrumb Label="@query.Data.Name" />
+    }
+  </Breadcrumbs>
+
+  <ViewHeader Title="@query.Data?.Name">
+    <ButtonsContent>
+      @if (query.HasData)
+      {
+        <ViewButtonUpdate TDialog="PluUpdateDialog" Model="query.Data" />
+        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPlu(query.Data.Id))" />
+      }
+    </ButtonsContent>
+
+    <TabsContent>
+      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
+        Информация
+      </ViewTabButton>
+      <ViewTabButton Value="characteristics" @bind-CurrentTab="CurrentTab">
+        Характеристики
+      </ViewTabButton>
+    </TabsContent>
+  </ViewHeader>
+
+  <Tabs @bind-ActiveTabId="@CurrentTab">
+    @if (query.HasData)
+    {
+      <Tab Id="info">
+        <PluViewInfo Model="@query.Data"/>
+      </Tab>
+      <Tab Id="characteristics">
+        <PluViewCharacteristics Model="@query.Data" />
+      </Tab>
+    }
+  </Tabs>
+</UseEndpoint>
+
+@code {
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+
+  [Parameter] public Guid Id { get; set; }
+
+  private string CurrentTab { get; set; } = "info";
+}

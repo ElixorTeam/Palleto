@@ -6,7 +6,13 @@
 @attribute [Authorize(Policy = PolicyEnum.Admin)]
 @rendermode InteractiveServer
 
+<PageTitle>Admin - Localizer["SectionTables"]</PageTitle>
+
 <UseParameterlessEndpoint Endpoint="@DiagnosticEndpoints.TablesEndpoint" Context="tablesQuery">
+  <Breadcrumbs Class="!pb-5">
+    <Breadcrumb Label="@Localizer["SectionTables"]" Link="@Urls.Tables" />
+  </Breadcrumbs>
+
   <DataGridHeader>
     <DataGridLabelWithCounter Label="@Localizer["SectionTables"]" ItemsCount="@tablesQuery.Data?.Length" IsLoading="tablesQuery.IsLoading"/>
     <DataGridActionReload OnClick="@tablesQuery.RefetchAsync" IsLoading="tablesQuery.IsFetching"/>

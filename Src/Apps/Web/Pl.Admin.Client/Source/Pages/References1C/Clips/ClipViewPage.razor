@@ -1,0 +1,53 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+
+@attribute [Route(Urls.Clips + "/{Id:guid}")]
+
+<UseEndpoint
+  Endpoint="@References1CEndpoints.ClipEndpoint"
+  Arg="@Id"
+  Context="query"
+>
+  <Breadcrumbs>
+    <Breadcrumb Label=@Localizer["SectionClips"] Link="@Urls.Clips" />
+    @if (query.HasData)
+    {
+      <Breadcrumb Label="@query.Data.Name" />
+    }
+  </Breadcrumbs>
+
+  <ViewHeader Title="@query.Data?.Name">
+
+    <ButtonsContent>
+      @if (query.HasData)
+      {
+        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToClip(query.Data.Id))" />
+      }
+    </ButtonsContent>
+
+    <TabsContent>
+      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
+        Информация
+      </ViewTabButton>
+    </TabsContent>
+  </ViewHeader>
+
+  <Tabs @bind-ActiveTabId="@CurrentTab">
+    @if (query.HasData)
+    {
+      <Tab Id="info">
+        <ClipViewInfo Model="@query.Data"/>
+      </Tab>
+    }
+  </Tabs>
+</UseEndpoint>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
+
+  [Parameter] public Guid Id { get; set; }
+
+  private string CurrentTab { get; set; } = "info";
+}

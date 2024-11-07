@@ -7,9 +7,13 @@
 @attribute [Route(Urls.Plus)]
 @rendermode InteractiveServer
 
-<PageTitle>Pl.Admin.Client - @Localizer["SectionPlu"]</PageTitle>
+<PageTitle>Admin - @Localizer["SectionPlu"]</PageTitle>
 
 <UseParameterlessEndpoint Endpoint="@References1CEndpoints.PlusEndpoint" Options="@(PageHelper.DefaultEndpointOptions)" Context="plusQuery">
+  <Breadcrumbs Class="!pb-5">
+    <Breadcrumb Label="@Localizer["SectionPlu"]" Link="@Urls.Plus" />
+  </Breadcrumbs>
+
   <DataGridHeader>
     <DataGridLabelWithCounter Label="@Localizer["SectionPlu"]" ItemsCount="@plusQuery.Data?.Length" IsLoading="plusQuery.IsLoading"/>
     <DataGridActionReload OnClick="@plusQuery.RefetchAsync" IsLoading="plusQuery.IsFetching"/>
@@ -18,7 +22,7 @@
   <DataGridContainer
     TItem="PluDto"
     Items="@(plusQuery.HasData ? plusQuery.Data : [])"
-    OnItemSelect="@(item => OpenUpdateDialog(item))"
+    OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToPlu(item.Id)))"
     IsFilterable
   >
     <ColumnsContent>
@@ -128,6 +132,8 @@
     </ColumnsContent>
     <ContextMenuContent>
       <DataGridActionUpdateItem TItem="PluDto" Action="@OpenUpdateDialog" />
+      <DataGridActionOpenItem Link="@RedirectHelper.ToPlu(context.Item.Id)" />
+      <DataGridActionOpenInNewTab TItem="PluDto" Link="@RedirectHelper.ToPlu(context.Item.Id)" />
     </ContextMenuContent>
   </DataGridContainer>
 </UseParameterlessEndpoint>
@@ -139,6 +145,7 @@
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
   [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private IDialogService DialogService { get; set; } = default!;
 
   # endregion
@@ -148,5 +155,5 @@
   private PluValidator PluValidator { get; } = new();
 
   private Task OpenUpdateDialog(PluDto item) =>
-    DialogService.ShowDialogAsync<PlusUpdateDialog>(item, PageHelper.DialogParameters);
+    DialogService.ShowDialogAsync<PluUpdateDialog>(item, PageHelper.DialogParameters);
 }

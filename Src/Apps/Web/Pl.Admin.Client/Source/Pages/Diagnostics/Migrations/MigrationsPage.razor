@@ -5,7 +5,13 @@
 @attribute [Authorize(Policy = PolicyEnum.Admin)]
 @rendermode InteractiveServer
 
+<PageTitle>Admin - @Localizer["SectionMigrations"]</PageTitle>
+
 <UseParameterlessEndpoint Endpoint="@DiagnosticEndpoints.MigrationsEndpoint" Context="migrationsQuery">
+  <Breadcrumbs Class="!pb-5">
+    <Breadcrumb Label="@Localizer["SectionMigrations"]" Link="@Urls.Migrations" />
+  </Breadcrumbs>
+
   <DataGridHeader>
     <DataGridLabelWithCounter Label="@Localizer["SectionMigrations"]" ItemsCount="@migrationsQuery.Data?.Length" IsLoading="migrationsQuery.IsLoading"/>
     <DataGridActionReload OnClick="@migrationsQuery.RefetchAsync" IsLoading="migrationsQuery.IsFetching"/>

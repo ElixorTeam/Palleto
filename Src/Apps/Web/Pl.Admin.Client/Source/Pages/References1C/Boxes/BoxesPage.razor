@@ -12,6 +12,10 @@
   Options="@(PageHelper.DefaultEndpointOptions)"
   Context="boxesQuery"
 >
+  <Breadcrumbs Class="!pb-5">
+    <Breadcrumb Label=@WsDataLocalizer["ColBoxes"] Link="@Urls.Boxes" />
+  </Breadcrumbs>
+
   <DataGridHeader>
     <DataGridLabelWithCounter Label="@Localizer["SectionBoxes"]" ItemsCount="@boxesQuery.Data?.Length" IsLoading="boxesQuery.IsLoading" />
     <DataGridActionReload OnClick="@boxesQuery.RefetchAsync" IsLoading="boxesQuery.IsFetching" />
@@ -20,7 +24,7 @@
   <DataGridContainer
     TItem="PackageDto"
     Items="@(boxesQuery.HasData ? boxesQuery.Data : [])"
-    OnItemSelect="@(item => OpenUpdateDialog(item))"
+    OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToBox(item.Id)))"
   >
     <ColumnsContent>
       <DataGridColumn
@@ -57,7 +61,8 @@
       />
     </ColumnsContent>
     <ContextMenuContent>
-      <DataGridActionUpdateItem TItem="PackageDto" Action="@OpenUpdateDialog" />
+      <DataGridActionOpenItem Link="@RedirectHelper.ToBox(context.Item.Id)" />
+      <DataGridActionOpenInNewTab TItem="PackageDto" Link="@RedirectHelper.ToBox(context.Item.Id)" />
     </ContextMenuContent>
     </DataGridContainer>
 </UseParameterlessEndpoint>
@@ -69,10 +74,7 @@
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
   [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
 
   # endregion
-
-  private Task OpenUpdateDialog(PackageDto item) =>
-    DialogService.ShowDialogAsync<BoxesViewDialog>(item, PageHelper.DialogParameters);
 }

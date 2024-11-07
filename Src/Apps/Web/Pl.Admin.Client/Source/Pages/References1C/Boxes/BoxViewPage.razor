@@ -1,0 +1,53 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+
+@attribute [Route(Urls.Boxes + "/{Id:guid}")]
+
+<UseEndpoint
+  Endpoint="@References1CEndpoints.BoxEndpoint"
+  Arg="@Id"
+  Context="query"
+>
+  <Breadcrumbs>
+    <Breadcrumb Label=@WsDataLocalizer["ColBoxes"] Link="@Urls.Boxes" />
+    @if (query.HasData)
+    {
+      <Breadcrumb Label="@query.Data.Name" />
+    }
+  </Breadcrumbs>
+
+  <ViewHeader Title="@query.Data?.Name">
+
+    <ButtonsContent>
+      @if (query.HasData)
+      {
+        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToBox(query.Data.Id))" />
+      }
+    </ButtonsContent>
+
+    <TabsContent>
+      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
+        Информация
+      </ViewTabButton>
+    </TabsContent>
+  </ViewHeader>
+
+  <Tabs @bind-ActiveTabId="@CurrentTab">
+    @if (query.HasData)
+    {
+      <Tab Id="info">
+        <BoxViewInfo Model="@query.Data"/>
+      </Tab>
+    }
+  </Tabs>
+</UseEndpoint>
+
+@code {
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
+
+  [Parameter] public Guid Id { get; set; }
+
+  private string CurrentTab { get; set; } = "info";
+}
