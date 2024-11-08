@@ -1,0 +1,22 @@
+@using Pl.Admin.Models.Features.References.ProductionSites.Queries
+
+<ViewFieldGrid Title="Общая информация">
+  <ViewFieldGuid Value="@Model.Id" />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColName"]"
+    Value="@Model.Name"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColAddress"]"
+    Value="@Model.Address"
+  />
+</ViewFieldGrid>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Parameter, EditorRequired] public ProductionSiteDto Model { get; set; } = default!;
+}

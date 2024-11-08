@@ -1,0 +1,65 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models.Features.References.ProductionSites.Queries
+@using Pl.Admin.Models.Features.References.Warehouses.Queries
+@using Pl.Admin.Models
+
+@attribute [Route(Urls.Warehouses + "/{Id:guid}")]
+
+<UseEndpoint
+  Endpoint="@ReferencesEndpoints.WarehouseEndpoint"
+  Arg="@Id"
+  Context="query"
+>
+  <Breadcrumbs>
+    <Breadcrumb Label="@Localizer["SectionWarehouses"]" Link="@Urls.Warehouses" />
+    @if (query.HasData)
+    {
+      <Breadcrumb Label="@query.Data.Name" />
+    }
+  </Breadcrumbs>
+
+  <ViewHeader Title="@query.Data?.Name">
+    <ButtonsContent>
+      @if (query.HasData)
+      {
+        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToWarehouse(query.Data.Id))" />
+        <ViewButtonUpdate TDialog="WarehouseUpdateDialog" Model="query.Data" />
+        <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
+      }
+    </ButtonsContent>
+
+    <TabsContent>
+      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
+        Информация
+      </ViewTabButton>
+    </TabsContent>
+  </ViewHeader>
+
+  <Tabs @bind-ActiveTabId="@CurrentTab">
+    @if (query.HasData)
+    {
+      <Tab Id="info">
+        <WarehouseViewInfo Model="@query.Data"/>
+      </Tab>
+    }
+  </Tabs>
+</UseEndpoint>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Parameter] public Guid Id { get; set; }
+
+  private string CurrentTab { get; set; } = "info";
+
+  private async Task DeleteItem(WarehouseDto item)
+  {
+    await WebApi.DeleteWarehouse(item.Id);
+    ReferencesEndpoints.DeleteWarehouse(item.ProductionSite.Id, item.Id);
+    await PageHelper.OpenLink(Urls.ProductionSites);
+  }
+}

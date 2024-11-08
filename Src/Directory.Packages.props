@@ -18,12 +18,12 @@
     <PackageVersion Include="vNext.BlazorComponents.FluentValidation" Version="1.1.3" />
     <!--MAUI-->
     <PackageVersion Include="CommunityToolkit.Maui" Version="9.1.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="8.0.92" />
-    <PackageVersion Include="Microsoft.Maui.Controls" Version="8.0.92" />
-    <PackageVersion Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.92" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="8.0.93" />
+    <PackageVersion Include="Microsoft.Maui.Controls" Version="8.0.93" />
+    <PackageVersion Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.93" />
     <!--Refit-->
-    <PackageVersion Include="Refit" Version="7.2.1" />
-    <PackageVersion Include="Refit.HttpClientFactory" Version="7.2.1" />
+    <PackageVersion Include="Refit" Version="8.0.0" />
+    <PackageVersion Include="Refit.HttpClientFactory" Version="8.0.0" />
     <!--Other-->
     <PackageVersion Include="Svg" Version="3.4.7" />
     <PackageVersion Include="Scrutor" Version="5.0.1" />

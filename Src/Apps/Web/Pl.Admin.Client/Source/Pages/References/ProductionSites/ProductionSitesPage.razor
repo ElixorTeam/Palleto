@@ -14,6 +14,10 @@
   Options="@(PageHelper.DefaultEndpointOptions)"
   Context="sitesQuery"
 >
+  <Breadcrumbs Class="!pb-5">
+    <Breadcrumb Label="@Localizer["SectionProductionSites"]" Link="@Urls.ProductionSites" />
+  </Breadcrumbs>
+
   <DataGridHeader>
     <DataGridLabelWithCounter Label="@Localizer["SectionProductionSites"]" ItemsCount="@sitesQuery.Data?.Length" IsLoading="sitesQuery.IsLoading"/>
     <DataGridActionReload OnClick="@sitesQuery.RefetchAsync" IsLoading="sitesQuery.IsFetching" />
@@ -25,8 +29,8 @@
   <DataGridContainer
     TItem="ProductionSiteDto"
     Items="@(sitesQuery.HasData ? sitesQuery.Data : [])"
-    OnItemSelect="@(item => OpenUpdateDialog(item))"
-  >
+    OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToProductionSite(item.Id)))"
+>
     <ColumnsContent>
       <DataGridColumn
         Caption="@WsDataLocalizer["ColName"]"
@@ -42,6 +46,8 @@
     </ColumnsContent>
     <ContextMenuContent>
       <DataGridActionUpdateItem TItem="ProductionSiteDto" Action="@OpenUpdateDialog" />
+      <DataGridActionOpenItem Link="@(RedirectHelper.ToProductionSite(context.Item.Id))" />
+      <DataGridActionOpenInNewTab TItem="ProductionSiteDto" Link="@(RedirectHelper.ToProductionSite(context.Item.Id))" />
       <AuthorizeView Policy="@PolicyEnum.Admin" Context="authContext">
         <DataGridActionDeleteItem TItem="ProductionSiteDto" Action="@DeleteItem" />
       </AuthorizeView>
@@ -57,15 +63,16 @@
   [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
   [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
 
   # endregion
 
   private Task OpenCreateDialog() =>
-    DialogService.ShowDialogAsync<ProductionSitesCreateDialog>(PageHelper.DialogParameters);
+    DialogService.ShowDialogAsync<ProductionSiteCreateDialog>(PageHelper.DialogParameters);
 
   private Task OpenUpdateDialog(ProductionSiteDto item) =>
-    DialogService.ShowDialogAsync<ProductionSitesUpdateDialog>(item, PageHelper.DialogParameters);
+    DialogService.ShowDialogAsync<ProductionSiteUpdateDialog>(item, PageHelper.DialogParameters);
 
   private async Task DeleteItem(ProductionSiteDto item)
   {

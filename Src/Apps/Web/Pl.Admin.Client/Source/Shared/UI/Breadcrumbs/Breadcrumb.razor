@@ -1,7 +1,7 @@
 @using Blazor.Heroicons.Outline
 
 <ChevronRightIcon class="size-3" />
-<a href="@Link" class="hover:text-foreground">
+<a href="@Link" @onclick:preventDefault="@(Link == "#")" class="hover:text-foreground">
   @Label
 </a>
 

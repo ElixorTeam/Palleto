@@ -18,6 +18,10 @@
     Options="@(PageHelper.DefaultEndpointOptions)"
     Context="warehousesQuery"
   >
+    <Breadcrumbs Class="!pb-5">
+      <Breadcrumb Label="@Localizer["SectionWarehouses"]" Link="@Urls.Warehouses" />
+    </Breadcrumbs>
+
     <DataGridHeader>
       <DataGridLabelWithCounter Label="@Localizer["SectionWarehouses"]" ItemsCount="@warehousesQuery.Data?.Length" IsLoading="warehousesQuery.IsLoading"/>
       <DataGridActionReload OnClick="@warehousesQuery.RefetchAsync" IsLoading="warehousesQuery.IsFetching" />
@@ -29,7 +33,7 @@
     <DataGridContainer
       TItem="WarehouseDto"
       Items="@(warehousesQuery.HasData ? warehousesQuery.Data : [])"
-      OnItemSelect="@(item => OpenUpdateDialog(item))"
+      OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToWarehouse(item.Id)))"
     >
       <ColumnsContent>
         <DataGridColumn
@@ -40,6 +44,8 @@
       </ColumnsContent>
       <ContextMenuContent>
         <DataGridActionUpdateItem TItem="WarehouseDto" Action="@OpenUpdateDialog" />
+        <DataGridActionOpenItem Link="@(RedirectHelper.ToWarehouse(context.Item.Id))" />
+        <DataGridActionOpenInNewTab TItem="WarehouseDto" Link="@(RedirectHelper.ToWarehouse(context.Item.Id))" />
         <AuthorizeView Policy="@PolicyEnum.Admin" Context="authContext">
           <DataGridActionDeleteItem TItem="WarehouseDto" Action="@DeleteItem" />
         </AuthorizeView>
@@ -57,15 +63,16 @@
   [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private IDialogService DialogService { get; set; } = default!;
   [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
 
   #endregion
 
   private Task OpenCreateDialog() =>
-    DialogService.ShowDialogAsync<WarehousesCreateDialog>(PageHelper.DialogParameters);
+    DialogService.ShowDialogAsync<WarehouseCreateDialog>(PageHelper.DialogParameters);
 
   private Task OpenUpdateDialog(WarehouseDto item) =>
-    DialogService.ShowDialogAsync<WarehousesUpdateDialog>(item, PageHelper.DialogParameters);
+    DialogService.ShowDialogAsync<WarehouseUpdateDialog>(item, PageHelper.DialogParameters);
 
   private async Task DeleteItem(WarehouseDto item)
   {

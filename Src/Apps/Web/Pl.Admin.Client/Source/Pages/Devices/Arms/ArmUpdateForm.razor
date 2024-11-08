@@ -146,12 +146,7 @@
       </SectionInputWrapper>
     </FieldsContent>
     <ActionsContent>
-      <SectionFormActionShare Path="@RedirectHelper.ToArm(Model.Id)" />
-      @if (IsSeniorSupport)
-      {
-        <SectionFormActionReset OnClick="@ResetAction" />
-        <SectionFormActionDelete OnClick="@DeleteItem" />
-      }
+      <SectionFormActionReset OnClick="@ResetAction" />
     </ActionsContent>
   </SectionForm>
 </UseParameterlessEndpoint>
@@ -187,11 +182,5 @@
   {
     ArmDto dto = await WebApi.UpdateArm(Model.Id, item);
     DevicesEndpoints.UpdateArm(Model.ProductionSite.Id, dto);
-  }
-
-  protected override async Task DeleteItemAction()
-  {
-    await WebApi.DeleteArm(Model.Id);
-    DevicesEndpoints.DeleteArm(Model.ProductionSite.Id, Model.Id);
   }
 }

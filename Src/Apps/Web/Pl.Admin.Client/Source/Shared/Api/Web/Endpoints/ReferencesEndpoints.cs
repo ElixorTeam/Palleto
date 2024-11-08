@@ -14,10 +14,16 @@ public class ReferencesEndpoints(IWebApi webApi)
         webApi.GetProductionSites,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
+    public Endpoint<Guid,ProductionSiteDto> ProductionSiteEndpoint { get; } = new(
+        webApi.GetProductionSiteByUid,
+        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+
     public void AddProductionSite(ProductionSiteDto productionSite)
     {
         ProductionSitesEndpoint.UpdateQueryData(new(), query =>
             query.Data == null ? query.Data! : query.Data.Prepend(productionSite).ToArray());
+        ProductionSiteEndpoint.UpdateQueryData(productionSite.Id, query =>
+            query.Data == null ? query.Data! : productionSite);
         AddProxyProductionSite(new(productionSite.Id, productionSite.Name));
     }
 
@@ -25,6 +31,8 @@ public class ReferencesEndpoints(IWebApi webApi)
     {
         ProductionSitesEndpoint.UpdateQueryData(new(), query =>
             query.Data == null ? query.Data! : query.Data.ReplaceItemBy(productionSite, p => p.Id == productionSite.Id).ToArray());
+        ProductionSiteEndpoint.UpdateQueryData(productionSite.Id, query =>
+            query.Data == null ? query.Data! : productionSite);
         UpdateProxyProductionSite(new(productionSite.Id, productionSite.Name));
     }
 
@@ -32,6 +40,7 @@ public class ReferencesEndpoints(IWebApi webApi)
     {
         ProductionSitesEndpoint.UpdateQueryData(new(), query =>
             query.Data == null ? query.Data! : query.Data.Where(x => x.Id != productionSiteId).ToArray());
+        ProductionSiteEndpoint.Invalidate(productionSiteId);
         DeleteProxyProductionSite(productionSiteId);
     }
 
@@ -47,15 +56,15 @@ public class ReferencesEndpoints(IWebApi webApi)
         webApi.GetProxyProductionSites,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
-    public void AddProxyProductionSite(ProxyDto productionSite) =>
+    private void AddProxyProductionSite(ProxyDto productionSite) =>
         ProxyProductionSiteEndpoint.UpdateQueryData(new(), query =>
             query.Data == null ? query.Data! : query.Data.Prepend(productionSite).ToArray());
 
-    public void UpdateProxyProductionSite(ProxyDto productionSite) =>
+    private void UpdateProxyProductionSite(ProxyDto productionSite) =>
         ProxyProductionSiteEndpoint.UpdateQueryData(new(), query =>
             query.Data == null ? query.Data! : query.Data.ReplaceItemBy(productionSite, p => p.Id == productionSite.Id).ToArray());
 
-    public void DeleteProxyProductionSite(Guid productionSiteId) =>
+    private void DeleteProxyProductionSite(Guid productionSiteId) =>
         ProxyProductionSiteEndpoint.UpdateQueryData(new(), query =>
             query.Data == null ? query.Data! : query.Data.Where(x => x.Id != productionSiteId).ToArray());
 
@@ -67,10 +76,16 @@ public class ReferencesEndpoints(IWebApi webApi)
         webApi.GetWarehousesByProductionSite,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
+    public Endpoint<Guid, WarehouseDto> WarehouseEndpoint { get; } = new(
+        webApi.GetWarehouseByUid,
+        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+
     public void AddWarehouse(Guid productionSiteId, WarehouseDto warehouse)
     {
         WarehousesEndpoint.UpdateQueryData(productionSiteId, query =>
             query.Data == null ? query.Data! : query.Data.Prepend(warehouse).ToArray());
+        WarehouseEndpoint.UpdateQueryData(warehouse.Id, query =>
+            query.Data == null ? query.Data! : warehouse);
         AddProxyWarehouse(productionSiteId, new(warehouse.Id, warehouse.Name));
     }
 
@@ -78,6 +93,8 @@ public class ReferencesEndpoints(IWebApi webApi)
     {
         WarehousesEndpoint.UpdateQueryData(productionSiteId, query =>
             query.Data == null ? query.Data! : query.Data.ReplaceItemBy(warehouse, p => p.Id == warehouse.Id).ToArray());
+        WarehouseEndpoint.UpdateQueryData(warehouse.Id, query =>
+            query.Data == null ? query.Data! : warehouse);
         UpdateProxyWarehouse(productionSiteId, new(warehouse.Id, warehouse.Name));
     }
 
@@ -85,6 +102,7 @@ public class ReferencesEndpoints(IWebApi webApi)
     {
         WarehousesEndpoint.UpdateQueryData(productionSiteId, query =>
             query.Data == null ? query.Data! : query.Data.Where(x => x.Id != warehouseId).ToArray());
+        WarehouseEndpoint.Invalidate(warehouseId);
         DeleteProxyWarehouse(productionSiteId, warehouseId);
     }
 
@@ -96,15 +114,15 @@ public class ReferencesEndpoints(IWebApi webApi)
         webApi.GetProxyWarehousesByProductionSite,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
-    public void AddProxyWarehouse(Guid productionSiteId, ProxyDto warehouse) =>
+    private void AddProxyWarehouse(Guid productionSiteId, ProxyDto warehouse) =>
         ProxyWarehousesEndpoint.UpdateQueryData(productionSiteId, query =>
             query.Data == null ? query.Data! : query.Data.Prepend(warehouse).ToArray());
 
-    public void UpdateProxyWarehouse(Guid productionSiteId, ProxyDto warehouse) =>
+    private void UpdateProxyWarehouse(Guid productionSiteId, ProxyDto warehouse) =>
         ProxyWarehousesEndpoint.UpdateQueryData(productionSiteId, query =>
             query.Data == null ? query.Data! : query.Data.ReplaceItemBy(warehouse, p => p.Id == warehouse.Id).ToArray());
 
-    public void DeleteProxyWarehouse(Guid productionSiteId, Guid warehouseId) =>
+    private void DeleteProxyWarehouse(Guid productionSiteId, Guid warehouseId) =>
         ProxyWarehousesEndpoint.UpdateQueryData(productionSiteId, query =>
             query.Data == null ? query.Data! : query.Data.Where(x => x.Id != warehouseId).ToArray());
 

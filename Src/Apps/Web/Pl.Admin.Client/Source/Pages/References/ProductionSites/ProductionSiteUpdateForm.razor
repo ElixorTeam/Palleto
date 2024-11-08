@@ -32,12 +32,7 @@
     />
   </FieldsContent>
   <ActionsContent>
-    <SectionFormActionShare Path="@($"{Urls.ProductionSites}?id={Model.Id}")" />
-    @if (IsAdmin)
-    {
-      <SectionFormActionReset OnClick="@ResetAction" />
-      <SectionFormActionDelete OnClick="@DeleteItem" />
-    }
+    <SectionFormActionReset OnClick="@ResetAction" />
   </ActionsContent>
 </SectionForm>
 
@@ -66,11 +61,5 @@
   {
     ProductionSiteDto dto = await WebApi.UpdateProductionSite(Model.Id, item);
     ReferencesEndpoints.UpdateProductionSite(dto);
-  }
-
-  protected override async Task DeleteItemAction()
-  {
-    await WebApi.DeleteProductionSite(Model.Id);
-    ReferencesEndpoints.DeleteProductionSite(Model.Id);
   }
 }

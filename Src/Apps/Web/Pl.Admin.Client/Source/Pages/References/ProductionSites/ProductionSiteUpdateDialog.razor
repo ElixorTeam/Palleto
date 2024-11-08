@@ -3,8 +3,8 @@
 @implements IDialogContentComponent<ProductionSiteDto>
 
 <SectionDialog>
-  <Tab Id="@typeof(ProductionSitesUpdateForm).ToString()" Title="@Localizer["SectionProductionSites"]">
-    <ProductionSitesUpdateForm Model="Content" FormModel="@ProductionSiteMapper.DtoToUpdateDto(Content)" />
+  <Tab Id="@typeof(ProductionSiteUpdateForm).ToString()" Title="@Localizer["SectionProductionSites"]">
+    <ProductionSiteUpdateForm Model="Content" FormModel="@ProductionSiteMapper.DtoToUpdateDto(Content)" />
   </Tab>
 </SectionDialog>
 

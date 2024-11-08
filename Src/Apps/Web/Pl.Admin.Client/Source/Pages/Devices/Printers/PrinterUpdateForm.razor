@@ -1,9 +1,9 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
-@using Pl.Admin.Client.Source.Shared.Constants
 @using TscZebra.Plugin.Abstractions.Enums
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Printers.Commands
 @using Pl.Admin.Models.Features.Devices.Printers.Queries
+
 @inherits SectionFormBase<PrinterUpdateDto>
 
 <UseParameterlessEndpoint
@@ -53,12 +53,7 @@
       />
     </FieldsContent>
     <ActionsContent>
-      <SectionFormActionShare Path="@($"{Urls.Printers}?id={Model.Id}")" />
-      @if (!isOnlyView)
-      {
-        <SectionFormActionReset OnClick="@ResetAction" />
-        <SectionFormActionDelete OnClick="@DeleteItem" />
-      }
+      <SectionFormActionReset OnClick="@ResetAction" />
     </ActionsContent>
   </SectionForm>
 </UseParameterlessEndpoint>
@@ -93,11 +88,5 @@
   {
     PrinterDto dto = await WebApi.UpdatePrinter(Model.Id, item);
     DevicesEndpoints.UpdatePrinter(Model.ProductionSite.Id, dto);
-  }
-
-  protected override async Task DeleteItemAction()
-  {
-    await WebApi.DeletePrinter(Model.Id);
-    DevicesEndpoints.DeletePrinter(Model.ProductionSite.Id, Model.Id);
   }
 }

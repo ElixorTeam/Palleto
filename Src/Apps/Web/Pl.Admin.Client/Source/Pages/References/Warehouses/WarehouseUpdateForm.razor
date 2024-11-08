@@ -42,12 +42,7 @@
     </UseParameterlessEndpoint>
   </FieldsContent>
   <ActionsContent>
-    <SectionFormActionShare Path="@($"{Urls.Warehouses}?id={Model.Id}")" />
-    @if (IsAdmin)
-    {
-      <SectionFormActionReset OnClick="@ResetAction" />
-      <SectionFormActionDelete OnClick="@DeleteItem" />
-    }
+    <SectionFormActionReset OnClick="@ResetAction" />
   </ActionsContent>
 </SectionForm>
 
@@ -76,11 +71,5 @@
   {
     WarehouseDto dto = await WebApi.UpdateWarehouse(Model.Id, item);
     ReferencesEndpoints.UpdateWarehouse(Model.ProductionSite.Id, dto);
-  }
-
-  protected override async Task DeleteItemAction()
-  {
-    await WebApi.DeleteWarehouse(Model.Id);
-    ReferencesEndpoints.DeleteWarehouse(Model.ProductionSite.Id, Model.Id);
   }
 }
