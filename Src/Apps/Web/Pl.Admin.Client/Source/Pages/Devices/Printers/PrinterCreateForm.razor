@@ -8,7 +8,7 @@
 
 <SectionForm
   FormModel="@FormModel"
-  Validator="@(new PrinterCreateValidator(WsDataLocalizer))"
+  Validator="@PrinterCreateValidator"
   OnCancelAction="@OnCancelAction"
   OnSubmitAction="@CreateItem"
 >
@@ -28,7 +28,7 @@
 
     <SectionSelectSingleField
       TItem="PrinterTypes"
-      Label="@WsDataLocalizer["ColType"]"
+      Label="@WsDataLocalizer["ColManufacturer"]"
       Items="PrinterTypes"
       @bind-Value="@FormModel.Type"
       For="@(() => FormModel.Type)"
@@ -52,6 +52,7 @@
   [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private PrinterCreateValidator PrinterCreateValidator { get; set; } = default!;
 
   # endregion
 

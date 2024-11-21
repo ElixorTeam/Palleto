@@ -324,4 +324,7 @@
     <data name="ColZplResource" xml:space="preserve">
         <value>ZPL Resource</value>
     </data>
+    <data name="ColManufacturer" xml:space="preserve">
+        <value>Manufacturer</value>
+    </data>
 </root>

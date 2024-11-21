@@ -6,7 +6,7 @@
 
 <SectionDialog>
   <Tab Id="@typeof(UsersUpdateForm).ToString()" Title="@Localizer["SectionUsers"]">
-    <UsersUpdateForm Model="Content" FormModel="@(new UserUpdateDto { ProductionSiteId = Content.ProductionSiteId })" />
+    <UsersUpdateForm Model="Content" FormModel="@(new UserUpdateDto { ProductionSiteId = Content.ProductionSite.Id })" />
   </Tab>
 </SectionDialog>
 

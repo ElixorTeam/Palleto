@@ -8,6 +8,7 @@ using Pl.Admin.Client.Source.Shared.Api;
 using Pl.Admin.Client.Source.Shared.Auth;
 using Pl.Admin.Client.Source.Shared.Auth.Settings;
 using Pl.Admin.Client.Source.Shared.Constants;
+using Pl.Admin.Models;
 using Pl.Shared.Constants;
 using Pl.Shared.Web.Extensions;
 
@@ -23,6 +24,7 @@ builder.Services
     .AddHelpers<IAdminAssembly>()
     .AddRefitEndpoints<IAdminAssembly>()
     .AddDelegatingHandlers<IAdminAssembly>()
+    .AddValidators<IAdminModelsAssembly>()
     .AddTransient<AcceptLanguageHandler>();
 
 builder.Services

@@ -39,7 +39,7 @@ internal sealed class PalletApiService(
         bool dateCondition = startTime != DateTime.MinValue && endTime != DateTime.MaxValue && startTime < endTime;
         return dbContext.Pallets
             .AsNoTracking()
-            .IfWhere(dateCondition, p => p.CreateDt.AddHours(3) > startTime && p.CreateDt.AddHours(3) < endTime)
+            .IfWhere(dateCondition, p => p.CreateDt > startTime.ToUniversalTime() && p.CreateDt < endTime.ToUniversalTime())
             .Where(p => p.Warehouse.Id == userHelper.WarehouseId)
             .OrderByDescending(p => p.CreateDt)
             .ToPalletInfo(dbContext.Labels).ToArrayAsync();
@@ -100,19 +100,19 @@ internal sealed class PalletApiService(
 
         if (dto.CharacteristicId.IsEmpty())
         {
-            NestingEntity data1 = await dbContext.Nestings
+            NestingEntity nesting = await dbContext.Nestings
                 .Include(i => i.Box)
                 .SingleAsync(i => i.Id == dto.PluId);
 
-            nestingForLabel = new(Guid.Empty, data1.Box.Weight, data1.BundleCount);
+            nestingForLabel = new(Guid.Empty, nesting.Box.Weight, nesting.BundleCount);
         }
         else
         {
-            CharacteristicEntity data2 = await dbContext.Characteristics
+            CharacteristicEntity characteristic = await dbContext.Characteristics
                 .Include(i => i.Box)
                 .SingleAsync(i => i.Id == dto.CharacteristicId);
 
-            nestingForLabel = new(dto.CharacteristicId, data2.Box.Weight, data2.BundleCount);
+            nestingForLabel = new(dto.CharacteristicId, characteristic.Box.Weight, characteristic.BundleCount);
         }
 
         ArmEntity arm = await dbContext.Arms

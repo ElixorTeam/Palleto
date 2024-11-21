@@ -8,7 +8,7 @@ public sealed class WarehouseEntity : EfEntityBase
     #region ProductionSite
 
     public Guid ProductionSiteId { get; set; }
-    public ProductionSiteEntity ProductionSite { get; set; } = new();
+    public ProductionSiteEntity ProductionSite { get; set; } = null!;
 
     #endregion
 

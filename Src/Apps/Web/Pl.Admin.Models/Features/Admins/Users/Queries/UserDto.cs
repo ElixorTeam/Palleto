@@ -5,6 +5,6 @@ public sealed record UserDto
     [JsonPropertyName("id")]
     public required Guid Id { get; init; }
 
-    [JsonPropertyName("productionSiteId")]
-    public required Guid ProductionSiteId { get; init; }
+    [JsonPropertyName("productionSite")]
+    public required ProxyDto ProductionSite { get; init; }
 }

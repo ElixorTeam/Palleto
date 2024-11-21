@@ -25,6 +25,6 @@ public class PrinterUpdateValidator : AbstractValidator<PrinterUpdateDto>
             .WithName(wsDataLocalizer["ColName"]);
 
         RuleFor(item => item.Ip).NotEmpty().NotEqual(IPAddress.None);
-        RuleFor(item => item.Type).IsInEnum().WithName(wsDataLocalizer["ColType"]);
+        RuleFor(item => item.Type).IsInEnum().WithName(wsDataLocalizer["ColManufacturer"]);
     }
 }

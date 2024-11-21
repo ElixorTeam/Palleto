@@ -6,7 +6,7 @@
 
 <SectionForm
   FormModel="@FormModel"
-  Validator="@(new ZplResourceCreateValidator(WsDataLocalizer))"
+  Validator="@ZplResourceCreateValidator"
   OnCancelAction="@OnCancelAction"
   OnSubmitAction="@CreateItem"
 >
@@ -41,6 +41,7 @@
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private ZplResourceCreateValidator ZplResourceCreateValidator { get; set; } = default!;
 
   #endregion
 

@@ -8,7 +8,7 @@ public sealed class CharacteristicEntity : EfEntityBase
     #region Box
 
     public Guid BoxId { get; set; }
-    public BoxEntity Box { get; set; } = new();
+    public BoxEntity Box { get; set; } = null!;
 
     #endregion
 

@@ -21,14 +21,14 @@ public class AdminEndpoints(IWebApi webApi, IKeycloakApi keycloakApi)
             IEnumerable<UserModel> users = keycloakUsers.Select(keycloakUser =>
                 userRelationDict.TryGetValue(keycloakUser.Id, out UserDto? userDto)
                     ? UserMapper.DtosToModel(keycloakUser, userDto)
-                    : UserMapper.DtosToModel(keycloakUser, new() { Id = Guid.Empty, ProductionSiteId = Guid.Empty }));
+                    : UserMapper.DtosToModel(keycloakUser, new() { Id = Guid.Empty, ProductionSite = new(Guid.Empty, "Без площадки") }));
             return users.ToArray();
         },
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(5) });
 
-    public void UpdateUser(UserModel user, Guid productionSiteId) =>
+    public void UpdateUser(UserModel user, ProxyDto productionSite) =>
         UsersEndpoint.UpdateQueryData(new(), query => query.Data == null ? [user] :
-            query.Data.ReplaceItemBy(user with { ProductionSiteId = productionSiteId }, p => p.KcId == user.KcId).ToArray());
+            query.Data.ReplaceItemBy(user with { ProductionSite = productionSite }, p => p.KcId == user.KcId).ToArray());
 
     public void DeleteUser(Guid userId) =>
         UsersEndpoint.UpdateQueryData(new(), query =>

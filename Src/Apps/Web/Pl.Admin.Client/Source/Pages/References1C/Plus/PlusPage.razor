@@ -1,6 +1,7 @@
 @using Blazor.Heroicons.Outline
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References1C.Brands
 @using Pl.Admin.Models.Features.References1C.Plus.Queries
 
@@ -45,7 +46,7 @@
               <BookmarkSlashIcon class="text-purple-500 size-5 transition-colors hover:text-purple-700 dark:hover:text-purple-300"/>
             </div>
           }
-          else if (!PluValidator.Validate(context).IsValid)
+          else if (!PluViewValidator.Validate(context).IsValid)
           {
             <div class="w-full flex items-center justify-center">
               <ExclamationTriangleIcon class="text-orange-400 size-5"/>
@@ -144,15 +145,16 @@
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
+  [Inject] private IWebApi WebApi { get; set; } = default!;
   [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private PluViewValidator PluViewValidator { get; set; } = default!;
 
   # endregion
 
   private bool? IsWeightFilter { get; set; }
   private BrandDto? BrandFilter { get; set; }
-  private PluValidator PluValidator { get; } = new();
 
   private Task OpenUpdateDialog(PluDto item) =>
     DialogService.ShowDialogAsync<PluUpdateDialog>(item, PageHelper.DialogParameters);

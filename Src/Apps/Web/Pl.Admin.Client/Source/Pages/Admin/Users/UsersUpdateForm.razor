@@ -2,12 +2,13 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Models
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Admins.Users.Commands
+@using Pl.Admin.Models.Features.Admins.Users.Queries
 @using Pl.Admin.Models.Features.References.ProductionSites.Queries
 @inherits SectionFormBase<UserUpdateDto>
 
 <SectionForm
   FormModel="@FormModel"
-  Validator="@(new UserUpdateValidator(WsDataLocalizer))"
+  Validator="@UserUpdateValidator"
   OnCancelAction="@OnCancelAction"
   OnSubmitAction="@UpdateItem"
 >
@@ -22,7 +23,7 @@
     />
 
     <SectionInputWrapper
-      Path="@RedirectHelper.ToProductionSite(Model.ProductionSiteId)"
+      Path="@RedirectHelper.ToProductionSite(Model.ProductionSite.Id)"
       Label="@WsDataLocalizer["ColProductionSite"]"
       HtmlFor="user-warehouse"
     >
@@ -68,6 +69,7 @@
   [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
   [Inject] private AdminEndpoints AdminEndpoints { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private UserUpdateValidator UserUpdateValidator { get; set; } = default!;
 
   #endregion
 
@@ -75,7 +77,7 @@
 
   protected override async Task UpdateItemAction(UserUpdateDto item)
   {
-    await WebApi.SaveOrUpdateUser(Model.Id, item);
-    AdminEndpoints.UpdateUser(Model, item.ProductionSiteId);
+    UserDto dto = await WebApi.SaveOrUpdateUser(Model.Id, item);
+    AdminEndpoints.UpdateUser(Model, dto.ProductionSite);
   }
 }

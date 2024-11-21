@@ -10,7 +10,7 @@ public sealed class PalletManEntity : EfEntityBase
 
     #region Fk
 
-    public WarehouseEntity Warehouse { get; set; } = new();
+    public WarehouseEntity Warehouse { get; set; } = null!;
 
     #endregion
 

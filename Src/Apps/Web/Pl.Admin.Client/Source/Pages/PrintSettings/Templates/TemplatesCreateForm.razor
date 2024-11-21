@@ -6,7 +6,7 @@
 
 <SectionForm
   FormModel="@FormModel"
-  Validator="@(new TemplateCreateValidator(WsDataLocalizer))"
+  Validator="@TemplateCreateValidator"
   OnCancelAction="@OnCancelAction"
   OnSubmitAction="@CreateItem"
 >
@@ -67,6 +67,7 @@
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private TemplateCreateValidator TemplateCreateValidator { get; set; } = default!;
 
   #endregion
 

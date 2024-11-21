@@ -15,7 +15,7 @@
     FormModel="@FormModel"
     ChangeDate="@Model.ChangeDt"
     CreateDate="@Model.CreateDt"
-    Validator="@(new PrinterUpdateValidator(WsDataLocalizer))"
+    Validator="@PrinterUpdateValidator"
     OnCancelAction="@OnCancelAction"
     OnSubmitAction="@UpdateItem"
   >
@@ -39,7 +39,7 @@
 
       <SectionSelectSingleField
         TItem="PrinterTypes"
-        Label="@WsDataLocalizer["ColType"]"
+        Label="@WsDataLocalizer["ColManufacturer"]"
         Items="PrinterTypes"
         @bind-Value="@FormModel.Type"
         Disabled="@isOnlyView"
@@ -69,6 +69,7 @@
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
   [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
+  [Inject] private PrinterUpdateValidator PrinterUpdateValidator { get; set; } = default!;
 
   # endregion
 

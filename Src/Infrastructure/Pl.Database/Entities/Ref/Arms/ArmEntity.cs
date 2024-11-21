@@ -13,8 +13,8 @@ public sealed class ArmEntity : EfEntityBase
 
     #region FK
 
-    public PrinterEntity Printer { get; set; } = new();
-    public WarehouseEntity Warehouse { get; set; } = new();
+    public PrinterEntity Printer { get; set; } = null!;
+    public WarehouseEntity Warehouse { get; set; } = null!;
     public ICollection<PluEntity> Plus { get; set; } = [];
 
     #endregion

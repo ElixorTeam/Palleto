@@ -14,8 +14,7 @@ public sealed class LabelEntity : EfEntityBase
 
     public Guid ArmId { get; set; }
     public ArmEntity Arm { get; set; } = null!;
-
-    public LabelZplEntity Zpl { get; set; } = new();
+    public LabelZplEntity Zpl { get; set; } = null!;
 
     #endregion
 

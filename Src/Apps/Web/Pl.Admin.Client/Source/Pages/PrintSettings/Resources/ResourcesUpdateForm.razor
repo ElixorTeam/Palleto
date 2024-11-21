@@ -10,7 +10,7 @@
   FormModel="@FormModel"
   ChangeDate="@Model.ChangeDt"
   CreateDate="@Model.CreateDt"
-  Validator="@(new ZplResourceCreateValidator(WsDataLocalizer))"
+  Validator="@ZplResourceUpdateValidator"
   OnCancelAction="@OnCancelAction"
   OnSubmitAction="@UpdateItem"
 >
@@ -93,6 +93,7 @@
 
   [Inject] private UserHelper UserHelper { get; set; } = default!;
   [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+  [Inject] private ZplResourceUpdateValidator ZplResourceUpdateValidator { get; set; } = default!;
 
   #endregion
 

@@ -18,22 +18,22 @@ public sealed class PluEntity : EfEntityBase
     //
 
     public Guid BundleId { get; set; }
-    public BundleEntity Bundle { get; set; } = new();
+    public BundleEntity Bundle { get; set; } = null!;
 
     //
 
     public Guid BrandId { get; set; }
-    public BrandEntity Brand { get; set; } = new();
+    public BrandEntity Brand { get; set; } = null!;
 
     //
 
     public Guid ClipId { get; set; }
-    public ClipEntity Clip { get; set; } = new();
+    public ClipEntity Clip { get; set; } = null!;
 
     //
 
     public Guid? TemplateId { get; set; }
-    public TemplateEntity Template { get; set; } = new();
+    public TemplateEntity? Template { get; set; }
 
     #region Date
 

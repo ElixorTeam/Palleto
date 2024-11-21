@@ -13,7 +13,7 @@
     FormModel="@FormModel"
     ChangeDate="@Model.ChangeDt"
     CreateDate="@Model.CreateDt"
-    Validator="@(new ArmUpdateValidator(WsDataLocalizer))"
+    Validator="@ArmUpdateValidator"
     OnCancelAction="@OnCancelAction"
     OnSubmitAction="@UpdateItem"
   >
@@ -162,6 +162,7 @@
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
   [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
+  [Inject] private ArmUpdateValidator ArmUpdateValidator { get; set; } = default!;
 
   # endregion
 

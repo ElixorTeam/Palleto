@@ -14,7 +14,7 @@
     FormModel="@FormModel"
     ChangeDate="@Model.ChangeDt"
     CreateDate="@Model.CreateDt"
-    Validator="@(new PalletManUpdateValidator(WsDataLocalizer))"
+    Validator="@PalletManUpdateValidator"
     OnCancelAction="@OnCancelAction"
     OnSubmitAction="@UpdateItem"
   >
@@ -115,6 +115,7 @@
   [Inject] private UserHelper UserHelper { get; set; } = default!;
   [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
   [Inject] private AdminEndpoints AdminEndpoints { get; set; } = default!;
+  [Inject] private PalletManUpdateValidator PalletManUpdateValidator { get; set; } = default!;
 
   #endregion
 

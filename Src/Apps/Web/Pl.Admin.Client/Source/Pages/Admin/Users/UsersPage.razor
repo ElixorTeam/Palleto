@@ -20,7 +20,7 @@
     <DataGridHeader>
       <DataGridLabelWithCounter
         Label="@Localizer["SectionUsers"]"
-        ItemsCount="@(query.Data?.Count(x => x.ProductionSiteId == ProductionSiteState.Value.ProductionSite.Id))"
+        ItemsCount="@(query.Data?.Count(x => x.ProductionSite.Id == ProductionSiteState.Value.ProductionSite.Id))"
         IsLoading="@query.IsLoading"
       />
       <DataGridActionReload OnClick="@(() => { query.Refetch(); })" IsLoading="@(query.IsFetching)" />
@@ -40,7 +40,7 @@
         />
         <DataGridColumn
           Caption="@WsDataLocalizer["ColProductionSite"]"
-          Field="@(nameof(UserModel.ProductionSiteId))"
+          Field="@(nameof(UserModel.ProductionSite))"
           Width="40%"
           FilterCellClass="!font-normal"
           CustomFilter="@((item, _) => ProductionSiteFilter(item))"
@@ -53,7 +53,7 @@
             />
           </FilterTemplate>
           <DisplayTemplate>
-            @CurrentProductionSite.Name
+            @context.ProductionSite.Name
           </DisplayTemplate>
         </DataGridColumn>
       </ColumnsContent>
@@ -87,8 +87,8 @@
 
   private bool ProductionSiteFilter(object dto)
   {
-    if (dto is not Guid userProductionSiteId) return false;
-    return userProductionSiteId.Equals(CurrentProductionSite.Id);
+    if (dto is not ProxyDto productionSite) return false;
+    return productionSite.Id.Equals(CurrentProductionSite.Id);
   }
 
   private async Task DeleteItem(UserModel item)

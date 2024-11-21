@@ -1,3 +1,4 @@
+// ReSharper disable ClassNeverInstantiated.Global
 namespace Pl.Admin.Models.Features.References1C.Plus.Queries;
 
 public sealed record PluDto
@@ -52,4 +53,17 @@ public sealed record PluDto
 
     [JsonPropertyName("changeDt")]
     public required DateTime ChangeDt { get; init; }
+}
+
+public class PluViewValidator : AbstractValidator<PluDto>
+{
+    public PluViewValidator(IStringLocalizer<WsDataResources> wsDataLocalizer)
+    {
+        RuleFor(item => item.Template)
+            .NotNull().WithName(wsDataLocalizer["ColTemplate"]);
+
+        RuleFor(item => item.StorageMethod)
+            .Must(value => value is "Замороженное" or "Охлаждённое")
+            .WithMessage("Способ хранения - должен быть ['Замороженное', 'Охлаждённое']");
+    }
 }

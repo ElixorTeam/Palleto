@@ -17,7 +17,7 @@ public static class UserMapper
                 partsOfName.ElementAtOrDefault(1) ?? string.Empty,
                 partsOfName.ElementAtOrDefault(2) ?? string.Empty),
             Username = keycloakUser.Username,
-            ProductionSiteId = userDto.ProductionSiteId,
+            ProductionSite = userDto.ProductionSite,
             Roles = []
         };
     }

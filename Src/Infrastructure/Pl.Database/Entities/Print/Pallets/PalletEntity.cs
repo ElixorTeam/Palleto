@@ -8,9 +8,9 @@ public class PalletEntity
 
     #region FK
 
-    public ArmEntity Arm { get; set; } = new();
-    public WarehouseEntity Warehouse { get; set; } = new();
-    public PalletManEntity PalletMan { get; set; } = new();
+    public ArmEntity Arm { get; set; } = null!;
+    public WarehouseEntity Warehouse { get; set; } = null!;
+    public PalletManEntity PalletMan { get; set; } = null!;
 
     #endregion
 

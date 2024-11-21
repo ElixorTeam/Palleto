@@ -6,6 +6,6 @@ public sealed record UserModel
     public required Guid KcId { get; set; }
     public required Fio Fio { get; set; }
     public required string Username { get; set; }
-    public required Guid ProductionSiteId { get; set; }
+    public required ProxyDto ProductionSite { get; set; }
     public required List<string> Roles { get; set; }
 }

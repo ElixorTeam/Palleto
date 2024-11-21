@@ -324,4 +324,7 @@
     <data name="ColArm" xml:space="preserve">
         <value>АРМ</value>
     </data>
+    <data name="ColManufacturer" xml:space="preserve">
+        <value>Производитель</value>
+    </data>
 </root>

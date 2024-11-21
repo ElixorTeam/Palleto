@@ -11,7 +11,7 @@ public sealed class PrinterEntity : EfEntityBase
     #region Fk
 
     public Guid ProductionSiteId { get; set; }
-    public ProductionSiteEntity ProductionSite { get; set; } = new();
+    public ProductionSiteEntity ProductionSite { get; set; } = null!;
 
     #endregion
 

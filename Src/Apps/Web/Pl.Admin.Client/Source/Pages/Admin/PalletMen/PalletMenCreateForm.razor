@@ -7,7 +7,7 @@
 
 <SectionForm
   FormModel="@FormModel"
-  Validator="@(new PalletManCreateValidator(WsDataLocalizer))"
+  Validator="@PalletManCreateValidator"
   OnCancelAction="@OnCancelAction"
   OnSubmitAction="@CreateItem"
 >
@@ -91,6 +91,7 @@
   [Inject] private AdminEndpoints AdminEndpoints { get; set; } = default!;
   [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private PalletManCreateValidator PalletManCreateValidator { get; set; } = default!;
 
   #endregion
 
