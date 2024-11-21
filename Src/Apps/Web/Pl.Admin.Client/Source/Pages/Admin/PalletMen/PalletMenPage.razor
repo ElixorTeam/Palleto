@@ -18,6 +18,10 @@
     Options="@PageHelper.DefaultEndpointOptions"
     Context="palletManQuery"
   >
+    <Breadcrumbs Class="!pb-5">
+      <Breadcrumb Label=@Localizer["SectionPalletMen"] Link="@Urls.PalletMen" />
+    </Breadcrumbs>
+
     <DataGridHeader>
       <DataGridLabelWithCounter
         Label="@Localizer["SectionPalletMen"]"
@@ -33,8 +37,9 @@
     <DataGridContainer
       TItem="PalletManDto"
       Items="@(palletManQuery.HasData ? palletManQuery.Data : [])"
-      OnItemSelect="@(item => OpenUpdateDialog(item))"
-      IsFilterable>
+      OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToPalletMan(item.Id)))"
+      IsFilterable
+    >
       <ColumnsContent>
         <DataGridColumn
           Caption="@WsDataLocalizer["ColChangeDt"]"
@@ -62,6 +67,8 @@
       </ColumnsContent>
       <ContextMenuContent>
         <DataGridActionUpdateItem TItem="PalletManDto" Action="@OpenUpdateDialog" />
+        <DataGridActionOpenItem Link="@(RedirectHelper.ToPalletMan(context.Item.Id))" />
+        <DataGridActionOpenInNewTab TItem="PalletManDto" Link="@(RedirectHelper.ToPalletMan(context.Item.Id))" />
         <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
           <DataGridActionDeleteItem TItem="PalletManDto" Action="@DeleteItem" />
         </AuthorizeView>
@@ -77,6 +84,7 @@
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private AdminEndpoints AdminEndpoints { get; set; } = default!;
   [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
   [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private IDialogService DialogService { get; set; } = default!;

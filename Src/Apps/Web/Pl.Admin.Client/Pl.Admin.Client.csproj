@@ -17,9 +17,9 @@
     <ItemGroup Label="Packages">
         <PackageReference Include="PSC.Blazor.Components.Chartjs" VersionOverride="8.0.8"/>
         <PackageReference Include="DNTCaptcha.Blazor" VersionOverride="1.2.3" />
-        <PackageReference Include="Blazorise" VersionOverride="1.6.2" />
-        <PackageReference Include="Blazorise.DataGrid" VersionOverride="1.6.2" />
-        <PackageReference Include="Blazorise.Icons.FontAwesome" VersionOverride="1.6.2" />
+        <PackageReference Include="Blazorise" VersionOverride="1.7.0" />
+        <PackageReference Include="Blazorise.DataGrid" VersionOverride="1.7.0" />
+        <PackageReference Include="Blazorise.Icons.FontAwesome" VersionOverride="1.7.0" />
         <PackageReference Include="DeepCloner" VersionOverride="0.10.4" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" VersionOverride="8.0.10" />
         <PackageReference Include="WMBlazorOverlayScrollbars" VersionOverride="1.0.0" />

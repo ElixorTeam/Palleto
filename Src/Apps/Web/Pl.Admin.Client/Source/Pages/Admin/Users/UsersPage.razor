@@ -1,11 +1,9 @@
 @using Pl.Admin.Client.Source.Features
-@using Pl.Admin.Client.Source.Shared.Api.Keycloak.Endpoints
-@using Pl.Admin.Client.Source.Shared.Api.Keycloak.Models
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Api.Web.Models
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Client.Source.Shared.Services.Stores
 @using Pl.Admin.Models
-@using Pl.Admin.Models.Features.Admins.Users.Queries
 
 @attribute [Route($"{Urls.Users}")]
 @attribute [Authorize(Policy = PolicyEnum.SeniorSupport)]
@@ -13,72 +11,59 @@
 
 <PageTitle>Admin - @Localizer["SectionUsers"]</PageTitle>
 
-<UseParameterlessEndpoint
-  Endpoint="AdminEndpoints.UserRelationshipEndpoint"
-  Options="@PageHelper.DefaultEndpointOptions"
-  Context="userRelationshipQuery"
->
+<UserProductionSiteErrorSuspense>
   <UseParameterlessEndpoint
-    Endpoint="@KeycloakEndpoints.KeycloakUsersEndpoint"
+    Endpoint="@AdminEndpoints.UsersEndpoint"
     Options="@PageHelper.DefaultEndpointOptions"
-    Context="keycloakUsersQuery"
+    Context="query"
   >
-    @{
-      IEnumerable<UserWithProductionSite> usersData = userRelationshipQuery.HasData && keycloakUsersQuery.HasData ?
-        GetAllUsers(keycloakUsersQuery.Data, userRelationshipQuery.Data) : [];
-    }
     <DataGridHeader>
       <DataGridLabelWithCounter
         Label="@Localizer["SectionUsers"]"
-        ItemsCount="@(usersData.Count(x => x.ProductionSiteId == ProductionSiteState.Value.ProductionSite.Id))"
-        IsLoading="@(userRelationshipQuery.IsLoading || keycloakUsersQuery.IsLoading)"
+        ItemsCount="@(query.Data?.Count(x => x.ProductionSiteId == ProductionSiteState.Value.ProductionSite.Id))"
+        IsLoading="@query.IsLoading"
       />
-      <DataGridActionReload
-        OnClick="@(() => { userRelationshipQuery.RefetchAsync(); keycloakUsersQuery.RefetchAsync(); })"
-        IsLoading="@(userRelationshipQuery.IsFetching || keycloakUsersQuery.IsFetching)"
-      />
+      <DataGridActionReload OnClick="@(() => { query.Refetch(); })" IsLoading="@(query.IsFetching)" />
     </DataGridHeader>
 
     <DataGridContainer
-      TItem="UserWithProductionSite"
-      Items="@(usersData)"
+      TItem="UserModel"
+      Items="@(query.Data ?? [])"
       OnItemSelect="@(item => OpenUpdateDialog(item))"
       IsFilterable
     >
       <ColumnsContent>
         <DataGridColumn
           Caption="@WsDataLocalizer["ColUser"]"
-          Field="@($"{nameof(UserWithProductionSite.User)}.{nameof(KeycloakUser.Username)}")"
-          Width="30%"/>
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColFullName"]"
-          Field="@($"{nameof(UserWithProductionSite.User)}.{nameof(KeycloakUser.FirstName)}")"
-          Width="30%"/>
+          Field="@($"{nameof(UserModel.Fio)}.{nameof(Fio.DisplayFullName)}")"
+          Width="30%"
+        />
         <DataGridColumn
           Caption="@WsDataLocalizer["ColProductionSite"]"
-          Field="@(nameof(UserWithProductionSite.ProductionSiteId))"
+          Field="@(nameof(UserModel.ProductionSiteId))"
           Width="40%"
           FilterCellClass="!font-normal"
           CustomFilter="@((item, _) => ProductionSiteFilter(item))"
         >
           <FilterTemplate>
             <ProductionSiteSelect
-              ValueChanged="@(_ => context.TriggerFilterChange(ProductionSiteState.Value.ProductionSite.Id))"
+              Value="@CurrentProductionSite"
+              ValueChanged="@(value => { ProductionSite = value; context.TriggerFilterChange(ProductionSite.Id); })"
               AllowIsNew
             />
           </FilterTemplate>
           <DisplayTemplate>
-            @ProductionSiteState.Value.ProductionSite.Name
+            @CurrentProductionSite.Name
           </DisplayTemplate>
         </DataGridColumn>
       </ColumnsContent>
       <ContextMenuContent>
-        <DataGridActionUpdateItem TItem="UserWithProductionSite" Action="@OpenUpdateDialog" />
-        <DataGridActionDeleteItem TItem="UserWithProductionSite" Action="@DeleteItem" />
+        <DataGridActionUpdateItem TItem="UserModel" Action="@OpenUpdateDialog" />
+        <DataGridActionDeleteItem TItem="UserModel" Action="@DeleteItem" />
       </ContextMenuContent>
     </DataGridContainer>
   </UseParameterlessEndpoint>
-</UseParameterlessEndpoint>
+</UserProductionSiteErrorSuspense>
 
 @code {
 
@@ -86,7 +71,6 @@
 
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private KeycloakEndpoints KeycloakEndpoints { get; set; } = default!;
   [Inject] private AdminEndpoints AdminEndpoints { get; set; } = default!;
   [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
@@ -95,27 +79,21 @@
 
   #endregion
 
-  private Task OpenUpdateDialog(UserWithProductionSite item) =>
-    DialogService.ShowDialogAsync<UsersUpdateDialog>(item, PageHelper.DialogParameters);
+  private ProxyDto? ProductionSite { get; set; }
+  private ProxyDto CurrentProductionSite => ProductionSite ?? ProductionSiteState.Value.ProductionSite;
 
-  private IEnumerable<UserWithProductionSite> GetAllUsers(IEnumerable<KeycloakUser> keycloakUsers, IEnumerable<UserDto> usersRelations)
-  {
-    Dictionary<Guid, Guid> userRelationDict = usersRelations.ToDictionary(x => x.Id, x => x.ProductionSiteId);
-    return keycloakUsers.Select(keycloakUser => userRelationDict.TryGetValue(keycloakUser.Id, out Guid productionSiteId)
-      ? new UserWithProductionSite(keycloakUser, productionSiteId)
-      : new (keycloakUser, Guid.Empty));
-  }
+  private Task OpenUpdateDialog(UserModel item) =>
+    DialogService.ShowDialogAsync<UsersUpdateDialog>(item, PageHelper.DialogParameters);
 
   private bool ProductionSiteFilter(object dto)
   {
-    if (dto is Guid userProductionSiteId)
-      return userProductionSiteId.Equals(ProductionSiteState.Value.ProductionSite.Id);
-    return false;
+    if (dto is not Guid userProductionSiteId) return false;
+    return userProductionSiteId.Equals(CurrentProductionSite.Id);
   }
 
-  private async Task DeleteItem(UserWithProductionSite item)
+  private async Task DeleteItem(UserModel item)
   {
-    await WebApi.DeleteUser(item.User.Id);
-    AdminEndpoints.DeleteUserRelationship(item.User.Id);
+    await WebApi.DeleteUser(item.Id);
+    AdminEndpoints.DeleteUser(item.Id);
   }
 }

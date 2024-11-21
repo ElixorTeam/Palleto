@@ -10,8 +10,8 @@
   Arg="@Id"
   Context="armQuery"
 >
-  <Breadcrumbs>
-    <Breadcrumb Label="Линии" Link="@Urls.Arms" />
+  <Breadcrumbs Start="BreadcrumbStart.Back">
+    <Breadcrumb Label=@Localizer["SectionArm"] Link="@Urls.Arms" />
     @if (armQuery.HasData)
     {
       <Breadcrumb Label="@armQuery.Data.Name" />
@@ -80,6 +80,7 @@
 </UseEndpoint>
 
 @code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;

@@ -55,8 +55,7 @@ public class References1CEndpoints(IWebApi webApi)
     public void UpdatePlu(PluDto plu)
     {
         PlusEndpoint.UpdateQueryData(new(),
-            query => query.Data == null ? query.Data! : query.Data.ReplaceItemBy(plu, p => p.Id == plu.Id).ToArray());
-        PluEndpoint.UpdateQueryData(new(),
-            query => query.Data == null ? query.Data! : plu);
+            query => query.Data == null ? [plu] : query.Data.ReplaceItemBy(plu, p => p.Id == plu.Id).ToArray());
+        PluEndpoint.UpdateQueryData(new(), _ => plu);
     }
 }

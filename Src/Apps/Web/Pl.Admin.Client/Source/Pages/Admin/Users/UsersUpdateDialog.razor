@@ -1,16 +1,17 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Models
 @using Pl.Admin.Client.Source.Shared.Services.Stores
 @using Pl.Admin.Models.Features.Admins.Users.Commands
-@implements IDialogContentComponent<UserWithProductionSite>
+
+@implements IDialogContentComponent<UserModel>
 
 <SectionDialog>
   <Tab Id="@typeof(UsersUpdateForm).ToString()" Title="@Localizer["SectionUsers"]">
-    <UsersUpdateForm Model="Content" FormModel="@(new UserUpdateDto { ProductionSiteId = ProductionSiteState.Value.ProductionSite.Id })" />
+    <UsersUpdateForm Model="Content" FormModel="@(new UserUpdateDto { ProductionSiteId = Content.ProductionSiteId })" />
   </Tab>
 </SectionDialog>
 
 @code {
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
 
-  [Parameter] public UserWithProductionSite Content { get; set; } = default!;
+  [Parameter] public UserModel Content { get; set; } = default!;
 }

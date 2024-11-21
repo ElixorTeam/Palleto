@@ -1,7 +1,7 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Api.Web.Models
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Admins.Users.Commands
-@using Pl.Admin.Models.Features.Admins.Users.Queries
 @using Pl.Admin.Models.Features.References.ProductionSites.Queries
 @inherits SectionFormBase<UserUpdateDto>
 
@@ -12,16 +12,13 @@
   OnSubmitAction="@UpdateItem"
 >
   <FieldsContent>
-    <SectionAdminGuidField Value="@Model.User.Id" />
+    <SectionAdminGuidField Value="@Model.Id" />
+
+    <SectionAdminGuidField Value="@Model.KcId" Label="UID KC" />
 
     <SectionReadOnlyField
-      Label="@WsDataLocalizer["ColUser"]"
-      Value="@Model.User.Username"
-    />
-
-    <SectionReadOnlyField
-      Label="@WsDataLocalizer["ColFullName"]"
-      Value="@Model.User.FirstName"
+      Label="@WsDataLocalizer["ColFIO"]"
+      Value="@Model.Fio.DisplayFullName"
     />
 
     <SectionInputWrapper
@@ -58,8 +55,7 @@
   </FieldsContent>
   <ActionsContent>
     <SectionFormActionReset OnClick="@ResetAction" />
-    <SectionFormActionRelogin UserUid="Model.User.Id" />
-    <SectionFormActionDelete OnClick="@DeleteItemAction" />
+    <SectionFormActionRelogin UserUid="Model.Id" />
   </ActionsContent>
 </SectionForm>
 
@@ -75,17 +71,11 @@
 
   #endregion
 
-  [Parameter, EditorRequired] public UserWithProductionSite Model { get; set; } = default!;
+  [Parameter, EditorRequired] public UserModel Model { get; set; } = default!;
 
   protected override async Task UpdateItemAction(UserUpdateDto item)
   {
-    UserDto dto = await WebApi.SaveOrUpdateUser(Model.User.Id, item);
-    AdminEndpoints.UpdateUserRelationship(dto);
-  }
-
-  protected override async Task DeleteItemAction()
-  {
-    await WebApi.DeleteUser(Model.User.Id);
-    AdminEndpoints.DeleteUserRelationship(Model.User.Id);
+    await WebApi.SaveOrUpdateUser(Model.Id, item);
+    AdminEndpoints.UpdateUser(Model, item.ProductionSiteId);
   }
 }

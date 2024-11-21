@@ -13,6 +13,10 @@ public class DevicesEndpoints(IWebApi webApi)
 {
     # region Arm
 
+    public Endpoint<Guid, ArmDto[]> ArmsEndpoint { get; } = new(
+        webApi.GetArmsByProductionSite,
+        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+
     public Endpoint<Guid, ArmDto> ArmEndpoint { get; } = new(
         webApi.GetArmByUid,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
@@ -29,25 +33,24 @@ public class DevicesEndpoints(IWebApi webApi)
         arg => webApi.GetArmAnalytic(arg.ArmId, arg.Date),
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
-    public Endpoint<Guid, ArmDto[]> ArmsEndpoint { get; } = new(
-        webApi.GetArmsByProductionSite,
-        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
-
-    public void AddArm(Guid productionSiteId, ArmDto arm) =>
+    public void AddArm(Guid productionSiteId, ArmDto arm)
+    {
         ArmsEndpoint.UpdateQueryData(productionSiteId, query =>
-            query.Data == null ? query.Data! : query.Data.Prepend(arm).ToArray());
+            query.Data == null ? [arm] : query.Data.Prepend(arm).ToArray());
+        ArmEndpoint.UpdateQueryData(arm.Id, _ => arm);
+    }
 
     public void UpdateArm(Guid productionSiteId, ArmDto arm)
     {
         ArmsEndpoint.UpdateQueryData(productionSiteId, query =>
-            query.Data == null ? query.Data! : query.Data.ReplaceItemBy(arm, p => p.Id == arm.Id).ToArray());
-        ArmEndpoint.UpdateQueryData(arm.Id, query => query.Data == null ? query.Data! : arm);
+            query.Data == null ? [arm] : query.Data.ReplaceItemBy(arm, p => p.Id == arm.Id).ToArray());
+        ArmEndpoint.UpdateQueryData(arm.Id, _ => arm);
     }
 
     public void DeleteArm(Guid productionSiteId, Guid armId)
     {
         ArmsEndpoint.UpdateQueryData(productionSiteId, query =>
-            query.Data == null ? query.Data! : query.Data.Where(x => x.Id != armId).ToArray());
+            query.Data == null ? [] : query.Data.Where(x => x.Id != armId).ToArray());
         ArmEndpoint.Invalidate(armId);
     }
 
@@ -65,7 +68,7 @@ public class DevicesEndpoints(IWebApi webApi)
             {
                 if (item.Id == pluId) item = item with { IsActive = true };
                 return item;
-            }).ToArray() ?? query.Data!);
+            }).ToArray() ?? []);
 
     public void DeleteArmPlu(Guid armId, Guid pluId) =>
         ArmPluEndpoint.UpdateQueryData(armId, query =>
@@ -73,7 +76,7 @@ public class DevicesEndpoints(IWebApi webApi)
             {
                 if (item.Id == pluId) item = item with { IsActive = false };
                 return item;
-            }).ToArray() ?? query.Data!);
+            }).ToArray() ?? []);
 
     # endregion
 
@@ -90,21 +93,24 @@ public class DevicesEndpoints(IWebApi webApi)
     public void AddPrinter(Guid productionSiteId, PrinterDto printer)
     {
         PrintersEndpoint.UpdateQueryData(productionSiteId, query =>
-            query.Data == null ? query.Data! : query.Data.Prepend(printer).ToArray());
+            query.Data == null ? [printer] : query.Data.Prepend(printer).ToArray());
+        PrinterEndpoint.UpdateQueryData(printer.Id, _ => printer);
         AddProxyPrinter(productionSiteId, new(printer.Id, printer.Name));
     }
 
     public void UpdatePrinter(Guid productionSiteId, PrinterDto printer)
     {
         PrintersEndpoint.UpdateQueryData(productionSiteId, query =>
-            query.Data == null ? query.Data! : query.Data.ReplaceItemBy(printer, p => p.Id == printer.Id).ToArray());
+            query.Data == null ? [printer] : query.Data.ReplaceItemBy(printer, p => p.Id == printer.Id).ToArray());
+        PrinterEndpoint.UpdateQueryData(printer.Id, _ => printer);
         UpdateProxyPrinter(productionSiteId, new(printer.Id, printer.Name));
     }
 
     public void DeletePrinter(Guid productionSiteId, Guid printerId)
     {
         PrintersEndpoint.UpdateQueryData(productionSiteId, query =>
-            query.Data == null ? query.Data! : query.Data.Where(x => x.Id != printerId).ToArray());
+            query.Data == null ? [] : query.Data.Where(x => x.Id != printerId).ToArray());
+        PrinterEndpoint.Invalidate(printerId);
         DeleteProxyPrinter(productionSiteId, printerId);
     }
 
@@ -118,15 +124,15 @@ public class DevicesEndpoints(IWebApi webApi)
 
     public void AddProxyPrinter(Guid productionSiteId, ProxyDto proxyPrinter) =>
         ProxyPrintersEndpoint.UpdateQueryData(productionSiteId, query =>
-            query.Data == null ? query.Data! : query.Data.Prepend(proxyPrinter).ToArray());
+            query.Data == null ? [proxyPrinter] : query.Data.Prepend(proxyPrinter).ToArray());
 
     public void UpdateProxyPrinter(Guid productionSiteId, ProxyDto proxyPrinter) =>
         ProxyPrintersEndpoint.UpdateQueryData(productionSiteId, query =>
-            query.Data == null ? query.Data! : query.Data.ReplaceItemBy(proxyPrinter, p => p.Id == proxyPrinter.Id).ToArray());
+            query.Data == null ? [proxyPrinter] : query.Data.ReplaceItemBy(proxyPrinter, p => p.Id == proxyPrinter.Id).ToArray());
 
     public void DeleteProxyPrinter(Guid productionSiteId, Guid proxyPrinterId) =>
         ProxyPrintersEndpoint.UpdateQueryData(productionSiteId, query =>
-            query.Data == null ? query.Data! : query.Data.Where(x => x.Id != proxyPrinterId).ToArray());
+            query.Data == null ? [] : query.Data.Where(x => x.Id != proxyPrinterId).ToArray());
 
     # endregion
 }

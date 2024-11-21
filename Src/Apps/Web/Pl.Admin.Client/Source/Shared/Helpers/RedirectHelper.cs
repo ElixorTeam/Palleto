@@ -29,6 +29,9 @@ public sealed class RedirectHelper(IAuthorizationService authorizationService, N
     public string ToPrinter(Guid uid) =>
         Link(uid, Urls.Printers, CheckPolicy(PolicyEnum.Support));
 
+    public string ToPalletMan(Guid uid) =>
+        Link(uid, Urls.PalletMen, CheckPolicy(PolicyEnum.Support));
+
     #endregion
 
     #region For Admin
