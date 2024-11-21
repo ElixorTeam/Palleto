@@ -1,0 +1,37 @@
+@using Pl.Admin.Models.Features.References.Template.Queries
+
+<ViewFieldGrid Title="Общая информация" Border>
+  <ViewFieldGuid Value="@Model.Id" />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColName"]"
+    Value="@Model.Name"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColType"]"
+    Value="@(Model.IsWeight ? WsDataLocalizer["ColTemplateWeight"] : WsDataLocalizer["ColTemplatePiece"])"
+  />
+</ViewFieldGrid>
+
+<ViewFieldGrid Title="Параметры">
+  <ViewField
+    Label="@($"{WsDataLocalizer["ColWidth"]} ({WsDataLocalizer["MeasureMm"]})")"
+    Value="@Model.Width.ToString()"
+  />
+
+  <ViewField
+    Label="@($"{WsDataLocalizer["ColHeight"]} ({WsDataLocalizer["MeasureMm"]})")"
+    Value="@Model.Height.ToString()"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColRotation"]"
+    Value="@($"{Model.Rotate}°")"
+  />
+</ViewFieldGrid>
+
+@code {
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Parameter, EditorRequired] public TemplateDto Model { get; set; } = default!;
+}

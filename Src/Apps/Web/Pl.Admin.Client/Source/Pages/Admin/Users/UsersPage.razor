@@ -17,6 +17,10 @@
     Options="@PageHelper.DefaultEndpointOptions"
     Context="query"
   >
+    <Breadcrumbs Class="!pb-5">
+      <Breadcrumb Label=@Localizer["SectionUsers"] Link="@Urls.Users" />
+    </Breadcrumbs>
+
     <DataGridHeader>
       <DataGridLabelWithCounter
         Label="@Localizer["SectionUsers"]"
@@ -29,7 +33,7 @@
     <DataGridContainer
       TItem="UserModel"
       Items="@(query.Data ?? [])"
-      OnItemSelect="@(item => OpenUpdateDialog(item))"
+      OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToUser(item.KcId)))"
       IsFilterable
     >
       <ColumnsContent>
@@ -59,7 +63,11 @@
       </ColumnsContent>
       <ContextMenuContent>
         <DataGridActionUpdateItem TItem="UserModel" Action="@OpenUpdateDialog" />
-        <DataGridActionDeleteItem TItem="UserModel" Action="@DeleteItem" />
+        <DataGridActionOpenItem Link="@(RedirectHelper.ToUser(context.Item.Id))" />
+        <DataGridActionOpenInNewTab TItem="UserModel" Link="@(RedirectHelper.ToUser(context.Item.Id))" />
+        <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
+          <DataGridActionDeleteItem TItem="UserModel" Action="@DeleteItem" />
+        </AuthorizeView>
       </ContextMenuContent>
     </DataGridContainer>
   </UseParameterlessEndpoint>
@@ -75,6 +83,7 @@
   [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
   [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private IDialogService DialogService { get; set; } = default!;
 
   #endregion

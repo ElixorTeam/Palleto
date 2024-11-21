@@ -15,19 +15,24 @@ public class PrintSettingsEndpoints(IWebApi webApi)
         webApi.GetTemplates,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
+    public Endpoint<Guid, TemplateDto> TemplateEndpoint { get; } = new(
+        webApi.GetTemplateByUid,
+        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+
     public void AddTemplate(TemplateDto template, string body)
     {
         TemplatesEndpoint.UpdateQueryData(new(), query =>
-            query.Data == null ? query.Data! : query.Data.Prepend(template).ToArray());
-
+            query.Data == null ? [template] : query.Data.Prepend(template).ToArray());
+        TemplateEndpoint.UpdateQueryData(template.Id, _ => template);
         AddProxyTemplate(template.IsWeight, new(template.Id, template.Name));
         AddTemplateBody(template.Id, body);
     }
 
     public void UpdateTemplate(TemplateDto template, string body)
     {
-        TemplatesEndpoint.UpdateQueryData(new(), query =>
-            query.Data == null ? query.Data! : query.Data.ReplaceItemBy(template, p => p.Id == template.Id).ToArray());
+        TemplatesEndpoint.UpdateQueryData(new(), query => query.Data == null ? [template] :
+            query.Data.ReplaceItemBy(template, p => p.Id == template.Id).ToArray());
+        TemplateEndpoint.UpdateQueryData(template.Id, _ => template);
         UpdateProxyTemplate(template.IsWeight, new(template.Id, template.Name));
         UpdateTemplateBody(template.Id, body);
     }
@@ -35,7 +40,9 @@ public class PrintSettingsEndpoints(IWebApi webApi)
     public void DeleteTemplate(bool isWeight, Guid templateId)
     {
         TemplatesEndpoint.UpdateQueryData(new(), query =>
-            query.Data == null ? query.Data! : query.Data.Where(x => x.Id != templateId).ToArray());
+            query.Data == null ? [] : query.Data.Where(x => x.Id != templateId).ToArray());
+
+        TemplateEndpoint.Invalidate(templateId);
         DeleteProxyTemplate(isWeight, templateId);
         DeleteTemplateBody(templateId);
     }
@@ -50,15 +57,15 @@ public class PrintSettingsEndpoints(IWebApi webApi)
 
     public void AddProxyTemplate(bool isWeight, ProxyDto proxyTemplate) =>
         ProxyTemplatesEndpoint.UpdateQueryData(isWeight, query =>
-            query.Data == null ? query.Data! : query.Data.Prepend(proxyTemplate).ToArray());
+            query.Data == null ? [proxyTemplate] : query.Data.Prepend(proxyTemplate).ToArray());
 
     public void UpdateProxyTemplate(bool isWeight, ProxyDto proxyTemplate) =>
-        ProxyTemplatesEndpoint.UpdateQueryData(isWeight, query =>
-            query.Data == null ? query.Data! : query.Data.ReplaceItemBy(proxyTemplate, p => p.Id == proxyTemplate.Id).ToArray());
+        ProxyTemplatesEndpoint.UpdateQueryData(isWeight, query => query.Data == null ? [proxyTemplate] :
+            query.Data.ReplaceItemBy(proxyTemplate, p => p.Id == proxyTemplate.Id).ToArray());
 
     public void DeleteProxyTemplate(bool isWeight, Guid proxyTemplateId) =>
         ProxyTemplatesEndpoint.UpdateQueryData(isWeight, query =>
-            query.Data == null ? query.Data! : query.Data.Where(x => x.Id != proxyTemplateId).ToArray());
+            query.Data == null ? [] : query.Data.Where(x => x.Id != proxyTemplateId).ToArray());
 
     # endregion
 
@@ -69,10 +76,10 @@ public class PrintSettingsEndpoints(IWebApi webApi)
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
     public void AddTemplateBody(Guid templateId, string body) =>
-        TemplateBodyEndpoint.UpdateQueryData(templateId, query => query.Data == null ? query.Data! : body);
+        TemplateBodyEndpoint.UpdateQueryData(templateId, _ => body);
 
     public void UpdateTemplateBody(Guid templateId, string body) =>
-        TemplateBodyEndpoint.UpdateQueryData(templateId, query => query.Data == null ? query.Data! : body);
+        TemplateBodyEndpoint.UpdateQueryData(templateId, _ => body);
 
     public void DeleteTemplateBody(Guid templateId) =>
         TemplateBodyEndpoint.Invalidate(templateId);
@@ -85,25 +92,32 @@ public class PrintSettingsEndpoints(IWebApi webApi)
         webApi.GetResources,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
+    public Endpoint<Guid, TemplateResourceDto> ResourceEndpoint { get; } = new(
+        webApi.GetResourceByUid,
+        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+
     public void AddResource(TemplateResourceDto resource, string body)
     {
         ResourcesEndpoint.UpdateQueryData(new(), query =>
-            query.Data == null ? query.Data! : query.Data.Prepend(resource).ToArray());
+            query.Data == null ? [resource] : query.Data.Prepend(resource).ToArray());
+        ResourceEndpoint.UpdateQueryData(new(), _ => resource);
         AddResourceBody(resource.Id, body);
     }
 
     public void UpdateResource(TemplateResourceDto resource, string body)
     {
         ResourcesEndpoint.UpdateQueryData(new(), query =>
-            query.Data == null ? query.Data! : query.Data.ReplaceItemBy(resource, p => p.Id == resource.Id).ToArray());
+            query.Data == null ? [resource] : query.Data.ReplaceItemBy(resource, p => p.Id == resource.Id).ToArray());
+        ResourceEndpoint.UpdateQueryData(new(), _ => resource);
         UpdateResourceBody(resource.Id, body);
     }
 
-    public void DeleteResource(Guid templateId)
+    public void DeleteResource(Guid resourceId)
     {
         ResourcesEndpoint.UpdateQueryData(new(), query =>
-            query.Data == null ? query.Data! : query.Data.Where(x => x.Id != templateId).ToArray());
-        DeleteResourceBody(templateId);
+            query.Data == null ? [] : query.Data.Where(x => x.Id != resourceId).ToArray());
+        ResourceEndpoint.Invalidate(resourceId);
+        DeleteResourceBody(resourceId);
     }
 
     # endregion
@@ -115,10 +129,10 @@ public class PrintSettingsEndpoints(IWebApi webApi)
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
     public void AddResourceBody(Guid resourceId, string body) =>
-        ResourceBodyEndpoint.UpdateQueryData(resourceId, query => query.Data == null ? query.Data! : body);
+        ResourceBodyEndpoint.UpdateQueryData(resourceId, _ => body);
 
     public void UpdateResourceBody(Guid resourceId, string body) =>
-        ResourceBodyEndpoint.UpdateQueryData(resourceId, query => query.Data == null ? query.Data! : body);
+        ResourceBodyEndpoint.UpdateQueryData(resourceId, _ => body);
 
     public void DeleteResourceBody(Guid resourceId) =>
         ResourceBodyEndpoint.Invalidate(resourceId);

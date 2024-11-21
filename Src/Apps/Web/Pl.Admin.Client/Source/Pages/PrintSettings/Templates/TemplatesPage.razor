@@ -14,6 +14,10 @@
   Options="PageHelper.DefaultEndpointOptions"
   Context="templatesQuery"
 >
+  <Breadcrumbs Class="!pb-5">
+    <Breadcrumb Label=@Localizer["SectionTemplates"] Link="@Urls.Templates" />
+  </Breadcrumbs>
+
   <DataGridHeader>
     <DataGridLabelWithCounter Label="@Localizer["SectionTemplates"]" ItemsCount="@templatesQuery.Data?.Length" IsLoading="templatesQuery.IsLoading"/>
     <DataGridActionReload OnClick="@templatesQuery.RefetchAsync" IsLoading="templatesQuery.IsFetching" />
@@ -25,7 +29,7 @@
   <DataGridContainer
     TItem="TemplateDto"
     Items="@(templatesQuery.HasData ? templatesQuery.Data : [])"
-    OnItemSelect="@(item => OpenUpdateDialog(item))"
+    OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToTemplate(item.Id)))"
     IsFilterable
   >
     <ColumnsContent>
@@ -78,6 +82,8 @@
     </ColumnsContent>
     <ContextMenuContent>
       <DataGridActionUpdateItem TItem="TemplateDto" Action="@OpenUpdateDialog" />
+      <DataGridActionOpenItem Link="@(RedirectHelper.ToTemplate(context.Item.Id))" />
+      <DataGridActionOpenInNewTab TItem="TemplateDto" Link="@(RedirectHelper.ToTemplate(context.Item.Id))" />
       <AuthorizeView Policy="@PolicyEnum.Admin" Context="authContext">
         <DataGridActionDeleteItem TItem="TemplateDto" Action="@DeleteItem" />
       </AuthorizeView>
@@ -91,6 +97,7 @@
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
   [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private IDialogService DialogService { get; set; } = default!;

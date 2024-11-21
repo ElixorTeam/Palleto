@@ -7,13 +7,17 @@
 @attribute [Authorize(Policy = PolicyEnum.SeniorSupport)]
 @rendermode InteractiveServer
 
-<PageTitle>Admin - @Localizer["SectionResources"]</PageTitle>
+<PageTitle>Admin - @Localizer["SectionTemplateResources"]</PageTitle>
 
 <UseParameterlessEndpoint
   Endpoint="PrintSettingsEndpoints.ResourcesEndpoint"
   Options="PageHelper.DefaultEndpointOptions"
   Context="resourcesQuery"
 >
+  <Breadcrumbs Class="!pb-5">
+    <Breadcrumb Label=@Localizer["SectionTemplateResources"] Link="@Urls.Resources" />
+  </Breadcrumbs>
+
   <DataGridHeader>
     <DataGridLabelWithCounter Label="@Localizer["SectionTemplateResources"]" ItemsCount="@resourcesQuery.Data?.Length" IsLoading="resourcesQuery.IsLoading"/>
     <DataGridActionReload OnClick="@resourcesQuery.RefetchAsync" IsLoading="resourcesQuery.IsFetching" />
@@ -25,7 +29,7 @@
   <DataGridContainer
     TItem="TemplateResourceDto"
     Items="@(resourcesQuery.HasData ? resourcesQuery.Data : [])"
-    OnItemSelect="@(item => OpenUpdateDialog(item))"
+    OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToResource(item.Id)))"
     IsFilterable
   >
     <ColumnsContent>
@@ -67,6 +71,8 @@
     </ColumnsContent>
     <ContextMenuContent>
       <DataGridActionUpdateItem TItem="TemplateResourceDto" Action="@OpenUpdateDialog" />
+      <DataGridActionOpenItem Link="@(RedirectHelper.ToResource(context.Item.Id))" />
+      <DataGridActionOpenInNewTab TItem="TemplateResourceDto" Link="@(RedirectHelper.ToResource(context.Item.Id))" />
       <AuthorizeView Policy="@PolicyEnum.Admin" Context="authContext">
         <DataGridActionDeleteItem TItem="TemplateResourceDto" Action="@DeleteItem" />
       </AuthorizeView>
@@ -81,6 +87,7 @@
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private IWebApi WebApi { get; set; } = default!;
   [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private IDialogService DialogService { get; set; } = default!;

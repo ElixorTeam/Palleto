@@ -90,7 +90,6 @@
     @if (IsAdmin)
     {
       <SectionFormActionReset OnClick="@ResetAction" />
-      <SectionFormActionDelete OnClick="@DeleteItem" />
     }
   </ActionsContent>
 </SectionForm>
@@ -122,12 +121,6 @@
   {
     TemplateDto dto = await WebApi.UpdateTemplate(Model.Id, item);
     PrintSettingsEndpoints.UpdateTemplate(dto, FormModel.Body);
-  }
-
-  protected override async Task DeleteItemAction()
-  {
-    await WebApi.DeleteTemplate(Model.Id);
-    PrintSettingsEndpoints.DeleteTemplate(Model.IsWeight, Model.Id);
   }
 
   private string GetTemplateTypeName(bool isWeight) =>

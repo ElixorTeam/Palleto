@@ -1,0 +1,62 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Models.Features.References.TemplateResources.Queries
+
+<div class="flex gap-8">
+  @if (Model.Type == ZplResourceType.Sign)
+  {
+    <div class="h-28 w-28 p-2 flex items-center rounded-md justify-center select-none overflow-hidden border bg-background [&>svg]:fill-primary">
+      <UseEndpoint
+        Endpoint="@PrintSettingsEndpoints.ResourceBodyEndpoint"
+        Arg="Model.Id"
+        Context="resourceBodyQuery"
+      >
+        @if (resourceBodyQuery.HasData)
+        {
+          @((MarkupString)resourceBodyQuery.Data)
+        }
+        else
+        {
+          <Spinner Class="size-6 inline text-gray-200 animate-spin fill-primary" />
+        }
+      </UseEndpoint>
+    </div>
+  }
+
+  <ViewFieldGrid Title="Общая информация">
+    <ViewFieldGuid Value="@Model.Id" />
+
+    <ViewField
+      Label="@WsDataLocalizer["ColName"]"
+      Value="@Model.Name"
+    />
+
+    <ViewField
+      Label="@WsDataLocalizer["ColType"]"
+      Value="@Localizer[Model.Type.GetDescription()]"
+    />
+
+    @if (Model.Type == ZplResourceType.Text)
+    {
+      <UseEndpoint
+        Endpoint="@PrintSettingsEndpoints.ResourceBodyEndpoint"
+        Arg="Model.Id"
+        Context="resourceBodyQuery"
+      >
+        <ViewField
+          Label="@WsDataLocalizer["ColTemplate"]"
+          Value="@resourceBodyQuery.Data"
+        />
+      </UseEndpoint>
+    }
+  </ViewFieldGrid>
+</div>
+
+
+
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+  [Parameter, EditorRequired] public TemplateResourceDto Model { get; set; } = default!;
+}

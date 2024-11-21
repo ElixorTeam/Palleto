@@ -23,6 +23,9 @@ public sealed class RedirectHelper(IAuthorizationService authorizationService, N
     public string ToTemplate(Guid uid) =>
         Link(uid, Urls.Templates, CheckPolicy(PolicyEnum.Support));
 
+    public string ToResource(Guid uid) =>
+        Link(uid, Urls.Resources, CheckPolicy(PolicyEnum.Support));
+
     public string ToArm(Guid uid) =>
         Link(uid, Urls.Arms, CheckPolicy(PolicyEnum.Support));
 
@@ -31,6 +34,10 @@ public sealed class RedirectHelper(IAuthorizationService authorizationService, N
 
     public string ToPalletMan(Guid uid) =>
         Link(uid, Urls.PalletMen, CheckPolicy(PolicyEnum.Support));
+
+    public string ToUser(Guid uid) =>
+        Link(uid, Urls.Users, CheckPolicy(PolicyEnum.Support));
+
 
     #endregion
 

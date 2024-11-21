@@ -1,0 +1,64 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models.Features.References.Template.Queries
+@using Pl.Admin.Models
+
+@attribute [Route(Urls.Templates + "/{Id:guid}")]
+
+<UseEndpoint
+  Endpoint="@PrintSettingsEndpoints.TemplateEndpoint"
+  Arg="@Id"
+  Context="query"
+>
+  <Breadcrumbs Start="BreadcrumbStart.Back">
+    <Breadcrumb Label="@Localizer["SectionTemplates"]" Link="@Urls.Templates" />
+    @if (query.HasData)
+    {
+      <Breadcrumb Label="@query.Data.Name" />
+    }
+  </Breadcrumbs>
+
+  <ViewHeader Title="@query.Data?.Name">
+    <ButtonsContent>
+      @if (query.HasData)
+      {
+      <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToTemplate(query.Data.Id))" />
+      <ViewButtonUpdate TDialog="TemplatesUpdateDialog" Model="query.Data" />
+      <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
+      }
+    </ButtonsContent>
+
+    <TabsContent>
+      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
+        Информация
+      </ViewTabButton>
+    </TabsContent>
+  </ViewHeader>
+
+  <Tabs @bind-ActiveTabId="@CurrentTab">
+    @if (query.HasData)
+    {
+    <Tab Id="info">
+      <TemplateViewInfo Model="@query.Data"/>
+    </Tab>
+    }
+  </Tabs>
+</UseEndpoint>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Parameter] public Guid Id { get; set; }
+
+  private string CurrentTab { get; set; } = "info";
+
+  private async Task DeleteItem(TemplateDto item)
+  {
+    await WebApi.DeleteTemplate(item.Id);
+    PrintSettingsEndpoints.DeleteTemplate(item.IsWeight, item.Id);
+    await PageHelper.OpenLink(Urls.Templates);
+  }
+}
