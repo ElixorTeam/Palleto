@@ -5,7 +5,7 @@
     </ItemGroup>
 
     <ItemGroup Label="Packages">
-        <PackageReference Include="EFCore.BulkExtensions" VersionOverride="8.1.1" />
+        <PackageReference Include="EFCore.BulkExtensions" VersionOverride="8.1.2" />
     </ItemGroup>
 
     <ItemGroup Label="Projects">

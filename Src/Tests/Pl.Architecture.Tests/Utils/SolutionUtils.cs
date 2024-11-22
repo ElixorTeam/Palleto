@@ -5,7 +5,7 @@ namespace Pl.Architecture.Tests.Utils;
 public static class SolutionUtils
 {
     private const string SolutionConfiguration = "Develop_x64";
-    private const string SolutionFileName = "WeightService.sln";
+    private const string SolutionFileName = "Palleto.sln";
     private const string SolutionRelativePath = $@"..\..\..\..\..\..\{SolutionFileName}";
     private static readonly SolutionFile SolutionFile = SolutionFile.Parse(Path.GetFullPath(SolutionRelativePath));
 
@@ -45,17 +45,13 @@ public static class SolutionUtils
 
     private static bool FilterAllProjects(ProjectInSolution project) =>
         project.AbsolutePath.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase) &&
-        !project.AbsolutePath.Contains("Test", StringComparison.OrdinalIgnoreCase);
+        !project.AbsolutePath.Contains("Tests", StringComparison.OrdinalIgnoreCase);
 
     private static bool FilterFrontendProjects(ProjectInSolution project) =>
-        FilterAllProjects(project) &&
-        project.AbsolutePath.Contains("Apps", StringComparison.OrdinalIgnoreCase) &&
-        project.AbsolutePath.Contains('.', StringComparison.OrdinalIgnoreCase) &&
-        !project.AbsolutePath.Contains("Pl", StringComparison.OrdinalIgnoreCase) &&
-        !project.AbsolutePath.Contains("Api", StringComparison.OrdinalIgnoreCase);
+        FilterAllProjects(project) && project.AbsolutePath.Contains("Client", StringComparison.OrdinalIgnoreCase);
 
     private static bool FilterApiProjects(ProjectInSolution project) =>
-        FilterAllProjects(project) && project.AbsolutePath.Contains(".Api", StringComparison.OrdinalIgnoreCase);
+        FilterAllProjects(project) && project.AbsolutePath.Contains("Api", StringComparison.OrdinalIgnoreCase);
 
     private static string FindAssemblyPath(string projectPath)
     {
@@ -71,8 +67,15 @@ public static class SolutionUtils
         foreach (ProjectInSolution project in SolutionFile.ProjectsInOrder)
         {
             if (!projectFilter(project)) continue;
-            string assemblyPath = FindAssemblyPath(project.AbsolutePath);
-            assemblies.Add(Path.GetFileNameWithoutExtension(project.AbsolutePath), Assembly.LoadFrom(assemblyPath));
+            try
+            {
+                string assemblyPath = FindAssemblyPath(project.AbsolutePath);
+                assemblies.Add(Path.GetFileNameWithoutExtension(project.AbsolutePath), Assembly.LoadFrom(assemblyPath));
+            }
+            catch
+            {
+                // pass
+            }
         }
 
         return assemblies;

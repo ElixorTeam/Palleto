@@ -19,8 +19,6 @@ public partial class MainPage : ContentPage
     {
         e.WebView.CoreWebView2.Settings.IsPinchZoomEnabled = false;
         e.WebView.CoreWebView2.Settings.IsZoomControlEnabled = false;
-
-        if (_fullScreen)
-            Controls.FullScreen();
+        if (_fullScreen) Controls.FullScreen();
     }
 }
