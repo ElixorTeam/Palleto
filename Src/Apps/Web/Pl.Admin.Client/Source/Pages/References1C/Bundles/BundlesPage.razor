@@ -7,19 +7,27 @@
 
 <PageTitle>Admin - @Localizer["SectionBundles"]</PageTitle>
 
-<UseParameterlessEndpoint Endpoint="@References1CEndpoints.BundlesEndpoint" Options="@(PageHelper.DefaultEndpointOptions)" Context="bundlesQuery">
+<UseParameterlessEndpoint
+  Endpoint="@References1CEndpoints.BundlesEndpoint"
+  Options="@(PageHelper.DefaultEndpointOptions)"
+  Context="query"
+>
   <Breadcrumbs Class="!pb-5">
     <Breadcrumb Label="@Localizer["SectionBundles"]" Link="@Urls.Bundles" />
   </Breadcrumbs>
 
   <DataGridHeader>
-    <DataGridLabelWithCounter Label="@Localizer["SectionBundles"]" ItemsCount="@bundlesQuery.Data?.Length" IsLoading="bundlesQuery.IsLoading"/>
-    <DataGridActionReload OnClick="@bundlesQuery.RefetchAsync" IsLoading="bundlesQuery.IsFetching" />
+    <DataGridLabelWithCounter
+      Label="@Localizer["SectionBundles"]"
+      ItemsCount="@query.Data?.Length"
+      IsLoading="query.IsLoading"
+    />
+    <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching" />
   </DataGridHeader>
 
   <DataGridContainer
     TItem="PackageDto"
-    Items="@(bundlesQuery.HasData ? bundlesQuery.Data : [])"
+    Items="@(query.HasData ? query.Data : [])"
     OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToBundle(item.Id)))"
   >
     <ColumnsContent>
@@ -67,9 +75,10 @@
 
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
+
   [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
 
   #endregion
 }

@@ -1,0 +1,80 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using TscZebra.Plugin.Abstractions.Enums
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.Devices.Printers.Commands
+@using Pl.Admin.Models.Features.Devices.Printers.Queries
+
+@inherits SectionFormBase<PrinterUpdateDto>
+
+<UseParameterlessEndpoint
+  Endpoint="ReferencesEndpoints.ProxyUserProductionSiteEndpoint"
+  Context="userProductionSiteQuery"
+>
+  <SectionForm
+    FormModel="@FormModel"
+    ChangeDate="@Model.ChangeDt"
+    CreateDate="@Model.CreateDt"
+    Validator="@PrinterUpdateValidator"
+    OnCancelAction="@OnCancelAction"
+    OnSubmitAction="@UpdateItem"
+  >
+    <FieldsContent>
+      <SectionAdminGuidField Value="@Model.Id" />
+
+      <SectionTextField
+        Label="@WsDataLocalizer["ColName"]"
+        @bind-Value="FormModel.Name"
+        For="@(() => FormModel.Name)"
+      />
+
+      <SectionIpField
+        Label="@($"{WsDataLocalizer["ColIp"]} ({Localizer["FormPrinterControl"]})")"
+        @bind-Value="@FormModel.Ip"
+        For="@(() => FormModel.Ip)"
+        Path="@($"http://{FormModel.Ip}")"
+      />
+
+      <SectionSelectSingleField
+        TItem="PrinterTypes"
+        Label="@WsDataLocalizer["ColManufacturer"]"
+        Items="PrinterTypes"
+        @bind-Value="@FormModel.Type"
+        For="@(() => FormModel.Type)"
+      />
+
+      <SectionReadOnlyField
+        Path="@RedirectHelper.ToProductionSite(Model.ProductionSite.Id)"
+        Label="@WsDataLocalizer["ColProductionSite"]"
+        Value="@Model.ProductionSite.Name"
+      />
+    </FieldsContent>
+    <ActionsContent>
+      <SectionFormActionReset OnClick="@ResetAction" />
+    </ActionsContent>
+  </SectionForm>
+</UseParameterlessEndpoint>
+
+@code {
+  # region Injects
+
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
+  [Inject] private PrinterUpdateValidator PrinterUpdateValidator { get; set; } = default!;
+
+  # endregion
+
+  [Parameter, EditorRequired] public PrinterDto Model { get; set; } = default!;
+
+  private IEnumerable<PrinterTypes> PrinterTypes { get; } = Enum.GetValues(typeof(PrinterTypes)).Cast<PrinterTypes>().ToList();
+
+  protected override async Task UpdateItemAction(PrinterUpdateDto item)
+  {
+    PrinterDto dto = await WebApi.UpdatePrinter(Model.Id, item);
+    DevicesEndpoints.UpdatePrinter(Model.ProductionSite.Id, dto);
+  }
+}

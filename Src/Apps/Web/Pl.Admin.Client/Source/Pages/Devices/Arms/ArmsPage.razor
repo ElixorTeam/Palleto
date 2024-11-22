@@ -1,14 +1,16 @@
 @using Blazor.Heroicons.Outline
 @using Pl.Admin.Client.Source.Features
+@using Pl.Admin.Client.Source.Pages.Devices.Arms.Create
+@using Pl.Admin.Client.Source.Pages.Devices.Arms.Update
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Client.Source.Shared.Services.Stores
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
 
-@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @attribute [Route(Urls.Arms)]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @rendermode InteractiveServer
 
 <PageTitle>Admin - @Localizer["SectionArm"]</PageTitle>
@@ -18,15 +20,22 @@
     Endpoint="@DevicesEndpoints.ArmsEndpoint"
     Arg="@ProductionSiteState.Value.ProductionSite.Id"
     Options="@PageHelper.DefaultEndpointOptions"
-    Context="armsQuery"
+    Context="query"
   >
     <Breadcrumbs Class="!pb-5">
       <Breadcrumb Label=@Localizer["SectionArm"] Link="@Urls.Arms" />
     </Breadcrumbs>
 
     <DataGridHeader>
-      <DataGridLabelWithCounter Label="@Localizer["SectionArm"]" ItemsCount="@armsQuery.Data?.Length" IsLoading="armsQuery.IsLoading"/>
-      <DataGridActionReload OnClick="@armsQuery.RefetchAsync" IsLoading="armsQuery.IsFetching" />
+      <DataGridLabelWithCounter
+        Label="@Localizer["SectionArm"]"
+        ItemsCount="@query.Data?.Length"
+        IsLoading="query.IsLoading"
+      />
+      <DataGridActionReload
+        OnClick="@query.RefetchAsync"
+        IsLoading="query.IsFetching"
+      />
       <AuthorizeView Policy="@PolicyEnum.SeniorSupport">
         <DataGridActionCreate OnClick="@OpenCreateDialog"/>
       </AuthorizeView>
@@ -34,7 +43,7 @@
 
     <DataGridContainer
       TItem="ArmDto"
-      Items="@(armsQuery.HasData ? armsQuery.Data : [])"
+      Items="@(query.HasData ? query.Data : [])"
       OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToArm(item.Id)))"
       IsFilterable
     >
@@ -101,14 +110,15 @@
 @code {
   #region Inject
 
+  [Inject] private IWebApi WebApi { get; set; } = default!;
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
   [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private IDialogService DialogService { get; set; } = default!;
+
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
 
   #endregion
 

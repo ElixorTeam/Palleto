@@ -1,4 +1,6 @@
 @using Pl.Admin.Client.Source.Features
+@using Pl.Admin.Client.Source.Pages.Admin.PalletMen.Create
+@using Pl.Admin.Client.Source.Pages.Admin.PalletMen.Update
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Client.Source.Shared.Services.Stores
@@ -16,7 +18,7 @@
     Endpoint="@AdminEndpoints.PalletMenEndpoint"
     Arg="@ProductionSiteState.Value.ProductionSite.Id"
     Options="@PageHelper.DefaultEndpointOptions"
-    Context="palletManQuery"
+    Context="query"
   >
     <Breadcrumbs Class="!pb-5">
       <Breadcrumb Label=@Localizer["SectionPalletMen"] Link="@Urls.PalletMen" />
@@ -25,10 +27,10 @@
     <DataGridHeader>
       <DataGridLabelWithCounter
         Label="@Localizer["SectionPalletMen"]"
-        ItemsCount="@palletManQuery.Data?.Length"
-        IsLoading="palletManQuery.IsLoading"
+        ItemsCount="@query.Data?.Length"
+        IsLoading="query.IsLoading"
       />
-      <DataGridActionReload OnClick="@palletManQuery.RefetchAsync" IsLoading="palletManQuery.IsFetching" />
+      <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching" />
       <AuthorizeView Policy="@PolicyEnum.SeniorSupport">
         <DataGridActionCreate OnClick="@OpenCreateDialog" />
       </AuthorizeView>
@@ -36,7 +38,7 @@
 
     <DataGridContainer
       TItem="PalletManDto"
-      Items="@(palletManQuery.HasData ? palletManQuery.Data : [])"
+      Items="@(query.HasData ? query.Data : [])"
       OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToPalletMan(item.Id)))"
       IsFilterable
     >
@@ -80,22 +82,23 @@
 @code {
   #region Inject
 
+  [Inject] private IWebApi WebApi { get; set; } = default!;
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private AdminEndpoints AdminEndpoints { get; set; } = default!;
   [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private IDialogService DialogService { get; set; } = default!;
+
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private AdminEndpoints AdminEndpoints { get; set; } = default!;
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
 
   #endregion
 
   private Task OpenCreateDialog() =>
-    DialogService.ShowDialogAsync<PalletMenCreateDialog>(PageHelper.DialogParameters);
+    DialogService.ShowDialogAsync<PalletManCreateDialog>(PageHelper.DialogParameters);
 
   private Task OpenUpdateDialog(PalletManDto item) =>
-    DialogService.ShowDialogAsync<PalletMenUpdateDialog>(item, PageHelper.DialogParameters);
+    DialogService.ShowDialogAsync<PalletManUpdateDialog>(item, PageHelper.DialogParameters);
 
   private async Task DeleteItem(PalletManDto item)
   {

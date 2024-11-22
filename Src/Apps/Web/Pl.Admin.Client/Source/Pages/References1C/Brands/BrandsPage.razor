@@ -11,21 +11,24 @@
 <UseParameterlessEndpoint
   Endpoint="@References1CEndpoints.BrandsEndpoint"
   Options="@(PageHelper.DefaultEndpointOptions)"
-  Context="brandsQuery"
+  Context="query"
 >
-
   <Breadcrumbs Class="!pb-5">
     <Breadcrumb Label=@Localizer["SectionBrands"] Link="@Urls.Brands" />
   </Breadcrumbs>
 
   <DataGridHeader>
-    <DataGridLabelWithCounter Label="@Localizer["SectionBrands"]" ItemsCount="@brandsQuery.Data?.Length" IsLoading="brandsQuery.IsLoading"/>
-    <DataGridActionReload OnClick="@brandsQuery.RefetchAsync" IsLoading="brandsQuery.IsFetching" />
+    <DataGridLabelWithCounter
+      Label="@Localizer["SectionBrands"]"
+      ItemsCount="@query.Data?.Length"
+      IsLoading="query.IsLoading"
+    />
+    <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching" />
   </DataGridHeader>
 
   <DataGridContainer
     TItem="BrandDto"
-    Items="@(brandsQuery.HasData ? brandsQuery.Data : [])"
+    Items="@(query.HasData ? query.Data : [])"
     OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToBrand(item.Id)))"
   >
     <ColumnsContent>
@@ -68,9 +71,10 @@
 
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
+
   [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
 
   #endregion
 }

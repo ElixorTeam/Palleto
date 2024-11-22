@@ -6,20 +6,20 @@
 <UseEndpoint
   Endpoint="@OperationsEndpoints.PalletEndpoint"
   Arg="@Id"
-  Context="palletQuery"
+  Context="query"
 >
   <Breadcrumbs Start="BreadcrumbStart.Back">
-    @if (palletQuery.HasData)
+    @if (query.HasData)
     {
-      <Breadcrumb Label="@("Паллета №" + palletQuery.Data.Number)" />
+      <Breadcrumb Label="@("Паллета №" + query.Data.Number)" />
     }
   </Breadcrumbs>
 
-  <ViewHeader Title="@(palletQuery.HasData ? "Паллета №" + palletQuery.Data.Number : string.Empty)">
+  <ViewHeader Title="@(query.HasData ? "Паллета №" + query.Data.Number : string.Empty)">
     <ButtonsContent>
-      @if (palletQuery.HasData)
+      @if (query.HasData)
       {
-        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPallet(palletQuery.Data.Id))" />
+        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPallet(query.Data.Id))" />
       }
     </ButtonsContent>
 
@@ -33,13 +33,13 @@
     </TabsContent>
   </ViewHeader>
   <Tabs @bind-ActiveTabId="@CurrentTab">
-    @if (palletQuery.HasData)
+    @if (query.HasData)
     {
       <Tab Id="info">
-        <PalletViewInfo Model="palletQuery.Data"/>
+        <PalletViewInfo Model="query.Data"/>
       </Tab>
       <Tab Id="labels">
-        <PalletViewLabels Model="palletQuery.Data"/>
+        <PalletViewLabels Model="query.Data"/>
       </Tab>
     }
   </Tabs>

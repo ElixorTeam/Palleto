@@ -537,6 +537,15 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Такой страницы не существует.
+        /// </summary>
+        public static string NotFoundMessage {
+            get {
+                return ResourceManager.GetString("NotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Площадка не настроена для данного аккаунта. Обратитесь к поддержке..
         /// </summary>
         public static string ProductionSiteSuspenseDescription {

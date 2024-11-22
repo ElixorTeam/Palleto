@@ -1,7 +1,7 @@
 @using Blazor.Heroicons.Outline
+@using Pl.Admin.Client.Source.Pages.References1C.Plus.Update
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
-@using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References1C.Brands
 @using Pl.Admin.Models.Features.References1C.Plus.Queries
 
@@ -10,19 +10,27 @@
 
 <PageTitle>Admin - @Localizer["SectionPlu"]</PageTitle>
 
-<UseParameterlessEndpoint Endpoint="@References1CEndpoints.PlusEndpoint" Options="@(PageHelper.DefaultEndpointOptions)" Context="plusQuery">
+<UseParameterlessEndpoint
+  Endpoint="@References1CEndpoints.PlusEndpoint"
+  Options="@(PageHelper.DefaultEndpointOptions)"
+  Context="query"
+>
   <Breadcrumbs Class="!pb-5">
     <Breadcrumb Label="@Localizer["SectionPlu"]" Link="@Urls.Plus" />
   </Breadcrumbs>
 
   <DataGridHeader>
-    <DataGridLabelWithCounter Label="@Localizer["SectionPlu"]" ItemsCount="@plusQuery.Data?.Length" IsLoading="plusQuery.IsLoading"/>
-    <DataGridActionReload OnClick="@plusQuery.RefetchAsync" IsLoading="plusQuery.IsFetching"/>
+    <DataGridLabelWithCounter
+      Label="@Localizer["SectionPlu"]"
+      ItemsCount="@query.Data?.Length"
+      IsLoading="query.IsLoading"
+    />
+    <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching"/>
   </DataGridHeader>
 
   <DataGridContainer
     TItem="PluDto"
-    Items="@(plusQuery.HasData ? plusQuery.Data : [])"
+    Items="@(query.HasData ? query.Data : [])"
     OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToPlu(item.Id)))"
     IsFilterable
   >
@@ -118,7 +126,7 @@
             }
             else
             {
-              <Skeleton Class="h-10 w-full" />
+              <Skeleton Class="h-9 w-full" />
             }
           </UseParameterlessEndpoint>
         </FilterTemplate>
@@ -132,9 +140,11 @@
       />
     </ColumnsContent>
     <ContextMenuContent>
-      <DataGridActionUpdateItem TItem="PluDto" Action="@OpenUpdateDialog" />
-      <DataGridActionOpenItem Link="@RedirectHelper.ToPlu(context.Item.Id)" />
-      <DataGridActionOpenInNewTab TItem="PluDto" Link="@RedirectHelper.ToPlu(context.Item.Id)" />
+      <AuthorizeView Policy="@PolicyEnum.Support" Context="authContext">
+        <DataGridActionUpdateItem TItem="PluDto" Action="@OpenUpdateDialog"/>
+      </AuthorizeView>
+      <DataGridActionOpenItem Link="@RedirectHelper.ToPlu(context.Item.Id)"/>
+      <DataGridActionOpenInNewTab TItem="PluDto" Link="@RedirectHelper.ToPlu(context.Item.Id)"/>
     </ContextMenuContent>
   </DataGridContainer>
 </UseParameterlessEndpoint>
@@ -144,11 +154,11 @@
 
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private IDialogService DialogService { get; set; } = default!;
+
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
   [Inject] private PluViewValidator PluViewValidator { get; set; } = default!;
 
   # endregion

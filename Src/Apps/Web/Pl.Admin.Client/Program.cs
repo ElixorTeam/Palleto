@@ -42,6 +42,8 @@ builder.Services
     .AddFluentUIComponents(c => c.ValidateClassNames = false)
     .ConfigureKeycloakAuthorization(oidcSettings);
 
+// builder.Services.AddRazorPages();
+
 WebApplication app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -57,6 +59,8 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.UseRequestLocalization(Cultures.Ru.Name);
+
+app.UseStatusCodePagesWithRedirects("/not-found");
 
 app
     .MapGroup(Urls.Authorization)

@@ -1,9 +1,9 @@
 using Pl.Admin.Client.Source.Shared.Constants;
 using Pl.Admin.Client.Source.Shared.Extensions;
-// ReSharper disable once ClassNeverInstantiated.Global
 
 namespace Pl.Admin.Client.Source.Shared.Helpers;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public sealed class RedirectHelper(IAuthorizationService authorizationService, NavigationManager navigationManager, ClaimsPrincipal user)
 {
     public string ToAbsoluteUrl(string relativePath) => new Uri(new(navigationManager.BaseUri), relativePath).AbsoluteUri;
@@ -38,16 +38,12 @@ public sealed class RedirectHelper(IAuthorizationService authorizationService, N
     public string ToUser(Guid uid) =>
         Link(uid, Urls.Users, CheckPolicy(PolicyEnum.Support));
 
-
-    #endregion
-
-    #region For Admin
-
     public string ToWarehouse(Guid uid) =>
-        Link(uid, Urls.Warehouses, CheckPolicy(PolicyEnum.Admin));
+        Link(uid, Urls.Warehouses, CheckPolicy(PolicyEnum.Support));
 
     public string ToProductionSite(Guid uid) =>
-        Link(uid, Urls.ProductionSites, CheckPolicy(PolicyEnum.Admin));
+        Link(uid, Urls.ProductionSites, CheckPolicy(PolicyEnum.Support));
+
 
     #endregion
 

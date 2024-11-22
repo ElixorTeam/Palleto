@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
-<html lang="ru">
-<head lang="@Thread.CurrentThread.CurrentCulture.Name">
+<html lang="@Thread.CurrentThread.CurrentCulture.Name">
+<head>
   <title>Admin</title>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -11,8 +11,6 @@
   <link rel="stylesheet" href="./_content/Blazorise.Icons.FontAwesome/v6/css/all.min.css" />
   <link rel="stylesheet" href="Pl.Admin.Client.styles.css" />
   <link rel="stylesheet" href="./app.min.css"/>
-  <script src="./charts.min.js"></script>
-  <script src="./sortable.min.js"></script>
   <script src="./_content/Pl.Components/index.js"></script>
   <script>initializeTheme()</script>
   <HeadOutlet @rendermode="@(new InteractiveServerRenderMode(prerender: false))" />
@@ -24,6 +22,9 @@
     </svg>
   </a>
   <Routes @rendermode="@(new InteractiveServerRenderMode(prerender: false))"/>
+  <script src="./sortable.min.js"></script>
+  <script src="_content/PSC.Blazor.Components.Chartjs/lib/Chart.js/chart.js"></script>
+  <script src="_content/PSC.Blazor.Components.Chartjs/Chart.js" type="module"></script>
   <script src="_framework/blazor.web.js"></script>
 </body>
 </html>

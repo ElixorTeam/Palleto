@@ -1,0 +1,43 @@
+@using Pl.Admin.Models.Features.Admins.PalletMen.Queries
+@using Pl.Admin.Client.Source.Features
+
+<ViewFieldGrid Title="Общая информация" Border>
+  <ViewFieldGuid Value="@Model.Id" />
+
+  <ViewFieldGuid Value="@Model.Id1C" Label="UID 1C" />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColWarehouse"]"
+    Value="@Model.Warehouse.Name"
+  />
+  <SupportAuthView ProductionSiteUid="@Model.ProductionSite.Id">
+    <ViewField
+      Label="@WsDataLocalizer["ColPassword"]"
+      Value="@Model.Password"
+    />
+  </SupportAuthView>
+</ViewFieldGrid>
+
+<ViewFieldGrid Title="@WsDataLocalizer["ColFIO"]">
+  <ViewField
+    Label="@WsDataLocalizer["ColFirstName"]"
+    Value="@Model.Fio.Name"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColSurname"]"
+    Value="@Model.Fio.Surname"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColPatronymic"]"
+    Value="@Model.Fio.Patronymic"
+  />
+</ViewFieldGrid>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Parameter, EditorRequired] public PalletManDto Model { get; set; } = default!;
+}

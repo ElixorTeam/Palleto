@@ -1,0 +1,83 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models.Features.Devices.Printers.Queries
+@using Pl.Admin.Models
+@using Pl.Admin.Client.Source.Pages.Devices.Printers.Update
+@using Pl.Admin.Client.Source.Features
+
+@attribute [Route(Urls.Printers + "/{Id:guid}")]
+@attribute [Authorize(Policy = PolicyEnum.Support)]
+
+<UseEndpoint
+  Endpoint="@DevicesEndpoints.PrinterEndpoint"
+  Arg="@Id"
+  Context="query"
+>
+  <Breadcrumbs Start="BreadcrumbStart.Back">
+    <Breadcrumb Label="@Localizer["SectionPrinters"]" Link="@Urls.Printers" />
+    @if (query.HasData)
+    {
+      <Breadcrumb Label="@query.Data.Name" />
+    }
+  </Breadcrumbs>
+
+  <ViewHeader Title="@query.Data?.Name">
+    <ButtonsContent>
+      @if (query.HasData)
+      {
+        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPrinter(query.Data.Id))" />
+        <SupportAuthView ProductionSiteUid="@query.Data.ProductionSite.Id">
+          <ViewButtonUpdate TDialog="PrinterUpdateDialog" Model="query.Data" />
+        </SupportAuthView>
+        <AuthorizeView Policy="@PolicyEnum.SeniorSupport">
+          <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
+        </AuthorizeView>
+      }
+    </ButtonsContent>
+
+    <TabsContent>
+      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
+        Информация
+      </ViewTabButton>
+      <ViewTabButton Value="control" @bind-CurrentTab="CurrentTab">
+        Управление
+      </ViewTabButton>
+    </TabsContent>
+  </ViewHeader>
+
+  <Tabs @bind-ActiveTabId="@CurrentTab">
+    @if (query.HasData)
+    {
+      <Tab Id="info">
+        <PrinterViewInfo Model="@query.Data"/>
+      </Tab>
+      <Tab Id="control">
+        <PrinterViewControl Model="@query.Data" />
+      </Tab>
+    }
+  </Tabs>
+</UseEndpoint>
+
+@code {
+  # region Injects
+
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+
+  # endregion
+
+  [Parameter] public Guid Id { get; set; }
+
+  private string CurrentTab { get; set; } = "info";
+
+  private async Task DeleteItem(PrinterDto item)
+  {
+    await WebApi.DeletePrinter(item.Id);
+    DevicesEndpoints.DeletePrinter(item.ProductionSite.Id, item.Id);
+    await PageHelper.OpenLink(Urls.Printers);
+  }
+}

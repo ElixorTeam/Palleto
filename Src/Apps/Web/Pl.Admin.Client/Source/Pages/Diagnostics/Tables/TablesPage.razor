@@ -3,24 +3,31 @@
 @using Pl.Admin.Models.Features.Database
 
 @attribute [Route($"{Urls.Tables}")]
-@attribute [Authorize(Policy = PolicyEnum.Admin)]
+@attribute [Authorize(Policy = PolicyEnum.Developer)]
 @rendermode InteractiveServer
 
 <PageTitle>Admin - Localizer["SectionTables"]</PageTitle>
 
-<UseParameterlessEndpoint Endpoint="@DiagnosticEndpoints.TablesEndpoint" Context="tablesQuery">
+<UseParameterlessEndpoint
+  Endpoint="@DiagnosticEndpoints.TablesEndpoint"
+  Context="query"
+>
   <Breadcrumbs Class="!pb-5">
     <Breadcrumb Label="@Localizer["SectionTables"]" Link="@Urls.Tables" />
   </Breadcrumbs>
 
   <DataGridHeader>
-    <DataGridLabelWithCounter Label="@Localizer["SectionTables"]" ItemsCount="@tablesQuery.Data?.Length" IsLoading="tablesQuery.IsLoading"/>
-    <DataGridActionReload OnClick="@tablesQuery.RefetchAsync" IsLoading="tablesQuery.IsFetching"/>
+    <DataGridLabelWithCounter
+      Label="@Localizer["SectionTables"]"
+      ItemsCount="@query.Data?.Length"
+      IsLoading="query.IsLoading"
+    />
+    <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching"/>
   </DataGridHeader>
 
   <DataGridContainer
     TItem="DataBaseTableDto"
-    Items="@(tablesQuery.HasData ? tablesQuery.Data : [])"
+    Items="@(query.HasData ? query.Data : [])"
     IsFilterable
   >
     <ColumnsContent>
@@ -34,11 +41,11 @@
       >
         <FilterTemplate>
           @{ context.SearchValue = Scheme; }
-          @if (tablesQuery.HasData)
+          @if (query.HasData)
           {
             <SelectSingle
               TItem="string?"
-              Items="@(tablesQuery.Data.Select(x => x.Schema).ToHashSet().Union([null]))"
+              Items="@(query.Data.Select(x => x.Schema).ToHashSet().Union([null]))"
               @bind-Value="@Scheme"
               @bind-Value:after="@(() => context.TriggerFilterChange(Scheme))"
               Placeholder="@Localizer["SelectItemNotSelected"]"
@@ -47,7 +54,7 @@
           }
           else
           {
-            <Skeleton Class="h-10 w-full" />
+            <Skeleton Class="h-9 w-full" />
           }
         </FilterTemplate>
       </DataGridColumn>

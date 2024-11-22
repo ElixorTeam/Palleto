@@ -1,25 +1,33 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Models.Features.Database
+
 @attribute [Route($"{Urls.Migrations}")]
-@attribute [Authorize(Policy = PolicyEnum.Admin)]
+@attribute [Authorize(Policy = PolicyEnum.Developer)]
 @rendermode InteractiveServer
 
 <PageTitle>Admin - @Localizer["SectionMigrations"]</PageTitle>
 
-<UseParameterlessEndpoint Endpoint="@DiagnosticEndpoints.MigrationsEndpoint" Context="migrationsQuery">
+<UseParameterlessEndpoint
+  Endpoint="@DiagnosticEndpoints.MigrationsEndpoint"
+  Context="query"
+>
   <Breadcrumbs Class="!pb-5">
     <Breadcrumb Label="@Localizer["SectionMigrations"]" Link="@Urls.Migrations" />
   </Breadcrumbs>
 
   <DataGridHeader>
-    <DataGridLabelWithCounter Label="@Localizer["SectionMigrations"]" ItemsCount="@migrationsQuery.Data?.Length" IsLoading="migrationsQuery.IsLoading"/>
-    <DataGridActionReload OnClick="@migrationsQuery.RefetchAsync" IsLoading="migrationsQuery.IsFetching"/>
+    <DataGridLabelWithCounter
+      Label="@Localizer["SectionMigrations"]"
+      ItemsCount="@query.Data?.Length"
+      IsLoading="query.IsLoading"
+    />
+    <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching"/>
   </DataGridHeader>
 
   <DataGridContainer
     TItem="MigrationHistoryDto"
-    Items="@(migrationsQuery.HasData ? migrationsQuery.Data : [])"
+    Items="@(query.HasData ? query.Data : [])"
   >
     <ColumnsContent>
       <DataGridColumn

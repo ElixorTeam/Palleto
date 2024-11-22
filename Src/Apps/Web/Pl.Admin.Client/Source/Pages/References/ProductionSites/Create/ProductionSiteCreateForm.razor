@@ -1,0 +1,43 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.References.ProductionSites.Commands
+@using Pl.Admin.Models.Features.References.ProductionSites.Queries
+
+@inherits SectionFormBase<ProductionSiteCreateDto>
+
+<SectionForm
+  FormModel="@FormModel"
+  Validator="@(new ProductionSiteCreateValidator(WsDataLocalizer))"
+  OnCancelAction="@OnCancelAction"
+  OnSubmitAction="@CreateItem"
+>
+  <FieldsContent>
+    <SectionTextField
+      Label="@WsDataLocalizer["ColName"]"
+      @bind-Value="@FormModel.Name"
+      For="@(() => FormModel.Name)"
+    />
+
+    <SectionTextAreaField
+      Label="@WsDataLocalizer["ColAddress"]"
+      @bind-Value="@FormModel.Address"
+      For="@(() => FormModel.Address)"
+    />
+  </FieldsContent>
+</SectionForm>
+
+@code {
+  # region Injects
+
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
+
+  # endregion
+
+  protected override async Task CreateItemAction(ProductionSiteCreateDto item)
+  {
+    ProductionSiteDto dto = await WebApi.CreateProductionSite(item);
+    ReferencesEndpoints.AddProductionSite(dto);
+  }
+}

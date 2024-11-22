@@ -321,4 +321,7 @@
     <data name="BtnReset" xml:space="preserve">
         <value>Восстановить</value>
     </data>
+    <data name="NotFoundMessage" xml:space="preserve">
+        <value>Такой страницы не существует</value>
+    </data>
 </root>

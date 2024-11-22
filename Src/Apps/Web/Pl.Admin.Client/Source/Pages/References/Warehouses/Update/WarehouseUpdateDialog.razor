@@ -1,0 +1,16 @@
+@using Pl.Admin.Models.Features.References.Warehouses
+@using Pl.Admin.Models.Features.References.Warehouses.Queries
+
+@implements IDialogContentComponent<WarehouseDto>
+
+<SectionDialog>
+  <Tab Id="@typeof(WarehouseUpdateForm).ToString()" Title="@Localizer["SectionWarehouses"]">
+    <WarehouseUpdateForm Model="Content" FormModel="@WarehouseMapper.DtoToUpdateDto(Content)" />
+  </Tab>
+</SectionDialog>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Parameter] public WarehouseDto Content { get; set; } = default!;
+}

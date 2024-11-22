@@ -43,9 +43,13 @@
 </UseEndpoint>
 
 @code {
+  # region Injects
+
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
+
+  # endregion
 
   [Parameter] public Guid Id { get; set; }
 

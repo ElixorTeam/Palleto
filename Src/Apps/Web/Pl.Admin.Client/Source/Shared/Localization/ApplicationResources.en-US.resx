@@ -321,4 +321,7 @@
     <data name="BtnReset" xml:space="preserve">
         <value>Reset</value>
     </data>
+    <data name="NotFoundMessage" xml:space="preserve">
+        <value>This page could not be found</value>
+    </data>
 </root>

@@ -1,4 +1,6 @@
 @using Pl.Admin.Client.Source.Features
+@using Pl.Admin.Client.Source.Pages.References.Warehouses.Create
+@using Pl.Admin.Client.Source.Pages.References.Warehouses.Update
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Client.Source.Shared.Services.Stores
@@ -6,7 +8,7 @@
 @using Pl.Admin.Models.Features.References.Warehouses.Queries
 
 @attribute [Route(Urls.Warehouses)]
-@attribute [Authorize(Policy = PolicyEnum.SeniorSupport)]
+@attribute [Authorize(Policy = PolicyEnum.Support)]
 @rendermode InteractiveServer
 
 <PageTitle>Admin - @Localizer["SectionWarehouses"]</PageTitle>
@@ -16,15 +18,19 @@
     Endpoint="@ReferencesEndpoints.WarehousesEndpoint"
     Arg="@ProductionSiteState.Value.ProductionSite.Id"
     Options="@(PageHelper.DefaultEndpointOptions)"
-    Context="warehousesQuery"
+    Context="query"
   >
     <Breadcrumbs Class="!pb-5">
       <Breadcrumb Label="@Localizer["SectionWarehouses"]" Link="@Urls.Warehouses" />
     </Breadcrumbs>
 
     <DataGridHeader>
-      <DataGridLabelWithCounter Label="@Localizer["SectionWarehouses"]" ItemsCount="@warehousesQuery.Data?.Length" IsLoading="warehousesQuery.IsLoading"/>
-      <DataGridActionReload OnClick="@warehousesQuery.RefetchAsync" IsLoading="warehousesQuery.IsFetching" />
+      <DataGridLabelWithCounter
+        Label="@Localizer["SectionWarehouses"]"
+        ItemsCount="@query.Data?.Length"
+        IsLoading="query.IsLoading"
+      />
+      <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching" />
       <AuthorizeView Policy="@PolicyEnum.Admin">
         <DataGridActionCreate OnClick="@OpenCreateDialog" />
       </AuthorizeView>
@@ -32,7 +38,7 @@
 
     <DataGridContainer
       TItem="WarehouseDto"
-      Items="@(warehousesQuery.HasData ? warehousesQuery.Data : [])"
+      Items="@(query.HasData ? query.Data : [])"
       OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToWarehouse(item.Id)))"
     >
       <ColumnsContent>
@@ -43,11 +49,13 @@
         />
       </ColumnsContent>
       <ContextMenuContent>
-        <DataGridActionUpdateItem TItem="WarehouseDto" Action="@OpenUpdateDialog" />
-        <DataGridActionOpenItem Link="@(RedirectHelper.ToWarehouse(context.Item.Id))" />
-        <DataGridActionOpenInNewTab TItem="WarehouseDto" Link="@(RedirectHelper.ToWarehouse(context.Item.Id))" />
         <AuthorizeView Policy="@PolicyEnum.Admin" Context="authContext">
-          <DataGridActionDeleteItem TItem="WarehouseDto" Action="@DeleteItem" />
+          <DataGridActionUpdateItem TItem="WarehouseDto" Action="@OpenUpdateDialog" />
+        </AuthorizeView>
+        <DataGridActionOpenItem Link="@(RedirectHelper.ToWarehouse(context.Item.Id))"/>
+        <DataGridActionOpenInNewTab TItem="WarehouseDto" Link="@(RedirectHelper.ToWarehouse(context.Item.Id))"/>
+        <AuthorizeView Policy="@PolicyEnum.Admin" Context="authContext">
+          <DataGridActionDeleteItem TItem="WarehouseDto" Action="@DeleteItem"/>
         </AuthorizeView>
       </ContextMenuContent>
     </DataGridContainer>
@@ -57,14 +65,15 @@
 @code {
   #region Inject
 
+  [Inject] private IWebApi WebApi { get; set; } = default!;
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private IDialogService DialogService { get; set; } = default!;
   [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
 
   #endregion
 

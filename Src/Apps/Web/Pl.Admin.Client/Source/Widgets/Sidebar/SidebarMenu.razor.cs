@@ -45,12 +45,12 @@ public sealed partial class SidebarMenu : ComponentBase
         new(Localizer["MenuReferences"], HeroiconName.BookOpen, [
             new(Localizer["SectionWarehouses"], Urls.Warehouses),
             new(Localizer["SectionProductionSites"], Urls.ProductionSites)
-        ], PolicyEnum.SeniorSupport),
+        ], PolicyEnum.Support),
 
         new(Localizer["MenuPrintSettings"], HeroiconName.Printer, [
             new(Localizer["SectionTemplates"], Urls.Templates),
             new(Localizer["SectionTemplateResources"], Urls.Resources),
-        ], PolicyEnum.SeniorSupport),
+        ], PolicyEnum.Support),
 
         new(Localizer["MenuAdministration"], HeroiconName.UserGroup, [
             new(Localizer["SectionPalletMen"], Urls.PalletMen, PolicyEnum.Support),

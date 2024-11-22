@@ -537,6 +537,15 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This page could not be found.
+        /// </summary>
+        public static string NotFoundMessage {
+            get {
+                return ResourceManager.GetString("NotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The platform is not configured for this account. Contact support..
         /// </summary>
         public static string ProductionSiteSuspenseDescription {

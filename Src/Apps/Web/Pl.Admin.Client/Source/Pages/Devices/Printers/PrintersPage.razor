@@ -1,4 +1,6 @@
 @using Pl.Admin.Client.Source.Features
+@using Pl.Admin.Client.Source.Pages.Devices.Printers.Create
+@using Pl.Admin.Client.Source.Pages.Devices.Printers.Update
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Client.Source.Shared.Services.Stores
@@ -18,21 +20,27 @@
     Endpoint="@DevicesEndpoints.PrintersEndpoint"
     Arg="@ProductionSiteState.Value.ProductionSite.Id"
     Options="@PageHelper.DefaultEndpointOptions"
-    Context="printersQuery"
+    Context="query"
   >
     <Breadcrumbs Class="!pb-5">
       <Breadcrumb Label="@Localizer["SectionPrinters"]" Link="@Urls.Printers" />
     </Breadcrumbs>
 
     <DataGridHeader>
-      <DataGridLabelWithCounter Label="@Localizer["SectionPrinters"]" ItemsCount="@printersQuery.Data?.Length" IsLoading="printersQuery.IsLoading"/>
-      <DataGridActionReload OnClick="@printersQuery.RefetchAsync" IsLoading="printersQuery.IsFetching" />
-      <DataGridActionCreate OnClick="@OpenCreateDialog"/>
+      <DataGridLabelWithCounter
+        Label="@Localizer["SectionPrinters"]"
+        ItemsCount="@query.Data?.Length"
+        IsLoading="query.IsLoading"
+      />
+      <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching" />
+      <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
+        <DataGridActionCreate OnClick="@OpenCreateDialog"/>
+      </AuthorizeView>
     </DataGridHeader>
 
     <DataGridContainer
       TItem="PrinterDto"
-      Items="@(printersQuery.HasData ? printersQuery.Data : [])"
+      Items="@(query.HasData ? query.Data : [])"
       OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToPrinter(item.Id)))"
       IsFilterable
     >
@@ -69,6 +77,7 @@
       </ColumnsContent>
       <ContextMenuContent>
         <DataGridActionUpdateItem TItem="PrinterDto" Action="@OpenUpdateDialog" />
+        <DataGridActionOpenItem Link="@(RedirectHelper.ToPrinter(context.Item.Id))"/>
         <DataGridActionOpenInNewTab TItem="PrinterDto" Link="@RedirectHelper.ToPrinter(context.Item.Id)"/>
         <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
           <DataGridActionDeleteItem TItem="PrinterDto" Action="@DeleteItem"/>
@@ -81,14 +90,15 @@
 @code {
   #region Inject
 
+  [Inject] private IWebApi WebApi { get; set; } = default!;
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
   [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
   [Inject] private IDialogService DialogService { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+
   [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
 
   #endregion
 

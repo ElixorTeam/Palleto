@@ -1,0 +1,25 @@
+@using Pl.Admin.Client.Source.Shared.Services.Stores
+
+@if ((Ignore || IsAllowed) && ChildContent != null)
+{
+  @ChildContent(IsAllowed)
+}
+
+@code {
+  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+  [Inject] private UserHelper UserHelper { get; set; } = default!;
+
+  [Parameter] public Guid? ProductionSiteUid { get; set; }
+  [Parameter] public RenderFragment<bool>? ChildContent { get; set; }
+  [Parameter] public bool Ignore { get; set; }
+  [CascadingParameter] private Task<AuthenticationState>? AuthenticationState { get; set; }
+
+  bool IsMoreThanSenior { get; set; }
+  bool IsAllowed => IsMoreThanSenior || ProductionSiteUid == null ||  ProductionSiteState.Value.ProductionSite.Id == ProductionSiteUid;
+
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync();
+    IsMoreThanSenior = await UserHelper.ValidatePolicyAsync(PolicyEnum.SeniorSupport);
+  }
+}
