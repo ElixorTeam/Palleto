@@ -21,7 +21,7 @@
         <PackageReference Include="Blazorise.DataGrid" VersionOverride="1.7.0" />
         <PackageReference Include="Blazorise.Icons.FontAwesome" VersionOverride="1.7.0" />
         <PackageReference Include="DeepCloner" VersionOverride="0.10.4" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" VersionOverride="8.0.10" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" VersionOverride="8.0.11" />
         <PackageReference Include="WMBlazorOverlayScrollbars" VersionOverride="1.0.0" />
     </ItemGroup>
 

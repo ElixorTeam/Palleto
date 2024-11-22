@@ -17,11 +17,4 @@ public partial class App : Application
         InitializeComponent();
         MainPage = new MainPage(configuration);
     }
-
-    protected override Window CreateWindow(IActivationState? activationState)
-    {
-        Window window = base.CreateWindow(activationState);
-        window.Title = "Весовой пост";
-        return window;
-    }
 }

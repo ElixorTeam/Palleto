@@ -53,18 +53,18 @@
         <PackageReference Include="Refit.HttpClientFactory" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
         <PackageReference Include="vNext.BlazorComponents.FluentValidation" />
+        <PackageReference Include="Microsoft.Maui.Controls" />
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" />
     </ItemGroup>
 
     <ItemGroup Label="Packages">
         <PackageReference Include="Append.Blazor.Printing" VersionOverride="6.3.0" />
         <PackageReference Include="FullScreenStatus.Maui" VersionOverride="1.0.5" />
         <PackageReference Include="Microsoft.Extensions.Options" VersionOverride="8.0.2" />
-        <PackageReference Include="Microsoft.Maui.Controls" VersionOverride="8.0.92" />
-        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" VersionOverride="8.0.92" />
-        <PackageReference Include="Microsoft.WindowsAppSDK" VersionOverride="1.6.240923002" />
+        <PackageReference Include="Microsoft.WindowsAppSDK" VersionOverride="1.6.241114003" />
         <PackageReference Include="MassaK.Plugin" VersionOverride="1.0.2" />
         <PackageReference Include="TscZebra.Plugin" VersionOverride="1.0.4" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" VersionOverride="8.0.92" />
         <PackageReference Include="barcodelib" VersionOverride="3.1.4" />
     </ItemGroup>
 

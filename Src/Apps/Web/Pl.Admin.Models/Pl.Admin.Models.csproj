@@ -9,7 +9,7 @@
     </ItemGroup>
 
     <ItemGroup Label="Packages">
-      <PackageReference Include="Microsoft.AspNetCore.Authorization" VersionOverride="8.0.10" />
+      <PackageReference Include="Microsoft.AspNetCore.Authorization" VersionOverride="8.0.11" />
       <PackageReference Include="TscZebra.Plugin.Abstractions" VersionOverride="1.0.4" />
     </ItemGroup>
 
