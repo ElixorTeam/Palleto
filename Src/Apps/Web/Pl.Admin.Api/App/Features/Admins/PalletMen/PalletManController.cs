@@ -28,12 +28,10 @@ public sealed class PalletManController(IPalletManService palletManService)
         palletManService.UpdateAsync(id, dto);
 
     [HttpPost]
-    [Authorize(PolicyEnum.SeniorSupport)]
     public Task<PalletManDto> Create([FromBody] PalletManCreateDto dto) =>
         palletManService.CreateAsync(dto);
 
     [HttpDelete("{id:guid}")]
-    [Authorize(PolicyEnum.SeniorSupport)]
     public Task Delete([FromRoute] Guid id) => palletManService.DeleteAsync(id);
 
     #endregion

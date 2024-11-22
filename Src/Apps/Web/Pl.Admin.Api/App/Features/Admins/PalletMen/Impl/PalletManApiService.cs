@@ -67,7 +67,13 @@ internal sealed class PalletManApiService(
         return await GetPalletManDtoDto(entity);
     }
 
-    public Task DeleteAsync(Guid id) => dbContext.PalletMen.SafeDeleteAsync(i => i.Id == id, FkProperty.PalletMan);
+    public async Task DeleteAsync(Guid id)
+    {
+        PalletManEntity entity = await dbContext.PalletMen.SafeGetById(id, FkProperty.PalletMan);
+        await dbContext.Entry(entity).Reference(e => e.Warehouse).LoadAsync();
+        await userHelper.ValidateUserProductionSiteAsync(entity.Warehouse.ProductionSiteId);
+        await dbContext.PalletMen.SafeDeleteAsync(i => i.Id == id, FkProperty.PalletMan);
+    }
 
     #endregion
 

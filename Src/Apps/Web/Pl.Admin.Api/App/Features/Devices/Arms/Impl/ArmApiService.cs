@@ -127,8 +127,11 @@ internal sealed class ArmApiService(
     {
         ArmEntity arm = await dbContext.Arms
           .Include(l => l.Plus)
+          .Include(l => l.Warehouse)
           .FirstOrDefaultAsync(l => l.Id == armId)
                 ?? throw new("АРМ не найдено");
+
+        await userHelper.ValidateUserProductionSiteAsync(arm.Warehouse.ProductionSiteId);
 
         PluEntity plu = await dbContext.Plus.SafeGetById(pluId, FkProperty.Plu);
         arm.Plus.Remove(plu);
@@ -139,8 +142,11 @@ internal sealed class ArmApiService(
     {
         ArmEntity arm = await dbContext.Arms
           .Include(l => l.Plus)
+          .Include(l => l.Warehouse)
           .FirstOrDefaultAsync(l => l.Id == armId)
                 ?? throw new("АРМ не найдено");
+
+        await userHelper.ValidateUserProductionSiteAsync(arm.Warehouse.ProductionSiteId);
 
         PluEntity plu = await dbContext.Plus.SafeGetById(pluId, FkProperty.Plu);
 
