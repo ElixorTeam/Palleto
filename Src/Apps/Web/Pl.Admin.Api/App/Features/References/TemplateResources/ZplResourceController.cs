@@ -10,17 +10,17 @@ public sealed class ZplResourceController(IZplResourceService zplResourceService
 {
     #region Queries
 
-    [Authorize(PolicyEnum.SeniorSupport)]
+    [Authorize(PolicyEnum.Support)]
     [HttpGet]
     public Task<TemplateResourceDto[]> GetAll() =>
         zplResourceService.GetAllAsync();
 
-    [Authorize(PolicyEnum.SeniorSupport)]
+    [Authorize(PolicyEnum.Support)]
     [HttpGet("{id:guid}")]
     public Task<TemplateResourceDto> GetById([FromRoute] Guid id) =>
         zplResourceService.GetByIdAsync(id);
 
-    [Authorize(PolicyEnum.SeniorSupport)]
+    [Authorize(PolicyEnum.Support)]
     [HttpGet("{id:guid}/body")]
     public Task<TemplateResourceBodyDto> GetBodyById([FromRoute] Guid id) =>
         zplResourceService.GetBodyByIdAsync(id);
@@ -29,17 +29,17 @@ public sealed class ZplResourceController(IZplResourceService zplResourceService
 
     #region Commands
 
-    [Authorize(PolicyEnum.Admin)]
+    [Authorize(PolicyEnum.Developer)]
     [HttpPost]
     public Task<TemplateResourceDto> Create([FromBody] ZplResourceCreateDto dto) =>
         zplResourceService.CreateAsync(dto);
 
-    [Authorize(PolicyEnum.Admin)]
+    [Authorize(PolicyEnum.Developer)]
     [HttpPut("{id:guid}")]
     public Task<TemplateResourceDto> Update([FromRoute] Guid id, [FromBody] ZplResourceUpdateDto dto) =>
         zplResourceService.UpdateAsync(id, dto);
 
-    [Authorize(PolicyEnum.Admin)]
+    [Authorize(PolicyEnum.Developer)]
     [HttpDelete("{id:guid}")]
     public Task Delete([FromRoute] Guid id) =>
         zplResourceService.DeleteAsync(id);

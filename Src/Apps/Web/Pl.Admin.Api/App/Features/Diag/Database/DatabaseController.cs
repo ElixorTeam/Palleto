@@ -4,7 +4,7 @@ using Pl.Admin.Models.Features.Database;
 namespace Pl.Admin.Api.App.Features.Diag.Database;
 
 [ApiController]
-[Authorize(PolicyEnum.Admin)]
+[Authorize(PolicyEnum.Developer)]
 [Route(ApiEndpoints.Database)]
 public sealed class DatabaseController(IDatabaseService databaseService)
 {

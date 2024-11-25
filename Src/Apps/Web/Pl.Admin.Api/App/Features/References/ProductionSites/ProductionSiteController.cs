@@ -10,14 +10,14 @@ public sealed class ProductionSiteController(IProductionSiteService productionSi
 {
     #region Queries
 
-    #region Admin
+    #region Support
 
-    [Authorize(PolicyEnum.SeniorSupport)]
+    [Authorize(PolicyEnum.Support)]
     [HttpGet]
     public Task<ProductionSiteDto[]> GetAll() =>
         productionSiteService.GetAllAsync();
 
-    [Authorize(PolicyEnum.SeniorSupport)]
+    [Authorize(PolicyEnum.Support)]
     [HttpGet("{id:guid}")]
     public Task<ProductionSiteDto> GetById([FromRoute] Guid id) =>
         productionSiteService.GetByIdAsync(id);

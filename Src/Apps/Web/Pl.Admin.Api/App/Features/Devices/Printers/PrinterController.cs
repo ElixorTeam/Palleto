@@ -28,6 +28,7 @@ public sealed class PrinterController(IPrinterService printerService)
     #region Commands
 
     [HttpPost]
+    [Authorize(PolicyEnum.SeniorSupport)]
     public Task<PrinterDto> Create([FromBody] PrinterCreateDto dto) =>
         printerService.CreateAsync(dto);
 
@@ -36,6 +37,7 @@ public sealed class PrinterController(IPrinterService printerService)
         printerService.UpdateAsync(id, dto);
 
     [HttpDelete("{id:guid}")]
+    [Authorize(PolicyEnum.SeniorSupport)]
     public Task Delete([FromRoute] Guid id) =>
         printerService.DeleteAsync(id);
 

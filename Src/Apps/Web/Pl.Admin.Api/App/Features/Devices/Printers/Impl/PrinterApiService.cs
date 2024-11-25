@@ -68,6 +68,7 @@ internal sealed class PrinterApiService(
     public async Task<PrinterDto> UpdateAsync(Guid id, PrinterUpdateDto dto)
     {
         PrinterEntity entity = await updateValidator.ValidateAndGetAsync(dbContext.Printers, dto, id);
+
         await userHelper.ValidateUserProductionSiteAsync(entity.ProductionSiteId);
 
         dto.UpdateEntity(entity);
