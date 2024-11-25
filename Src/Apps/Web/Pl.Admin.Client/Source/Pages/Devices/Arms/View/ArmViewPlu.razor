@@ -3,129 +3,135 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
 @using Pl.Admin.Models.Features.References1C.Brands
+@using Pl.Admin.Client.Source.Features
 
-<UseEndpoint Endpoint="@DevicesEndpoints.ArmPluEndpoint" Arg="Model.Id" Options="@(PageHelper.DefaultEndpointOptions)" Context="plusQuery">
-  <DataGridHeader>
-    <span class="text-xl font-medium">@Localizer["SectionArmPlu"]</span>
-    <DataGridItemsSelected
-      Count="@(plusQuery.Data?.Length ?? 0)"
-      SelectedCount="@(plusQuery.Data?.Where(x => x.IsActive).Count() ?? 0)"
-      IsLoading="plusQuery.IsLoading"
-    />
-    <DataGridActionReload OnClick="@plusQuery.RefetchAsync" IsLoading="plusQuery.IsFetching"/>
-  </DataGridHeader>
 
-  <DataGridContainer
-    TItem="PluArmDto"
-    Items="@(plusQuery.HasData ? plusQuery.Data : [])"
-    ItemsPerPage="11"
-    IsFilterable
-  >
-    <ColumnsContent>
-      <DataGridColumn
-        Caption="@WsDataLocalizer["ColPluActive"]"
-        Field="@($"{nameof(PluArmDto.IsActive)}")"
-        Width="8%"
-        Sortable="false"
-        FilterMethod="DataGridColumnFilterMethod.Equals"
-        FilterCellClass="!font-normal"
-      >
-        <FilterTemplate>
-          @{ context.SearchValue = IsActiveFilter; }
-          <SelectSingle
-            TItem="bool?"
-            Items="@( [false, true, null])"
-            @bind-Value="@IsActiveFilter"
-            @bind-Value:after="@(() => context.TriggerFilterChange(IsActiveFilter))"
-            Placeholder="@Localizer["SelectItemNotSelected"]"
-            ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] :
-                               item.Value ? Localizer["StateOn"] : Localizer["StateOff"])"
-          />
-        </FilterTemplate>
-        <DisplayTemplate>
-          <div class="size-full flex items-center justify-center">
-            <Switch
-              Value="@context.IsActive"
-              ValueChanged="@(value => value ? AddArmPlu(context) : DeleteArmPlu(context))"
-            />
-          </div>
-        </DisplayTemplate>
-      </DataGridColumn>
-
-      <DataGridColumn
-        Caption="@WsDataLocalizer["ColNumber"]"
-        Field="@($"{nameof(PluArmDto.Number)}")"
-        Width="10%"
+<SupportAuthView ProductionSiteUid="Model.ProductionSite.Id" Ignore Context="isSupportAllowed">
+  <UseEndpoint Endpoint="@DevicesEndpoints.ArmPluEndpoint" Arg="Model.Id" Options="@(PageHelper.DefaultEndpointOptions)" Context="plusQuery">
+    <DataGridHeader>
+      <span class="text-xl font-medium">@Localizer["SectionArmPlu"]</span>
+      <DataGridItemsSelected
+        Count="@(plusQuery.Data?.Length ?? 0)"
+        SelectedCount="@(plusQuery.Data?.Where(x => x.IsActive).Count() ?? 0)"
+        IsLoading="plusQuery.IsLoading"
       />
+      <DataGridActionReload OnClick="@plusQuery.RefetchAsync" IsLoading="plusQuery.IsFetching"/>
+    </DataGridHeader>
 
-      <DataGridColumn
-        Caption="@WsDataLocalizer["ColType"]"
-        Field="@nameof(PluArmDto.IsWeight)"
-        Width="15%"
-        Sortable="false"
-        FilterCellClass="!font-normal"
-      >
-        <FilterTemplate>
-          @{ context.SearchValue = IsWeightFilter; }
-          <SelectSingle
-            TItem="bool?"
-            Items="@( [false, true, null])"
-            @bind-Value="@IsWeightFilter"
-            @bind-Value:after="@(() => context.TriggerFilterChange(IsWeightFilter))"
-            Placeholder="@Localizer["SelectItemNotSelected"]"
-            ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] :
-                               item.Value ? WsDataLocalizer["ColPluWeight"] : WsDataLocalizer["ColPluPiece"])"
-          />
-        </FilterTemplate>
-        <DisplayTemplate>
+    <DataGridContainer
+      TItem="PluArmDto"
+      Items="@(plusQuery.HasData ? plusQuery.Data : [])"
+      ItemsPerPage="11"
+      IsFilterable
+    >
+      <ColumnsContent>
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColPluActive"]"
+          Field="@($"{nameof(PluArmDto.IsActive)}")"
+          Width="8%"
+          Sortable="false"
+          FilterMethod="DataGridColumnFilterMethod.Equals"
+          FilterCellClass="!font-normal"
+        >
+          <FilterTemplate>
+            @{ context.SearchValue = IsActiveFilter; }
+            <SelectSingle
+              TItem="bool?"
+              Items="@( [false, true, null])"
+              @bind-Value="@IsActiveFilter"
+              @bind-Value:after="@(() => context.TriggerFilterChange(IsActiveFilter))"
+              Placeholder="@Localizer["SelectItemNotSelected"]"
+              ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] :
+                                 item.Value ? Localizer["StateOn"] : Localizer["StateOff"])"
+            />
+          </FilterTemplate>
+          <DisplayTemplate>
+            <div class="size-full flex items-center justify-center">
+              <Switch
+                Value="@context.IsActive"
+                ValueChanged="@(value => value ? AddArmPlu(context) : DeleteArmPlu(context))"
+                Disabled="@(!isSupportAllowed)"
+              />
+            </div>
+          </DisplayTemplate>
+        </DataGridColumn>
+
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColNumber"]"
+          Field="@($"{nameof(PluArmDto.Number)}")"
+          Width="10%"
+        />
+
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColType"]"
+          Field="@nameof(PluArmDto.IsWeight)"
+          Width="15%"
+          Sortable="false"
+          FilterCellClass="!font-normal"
+        >
+          <FilterTemplate>
+            @{ context.SearchValue = IsWeightFilter; }
+            <SelectSingle
+              TItem="bool?"
+              Items="@( [false, true, null])"
+              @bind-Value="@IsWeightFilter"
+              @bind-Value:after="@(() => context.TriggerFilterChange(IsWeightFilter))"
+              Placeholder="@Localizer["SelectItemNotSelected"]"
+              ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] :
+                                 item.Value ? WsDataLocalizer["ColPluWeight"] : WsDataLocalizer["ColPluPiece"])"
+            />
+          </FilterTemplate>
+          <DisplayTemplate>
           <span>
             @(context.IsWeight ? WsDataLocalizer["ColPluWeight"] : WsDataLocalizer["ColPluPiece"])
           </span>
-        </DisplayTemplate>
-      </DataGridColumn>
+          </DisplayTemplate>
+        </DataGridColumn>
 
-      <DataGridColumn
-        Caption="@WsDataLocalizer["ColName"]"
-        Field="@($"{nameof(PluArmDto.Name)}")"
-        Width="30%"
-      />
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColName"]"
+          Field="@($"{nameof(PluArmDto.Name)}")"
+          Width="30%"
+        />
 
-      <DataGridColumn
-        Caption="@WsDataLocalizer["ColBrand"]"
-        Field="@($"{nameof(PluArmDto.Brand)}")"
-        Width="30%"
-        Sortable="false"
-        FilterMethod="DataGridColumnFilterMethod.Equals"
-        FilterCellClass="!font-normal"
-      >
-        <FilterTemplate>
-          <UseParameterlessEndpoint Endpoint="@References1CEndpoints.BrandsEndpoint" Context="brandsQuery">
-            @if (brandsQuery.HasData)
-            {
-              <SelectSingle
-                TItem="BrandDto?"
-                Items="@(brandsQuery.Data.Concat([null]))"
-                @bind-Value="@BrandFilter"
-                @bind-Value:after="@(() => context.TriggerFilterChange(BrandFilter?.Name))"
-                Placeholder="@Localizer["SelectItemNotSelected"]"
-                ItemDisplayName="@(item => item?.Name ?? Localizer["SelectItemNotSelected"])"
-                Filterable
-              />
-            }
-            else
-            {
-              <Skeleton Class="h-9 w-full" />
-            }
-          </UseParameterlessEndpoint>
-        </FilterTemplate>
-      </DataGridColumn>
-    </ColumnsContent>
-    <ContextMenuContent>
-      <DataGridActionOpenItem Link="@(RedirectHelper.ToPlu(context.Item.Id))" />
-      <DataGridActionOpenInNewTab TItem="ArmDto" Link="@(RedirectHelper.ToPlu(context.Item.Id))" />
-    </ContextMenuContent>
-  </DataGridContainer>
-</UseEndpoint>
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColBrand"]"
+          Field="@($"{nameof(PluArmDto.Brand)}")"
+          Width="30%"
+          Sortable="false"
+          FilterMethod="DataGridColumnFilterMethod.Equals"
+          FilterCellClass="!font-normal"
+        >
+          <FilterTemplate>
+            <UseParameterlessEndpoint Endpoint="@References1CEndpoints.BrandsEndpoint" Context="brandsQuery">
+              @if (brandsQuery.HasData)
+              {
+                <SelectSingle
+                  TItem="BrandDto?"
+                  Items="@(brandsQuery.Data.Concat([null]))"
+                  @bind-Value="@BrandFilter"
+                  @bind-Value:after="@(() => context.TriggerFilterChange(BrandFilter?.Name))"
+                  Placeholder="@Localizer["SelectItemNotSelected"]"
+                  ItemDisplayName="@(item => item?.Name ?? Localizer["SelectItemNotSelected"])"
+                  Filterable
+                />
+              }
+              else
+              {
+                <Skeleton Class="h-9 w-full" />
+              }
+            </UseParameterlessEndpoint>
+          </FilterTemplate>
+        </DataGridColumn>
+      </ColumnsContent>
+      <ContextMenuContent>
+        <DataGridActionOpenItem Link="@(RedirectHelper.ToPlu(context.Item.Id))" />
+        <DataGridActionOpenInNewTab TItem="ArmDto" Link="@(RedirectHelper.ToPlu(context.Item.Id))" />
+      </ContextMenuContent>
+    </DataGridContainer>
+  </UseEndpoint>
+</SupportAuthView>
+
 
 @code {
 

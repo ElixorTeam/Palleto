@@ -17,6 +17,7 @@
   Anchor="theme-button"
   @bind-IsOpen="@IsOpen"
   VerticalThreshold="300"
+  Position="@Position"
 >
   <ul class="flex flex-col p-1">
     <li>
@@ -43,6 +44,8 @@
 @code {
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
+
+  [Parameter] public VerticalPosition? Position { get; set; }
 
   private bool IsOpen { get; set; }
 

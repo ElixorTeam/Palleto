@@ -5,6 +5,7 @@
   @bind-Open:after="OnIsOpenChanged"
   VerticalThreshold="@VerticalThreshold"
   Class="@Css.Class("!bg-background rounded-md border !shadow-md", Class)"
+  VerticalPosition="@Position"
   Style="@Style"
 >
   <Header></Header>
@@ -21,6 +22,7 @@
   [Parameter] public int VerticalThreshold { get; set; }
   [Parameter] public string? Id { get; set; }
   [Parameter] public string? Style { get; set; }
+  [Parameter] public VerticalPosition? Position { get; set; }
 
   private async Task OnIsOpenChanged() => await IsOpenChanged.InvokeAsync(IsOpen);
 }

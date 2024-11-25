@@ -9,13 +9,14 @@
   />
   @if (IsCopyable && !string.IsNullOrWhiteSpace(Value))
   {
-    <button
-      type="button"
-      onclick="@(() => SaveToClipboard(Value))"
-      class="text-muted-foreground absolute opacity-50 hover:opacity-100 top-8 right-2 pt-px pr-px"
+    <Button
+      Variant="ButtonVariantType.Ghost"
+      Size="ButtonSizeType.Icon"
+      OnClick="@(() => SaveToClipboard(Value))"
+      class="text-muted-foreground absolute !size-7 top-7 right-1.5"
     >
-      <ClipboardDocumentIcon class="size-5" />
-    </button>
+      <ClipboardIcon class="size-[1.1rem]" />
+    </Button>
   }
 </div>
 

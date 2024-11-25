@@ -44,7 +44,6 @@ public sealed class RedirectHelper(IAuthorizationService authorizationService, N
     public string ToProductionSite(Guid uid) =>
         Link(uid, Urls.ProductionSites, CheckPolicy(PolicyEnum.Support));
 
-
     #endregion
 
     #region For All

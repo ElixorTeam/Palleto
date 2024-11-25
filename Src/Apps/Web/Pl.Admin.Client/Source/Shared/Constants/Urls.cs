@@ -51,6 +51,13 @@ public static class Urls
 
     # endregion
 
+    # region Guides
+
+    public const string ErrorReportGuide = "/error-report";
+    public const string PrinterControlGuide = "/printer-control";
+
+    # endregion
+
     public const string Home = "/";
     public const string Authorization = "/auth";
 }
