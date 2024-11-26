@@ -3,6 +3,7 @@ using Fluxor;
 using Microsoft.FluentUI.AspNetCore.Components;
 using Pl.Shared.Web.Extensions;
 using Pl.Mobile.Client.Source.Shared.Api;
+using TailwindMerge.Extensions;
 
 namespace Pl.Mobile.Client;
 
@@ -30,6 +31,8 @@ public static partial class MauiProgram
             options.WithLifetime(StoreLifetime.Singleton);
             options.ScanAssemblies(typeof(IMobileAssembly).Assembly);
         });
+
+        builder.Services.AddTailwindMerge();
 
         ConfigureDebugServices(builder);
 

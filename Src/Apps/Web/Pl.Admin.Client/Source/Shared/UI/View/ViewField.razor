@@ -18,22 +18,22 @@
       <Button
         Variant="ButtonVariantType.Ghost"
         Size="ButtonSizeType.Icon"
-        Class="!size-6 shrink-0"
-        OnClick="SaveToClipboard">
-        <ClipboardIcon class="size-4"/>
+        Class="size-6 shrink-0"
+        OnClick="SaveToClipboard"
+      >
+        <ClipboardIcon class="size-4" />
       </Button>
     }
     @if (!string.IsNullOrWhiteSpace(Link))
     {
-      <a href="@Link" class="size-6">
-        <Button
-          Variant="ButtonVariantType.Ghost"
-          Size="ButtonSizeType.Icon"
-          Class="!size-6 shrink-0">
-          <ArrowTopRightOnSquareIcon class="size-4"/>
-
-        </Button>
-      </a>
+      <Button
+        Link="@Link"
+        Variant="ButtonVariantType.Ghost"
+        Size="ButtonSizeType.Icon"
+        Class="size-6 shrink-0"
+      >
+        <ArrowTopRightOnSquareIcon class="size-4" />
+      </Button>
     }
   </div>
 </div>

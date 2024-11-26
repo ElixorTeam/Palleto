@@ -1,0 +1,16 @@
+@inherits PlComponentBase
+
+<div
+  @attributes="AdditionalAttributes"
+  id="@Id"
+  class="@ClassMerge("text-sm text-muted-foreground", Class)"
+>
+  @ChildContent
+</div>
+
+@code {
+  /// <summary>
+  /// The content to be rendered inside the component.
+  /// </summary>
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+}

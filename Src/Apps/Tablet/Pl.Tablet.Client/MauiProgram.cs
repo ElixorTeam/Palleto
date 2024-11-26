@@ -8,6 +8,7 @@ using Pl.Tablet.Client.Source.Shared;
 using Pl.Tablet.Client.Source.Shared.Api;
 using Pl.Tablet.Client.Source.Shared.Services;
 using Pl.Shared.Web.Extensions;
+using TailwindMerge.Extensions;
 
 namespace Pl.Tablet.Client;
 
@@ -36,6 +37,8 @@ public static class MauiProgram
             options.WithLifetime(StoreLifetime.Singleton);
             options.ScanAssemblies(typeof(ITabletAssembly).Assembly);
         });
+
+        builder.Services.AddTailwindMerge();
 
         builder.Services
             .AddScoped<HtmlRenderer>()

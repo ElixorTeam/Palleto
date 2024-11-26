@@ -1,9 +1,11 @@
 @using Blazor.Heroicons.Outline
 @using Pl.Components.Source.UI.Select
 
+@inherits PlComponentBase
+
 <div
   id="@Parent.HtmlId"
-  class="@Css.Class("flex w-full rounded-md h-9 border bg-background disabled:cursor-not-allowed disabled:opacity-50", Class)"
+  class="@ClassMerge("flex w-full rounded-md h-9 border bg-background disabled:cursor-not-allowed disabled:opacity-50", Class)"
   role="combobox"
   aria-haspopup="listbox"
   aria-expanded="@Parent.IsDropdownOpened.ToString()"
@@ -21,7 +23,9 @@
 @code {
   [CascadingParameter] public SelectBase<string, string> Parent { get; set; } = default!;
 
-  [Parameter] public string Class { get; set; } = string.Empty;
+  /// <summary>
+  /// Indicates whether the trigger is disabled, preventing user interaction.
+  /// </summary>
   [Parameter] public bool Disabled { get; set; }
 
   private string? TriggerValue

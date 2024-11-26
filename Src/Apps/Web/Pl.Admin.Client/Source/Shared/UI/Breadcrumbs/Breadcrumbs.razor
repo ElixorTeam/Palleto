@@ -1,4 +1,4 @@
-<div class="@Css.Class("pb-2 flex gap-2 text-sm text-muted-foreground items-center", Class)">
+<div class="@TwMerge.Merge("pb-2 flex gap-2 text-sm text-muted-foreground items-center", Class)">
   @if (Start == BreadcrumbStart.Home)
   {
     <BreadcrumbHome />
@@ -13,6 +13,7 @@
 </div>
 
 @code {
+  [Inject] private TwMerge TwMerge { get; set; } = default!;
   [Parameter] public string Class { get; set; } = string.Empty;
   [Parameter] public RenderFragment? ChildContent { get; set; }
   [Parameter] public BreadcrumbStart Start { get; set; } = BreadcrumbStart.Home;

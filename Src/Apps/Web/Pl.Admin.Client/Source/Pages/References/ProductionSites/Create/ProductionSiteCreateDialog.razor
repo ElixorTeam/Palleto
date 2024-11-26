@@ -1,7 +1,7 @@
 @implements IDialogContentComponent
 
 <SectionDialog>
-  <Tab Id="@typeof(ProductionSiteCreateForm).ToString()" Title="@Localizer["SectionProductionSites"]">
+  <Tab Id="@typeof(ProductionSiteCreateForm).ToString()" Label="@Localizer["SectionProductionSites"]">
     <ProductionSiteCreateForm FormModel="@(new())" />
   </Tab>
 </SectionDialog>

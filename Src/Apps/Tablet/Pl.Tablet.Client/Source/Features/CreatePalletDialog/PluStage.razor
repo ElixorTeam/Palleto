@@ -14,7 +14,7 @@
       />
       <FieldValidation For="@(() => Model.Mono)" />
     </FormFieldWrapper>
-    <FormFieldWrapper Label="Номер ПЛУ" HtmlId="pallet-plu">
+    <FormFieldWrapper Label="Номер ПЛУ" For="pallet-plu">
       <PluInput
         HtmlId="pallet-plu"
         @bind-Plu="@Model.DefaultPlu"

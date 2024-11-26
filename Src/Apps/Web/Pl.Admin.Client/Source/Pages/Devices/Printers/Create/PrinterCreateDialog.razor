@@ -3,7 +3,7 @@
 @implements IDialogContentComponent
 
 <SectionDialog>
-  <Tab Id="@typeof(PrinterCreateForm).ToString()" Title="@Localizer["SectionPrinters"]">
+  <Tab Id="@typeof(PrinterCreateForm).ToString()" Label="@Localizer["SectionPrinters"]">
     <PrinterCreateForm FormModel="@(new() { ProductionSiteId = ProductionSiteState.Value.ProductionSite.Id })" />
   </Tab>
 </SectionDialog>

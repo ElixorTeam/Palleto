@@ -1,6 +1,6 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Models
 
-<ViewFieldGrid Title="Общая информация" Border>
+<ViewFieldGrid Label="Общая информация" Border>
   <ViewFieldGuid Value="@Model.Id" />
 
   <ViewFieldGuid Value="@Model.KcId" Label="UID KC" />
@@ -12,7 +12,7 @@
   />
 </ViewFieldGrid>
 
-<ViewFieldGrid Title="@WsDataLocalizer["ColFIO"]">
+<ViewFieldGrid Label="@WsDataLocalizer["ColFIO"]">
   <ViewField
     Label="@WsDataLocalizer["ColFirstName"]"
     Value="@Model.Fio.Name"

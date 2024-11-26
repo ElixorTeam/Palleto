@@ -13,16 +13,14 @@
           </p>
         </div>
         <div class="w-full max-w-xs mx-auto flex flex-col space-y-2">
-          <Button OnClick="@query.Refetch" Variant="ButtonVariantType.Outline" Class="!w-full">
+          <Button OnClick="@query.Refetch" Variant="ButtonVariantType.Outline" Class="w-full">
             <ArrowPathIcon class="size-4 mr-2" />
             @Localizer["BtnUpdate"]
           </Button>
-          <a href="@Routes.Home" class="w-full">
-            <Button Class="!w-full">
-              <ArrowRightStartOnRectangleIcon class="size-4 mr-2" />
-              Главная страница
-            </Button>
-          </a>
+          <Button Link="@Routes.Home" Class="w-full">
+            <ArrowRightStartOnRectangleIcon class="size-4 mr-2" />
+            Главная страница
+          </Button>
         </div>
       </div>
     </div>

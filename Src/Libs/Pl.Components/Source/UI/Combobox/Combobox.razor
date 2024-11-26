@@ -6,11 +6,11 @@
   @bind-Value="Value"
   @bind-Value:after="OnValueChanged"
   ItemDisplayName="ItemDisplayName"
-  HtmlId="@HtmlId"
+  HtmlId="@Id"
   IgnoreWidth="@IgnoreWidth"
 >
   <ComboboxTrigger Class="@Class" />
-  <SelectContent Class="@DropdownClass">
+  <SelectContent Class="@DropdownClass" Position="@Position">
     <SelectEmptyPlaceholder>
       @EmptyPlaceholder
     </SelectEmptyPlaceholder>
@@ -72,7 +72,9 @@
   /// <summary>
   /// The html id for forms
   /// </summary>
-  [Parameter] public string HtmlId { get; set; } = $"id-{Guid.NewGuid()}";
+  [Parameter] public string Id { get; set; } = $"id-{Guid.NewGuid()}";
+
+  [Parameter] public VerticalPosition? Position { get; set; }
 
   [Parameter] public string Class { get; set; } = string.Empty;
 

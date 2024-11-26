@@ -8,19 +8,19 @@
 @using Pl.Print.Features.Barcodes.Utils
 
 <div class="w-full bg-secondary/[.3] pt-6 pb-8 px-5 overflow-y-auto dark:bg-inherit">
-  <Accordion Title="@WsDataLocalizer["ColBarcodeTop"]">
+  <Accordion Label="@WsDataLocalizer["ColBarcodeTop"]">
     <BarcodeConfigurator
       BarcodeVariables="@BarcodeVarUtils.BarcodeVarInfos"
       @bind-BarcodeDictionary="BarcodesCopy.Top"
     />
   </Accordion>
-  <Accordion Title="@WsDataLocalizer["ColBarcodeBottom"]">
+  <Accordion Label="@WsDataLocalizer["ColBarcodeBottom"]">
     <BarcodeConfigurator
       BarcodeVariables="@BarcodeVarUtils.BarcodeVarInfos"
       @bind-BarcodeDictionary="BarcodesCopy.Bottom"
     />
   </Accordion>
-  <Accordion Title="@WsDataLocalizer["ColBarcodeRight"]">
+  <Accordion Label="@WsDataLocalizer["ColBarcodeRight"]">
     <BarcodeConfigurator
       BarcodeVariables="@BarcodeVarUtils.BarcodeVarInfos"
       @bind-BarcodeDictionary="BarcodesCopy.Right"

@@ -21,7 +21,7 @@
       @TriggerContent(context)
     </SelectTriggerContext>
   }
-  <SelectContent Class="@DropdownClass">
+  <SelectContent Class="@DropdownClass" Position="@Position">
     <ChildContent>
       @if (Filterable)
       {
@@ -95,6 +95,8 @@
   /// The html id for forms
   /// </summary>
   [Parameter] public string HtmlId { get; set; } = $"id-{Guid.NewGuid()}";
+
+  [Parameter] public VerticalPosition? Position { get; set; }
 
   [Parameter] public string Class { get; set; } = string.Empty;
 

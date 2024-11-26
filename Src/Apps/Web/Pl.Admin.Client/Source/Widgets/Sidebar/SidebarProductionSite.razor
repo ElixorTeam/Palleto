@@ -20,13 +20,14 @@
         Value="ProductionSiteState.Value.ProductionSite"
         ValueChanged="@OnItemChanged"
         ItemDisplayName="@(item => item.Name)"
+        Position="VerticalPosition.Top"
       >
         <TriggerContent Context="select">
           <Button
             Id="@select.HtmlId"
             Variant="ButtonVariantType.Ghost"
             Size="ButtonSizeType.Small"
-            Class="shrink-0 !h-8 !w-full items-center disabled:!opacity-100"
+            Class="shrink-0 h-8 w-full items-center disabled:opacity-100"
             OnClick="@(() => select.ToggleDropdown())"
             Disabled="@(productionSiteQuery.Data.Length <= 1)"
             role="combobox"

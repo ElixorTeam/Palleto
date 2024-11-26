@@ -1,13 +1,10 @@
 @using Blazor.Heroicons.Outline
 
 <div class="flex h-12 items-center shrink-0 w-full px-2 border-b">
-  <a href="@Routes.Home">
-    <Button Variant="ButtonVariantType.Ghost">
-      <ArrowLeftIcon class="size-4 mr-3" />
-      <span>@Title</span>
-    </Button>
-  </a>
-
+  <Button Link="@Routes.Home" Variant="ButtonVariantType.Ghost">
+    <ArrowLeftIcon class="size-4 mr-3" />
+    <span>@Title</span>
+  </Button>
 </div>
 
 @code {

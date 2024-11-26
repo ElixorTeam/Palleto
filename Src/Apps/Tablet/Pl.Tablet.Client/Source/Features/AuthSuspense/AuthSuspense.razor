@@ -20,7 +20,7 @@
       class="mt-4"
     >
       <FluentValidationValidator Validator="@(new AuthModelValidator())" />
-      <FormFieldWrapper Label="Пароль" HtmlId="login-password">
+      <FormFieldWrapper Label="Пароль" For="login-password">
         <InputTextField
           id="login-password"
           Type="TextInputType.Password"

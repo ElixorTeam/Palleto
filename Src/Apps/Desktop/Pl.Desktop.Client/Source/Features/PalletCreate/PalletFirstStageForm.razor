@@ -7,7 +7,7 @@
   class="max-w-md mx-auto w-full flex flex-col space-y-4"
 >
   <FluentValidationValidator Validator="@(new PalletPluStageFormValidator(WsDataLocalizer, Localizer))" />
-  <FormFieldWrapper Label="@WsDataLocalizer["ColPlu"]" HtmlId="pallet-plu">
+  <FormFieldWrapper Label="@WsDataLocalizer["ColPlu"]" For="pallet-plu">
     <UseParameterlessEndpoint Endpoint="@PluEndpoints.PiecePlusEndpoint" Context="pluQuery">
       @if (pluQuery.HasData)
       {
@@ -29,7 +29,7 @@
     </UseParameterlessEndpoint>
     <FieldValidation For="@(() => FormModel.Plu)"/>
   </FormFieldWrapper>
-  <FormFieldWrapper Label="@($"{Localizer["ColNestingPerBox"]} ({WsDataLocalizer["MeasurePc"]})")" HtmlId="pallet-nesting">
+  <FormFieldWrapper Label="@($"{Localizer["ColNestingPerBox"]} ({WsDataLocalizer["MeasurePc"]})")" For="pallet-nesting">
     <SelectSingle
       TItem="NestingDto"
       HtmlId="pallet-nesting"

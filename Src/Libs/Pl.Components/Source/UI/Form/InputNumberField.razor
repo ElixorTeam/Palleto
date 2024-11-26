@@ -4,11 +4,10 @@
 <input
   type="number"
   inputmode="numeric"
-  id="@HtmlId"
+  id="@Id"
   @attributes="AdditionalAttributes"
   @bind-value="InputValue"
-  class="@Css.Class("flex h-9 w-full rounded-md border bg-background px-3 py-2 text-sm",
-           "placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50", Class)"
+  class="@ClassMerge("flex h-9 w-full rounded-md border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50", Class)"
   disabled="@Disabled"
   readonly="@ReadOnly"
   autofocus="@AutoFocus"
@@ -19,10 +18,25 @@
 />
 
 @code {
+  /// <summary>
+  /// Minimum value for the input. If set, the value will not go below this threshold.
+  /// </summary>
   [Parameter] public string? Min { get; set; }
+
+  /// <summary>
+  /// Maximum value for the input. If set, the value will not exceed this threshold.
+  /// </summary>
   [Parameter] public string? Max { get; set; }
+
+  /// <summary>
+  /// The step value for the input. This defines the increment/decrement step for numeric values.
+  /// </summary>
   [Parameter] public string Step { get; set; } = "1";
-  [Parameter] public System.Globalization.CultureInfo Culture { get; set; } = System.Globalization.CultureInfo.InvariantCulture;
+
+  /// <summary>
+  /// The culture to use for formatting the input value.
+  /// </summary>
+  [Parameter] public CultureInfo Culture { get; set; } = CultureInfo.InvariantCulture;
 
   private string InputValue
   {

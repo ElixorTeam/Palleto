@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FluentUI.AspNetCore.Components;
 using Pl.Components.Source.UI.Select;
+using TailwindMerge.Extensions;
 
 namespace Pl.Components.Tests;
 
@@ -14,6 +15,7 @@ public class SelectSingleTests : TestContext
     {
         JSInterop.Mode = JSRuntimeMode.Loose;
         Services.AddSingleton(LibraryConfiguration);
+        Services.AddTailwindMerge();
     }
 
     private IRenderedComponent<SelectSingle<T>> RenderComponentWithParameters<T>(Action<ComponentParameterCollectionBuilder<SelectSingle<T>>> parameters)

@@ -4,7 +4,7 @@
 @implements IDialogContentComponent<PrinterDto>
 
 <SectionDialog>
-  <Tab Id="@typeof(PrinterUpdateForm).ToString()" Title="@Localizer["SectionPrinters"]">
+  <Tab Id="@typeof(PrinterUpdateForm).ToString()" Label="@Localizer["SectionPrinters"]">
     <PrinterUpdateForm Model="Content" FormModel="@PrinterMapper.DtoToUpdateDto(Content)" />
   </Tab>
 </SectionDialog>

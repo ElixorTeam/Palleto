@@ -29,7 +29,7 @@
                 Disabled="@(TabsComponent.ActiveTabId == tab.Id)"
                 Class="disabled:!opacity-100"
               >
-                @tab.Title
+                @tab.Label
               </Button>
             </li>
           }
@@ -37,10 +37,10 @@
       </div>
     </div>
     <div class="size-full bg-secondary/[.3] flex flex-col grow overflow-hidden">
-      <Tab Id="@PalletViewTabType.Info.ToString()" Title="@WsDataLocalizer["ColPallet"]">
+      <Tab Id="@PalletViewTabType.Info.ToString()" Label="@WsDataLocalizer["ColPallet"]">
         <PalletOverview Pallet="Pallet" />
       </Tab>
-      <Tab Id="@PalletViewTabType.Labels.ToString()" Title="@Localizer["ColPrint"]">
+      <Tab Id="@PalletViewTabType.Labels.ToString()" Label="@Localizer["ColPrint"]">
         <LabelsGrid Pallet="Pallet" />
       </Tab>
     </div>

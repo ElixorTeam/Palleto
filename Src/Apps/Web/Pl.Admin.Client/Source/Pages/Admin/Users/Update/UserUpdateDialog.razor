@@ -4,7 +4,7 @@
 @implements IDialogContentComponent<UserModel>
 
 <SectionDialog>
-  <Tab Id="@typeof(UserUpdateForm).ToString()" Title="@Localizer["SectionUsers"]">
+  <Tab Id="@typeof(UserUpdateForm).ToString()" Label="@Localizer["SectionUsers"]">
     <UserUpdateForm Model="Content" FormModel="@(new UserUpdateDto { ProductionSiteId = Content.ProductionSite.Id })" />
   </Tab>
 </SectionDialog>

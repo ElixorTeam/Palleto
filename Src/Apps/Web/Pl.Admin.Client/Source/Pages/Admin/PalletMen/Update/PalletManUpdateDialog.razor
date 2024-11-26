@@ -4,7 +4,7 @@
 @implements IDialogContentComponent<PalletManDto>
 
 <SectionDialog>
-  <Tab Id="@typeof(PalletManUpdateForm).ToString()" Title="@Localizer["SectionPalletMen"]">
+  <Tab Id="@typeof(PalletManUpdateForm).ToString()" Label="@Localizer["SectionPalletMen"]">
     <PalletManUpdateForm Model="Content" FormModel="@PalletManMapper.DtoToUpdateDto(Content)" />
   </Tab>
 </SectionDialog>

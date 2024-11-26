@@ -10,12 +10,10 @@
       <div class="flex grow size-full">
         @ChildContent
       </div>
-      <a href="@Routes.Home">
-        <Button Variant="ButtonVariantType.Outline">
-          <HomeIcon class="size-5 mr-2"/>
-          <span>@Localizer["BtnMenu"]</span>
-        </Button>
-      </a>
+      <Button Link="@Routes.Home" Variant="ButtonVariantType.Outline">
+        <HomeIcon class="size-5 mr-2"/>
+        <span>@Localizer["BtnMenu"]</span>
+      </Button>
     </div>
   </div>
 </div>

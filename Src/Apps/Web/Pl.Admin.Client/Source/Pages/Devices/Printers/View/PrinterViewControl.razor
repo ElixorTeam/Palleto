@@ -1,19 +1,24 @@
 @using Pl.Admin.Models.Features.Devices.Printers.Queries
+@using Pl.Admin.Client.Source.Shared.Constants
 @using Blazor.Heroicons.Outline
 
 <div class="flex flex-col pb-2 px-2">
   <div class="flex gap-1 items-center">
     <h2 class="text-xl font-medium">Удаленное управление принтером</h2>
-    <a href="@PrinterUrl" target="_blank" class="pt-1">
-      <Button Size="ButtonSizeType.Icon" Variant="ButtonVariantType.Ghost" Class="!size-7">
-        <ArrowTopRightOnSquareIcon class="size-[1.1rem]" />
-      </Button>
-    </a>
+    <Button
+      Link="@PrinterUrl"
+      Size="ButtonSizeType.Icon"
+      Variant="ButtonVariantType.Ghost"
+      Class="size-7 pt-1"
+      target="_blank"
+    >
+      <ArrowTopRightOnSquareIcon class="size-[1.1rem]" />
+    </Button>
   </div>
   <span class="text-muted-foreground text-sm">
     Если вы видите пустой блок, это означает, что браузер блокирует запрос к принтеру через сайт. Вы можете перейти по
     <a href="@PrinterUrl" target="_blank" class="underline text-primary hover:cursor-pointer">прямой ссылке</a> на устройство или отключить
-    настройки защиты браузера для сайта, следуя <a href="/" class="underline text-primary hover:cursor-pointer">данному руководству</a>.
+    настройки защиты браузера для сайта, следуя <a href="@Urls.PrinterControlGuide" class="underline text-primary hover:cursor-pointer">данному руководству</a>.
   </span>
 </div>
 

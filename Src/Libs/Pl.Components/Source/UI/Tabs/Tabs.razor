@@ -3,6 +3,12 @@
 </CascadingValue>
 
 @code {
+  /// <summary>
+  /// The content to be rendered inside the component.
+  /// </summary>
+  /// <remark>
+  /// Expect to see Tab components
+  /// </remark>
   [Parameter] public RenderFragment? ChildContent { get; set; }
   [Parameter] public string? DefaultTab { get; set; }
   [Parameter] public string ActiveTabId { get; set; } = string.Empty;

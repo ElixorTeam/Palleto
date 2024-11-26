@@ -1,12 +1,12 @@
 @inherits InputBase<bool>
 
 <FluentSwitch
-  Id="@HtmlId"
+  AdditionalAttributes="@AdditionalAttributes"
+  Id="@Id"
   @bind-Value="Value"
   @bind-Value:after="OnValueChanged"
   Class="@Css.Class("[&::part(switch)]:!border-transparent", Class)"
   Autofocus="AutoFocus"
   Disabled="Disabled"
   ReadOnly="ReadOnly"
-  AdditionalAttributes="AdditionalAttributes"
 />

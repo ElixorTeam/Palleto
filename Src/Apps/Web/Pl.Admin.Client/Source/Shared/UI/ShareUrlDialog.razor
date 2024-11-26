@@ -2,7 +2,7 @@
 
 @implements IDialogContentComponent<string>
 
-<Dialog Class="max-w-lg !p-6">
+<Dialog Class="max-w-lg p-6">
   <div class="shrink-0 w-full flex items-center justify-between bg-background">
     <h3 class="font-semibold">Поделиться записью</h3>
     <Button
@@ -20,24 +20,25 @@
     <div class="rounded-md h-9 w-full overflow-hidden border items-center flex pl-2 pr-1 gap-1">
       <input
         value="@Content"
-        class="border-none w-full pr-0 pl-2 text-sm bg-transparent focus:outline-none focus:border-none focus:ring-0"
+        class="border-none w-full pr-0 pl-1.5 text-sm bg-transparent focus:outline-none focus:border-none focus:ring-0"
         readonly
       />
       <Button
         OnClick="@CopyToClipboard"
         Size="ButtonSizeType.Icon"
         Variant="ButtonVariantType.Ghost"
-        Class="!h-[1.6rem] !w-7 shrink-0"
+        Class="h-[1.6rem] w-7 shrink-0"
       >
         <ClipboardIcon class="size-4" />
       </Button>
     </div>
-    <a href="@TelegramUrl" target="_blank">
-      <Button
-        Class="!bg-blue-500 !text-white hover:!bg-blue-600">
-        Telegram
-      </Button>
-    </a>
+    <Button
+      Link="@TelegramUrl"
+      Class="bg-blue-500 text-white hover:bg-blue-600"
+      target="_blank"
+    >
+      Telegram
+    </Button>
   </div>
 </Dialog>
 

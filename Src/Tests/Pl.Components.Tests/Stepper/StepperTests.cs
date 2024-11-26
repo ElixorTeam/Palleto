@@ -1,15 +1,20 @@
 using AngleSharp.Dom;
 using Pl.Components.Source.UI.Stepper;
+using TailwindMerge.Extensions;
 
 namespace Pl.Components.Tests.Stepper;
 
 public class StepperTests : TestContext
 {
+    public StepperTests()
+    {
+        Services.AddTailwindMerge();
+    }
+
     [Fact]
     public void Stepper_Component_Initializes_With_Correct_Current_Index()
     {
-        using TestContext ctx = new();
-        IRenderedComponent<Source.UI.Stepper.Stepper> cut = ctx.RenderComponent<Source.UI.Stepper.Stepper>();
+        IRenderedComponent<Source.UI.Stepper.Stepper> cut = RenderComponent<Source.UI.Stepper.Stepper>();
 
         cut.Instance.CurrentIndex.Should().Be(1);
     }
@@ -17,8 +22,7 @@ public class StepperTests : TestContext
     [Fact]
     public async Task Stepper_Component_Can_Change_Current_Index()
     {
-        using TestContext ctx = new();
-        IRenderedComponent<Source.UI.Stepper.Stepper> cut = ctx.RenderComponent<Source.UI.Stepper.Stepper>();
+        IRenderedComponent<Source.UI.Stepper.Stepper> cut = RenderComponent<Source.UI.Stepper.Stepper>();
 
         await cut.Instance.SetCurrentIndex(2);
 
@@ -28,9 +32,8 @@ public class StepperTests : TestContext
     [Fact]
     public void Stepper_Component_Indexes_Items_Correctly()
     {
-        using TestContext ctx = new();
         const short itemsCount = 3;
-        IRenderedComponent<StepperComponent> cut = ctx.RenderComponent<StepperComponent>();
+        IRenderedComponent<StepperComponent> cut = RenderComponent<StepperComponent>();
 
         IReadOnlyList<IRenderedComponent<StepperItem>> items = cut.FindComponents<StepperItem>();
 
@@ -43,8 +46,7 @@ public class StepperTests : TestContext
     [Fact]
     public void First_StepperItem_Is_Clickable_And_Last_StepperItem_Is_Disabled()
     {
-        using TestContext ctx = new();
-        IRenderedComponent<StepperComponent> cut = ctx.RenderComponent<StepperComponent>();
+        IRenderedComponent<StepperComponent> cut = RenderComponent<StepperComponent>();
 
         IReadOnlyList<IRenderedComponent<StepperItem>> items = cut.FindComponents<StepperItem>();
         IRenderedComponent<StepperItem> firstItem = items[0];
@@ -62,8 +64,7 @@ public class StepperTests : TestContext
     [Fact]
     public async Task Changing_CurrentStepIndex_Manually_Updates_Current_Content_And_Active_StepperItem()
     {
-        using TestContext ctx = new();
-        IRenderedComponent<StepperComponent> cut = ctx.RenderComponent<StepperComponent>();
+        IRenderedComponent<StepperComponent> cut = RenderComponent<StepperComponent>();
 
         IRenderedComponent<Source.UI.Stepper.Stepper> stepper = cut.FindComponent<Source.UI.Stepper.Stepper>();
 

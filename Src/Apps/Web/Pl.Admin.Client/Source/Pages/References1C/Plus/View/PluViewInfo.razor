@@ -1,7 +1,7 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Models.Features.References1C.Plus.Queries
 
-<ViewFieldGrid Title="Общая информация" Border>
+<ViewFieldGrid Label="Общая информация" Border>
   <ViewFieldGuid Value="@Model.Id" />
 
   <ViewField Label="@WsDataLocalizer["ColNumber"]" Value="@Model.Number.ToString()" />
@@ -47,7 +47,7 @@
   />
 </ViewFieldGrid>
 
-<ViewFieldGrid Title="@WsDataLocalizer["ColDescription"]" Border>
+<ViewFieldGrid Label="@WsDataLocalizer["ColDescription"]" Border>
   <ViewField
     Label="@WsDataLocalizer["ColName"]"
     Value="@Model.Name"
@@ -64,7 +64,7 @@
   />
 </ViewFieldGrid>
 
-<ViewFieldGrid Title="@Localizer["FieldPackaging"]" Border>
+<ViewFieldGrid Label="@Localizer["FieldPackaging"]" Border>
   @if (Model.Bundle != null)
   {
     <ViewField
@@ -84,7 +84,7 @@
   }
 </ViewFieldGrid>
 
-<ViewFieldGrid Title="@WsDataLocalizer["ColBarcode"]">
+<ViewFieldGrid Label="@WsDataLocalizer["ColBarcode"]">
   <ViewField
     Label="Ean13"
     Value="@Model.Ean13"

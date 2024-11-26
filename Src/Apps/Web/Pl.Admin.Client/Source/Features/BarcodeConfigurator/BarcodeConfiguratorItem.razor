@@ -20,7 +20,7 @@
           @bind-Value="@Value.Property"
           @bind-Value:after="@OnConstInputValue"
           Placeholder="@Localizer["BarcodeEditorConstInputPlaceholder"]"
-          Class="!border-none !rounded-none"
+          Class="border-none rounded-none"
         />
       }
       else
@@ -31,7 +31,7 @@
           @bind-Value="@Value.Property"
           @bind-Value:after="@OnVarSelect"
           ItemDisplayName="@(item => string.IsNullOrWhiteSpace(item) ? Localizer["BarcodeEditorVariableSelectPlaceholder"] : item.ToString())"
-          Class="!border-none !rounded-none !h-full"
+          Class="border-none rounded-none h-full"
         />
       }
     </div>
@@ -43,7 +43,7 @@
           @bind-Value="@Value.FormatStr"
           @bind-Value:after="@OnMaskEnter"
           Placeholder="@Localizer["BarcodeEditorMaskPlaceholder"]"
-          Class="!border-none !rounded-none !bg-inherit !h-full"
+          Class="border-none rounded-none bg-inherit h-full"
         />
         @if (GetTypedBarcode()?.Type == typeof(DateTime))
         {
@@ -66,7 +66,7 @@
           @bind-Value:after="@OnMaskEnter"
           Items="@BarcodeVarUtils.BarcodeVarConstantsFormats"
           Placeholder="@Localizer["BarcodeEditorMaskPlaceholder"]"
-          Class="!border-none !rounded-none !bg-inherit !h-full"
+          Class="border-none rounded-none bg-inherit h-full"
         />
       }
     </div>

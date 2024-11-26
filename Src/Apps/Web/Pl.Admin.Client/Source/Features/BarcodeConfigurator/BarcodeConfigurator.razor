@@ -27,7 +27,7 @@
 </CascadingValue>
 
 <div class="flex w-full py-4 gap-2 justify-between items-center overflow-hidden flex-wrap gap-y-8">
-  <Badge Type="@BadgeType.Outline">
+  <Badge Variant="@BadgeVariants.Outline">
     @WsDataLocalizer["ColLength"]: @ExtendedBarcodeDictionary.Sum(x => x.Example.Count(char.IsDigit))
   </Badge>
   <div class="gap-2 flex">

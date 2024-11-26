@@ -40,11 +40,13 @@
     }
     else
     {
-      <a href="@Routes.Home" class="w-full">
-        <Button OnClick="@SubmitTransfer" Variant="ButtonVariantType.Outline" Class="!w-full">
-          Выход
-        </Button>
-      </a>
+      <Button
+        Link="@Routes.Home"
+        Variant="ButtonVariantType.Outline"
+        Class="w-full"
+      >
+        Выход
+      </Button>
       <Button OnClick="@ResetAction">
         Повторить
       </Button>

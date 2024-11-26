@@ -5,11 +5,11 @@
 @implements IDialogContentComponent<TemplateDto>
 
 <SectionDialog>
-  <Tab Id="@typeof(TemplateUpdateForm).ToString()" Title="@Localizer["SectionTemplates"]">
+  <Tab Id="@typeof(TemplateUpdateForm).ToString()" Label="@Localizer["SectionTemplates"]">
     <TemplateUpdateForm Model="Content" FormModel="@TemplateMapper.DtoToUpdateDto(Content)" />
   </Tab>
 
-  <Tab Id="@typeof(TemplateBarcodeForm).ToString()" Title="@WsDataLocalizer["ColBarcode"]">
+  <Tab Id="@typeof(TemplateBarcodeForm).ToString()" Label="@WsDataLocalizer["ColBarcode"]">
     <UseEndpoint Endpoint="PrintSettingsEndpoints.BarcodesEndpoint" Arg="@Content.Id" Context="barcodesQuery">
       @if (barcodesQuery.HasData)
       {

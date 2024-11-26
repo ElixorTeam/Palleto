@@ -1,11 +1,13 @@
 @typeparam TSelectItem
+@using Pl.Components.Source.UI.Dropdown
 @typeparam TSelectType
 
 <Dropdown
   Anchor="@Parent.HtmlId"
-  @bind-IsOpen="@Parent.IsDropdownOpened"
-  @bind-IsOpen:after="@(() => { if (!Parent.IsDropdownOpened) Parent.Reset(); })"
+  @bind-Visible="@Parent.IsDropdownOpened"
+  @bind-Visible:after="@(() => { if (!Parent.IsDropdownOpened) Parent.Reset(); })"
   VerticalThreshold="@DropdownHeight"
+  Position="@Position"
   Class="@Class"
   Style="@(!Parent.IgnoreWidth ? $"width: {Parent.TriggerWidth}px" : null)"
 >
@@ -28,6 +30,7 @@
   [Parameter] public RenderFragment? SelectGroup { get; set; }
   [Parameter] public RenderFragment? ChildContent { get; set; }
   [Parameter] public string Class { get; set; } = string.Empty;
+  [Parameter] public VerticalPosition? Position { get; set; }
 
   [CascadingParameter] public SelectBase<TSelectItem, TSelectType> Parent { get; set; } = default!;
 

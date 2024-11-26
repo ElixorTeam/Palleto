@@ -11,6 +11,7 @@ using Pl.Admin.Client.Source.Shared.Constants;
 using Pl.Admin.Models;
 using Pl.Shared.Constants;
 using Pl.Shared.Web.Extensions;
+using TailwindMerge.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -42,7 +43,7 @@ builder.Services
     .AddFluentUIComponents(c => c.ValidateClassNames = false)
     .ConfigureKeycloakAuthorization(oidcSettings);
 
-// builder.Services.AddRazorPages();
+builder.Services.AddTailwindMerge();
 
 WebApplication app = builder.Build();
 

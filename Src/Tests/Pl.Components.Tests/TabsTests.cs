@@ -89,12 +89,12 @@ public class TabsTests : TestContext
     }
 
     [Fact]
-    public void Tab_ShouldRegisterIdAndTitleCorrectly()
+    public void Tab_ShouldRegisterIdAndLabelCorrectly()
     {
         // Arrange
         IRenderedComponent<Tabs> cut = RenderComponent<Tabs>(parameters => parameters
-            .AddChildContent<Tab>(p => p.Add(t => t.Id, "first").Add(t => t.Title, "First Tab").Add(t => t.ChildContent, "<p>First tab</p>"))
-            .AddChildContent<Tab>(p => p.Add(t => t.Id, "second").Add(t => t.Title, "Second Tab").Add(t => t.ChildContent, "<p>Second tab</p>"))
+            .AddChildContent<Tab>(p => p.Add(t => t.Id, "first").Add(t => t.Label, "First Tab").Add(t => t.ChildContent, "<p>First tab</p>"))
+            .AddChildContent<Tab>(p => p.Add(t => t.Id, "second").Add(t => t.Label, "Second Tab").Add(t => t.ChildContent, "<p>Second tab</p>"))
         );
 
         // Act
@@ -103,9 +103,9 @@ public class TabsTests : TestContext
         // Assert
         tabs.Should().HaveCount(2);
         tabs[0].Id.Should().Be("first");
-        tabs[0].Title.Should().Be("First Tab");
+        tabs[0].Label.Should().Be("First Tab");
         tabs[1].Id.Should().Be("second");
-        tabs[1].Title.Should().Be("Second Tab");
+        tabs[1].Label.Should().Be("Second Tab");
     }
 
     [Fact]
@@ -144,12 +144,12 @@ public class TabsTests : TestContext
     }
 
     [Fact]
-    public void Tabs_ShouldHandleDuplicateTitles()
+    public void Tabs_ShouldHandleDuplicateLabels()
     {
         // Arrange
         IRenderedComponent<Tabs> cut = RenderComponent<Tabs>(parameters => parameters
-            .AddChildContent<Tab>(p => p.Add(t => t.Id, "first").Add(t => t.Title, "Duplicate").Add(t => t.ChildContent, "<p>First tab</p>"))
-            .AddChildContent<Tab>(p => p.Add(t => t.Id, "second").Add(t => t.Title, "Duplicate").Add(t => t.ChildContent, "<p>Second tab</p>"))
+            .AddChildContent<Tab>(p => p.Add(t => t.Id, "first").Add(t => t.Label, "Duplicate").Add(t => t.ChildContent, "<p>First tab</p>"))
+            .AddChildContent<Tab>(p => p.Add(t => t.Id, "second").Add(t => t.Label, "Duplicate").Add(t => t.ChildContent, "<p>Second tab</p>"))
         );
 
         // Act
@@ -157,8 +157,8 @@ public class TabsTests : TestContext
 
         // Assert
         tabs.Count.Should().Be(2);
-        tabs[0].Title.Should().Be("Duplicate");
-        tabs[1].Title.Should().Be("Duplicate");
+        tabs[0].Label.Should().Be("Duplicate");
+        tabs[1].Label.Should().Be("Duplicate");
     }
 
     [Fact]

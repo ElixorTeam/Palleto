@@ -1,7 +1,7 @@
 @using Pl.Admin.Models.Features.Admins.PalletMen.Queries
 @using Pl.Admin.Client.Source.Features
 
-<ViewFieldGrid Title="Общая информация" Border>
+<ViewFieldGrid Label="Общая информация" Border>
   <ViewFieldGuid Value="@Model.Id" />
 
   <ViewFieldGuid Value="@Model.Id1C" Label="UID 1C" />
@@ -18,7 +18,7 @@
   </SupportAuthView>
 </ViewFieldGrid>
 
-<ViewFieldGrid Title="@WsDataLocalizer["ColFIO"]">
+<ViewFieldGrid Label="@WsDataLocalizer["ColFIO"]">
   <ViewField
     Label="@WsDataLocalizer["ColFirstName"]"
     Value="@Model.Fio.Name"

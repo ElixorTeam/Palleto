@@ -1,0 +1,29 @@
+@inherits PlComponentBase
+
+<button
+  @attributes="AdditionalAttributes"
+  id="@Id"
+  type="button"
+  class="@ClassMerge("relative w-full flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent focus:bg-accent/[.5] focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50", Class)"
+  onclick="@OnClick"
+  disabled="@Disabled"
+>
+  @ChildContent
+</button>
+
+@code {
+  /// <summary>
+  /// The content to be rendered inside the component.
+  /// </summary>
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  /// <summary>
+  /// Callback executed when the user clicks on trigger.
+  /// </summary>
+  [Parameter] public EventCallback OnClick { get; set; }
+
+  /// <summary>
+  /// Indicates whether the trigger is disabled, preventing user interaction.
+  /// </summary>
+  [Parameter] public bool Disabled { get; set; }
+}

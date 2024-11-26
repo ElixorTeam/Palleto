@@ -24,11 +24,9 @@
     </Authorized>
     <NotAuthorized>
       <div class="flex w-full items-center justify-center">
-        <a href="@($"{Urls.Authorization}/login")">
-          <Button Variant="ButtonVariantType.Outline">
-            Log in
-          </Button>
-        </a>
+        <Button Link="@($"{Urls.Authorization}/login")" Variant="ButtonVariantType.Outline">
+          Log in
+        </Button>
       </div>
     </NotAuthorized>
   </AuthorizeView>

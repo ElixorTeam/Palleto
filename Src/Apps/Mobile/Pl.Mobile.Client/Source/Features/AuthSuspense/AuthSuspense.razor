@@ -21,7 +21,7 @@
         class="mt-4"
       >
         <FluentValidationValidator Validator="@(new AuthModelValidator())" />
-        <FormFieldWrapper Label="Пароль" HtmlId="login-password">
+        <FormFieldWrapper Label="Пароль" For="login-password">
           <NumericInputNoVirtual
             @bind-Value="@Model.Password"
             Placeholder="Введите пароль..."
@@ -31,7 +31,7 @@
           <FieldValidation For="@(() => Model.Password)" />
         </FormFieldWrapper>
         <div class="w-full flex justify-end">
-          <Button Type="@ButtonType.Submit" Disabled="@IsLoading" Class="!mt-4">
+          <Button Type="@ButtonType.Submit" Disabled="@IsLoading" Class="mt-4">
             Войти
           </Button>
         </div>

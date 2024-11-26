@@ -33,7 +33,7 @@
           @bind-Plu="@item.Plu"
           @bind-Plu:after="@(() => OnItemChanged(item))"
           Disabled="@Model.Mono"
-          Class="!rounded-none !border-l-none !border-y-0 !h-full"
+          Class="rounded-none border-l-none border-y-0 h-full"
         />
         <NumericDateInput @bind-Value="@item.Date" />
         <input

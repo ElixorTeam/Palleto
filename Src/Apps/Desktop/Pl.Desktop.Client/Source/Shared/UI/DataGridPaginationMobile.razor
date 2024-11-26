@@ -3,7 +3,7 @@
     Variant="ButtonVariantType.Outline"
     OnClick="@(() => GoToPageAsync(Pagination.CurrentPageIndex - 1))"
     Disabled="@(Pagination.CurrentPageIndex == 0)"
-    Class="md:!h-12 md:!px-4"
+    Class="md:h-12 md:px-4"
   >
     @Localizer["BtnPaginationPrev"]
   </Button>
@@ -14,7 +14,7 @@
     Variant="ButtonVariantType.Outline"
     OnClick="@(() => GoToPageAsync(Pagination.CurrentPageIndex + 1))"
     Disabled="@(Pagination.CurrentPageIndex == Pagination.LastPageIndex)"
-    Class="md:!h-12 md:!px-4"
+    Class="md:h-12 md:px-4"
   >
     @Localizer["BtnPaginationNext"]
   </Button>

@@ -6,6 +6,7 @@ using Pl.Desktop.Client.Source.Shared.Api;
 using Pl.Desktop.Client.Source.Shared.Extensions;
 using Pl.Desktop.Client.Source.Shared.Services.Devices;
 using Pl.Shared.Web.Extensions;
+using TailwindMerge.Extensions;
 
 namespace Pl.Desktop.Client;
 
@@ -32,6 +33,8 @@ public static class MauiProgram
         builder.Services
             .AddScoped<HtmlRenderer>()
             .AddScoped<IPrintingService, PrintingService>();
+
+        builder.Services.AddTailwindMerge();
 
         #if DEBUG
 

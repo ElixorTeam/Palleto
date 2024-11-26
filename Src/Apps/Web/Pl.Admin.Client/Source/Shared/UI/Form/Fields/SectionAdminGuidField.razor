@@ -1,11 +1,11 @@
 <AuthorizeView Policy="@PolicyEnum.Admin">
   <SectionInputWrapper
     Label="@Label"
-    HtmlFor="@HtmlId()"
+    HtmlFor="@HtmlId"
     ValueToCopy="@Value.ToString()"
   >
     <InputTextField
-      id="@HtmlId()"
+      Id="@HtmlId"
       Value="@Value.ToString().ToUpper()"
       Disabled
     />
@@ -16,5 +16,5 @@
   [Parameter] public Guid Value { get; set; }
   [Parameter] public string Label { get; set; } = "UID";
 
-  private string HtmlId() => $"uid-{Value}";
+  private string HtmlId { get; set; } = $"uid-{Guid.NewGuid()}";
 }

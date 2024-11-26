@@ -2,7 +2,7 @@
 
 @implements IDialogContentComponent
 
-<Dialog Class="max-w-lg !p-6">
+<Dialog Class="max-w-lg p-6">
   <div class="shrink-0 w-full flex items-center justify-between bg-background">
     <h3 class="font-semibold">Вы уверены, что хотите завершить создание?</h3>
     <Button
@@ -23,11 +23,9 @@
     >
       Отмена
     </Button>
-    <a href="@Urls.Home">
-      <Button>
-        Подтвердить
-      </Button>
-    </a>
+    <Button Link="@Urls.Home">
+      Подтвердить
+    </Button>
   </div>
 </Dialog>
 

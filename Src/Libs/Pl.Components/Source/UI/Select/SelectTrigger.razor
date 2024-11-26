@@ -1,11 +1,14 @@
-@typeparam TSelectItem
 @using Blazor.Heroicons.Outline
+
+@typeparam TSelectItem
 @typeparam TSelectType
+
+@inherits PlComponentBase
 
 <button
   id="@Parent.HtmlId"
   @onclick="@Parent.ToggleDropdown"
-  class="@Css.Class("flex text-left h-9 w-full transition-colors items-center justify-between rounded-md border border-input bg-background px-3 py-2 hover:bg-accent hover:text-accent-foreground text-sm disabled:cursor-not-allowed disabled:opacity-50", Class)"
+  class="@ClassMerge("flex text-left h-9 w-full transition-colors items-center justify-between rounded-md border border-input bg-background px-3 py-2 hover:bg-accent hover:text-accent-foreground text-sm disabled:cursor-not-allowed disabled:opacity-50", Class)"
   disabled="@Disabled"
   type="button"
   role="combobox"
@@ -20,7 +23,13 @@
 @code {
   [CascadingParameter] public SelectBase<TSelectItem, TSelectType> Parent { get; set; } = default!;
 
+  /// <summary>
+  /// The content to be rendered inside the component.
+  /// </summary>
   [Parameter] public RenderFragment? ChildContent { get; set; }
-  [Parameter] public string Class { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Indicates whether the trigger is disabled, preventing user interaction.
+  /// </summary>
   [Parameter] public bool Disabled { get; set; }
 }

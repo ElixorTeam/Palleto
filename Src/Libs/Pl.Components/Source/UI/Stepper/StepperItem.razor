@@ -1,4 +1,5 @@
 @using Blazor.Heroicons.Outline
+
 @implements IDisposable
 
 <li class="relative">
@@ -11,6 +12,7 @@
       }
     <button
       @onclick="@(() => ParentStepper.SetCurrentIndex(Index))"
+      type="button"
       class="@Css.Class("relative border transition-colors flex size-8 items-center justify-center rounded-full", ParentStepper.CurrentIndex == Index ? "border-primary/70 border-2 bg-background" : ParentStepper.CurrentIndex > Index ? "border-primary border-2 bg-primary" : "bg-background")"
       disabled="@Disabled"
     >
@@ -39,8 +41,20 @@
 
 @code {
   [CascadingParameter] private Stepper ParentStepper { get; set; } = default!;
+
+  /// <summary>
+  /// The text label for additional information
+  /// </summary>
   [Parameter] public string Label { get; set; } = string.Empty;
+
+  /// <summary>
+  /// Indicates whether the trigger is disabled, preventing user interaction.
+  /// </summary>
   [Parameter] public bool Disabled { get; set; }
+
+  /// <summary>
+  /// Indicates current index of component after registration
+  /// </summary>
   public int Index { get; private set; }
 
   protected override void OnInitialized()

@@ -1,10 +1,14 @@
 @using System.Linq.Expressions
 @using Microsoft.AspNetCore.Components.Forms
+
 @typeparam TValue
+@inherits PlComponentBase
 
-
-<ValidationMessage For="@For" class="text-sm font-medium text-destructive" />
+<ValidationMessage For="@For" class="@ClassMerge("text-sm font-medium text-destructive", Class)" />
 
 @code {
+  /// <summary>
+  /// The expression representing the field or property to validate.
+  /// </summary>
   [Parameter] public Expression<Func<TValue>>? For { get; set; }
 }

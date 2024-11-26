@@ -1,4 +1,4 @@
-<Dialog Class="max-w-screen-lg min-h-52 !p-0">
+<Dialog Class="max-w-screen-lg min-h-52 p-0">
   <Tabs DefaultTab="@DefaultTab" @ref="TabComponent">
     <DialogHeader>
       <ul class="flex gap-2">
@@ -9,7 +9,7 @@
               Variant="@(TabComponent.ActiveTabId == tab.Id ? ButtonVariantType.Secondary : ButtonVariantType.Outline)"
               OnClick="@(() => TabComponent.ChangeTab(tab.Id))"
             >
-              @tab.Title
+              @tab.Label
             </Button>
           </li>
         }

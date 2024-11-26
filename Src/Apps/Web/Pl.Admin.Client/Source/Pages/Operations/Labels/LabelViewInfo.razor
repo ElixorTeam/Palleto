@@ -1,6 +1,6 @@
 @using Pl.Admin.Models.Features.Print.Labels
 
-<ViewFieldGrid Title="Общая информация" Border>
+<ViewFieldGrid Label="Общая информация" Border>
   <ViewFieldGuid Value="@Model.Id" />
 
   @if (Model.Plu != null)
@@ -13,7 +13,7 @@
   <ViewField Label="@WsDataLocalizer["ColWarehouse"]" Value="@Model.Warehouse.Name" Link="@RedirectHelper.ToWarehouse(Model.Warehouse.Id)" />
 </ViewFieldGrid>
 
-<ViewFieldGrid Title="Параметры этикетки" Border>
+<ViewFieldGrid Label="Параметры этикетки" Border>
   <ViewField Label="@WsDataLocalizer["ColKneading"]" Value="@Model.Kneading.ToString()" />
   <ViewField Label="@WsDataLocalizer["ColCount"]" Value="@Model.BundleCount.ToString()" />
 
@@ -24,7 +24,7 @@
   <ViewField Label="@WsDataLocalizer["ColTareWeight"]" Value="@Model.WeightTare.ToString(CultureInfo.InvariantCulture)"/>
 </ViewFieldGrid>
 
-<ViewFieldGrid Title="Штрихкоды">
+<ViewFieldGrid Label="Штрихкоды">
   <ViewField Label="@WsDataLocalizer["ColBarcodeTop"]" Value="@Model.BarcodeTop" Copyable />
   <ViewField Label="@WsDataLocalizer["ColBarcodeBottom"]" Value="@Model.BarcodeBottom" Copyable />
   <ViewField Label="@WsDataLocalizer["ColBarcodeRight"]" Value="@Model.BarcodeRight" Copyable />

@@ -1,7 +1,7 @@
 @using Pl.Desktop.Models.Features.Pallets.Output
 
 <div class="w-full grid grid-cols-1 gap-x-10 gap-y-3 lg:grid-cols-2 items-start">
-  <FormDivider Class="!pb-0">@Localizer["PalletOverviewDividerCommon"]</FormDivider>
+  <FormDivider Class="pb-0">@Localizer["PalletOverviewDividerCommon"]</FormDivider>
 
   <PalletViewFormField
     Label="@WsDataLocalizer["ColNumber"]"
@@ -41,7 +41,7 @@
     HtmlId="pallet-bundle-count"
   />
 
-  <FormDivider Class="!pb-0">@WsDataLocalizer["ColPlu"]</FormDivider>
+  <FormDivider Class="pb-0">@WsDataLocalizer["ColPlu"]</FormDivider>
 
   @foreach (PluPalletDto item in Pallet.Plus)
   {
@@ -64,7 +64,7 @@
     />
   }
 
-  <FormDivider Class="!pb-0">@WsDataLocalizer["ColWeight"]</FormDivider>
+  <FormDivider Class="pb-0">@WsDataLocalizer["ColWeight"]</FormDivider>
 
   <PalletViewFormField
     Label="@($"{WsDataLocalizer["ColNetWeight"]} ({WsDataLocalizer["MeasureKg"]})")"

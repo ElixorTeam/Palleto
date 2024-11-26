@@ -1,6 +1,3 @@
-<div @attributes="Attributes" class="@Css.Class("animate-pulse rounded-md bg-muted", Class)"></div>
+@inherits PlComponentBase
 
-@code {
-  [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object> Attributes { get; set; } = new();
-  [Parameter] public string Class { get; set; } = string.Empty;
-}
+<div @attributes="AdditionalAttributes" class="@ClassMerge("animate-pulse rounded-md bg-muted", Class)"></div>

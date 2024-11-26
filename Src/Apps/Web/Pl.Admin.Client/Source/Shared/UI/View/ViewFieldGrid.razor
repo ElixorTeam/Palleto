@@ -1,7 +1,7 @@
 <div class="@Css.Class("w-full flex flex-col gap-3", Border ? "pb-6 mb-6 border-b" : "", Class)">
-  @if (!string.IsNullOrWhiteSpace(Title))
+  @if (!string.IsNullOrWhiteSpace(Label))
   {
-    <h2 class="text-xl font-medium">@Title</h2>
+    <h2 class="text-xl font-medium">@Label</h2>
   }
   <ul class="w-full grid grid-cols-3 gap-4 xl:grid-cols-4 2xl:grid-cols-5">
     @ChildContent
@@ -12,6 +12,6 @@
 @code {
   [Parameter] public RenderFragment? ChildContent { get; set; }
   [Parameter] public string Class { get; set; } = string.Empty;
-  [Parameter] public string Title { get; set; } = string.Empty;
+  [Parameter] public string Label { get; set; } = string.Empty;
   [Parameter] public bool Border { get; set; }
 }

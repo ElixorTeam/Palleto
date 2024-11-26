@@ -1,4 +1,10 @@
-<div class="@Css.Class("bg-background overflow-hidden flex flex-col max-h-[calc(100vh_-_2px)] w-screen border shadow-lg rounded-lg", Class)">
+@inherits PlComponentBase
+
+<div
+  @attributes="AdditionalAttributes"
+  id="@Id"
+  class="@ClassMerge("bg-background overflow-hidden flex flex-col max-h-[calc(100vh_-_2px)] w-screen border shadow-lg rounded-lg", Class)"
+>
   @ChildContent
 </div>
 
@@ -8,5 +14,4 @@
 
 @code {
   [Parameter] public RenderFragment? ChildContent { get; set; }
-  [Parameter] public string Class { get; set; } = string.Empty;
 }

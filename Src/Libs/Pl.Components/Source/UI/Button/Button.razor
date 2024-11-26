@@ -1,0 +1,98 @@
+@inherits PlComponentBase
+
+@if (string.IsNullOrWhiteSpace(Link))
+{
+  <button
+    @attributes="AdditionalAttributes"
+    id="@Id"
+    class="@ButtonClasses"
+    type="@HtmlType"
+    onclick="@OnClick"
+    disabled="@Disabled"
+  >
+    @ChildContent
+  </button>
+}
+else
+{
+  <a
+    @attributes="AdditionalAttributes"
+    id="@Id"
+    href="@Link"
+    class="@ButtonClasses"
+  >
+    @ChildContent
+  </a>
+}
+
+@code {
+  /// <summary>
+  /// The content to be rendered inside the component.
+  /// </summary>
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  /// <summary>
+  /// Defines the visual style of the button.
+  /// </summary>
+  [Parameter] public ButtonVariantType Variant { get; set; } = ButtonVariantType.Default;
+
+  /// <summary>
+  /// Defines the size of the button.
+  /// </summary>
+  [Parameter] public ButtonSizeType Size { get; set; } = ButtonSizeType.Default;
+
+  /// <summary>
+  /// Defines the HTML type attribute for the button element.
+  /// </summary>
+  [Parameter] public ButtonType Type { get; set; } = ButtonType.Button;
+
+  /// <summary>
+  /// Callback executed when the user clicks on trigger.
+  /// </summary>
+  [Parameter] public EventCallback OnClick { get; set; }
+
+  /// <summary>
+  /// Indicates whether the trigger is disabled, preventing user interaction.
+  /// </summary>
+  [Parameter] public bool Disabled { get; set; }
+
+  /// <summary>
+  /// The URL the hyperlink references.
+  /// </summary>
+  /// <remarks>
+  /// When this property is set, the button is transformed into a hyperlink.
+  /// </remarks>
+  [Parameter] public string Link { get; set; } = string.Empty;
+
+  private string? ButtonClasses => ClassMerge(BaseClasses, VariantClasses, SizeClasses, Class);
+
+  private string BaseClasses => "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-5";
+
+  private string VariantClasses => Variant switch
+  {
+    ButtonVariantType.Default => "bg-primary text-primary-foreground hover:bg-primary/90",
+    ButtonVariantType.Destructive => "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+    ButtonVariantType.Outline => "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+    ButtonVariantType.Secondary => "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+    ButtonVariantType.Ghost => "hover:bg-accent hover:text-accent-foreground",
+    ButtonVariantType.Link => "text-primary underline-offset-4 hover:underline",
+    _ => string.Empty
+  };
+
+  private string SizeClasses => Size switch
+  {
+    ButtonSizeType.Default => "h-9 px-4 py-2",
+    ButtonSizeType.Small => "h-8 rounded-md px-3 text-xs",
+    ButtonSizeType.Large => "h-10 rounded-md px-8",
+    ButtonSizeType.Full => "size-full",
+    ButtonSizeType.Icon => "h-9 w-9",
+    _ => string.Empty
+  };
+
+  private string HtmlType => Type switch
+  {
+    ButtonType.Reset => "reset",
+    ButtonType.Submit => "submit",
+    _ => "button"
+  };
+}
