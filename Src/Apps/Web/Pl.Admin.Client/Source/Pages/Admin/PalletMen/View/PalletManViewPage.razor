@@ -12,6 +12,8 @@
   Arg="@Id"
   Context="query"
 >
+  <BrowserTitle Label="@(query.Data?.Fio.DisplayShortName ?? Localizer["SectionPalletMen"])" />
+
   <Breadcrumbs Start="BreadcrumbStart.Back">
     <Breadcrumb Label="@Localizer["SectionPalletMen"]" Link="@Urls.PalletMen" />
     @if (query.HasData)
@@ -38,7 +40,7 @@
 
     <TabsContent>
       <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-        Информация
+        @Localizer["SectionViewInfo"]
       </ViewTabButton>
     </TabsContent>
   </ViewHeader>

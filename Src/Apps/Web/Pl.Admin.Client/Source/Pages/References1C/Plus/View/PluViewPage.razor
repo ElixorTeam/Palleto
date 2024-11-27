@@ -9,8 +9,10 @@
   Arg="@Id"
   Context="query"
 >
+  <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionPlu"])" />
+
   <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label="@WsDataLocalizer["ColPlu"]" Link="@Urls.Plus" />
+    <Breadcrumb Label="@Localizer["SectionPlu"]" Link="@Urls.Plus" />
     @if (query.HasData)
     {
       <Breadcrumb Label="@query.Data.Name" />
@@ -30,10 +32,10 @@
 
     <TabsContent>
       <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-        Информация
+        @Localizer["SectionViewInfo"]
       </ViewTabButton>
       <ViewTabButton Value="characteristics" @bind-CurrentTab="CurrentTab">
-        Характеристики
+        @WsDataLocalizer["ColCharacteristics"]
       </ViewTabButton>
     </TabsContent>
   </ViewHeader>
@@ -54,6 +56,7 @@
 @code {
   # region Injects
 
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;

@@ -8,6 +8,8 @@
   Arg="@Id"
   Context="query"
 >
+  <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionBundles"])" />
+
   <Breadcrumbs Start="BreadcrumbStart.Back">
     <Breadcrumb Label=@Localizer["SectionBundles"] Link="@Urls.Bundles" />
     @if (query.HasData)
@@ -27,7 +29,7 @@
 
     <TabsContent>
       <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-        Информация
+        @Localizer["SectionViewInfo"]
       </ViewTabButton>
     </TabsContent>
   </ViewHeader>

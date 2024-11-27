@@ -1,6 +1,6 @@
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
 
-<ViewFieldGrid Label="Общая информация" Border>
+<ViewFieldGrid Label="@Localizer["FieldCommon"]" Border>
   <ViewFieldGuid Value="@Model.Id" />
 
   <ViewField
@@ -29,7 +29,7 @@
   />
 </ViewFieldGrid>
 
-<ViewFieldGrid Label="Параметры">
+<ViewFieldGrid Label="@Localizer["FieldParameters"]">
   <ViewField
     Label="@WsDataLocalizer["ColSystemKey"]"
     Value="@Model.SystemKey.ToString()"

@@ -59,7 +59,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-app.UseRequestLocalization(Cultures.Ru.Name);
+app.UseRequestLocalization(Cultures.En.Name);
 
 app.UseStatusCodePagesWithRedirects("/not-found");
 

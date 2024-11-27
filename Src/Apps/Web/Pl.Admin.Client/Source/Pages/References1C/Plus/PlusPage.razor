@@ -8,7 +8,7 @@
 @attribute [Route(Urls.Plus)]
 @rendermode InteractiveServer
 
-<PageTitle>Admin - @Localizer["SectionPlu"]</PageTitle>
+<BrowserTitle Label="@Localizer["SectionPlu"]" />
 
 <UseParameterlessEndpoint
   Endpoint="@References1CEndpoints.PlusEndpoint"
@@ -45,7 +45,7 @@
           @if (context.Name.StartsWith('я'))
           {
             <div class="w-full flex items-center justify-center">
-              <TrashIcon class="text-red-600 size-5"/>
+              <TrashIcon class="text-destructive size-5"/>
             </div>
           }
           else if (context.Template?.Id.IsEmpty() == true)

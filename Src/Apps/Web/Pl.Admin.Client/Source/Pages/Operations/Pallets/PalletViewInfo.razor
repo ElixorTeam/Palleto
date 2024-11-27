@@ -1,6 +1,6 @@
 @using Pl.Admin.Models.Features.Print.Pallets
 
-<ViewFieldGrid Label="Общая информация" Border>
+<ViewFieldGrid Label="@Localizer["FieldCommon"]" Border>
   <ViewFieldGuid Value="@Model.Id" />
   <ViewField Label="@WsDataLocalizer["ColNumber"]" Value="@Model.Number" />
   <ViewField Label="@WsDataLocalizer["ColBarcode"]" Value="@Model.Barcode" />
@@ -9,7 +9,7 @@
   <ViewField Label="@WsDataLocalizer["ColPalletMan"]" Value="@Model.PalletMan.Name" />
 </ViewFieldGrid>
 
-<ViewFieldGrid Label="Параметры паллеты">
+<ViewFieldGrid Label="@Localizer["FieldParameters"]">
   <ViewField Label="@WsDataLocalizer["ColPlu"]" Value="@(Model.Plus.FirstOrDefault()?.Plu.Name ?? "Неизвестно")" />
   <ViewField Label="@WsDataLocalizer["ColKneading"]" Value="@Model.Kneadings.FirstOrDefault().ToString()" />
   <ViewField Label="@WsDataLocalizer["ColGrossWeight"]" Value="@Model.WeightBrutto.ToString(CultureInfo.InvariantCulture)"/>

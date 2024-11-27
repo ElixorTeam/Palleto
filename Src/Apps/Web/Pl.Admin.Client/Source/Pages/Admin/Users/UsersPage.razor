@@ -10,7 +10,7 @@
 @attribute [Authorize(Policy = PolicyEnum.SeniorSupport)]
 @rendermode InteractiveServer
 
-<PageTitle>Admin - @Localizer["SectionUsers"]</PageTitle>
+<BrowserTitle Label="@Localizer["SectionUsers"]" />
 
 <UseParameterlessEndpoint
   Endpoint="@AdminEndpoints.UsersEndpoint"

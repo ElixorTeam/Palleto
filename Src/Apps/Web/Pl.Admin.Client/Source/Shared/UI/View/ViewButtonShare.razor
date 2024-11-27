@@ -2,12 +2,18 @@
 
 <Button Variant="ButtonVariantType.Outline" OnClick="@OpenShareDialog">
   <ShareIcon class="size-4 mr-2"/>
-  <span class="sr-only sm:not-sr-only">Поделиться</span>
+  <span class="sr-only sm:not-sr-only">@Localizer["BtnShare"]</span>
 </Button>
 
 @code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IDialogService DialogService { get; set; } = default!;
   [Inject] private PageHelper PageHelper { get; set; } = default!;
+
+  # endregion
+
   [Parameter, EditorRequired] public string Link { get; set; } = string.Empty;
 
   private Task OpenShareDialog() => DialogService.ShowDialogAsync<ShareUrlDialog>(Link, PageHelper.DialogParameters);

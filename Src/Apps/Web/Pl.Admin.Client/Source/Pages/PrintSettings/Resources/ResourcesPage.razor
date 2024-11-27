@@ -9,7 +9,7 @@
 @attribute [Authorize(Policy = PolicyEnum.Support)]
 @rendermode InteractiveServer
 
-<PageTitle>Admin - @Localizer["SectionTemplateResources"]</PageTitle>
+<BrowserTitle Label="@Localizer["SectionTemplateResources"]" />
 
 <UseParameterlessEndpoint
   Endpoint="PrintSettingsEndpoints.ResourcesEndpoint"

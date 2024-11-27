@@ -1,7 +1,7 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Models.Features.References1C.Plus.Queries
 
-<ViewFieldGrid Label="Общая информация" Border>
+<ViewFieldGrid Label="@Localizer["FieldCommon"]" Border>
   <ViewFieldGuid Value="@Model.Id" />
 
   <ViewField Label="@WsDataLocalizer["ColNumber"]" Value="@Model.Number.ToString()" />

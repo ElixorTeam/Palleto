@@ -327,4 +327,13 @@
     <data name="ColManufacturer" xml:space="preserve">
         <value />
     </data>
+    <data name="ColLabels" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ColCharacteristics" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ColLoad" xml:space="preserve">
+        <value />
+    </data>
 </root>

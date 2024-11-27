@@ -19,5 +19,4 @@ public static class ConfigurationUtils
 #else
         ConfigurationType.DevelopVs;
 #endif
-
 }

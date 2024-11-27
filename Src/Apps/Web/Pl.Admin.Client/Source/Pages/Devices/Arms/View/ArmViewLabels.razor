@@ -11,7 +11,7 @@
   Context="labelsQuery"
 >
   <DataGridHeader>
-    <DataGridLabelWithCounter Label="@($"Этикетки смены ({WorkShift.Start:dd.MM.yy} - {WorkShift.End:dd.MM.yy})")"
+    <DataGridLabelWithCounter Label="@($"{Localizer["SectionViewWorkshiftPallets"]} ({WorkShift.Start:dd.MM.yy} - {WorkShift.End:dd.MM.yy})")"
                               ItemsCount="@labelsQuery.Data?.Length" IsLoading="labelsQuery.IsLoading"/>
     <DataGridActionReload OnClick="@labelsQuery.RefetchAsync" IsLoading="labelsQuery.IsFetching" />
   </DataGridHeader>
@@ -88,10 +88,16 @@
 </UseEndpoint>
 
 @code {
-  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+
+  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
   [Inject] private NavigationManager NavigationManager { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+
+  # endregion
 
   [Parameter, EditorRequired] public ArmDto Model { get; set; } = default!;
 

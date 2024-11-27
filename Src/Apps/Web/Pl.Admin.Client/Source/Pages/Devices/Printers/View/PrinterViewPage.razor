@@ -13,6 +13,8 @@
   Arg="@Id"
   Context="query"
 >
+  <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionPrinters"])" />
+
   <Breadcrumbs Start="BreadcrumbStart.Back">
     <Breadcrumb Label="@Localizer["SectionPrinters"]" Link="@Urls.Printers" />
     @if (query.HasData)
@@ -37,10 +39,10 @@
 
     <TabsContent>
       <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-        Информация
+        @Localizer["SectionViewInfo"]
       </ViewTabButton>
       <ViewTabButton Value="control" @bind-CurrentTab="CurrentTab">
-        Управление
+        @Localizer["SectionViewControl"]
       </ViewTabButton>
     </TabsContent>
   </ViewHeader>

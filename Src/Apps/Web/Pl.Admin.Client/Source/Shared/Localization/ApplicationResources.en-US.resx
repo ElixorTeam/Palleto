@@ -243,4 +243,64 @@
     <data name="DataGridContextMenuUpdate" xml:space="preserve">
         <value>Update</value>
     </data>
+    <data name="SectionArmPlu" xml:space="preserve">
+        <value>ARM PLU</value>
+    </data>
+    <data name="SectionViewAnalytics" xml:space="preserve">
+        <value>Analytics</value>
+    </data>
+    <data name="SectionViewInfo" xml:space="preserve">
+        <value>Information</value>
+    </data>
+    <data name="SectionViewPreview" xml:space="preserve">
+        <value>Preview</value>
+    </data>
+    <data name="SectionViewControl" xml:space="preserve">
+        <value>Control</value>
+    </data>
+    <data name="BtnDelete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="BtnRefetch" xml:space="preserve">
+        <value>Refetch</value>
+    </data>
+    <data name="BtnUpdate" xml:space="preserve">
+        <value>Update</value>
+    </data>
+    <data name="BtnShare" xml:space="preserve">
+        <value>Share</value>
+    </data>
+    <data name="FieldCommon" xml:space="preserve">
+        <value>Common</value>
+    </data>
+    <data name="FieldParameters" xml:space="preserve">
+        <value>Parameters</value>
+    </data>
+    <data name="SectionViewWorkshiftPallets" xml:space="preserve">
+        <value>Work shift pallets</value>
+    </data>
+    <data name="SectionViewWorkshiftLabels" xml:space="preserve">
+        <value>Work shift labels</value>
+    </data>
+    <data name="SectionViewWorkshiftArmAnalytics" xml:space="preserve">
+        <value>Work shift arm analytics</value>
+    </data>
+    <data name="ShareDialogDescription" xml:space="preserve">
+        <value>You can either copy the link manually, or use the built-in functionality of social networks</value>
+    </data>
+    <data name="ShareDialogTitle" xml:space="preserve">
+        <value>Share an entry</value>
+    </data>
+    <data name="PrinterControlDescription" xml:space="preserve">
+        <value>If you see an empty block, it means that the browser is blocking the request to the printer through the site. You can follow the {0} to the device or disable the browser security settings for the site by following {1}.</value>
+    </data>
+    <data name="PrinterControlDescriptionDirectLink" xml:space="preserve">
+        <value>direct link</value>
+    </data>
+    <data name="PrinterControlDescriptionGuideLink" xml:space="preserve">
+        <value>this guide</value>
+    </data>
+    <data name="PrinterControlTitle" xml:space="preserve">
+        <value>Remote printer control</value>
+    </data>
 </root>

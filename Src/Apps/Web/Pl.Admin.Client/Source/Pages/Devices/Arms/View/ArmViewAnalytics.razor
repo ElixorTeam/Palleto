@@ -1,51 +1,78 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
 
-<h2 class="text-xl font-medium pb-3">Аналитика линии по сменам</h2>
+<h2 class="text-xl font-medium pb-3">@Localizer["SectionViewWorkshiftArmAnalytics"]</h2>
 <div class="grid w-full gap-6 grid-cols-1 xl:grid-cols-2">
-  <div class="w-full h-96 flex flex-col rounded-md overflow-hidden border p-6">
-    <h2 class="text-lg shrink-0 pb-4 font-medium">Нагрузка (@DateTime.Today.ToString("dd.MM.yy"))</h2>
+  <Card class="w-full h-96 flex flex-col">
     <UseEndpoint
       Endpoint="@DevicesEndpoints.ArmAnalytics"
       Arg="@(new ArmAnalyticsArg(Model.Id, DateOnly.FromDateTime(DateTime.Today)))"
       Context="armAnalyticsQuery"
     >
-      @if (armAnalyticsQuery.HasData)
-      {
-        <LineChart
-          Labels="@(armAnalyticsQuery.Data.Select(x => x.Date.ToString("HH:mm")).ToList())"
-          Data="@(armAnalyticsQuery.Data.Select(x => (decimal?)Convert.ToDecimal(x.Count)).ToList())"
+      <CardHeader class="flex-row gap-4 items-center space-y-0">
+        <CardTitle class="text-lg">
+          @WsDataLocalizer["ColLoad"] (@DateTime.Today.ToString("dd.MM.yy"))
+        </CardTitle>
+        <DataGridActionReload
+          OnClick="@armAnalyticsQuery.RefetchAsync"
+          IsLoading="@armAnalyticsQuery.IsFetching"
         />
-      }
-      else
-      {
-        <Skeleton Class="size-full" />
-      }
+      </CardHeader>
+      <CardContent class="size-full">
+        @if (armAnalyticsQuery.HasData)
+        {
+          <LineChart
+            Labels="@(armAnalyticsQuery.Data.Select(x => x.Date.ToString("HH:mm")).ToList())"
+            Data="@(armAnalyticsQuery.Data.Select(x => (decimal?)Convert.ToDecimal(x.Count)).ToList())"
+          />
+        }
+        else
+        {
+          <Skeleton Class="size-full" />
+        }
+      </CardContent>
     </UseEndpoint>
-  </div>
-  <div class="w-full h-96 flex flex-col rounded-md overflow-hidden border p-6">
-    <h2 class="text-lg shrink-0 pb-4 font-medium">Нагрузка (@DateTime.Today.AddDays(-1).ToString("dd.MM.yy"))</h2>
+  </Card>
+  <Card class="w-full h-96 flex flex-col">
     <UseEndpoint
       Endpoint="@DevicesEndpoints.ArmAnalytics"
       Arg="@(new ArmAnalyticsArg(Model.Id, DateOnly.FromDateTime(DateTime.Today.AddDays(-1))))"
       Context="armAnalyticsQuery"
     >
-      @if (armAnalyticsQuery.HasData)
-      {
-        <LineChart
-          Labels="@(armAnalyticsQuery.Data.Select(x => x.Date.ToString("HH:mm")).ToList())"
-          Data="@(armAnalyticsQuery.Data.Select(x => (decimal?)Convert.ToDecimal(x.Count)).ToList())"
+      <CardHeader class="flex-row gap-4 items-center space-y-0">
+        <CardTitle class="text-lg">
+          @WsDataLocalizer["ColLoad"] (@DateTime.Today.AddDays(-1).ToString("dd.MM.yy"))
+        </CardTitle>
+        <DataGridActionReload
+          OnClick="@armAnalyticsQuery.RefetchAsync"
+          IsLoading="@armAnalyticsQuery.IsFetching"
         />
-      }
-      else
-      {
-        <Skeleton Class="size-full" />
-      }
+      </CardHeader>
+      <CardContent class="size-full">
+        @if (armAnalyticsQuery.HasData)
+        {
+          <LineChart
+            Labels="@(armAnalyticsQuery.Data.Select(x => x.Date.ToString("HH:mm")).ToList())"
+            Data="@(armAnalyticsQuery.Data.Select(x => (decimal?)Convert.ToDecimal(x.Count)).ToList())"
+          />
+        }
+        else
+        {
+          <Skeleton Class="size-full" />
+        }
+      </CardContent>
     </UseEndpoint>
-  </div>
+  </Card>
 </div>
 
 @code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+
+  # endregion
+
   [Parameter] public ArmDto Model { get; set; } = default!;
 }

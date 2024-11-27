@@ -12,6 +12,8 @@
   Arg="@Id"
   Context="query"
 >
+  <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionTemplateResources"])" />
+
   <Breadcrumbs Start="BreadcrumbStart.Back">
     <Breadcrumb Label=@Localizer["SectionTemplateResources"] Link="@Urls.Resources" />
     @if (query.HasData)
@@ -34,7 +36,7 @@
 
     <TabsContent>
       <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-        Информация
+        @Localizer["SectionViewInfo"]
       </ViewTabButton>
     </TabsContent>
   </ViewHeader>

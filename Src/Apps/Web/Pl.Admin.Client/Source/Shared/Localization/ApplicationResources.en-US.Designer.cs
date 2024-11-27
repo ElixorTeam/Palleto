@@ -168,6 +168,24 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string BtnDelete {
+            get {
+                return ResourceManager.GetString("BtnDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refetch.
+        /// </summary>
+        public static string BtnRefetch {
+            get {
+                return ResourceManager.GetString("BtnRefetch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         public static string BtnReset {
@@ -177,11 +195,29 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Share.
+        /// </summary>
+        public static string BtnShare {
+            get {
+                return ResourceManager.GetString("BtnShare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string BtnSubmit {
             get {
                 return ResourceManager.GetString("BtnSubmit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string BtnUpdate {
+            get {
+                return ResourceManager.GetString("BtnUpdate", resourceCulture);
             }
         }
         
@@ -249,6 +285,15 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Common.
+        /// </summary>
+        public static string FieldCommon {
+            get {
+                return ResourceManager.GetString("FieldCommon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Location.
         /// </summary>
         public static string FieldLocation {
@@ -263,6 +308,15 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         public static string FieldPackaging {
             get {
                 return ResourceManager.GetString("FieldPackaging", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameters.
+        /// </summary>
+        public static string FieldParameters {
+            get {
+                return ResourceManager.GetString("FieldParameters", resourceCulture);
             }
         }
         
@@ -447,6 +501,42 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If you see an empty block, it means that the browser is blocking the request to the printer through the site. You can follow the {0} to the device or disable the browser security settings for the site by following {1}..
+        /// </summary>
+        public static string PrinterControlDescription {
+            get {
+                return ResourceManager.GetString("PrinterControlDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to direct link.
+        /// </summary>
+        public static string PrinterControlDescriptionDirectLink {
+            get {
+                return ResourceManager.GetString("PrinterControlDescriptionDirectLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to this guide.
+        /// </summary>
+        public static string PrinterControlDescriptionGuideLink {
+            get {
+                return ResourceManager.GetString("PrinterControlDescriptionGuideLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote printer control.
+        /// </summary>
+        public static string PrinterControlTitle {
+            get {
+                return ResourceManager.GetString("PrinterControlTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The platform is not configured for this account. Contact support..
         /// </summary>
         public static string ProductionSiteSuspenseDescription {
@@ -461,6 +551,15 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         public static string SectionArm {
             get {
                 return ResourceManager.GetString("SectionArm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ARM PLU.
+        /// </summary>
+        public static string SectionArmPlu {
+            get {
+                return ResourceManager.GetString("SectionArmPlu", resourceCulture);
             }
         }
         
@@ -591,6 +690,69 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Analytics.
+        /// </summary>
+        public static string SectionViewAnalytics {
+            get {
+                return ResourceManager.GetString("SectionViewAnalytics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Control.
+        /// </summary>
+        public static string SectionViewControl {
+            get {
+                return ResourceManager.GetString("SectionViewControl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string SectionViewInfo {
+            get {
+                return ResourceManager.GetString("SectionViewInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string SectionViewPreview {
+            get {
+                return ResourceManager.GetString("SectionViewPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Work shift arm analytics.
+        /// </summary>
+        public static string SectionViewWorkshiftArmAnalytics {
+            get {
+                return ResourceManager.GetString("SectionViewWorkshiftArmAnalytics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Work shift labels.
+        /// </summary>
+        public static string SectionViewWorkshiftLabels {
+            get {
+                return ResourceManager.GetString("SectionViewWorkshiftLabels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Work shift pallets.
+        /// </summary>
+        public static string SectionViewWorkshiftPallets {
+            get {
+                return ResourceManager.GetString("SectionViewWorkshiftPallets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warehouses.
         /// </summary>
         public static string SectionWarehouses {
@@ -605,6 +767,24 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         public static string SelectItemNotSelected {
             get {
                 return ResourceManager.GetString("SelectItemNotSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can either copy the link manually, or use the built-in functionality of social networks.
+        /// </summary>
+        public static string ShareDialogDescription {
+            get {
+                return ResourceManager.GetString("ShareDialogDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share an entry.
+        /// </summary>
+        public static string ShareDialogTitle {
+            get {
+                return ResourceManager.GetString("ShareDialogTitle", resourceCulture);
             }
         }
         

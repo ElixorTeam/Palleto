@@ -4,7 +4,7 @@
 
 <Dialog Class="max-w-lg p-6">
   <div class="shrink-0 w-full flex items-center justify-between bg-background">
-    <h3 class="font-semibold">Поделиться записью</h3>
+    <h3 class="font-semibold">@Localizer["ShareDialogTitle"]</h3>
     <Button
       Variant="ButtonVariantType.Ghost"
       Size="ButtonSizeType.Icon"
@@ -14,7 +14,7 @@
     </Button>
   </div>
   <p class="text-sm text-muted-foreground pt-1">
-    Вы можете либо скопировать ссылку вручную, либо воспользоваться встроенными функционалами социальных сетей
+    @Localizer["ShareDialogDescription"]
   </p>
   <div class="w-full flex gap-2 pb-2 pt-3">
     <div class="rounded-md h-9 w-full overflow-hidden border items-center flex pl-2 pr-1 gap-1">
@@ -43,12 +43,16 @@
 </Dialog>
 
 @code {
+  # region Injects
+
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
   [Inject] private IToastService ToastService { get; set; } = default!;
 
+  # endregion
+
   [CascadingParameter] protected FluentDialog Dialog { get; set; } = default!;
-  [Parameter] public String Content { get; set; } = string.Empty;
+  [Parameter] public string Content { get; set; } = string.Empty;
 
   private Task OnCancelAction() => Dialog.CloseAsync();
 
@@ -64,5 +68,5 @@
     }
   }
 
-  private String TelegramUrl => $"https://t.me/share/url?url={Uri.EscapeDataString(Content)}";
+  private string TelegramUrl => $"https://t.me/share/url?url={Uri.EscapeDataString(Content)}";
 }

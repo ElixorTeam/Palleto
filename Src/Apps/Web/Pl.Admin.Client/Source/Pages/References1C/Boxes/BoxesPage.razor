@@ -5,7 +5,7 @@
 @attribute [Route(Urls.Boxes)]
 @rendermode InteractiveServer
 
-<PageTitle>Admin - @Localizer["SectionBoxes"]</PageTitle>
+<BrowserTitle Label="@Localizer["SectionBoxes"]" />
 
 <UseParameterlessEndpoint
   Endpoint="@References1CEndpoints.BoxesEndpoint"
@@ -13,7 +13,7 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label=@WsDataLocalizer["ColBoxes"] Link="@Urls.Boxes" />
+    <Breadcrumb Label=@Localizer["SectionBoxes"] Link="@Urls.Boxes" />
   </Breadcrumbs>
 
   <DataGridHeader>
@@ -40,7 +40,7 @@
           @if (context.Name.StartsWith('я'))
           {
             <div class="w-full flex items-center justify-center">
-              <TrashIcon class="text-red-600 size-5"/>
+              <TrashIcon class="text-destructive size-5" />
             </div>
           }
         </DisplayTemplate>

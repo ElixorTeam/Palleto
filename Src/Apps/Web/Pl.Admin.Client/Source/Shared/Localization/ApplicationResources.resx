@@ -243,4 +243,64 @@
     <data name="DataGridContextMenuUpdate" xml:space="preserve">
         <value />
     </data>
+    <data name="SectionArmPlu" xml:space="preserve">
+        <value />
+    </data>
+    <data name="SectionViewInfo" xml:space="preserve">
+        <value />
+    </data>
+    <data name="SectionViewAnalytics" xml:space="preserve">
+        <value />
+    </data>
+    <data name="SectionViewPreview" xml:space="preserve">
+        <value />
+    </data>
+    <data name="SectionViewControl" xml:space="preserve">
+        <value />
+    </data>
+    <data name="BtnRefetch" xml:space="preserve">
+        <value />
+    </data>
+    <data name="BtnUpdate" xml:space="preserve">
+        <value />
+    </data>
+    <data name="BtnDelete" xml:space="preserve">
+        <value />
+    </data>
+    <data name="BtnShare" xml:space="preserve">
+        <value />
+    </data>
+    <data name="FieldCommon" xml:space="preserve">
+        <value />
+    </data>
+    <data name="FieldParameters" xml:space="preserve">
+        <value />
+    </data>
+    <data name="SectionViewWorkshiftPallets" xml:space="preserve">
+        <value />
+    </data>
+    <data name="SectionViewWorkshiftLabels" xml:space="preserve">
+        <value />
+    </data>
+    <data name="SectionViewWorkshiftArmAnalytics" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ShareDialogTitle" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ShareDialogDescription" xml:space="preserve">
+        <value />
+    </data>
+    <data name="PrinterControlTitle" xml:space="preserve">
+        <value />
+    </data>
+    <data name="PrinterControlDescription" xml:space="preserve">
+        <value />
+    </data>
+    <data name="PrinterControlDescriptionDirectLink" xml:space="preserve">
+        <value />
+    </data>
+    <data name="PrinterControlDescriptionGuideLink" xml:space="preserve">
+        <value />
+    </data>
 </root>

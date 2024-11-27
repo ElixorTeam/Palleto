@@ -13,6 +13,8 @@
   Arg="@Id"
   Context="query"
 >
+  <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionArm"])" />
+
   <Breadcrumbs Start="BreadcrumbStart.Back">
     <Breadcrumb Label=@Localizer["SectionArm"] Link="@Urls.Arms" />
     @if (query.HasData)
@@ -47,19 +49,19 @@
 
     <TabsContent>
       <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-        Информация
+        @Localizer["SectionViewInfo"]
       </ViewTabButton>
       <ViewTabButton Value="plus" @bind-CurrentTab="CurrentTab">
-        ПЛУ
+        @WsDataLocalizer["ColPlu"]
       </ViewTabButton>
       <ViewTabButton Value="labels" @bind-CurrentTab="CurrentTab">
-        Этикетки
+        @WsDataLocalizer["ColLabels"]
       </ViewTabButton>
       <ViewTabButton Value="pallets" @bind-CurrentTab="CurrentTab">
-        Паллеты
+        @WsDataLocalizer["ColPallets"]
       </ViewTabButton>
       <ViewTabButton Value="analytics" @bind-CurrentTab="CurrentTab">
-        Аналитика
+        @Localizer["SectionViewAnalytics"]
       </ViewTabButton>
     </TabsContent>
   </ViewHeader>
@@ -91,6 +93,7 @@
 
   [Inject] private IWebApi WebApi { get; set; } = default!;
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
 
   [Inject] private PageHelper PageHelper { get; set; } = default!;
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;

@@ -8,14 +8,16 @@
   Arg="@Id"
   Context="query"
 >
+  <BrowserTitle Label="@WsDataLocalizer["ColPallet"]" />
+
   <Breadcrumbs Start="BreadcrumbStart.Back">
     @if (query.HasData)
     {
-      <Breadcrumb Label="@("Паллета №" + query.Data.Number)" />
+      <Breadcrumb Label="@(WsDataLocalizer["ColPallet"] + " №" + query.Data.Number)" />
     }
   </Breadcrumbs>
 
-  <ViewHeader Title="@(query.HasData ? "Паллета №" + query.Data.Number : string.Empty)">
+  <ViewHeader Title="@(query.HasData ? WsDataLocalizer["ColPallet"] + " №" + query.Data.Number : string.Empty)">
     <ButtonsContent>
       @if (query.HasData)
       {
@@ -25,10 +27,10 @@
 
     <TabsContent>
       <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-        Информация
+        @Localizer["SectionViewInfo"]
       </ViewTabButton>
       <ViewTabButton Value="labels" @bind-CurrentTab="CurrentTab">
-        Этикетки
+        @WsDataLocalizer["ColLabels"]
       </ViewTabButton>
     </TabsContent>
   </ViewHeader>
@@ -46,8 +48,15 @@
 </UseEndpoint>
 
 @code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
   [Inject] private OperationsEndpoints OperationsEndpoints { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+
+  # endregion
 
   [Parameter] public Guid Id { get; set; }
 

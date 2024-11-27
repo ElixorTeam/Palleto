@@ -243,4 +243,64 @@
     <data name="DataGridContextMenuUpdate" xml:space="preserve">
         <value>Изменить</value>
     </data>
+    <data name="SectionArmPlu" xml:space="preserve">
+        <value>ARM ПЛУ</value>
+    </data>
+    <data name="SectionViewAnalytics" xml:space="preserve">
+        <value>Аналитика</value>
+    </data>
+    <data name="SectionViewInfo" xml:space="preserve">
+        <value>Информация</value>
+    </data>
+    <data name="SectionViewPreview" xml:space="preserve">
+        <value>Предпросмотр</value>
+    </data>
+    <data name="SectionViewControl" xml:space="preserve">
+        <value>Управление</value>
+    </data>
+    <data name="BtnDelete" xml:space="preserve">
+        <value>Удалить</value>
+    </data>
+    <data name="BtnRefetch" xml:space="preserve">
+        <value>Обновить</value>
+    </data>
+    <data name="BtnUpdate" xml:space="preserve">
+        <value>Изменить</value>
+    </data>
+    <data name="BtnShare" xml:space="preserve">
+        <value>Поделиться</value>
+    </data>
+    <data name="FieldCommon" xml:space="preserve">
+        <value>Общая информация</value>
+    </data>
+    <data name="FieldParameters" xml:space="preserve">
+        <value>Параметры</value>
+    </data>
+    <data name="SectionViewWorkshiftPallets" xml:space="preserve">
+        <value>Паллеты смены</value>
+    </data>
+    <data name="SectionViewWorkshiftLabels" xml:space="preserve">
+        <value>Этикетки смены</value>
+    </data>
+    <data name="SectionViewWorkshiftArmAnalytics" xml:space="preserve">
+        <value>Аналитика линии по смене</value>
+    </data>
+    <data name="ShareDialogTitle" xml:space="preserve">
+        <value>Поделиться записью</value>
+    </data>
+    <data name="ShareDialogDescription" xml:space="preserve">
+        <value>Вы можете либо скопировать ссылку вручную, либо воспользоваться встроенными функционалами социальных сетей</value>
+    </data>
+    <data name="PrinterControlTitle" xml:space="preserve">
+        <value>Удаленное управление принтером</value>
+    </data>
+    <data name="PrinterControlDescription" xml:space="preserve">
+        <value>Если вы видите пустой блок, это означает, что браузер блокирует запрос к принтеру через сайт. Вы можете перейти по {0} на устройство или отключить настройки защиты браузера для сайта, следуя {1}.</value>
+    </data>
+    <data name="PrinterControlDescriptionDirectLink" xml:space="preserve">
+        <value>прямой ссылке</value>
+    </data>
+    <data name="PrinterControlDescriptionGuideLink" xml:space="preserve">
+        <value>данному руководству</value>
+    </data>
 </root>

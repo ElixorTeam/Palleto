@@ -13,6 +13,8 @@
 >
   @{ UserModel? user = query.Data?.FirstOrDefault(x => x.KcId == Id); }
 
+  <BrowserTitle Label="@(user?.Fio.DisplayShortName ?? Localizer["SectionUsers"])" />
+
   <Breadcrumbs Start="BreadcrumbStart.Back">
     <Breadcrumb Label="@Localizer["SectionUsers"]" Link="@Urls.Users" />
     @if (user != null)
@@ -33,7 +35,7 @@
 
     <TabsContent>
       <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-        Информация
+        @Localizer["SectionViewInfo"]
       </ViewTabButton>
     </TabsContent>
   </ViewHeader>
