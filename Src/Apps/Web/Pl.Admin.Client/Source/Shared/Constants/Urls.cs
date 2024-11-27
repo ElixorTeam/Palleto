@@ -37,9 +37,7 @@ public static class Urls
 
     # region Admin
 
-    public const string Database = "/database";
     public const string Users = "/users";
-    public const string Roles = "/roles";
     public const string PalletMen = "/pallet-men";
 
     # endregion

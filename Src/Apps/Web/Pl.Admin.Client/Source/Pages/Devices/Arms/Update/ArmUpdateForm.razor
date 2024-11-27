@@ -20,9 +20,11 @@
     <FieldsContent>
       <SectionAdminGuidField Value="@Model.Id" />
 
-      <SectionReadOnlyField
-        Label="@WsDataLocalizer["ColVersion"]"
-        Value="@Model.Version"
+      <SectionTextField
+        Label="@WsDataLocalizer["ColName"]"
+        @bind-Value="@FormModel.Name"
+        For="@(() => FormModel.Name)"
+        MaxLength="32"
       />
 
       <SectionNumericField
@@ -31,13 +33,6 @@
         Min="10000"
         Max="99999"
         For="@(() => FormModel.Number)"
-      />
-
-      <SectionTextField
-        Label="@WsDataLocalizer["ColName"]"
-        @bind-Value="@FormModel.Name"
-        For="@(() => FormModel.Name)"
-        MaxLength="32"
       />
 
       <SectionNumericField

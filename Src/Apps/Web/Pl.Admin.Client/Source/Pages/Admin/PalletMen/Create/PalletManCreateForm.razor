@@ -54,15 +54,15 @@
     <FormDivider>@WsDataLocalizer["ColFIO"]</FormDivider>
 
     <SectionTextField
-      Label="@WsDataLocalizer["ColFirstName"]"
-      @bind-Value="@FormModel.Name"
-      For="@(() => FormModel.Name)"
-    />
-
-    <SectionTextField
       Label="@WsDataLocalizer["ColSurname"]"
       @bind-Value="@FormModel.Surname"
       For="@(() => FormModel.Surname)"
+    />
+
+    <SectionTextField
+      Label="@WsDataLocalizer["ColFirstName"]"
+      @bind-Value="@FormModel.Name"
+      For="@(() => FormModel.Name)"
     />
 
     <SectionTextField
