@@ -18,9 +18,6 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="HomeMsgDescription" xml:space="preserve">
-        <value>Click on the menu section to continue</value>
-    </data>
     <data name="Menu1CReferences" xml:space="preserve">
         <value>1C References</value>
     </data>
@@ -39,18 +36,6 @@
     <data name="MenuReferences" xml:space="preserve">
         <value>References</value>
     </data>
-    <data name="Section1CLogs" xml:space="preserve">
-        <value>1C Logs</value>
-    </data>
-    <data name="SectionAggregatedLabels" xml:space="preserve">
-        <value>Agg. labels</value>
-    </data>
-    <data name="SectionAppsLogs" xml:space="preserve">
-        <value>App's logs</value>
-    </data>
-    <data name="SectionBarcodes" xml:space="preserve">
-        <value>Barcodes</value>
-    </data>
     <data name="SectionBoxes" xml:space="preserve">
         <value>Boxes</value>
     </data>
@@ -63,12 +48,6 @@
     <data name="SectionClips" xml:space="preserve">
         <value>Clips</value>
     </data>
-    <data name="SectionDatabase" xml:space="preserve">
-        <value>Database</value>
-    </data>
-    <data name="SectionLabels" xml:space="preserve">
-        <value>Labels</value>
-    </data>
     <data name="SectionArm" xml:space="preserve">
         <value>ARM</value>
     </data>
@@ -77,9 +56,6 @@
     </data>
     <data name="SectionPlu" xml:space="preserve">
         <value>PLU</value>
-    </data>
-    <data name="SectionStorageMethods" xml:space="preserve">
-        <value>Storage Methods</value>
     </data>
     <data name="SectionPrinters" xml:space="preserve">
         <value>Printers</value>
@@ -93,23 +69,11 @@
     <data name="SectionUsers" xml:space="preserve">
         <value>Users</value>
     </data>
-    <data name="SectionVersions" xml:space="preserve">
-        <value>Versions</value>
-    </data>
-    <data name="SectionWeightings" xml:space="preserve">
-        <value>Weightings</value>
-    </data>
     <data name="SectionWarehouses" xml:space="preserve">
         <value>Warehouses</value>
     </data>
-    <data name="ApplicationName" xml:space="preserve">
-        <value>Device control</value>
-    </data>
     <data name="BtnSubmit" xml:space="preserve">
         <value>Submit</value>
-    </data>
-    <data name="SectionArmPlu" xml:space="preserve">
-        <value>PLU ARM</value>
     </data>
     <data name="InputDefaultPlaceholder" xml:space="preserve">
         <value>Enter value...</value>
@@ -126,8 +90,8 @@
     <data name="FormProductionSiteDefaultPlaceholder" xml:space="preserve">
         <value>Select the production site</value>
     </data>
-    <data name="DataGridContextMenuOpenInDialog" xml:space="preserve">
-        <value>Open in a dialog</value>
+    <data name="DataGridContextMenuOpen" xml:space="preserve">
+        <value>View</value>
     </data>
     <data name="DataGridContextMenuOpenInNewTab" xml:space="preserve">
         <value>Open in new tab</value>
@@ -138,9 +102,6 @@
     <data name="ToastResetItem" xml:space="preserve">
         <value>Original values restored</value>
     </data>
-    <data name="ToastUrlCopyToClipboard" xml:space="preserve">
-        <value>Url copied to clipboard</value>
-    </data>
     <data name="ToastCreateItem" xml:space="preserve">
         <value>The item was created</value>
     </data>
@@ -150,20 +111,8 @@
     <data name="ToastUpdateItem" xml:space="preserve">
         <value>The item was updated</value>
     </data>
-    <data name="SectionPluNesting" xml:space="preserve">
-        <value>Nestring</value>
-    </data>
-    <data name="FormEmptyItemPlaceholder" xml:space="preserve">
-        <value>Empty</value>
-    </data>
     <data name="LabelsPreviewErrorMsg" xml:space="preserve">
         <value>Error while converting zpl code to image</value>
-    </data>
-    <data name="LabelsPreviewNoData" xml:space="preserve">
-        <value>No image</value>
-    </data>
-    <data name="LabelsPreviewTitle" xml:space="preserve">
-        <value>Preview</value>
     </data>
     <data name="ToastCopyToClipboard" xml:space="preserve">
         <value>Value copied to clipboard</value>
@@ -174,20 +123,11 @@
     <data name="FormSelectEmptyDefaultPlaceholder" xml:space="preserve">
         <value>No results</value>
     </data>
-    <data name="SectionRoles" xml:space="preserve">
-        <value>Roles</value>
-    </data>
     <data name="SectionPalletMen" xml:space="preserve">
         <value>Pallet Men</value>
     </data>
     <data name="BtnCancel" xml:space="preserve">
         <value>Cancel</value>
-    </data>
-    <data name="FormActionShare" xml:space="preserve">
-        <value>Share</value>
-    </data>
-    <data name="FormActionDelete" xml:space="preserve">
-        <value>Delete</value>
     </data>
     <data name="FormActionReset" xml:space="preserve">
         <value>Reset</value>
@@ -201,32 +141,14 @@
     <data name="DataGridTotalItems" xml:space="preserve">
         <value>items</value>
     </data>
-    <data name="FormActionLock" xml:space="preserve">
-        <value>Lock</value>
-    </data>
-    <data name="FormActionUnlock" xml:space="preserve">
-        <value>Unlock</value>
-    </data>
     <data name="FormActionsTitle" xml:space="preserve">
         <value>Actions</value>
     </data>
     <data name="BtnBack" xml:space="preserve">
         <value>Back</value>
     </data>
-    <data name="NavMenuDeveloperVersion" xml:space="preserve">
-        <value>Developer version</value>
-    </data>
     <data name="ToastReloginUser" xml:space="preserve">
         <value>A relogin has been executed</value>
-    </data>
-    <data name="ToastErrorGettingData" xml:space="preserve">
-        <value>An error occurred while trying to retrieve the data. Try again later</value>
-    </data>
-    <data name="SectionPluCharacteristics" xml:space="preserve">
-        <value>Characteristics</value>
-    </data>
-    <data name="ToastDeleteItemError" xml:space="preserve">
-        <value>Error deleting an item. Try again later.</value>
     </data>
     <data name="UnknownError" xml:space="preserve">
         <value>Unknown error</value>
@@ -236,9 +158,6 @@
     </data>
     <data name="FieldLocation" xml:space="preserve">
         <value>Location</value>
-    </data>
-    <data name="BtnClear" xml:space="preserve">
-        <value>Clear</value>
     </data>
     <data name="BtnAdd" xml:space="preserve">
         <value>Add</value>
@@ -267,17 +186,11 @@
     <data name="ProductionSiteSuspenseDescription" xml:space="preserve">
         <value>The platform is not configured for this account. Contact support.</value>
     </data>
-    <data name="FormFieldNotSelected" xml:space="preserve">
-        <value>{0} field is not selected</value>
-    </data>
     <data name="SectionMigrations" xml:space="preserve">
         <value>Migrations</value>
     </data>
     <data name="SectionTables" xml:space="preserve">
         <value>Tables</value>
-    </data>
-    <data name="SectionAnalytics" xml:space="preserve">
-        <value>Analytics</value>
     </data>
     <data name="ArmPluRemovedUnsuccessfully" xml:space="preserve">
         <value>Failed to remove {0} PLU from the arm</value>
@@ -323,5 +236,11 @@
     </data>
     <data name="NotFoundMessage" xml:space="preserve">
         <value>This page could not be found</value>
+    </data>
+    <data name="SectionPluCharacteristics" xml:space="preserve">
+        <value>PLU Characteristics</value>
+    </data>
+    <data name="DataGridContextMenuUpdate" xml:space="preserve">
+        <value>Update</value>
     </data>
 </root>

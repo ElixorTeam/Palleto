@@ -36,8 +36,8 @@ public partial class ScanPage : ContentPage
 
     private void CameraView_OnDetectionFinished(object sender, OnDetectionFinishedEventArg e)
     {
-        if (e.BarcodeResults.Length == 0) return;
-        ScanCompleted?.Invoke(this, e.BarcodeResults[0].DisplayValue);
+        if (e.BarcodeResults.Count == 0) return;
+        ScanCompleted?.Invoke(this, e.BarcodeResults.First().DisplayValue);
         Navigation.PopModalAsync();
     }
 }

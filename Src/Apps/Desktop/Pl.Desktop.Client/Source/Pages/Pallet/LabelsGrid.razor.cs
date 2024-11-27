@@ -5,7 +5,7 @@ using Pl.Desktop.Client.Source.Shared.Services.Devices;
 using Pl.Desktop.Models.Features.Pallets.Output;
 using TscZebra.Plugin.Abstractions.Enums;
 
-namespace Pl.Desktop.Client.Source.Pages.Pallet.PalletWorkspace;
+namespace Pl.Desktop.Client.Source.Pages.Pallet;
 
 public sealed partial class LabelsGrid : ComponentBase
 {

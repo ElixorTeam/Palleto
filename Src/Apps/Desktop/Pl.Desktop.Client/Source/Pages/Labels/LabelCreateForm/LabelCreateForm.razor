@@ -11,13 +11,13 @@
     </div>
     <div class="flex gap-8 w-full px-8 pb-5 shrink-0 h-24 xl:h-28 xl:px-12 xl:pb-8">
       <div class="w-1/2 h-full">
-        <ScaleCalibration />
+        <CalibrateButton />
       </div>
       <div class="w-1/2 h-full">
         <UseParameterlessEndpoint Endpoint="@ArmEndpoints.ArmEndpoint" Context="query">
           @if (query.HasData)
           {
-            <LabelPrint Arm="query.Data" KneadingModel="FormModel"/>
+            <PrintButton Arm="query.Data" KneadingModel="FormModel"/>
           }
           else
           {

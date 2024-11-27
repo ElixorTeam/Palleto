@@ -3,7 +3,7 @@
 <UseParameterlessEndpoint Endpoint="@ArmEndpoints.ArmEndpoint" Context="query">
   @if (query.HasData)
   {
-    <span class="text-right absolute text-muted-foreground bottom-0 right-1 text-sm xl:text-base">
+    <span class="text-right select-none absolute text-muted-foreground bottom-0 right-1 text-sm xl:text-base">
       @query.Data.Printer.Name
     </span>
   }

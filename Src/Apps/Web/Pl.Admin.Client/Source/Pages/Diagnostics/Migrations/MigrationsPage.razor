@@ -6,7 +6,7 @@
 @attribute [Authorize(Policy = PolicyEnum.Developer)]
 @rendermode InteractiveServer
 
-<PageTitle>Admin - @Localizer["SectionMigrations"]</PageTitle>
+<BrowserTitle Label="@Localizer["SectionMigrations"]" />
 
 <UseParameterlessEndpoint
   Endpoint="@DiagnosticEndpoints.MigrationsEndpoint"

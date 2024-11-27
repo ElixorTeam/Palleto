@@ -1,4 +1,4 @@
-namespace Pl.Desktop.Client.Source.Widgets.PalletSelect;
+namespace Pl.Desktop.Client.Source.Pages.Pallet.PalletSelect;
 
 public enum PalletFilterType
 {

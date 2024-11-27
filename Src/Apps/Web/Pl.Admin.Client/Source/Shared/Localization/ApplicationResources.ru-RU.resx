@@ -18,9 +18,6 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="HomeMsgDescription" xml:space="preserve">
-        <value>Нажмите на раздел меню, чтобы продолжить</value>
-    </data>
     <data name="Menu1CReferences" xml:space="preserve">
         <value>Данные из 1С</value>
     </data>
@@ -39,18 +36,6 @@
     <data name="MenuReferences" xml:space="preserve">
         <value>Справочник</value>
     </data>
-    <data name="Section1CLogs" xml:space="preserve">
-        <value>Логи 1С</value>
-    </data>
-    <data name="SectionAggregatedLabels" xml:space="preserve">
-        <value>Агр. этикетки</value>
-    </data>
-    <data name="SectionAppsLogs" xml:space="preserve">
-        <value>Логи приложения</value>
-    </data>
-    <data name="SectionBarcodes" xml:space="preserve">
-        <value>Штрихкоды</value>
-    </data>
     <data name="SectionBoxes" xml:space="preserve">
         <value>Коробки</value>
     </data>
@@ -63,12 +48,6 @@
     <data name="SectionClips" xml:space="preserve">
         <value>Клипсы</value>
     </data>
-    <data name="SectionDatabase" xml:space="preserve">
-        <value>База данных</value>
-    </data>
-    <data name="SectionLabels" xml:space="preserve">
-        <value>Этикетки</value>
-    </data>
     <data name="SectionArm" xml:space="preserve">
         <value>АРМ</value>
     </data>
@@ -77,9 +56,6 @@
     </data>
     <data name="SectionPlu" xml:space="preserve">
         <value>ПЛУ</value>
-    </data>
-    <data name="SectionStorageMethods" xml:space="preserve">
-        <value>Способы хранения</value>
     </data>
     <data name="SectionPrinters" xml:space="preserve">
         <value>Принтеры</value>
@@ -93,23 +69,11 @@
     <data name="SectionUsers" xml:space="preserve">
         <value>Пользователи</value>
     </data>
-    <data name="SectionVersions" xml:space="preserve">
-        <value>Версии</value>
-    </data>
-    <data name="SectionWeightings" xml:space="preserve">
-        <value>Взвешивания</value>
-    </data>
     <data name="SectionWarehouses" xml:space="preserve">
         <value>Склады</value>
     </data>
-    <data name="ApplicationName" xml:space="preserve">
-        <value>Управление устройствами</value>
-    </data>
     <data name="BtnSubmit" xml:space="preserve">
         <value>Подтвердить</value>
-    </data>
-    <data name="SectionArmPlu" xml:space="preserve">
-        <value>ПЛУ АРМ</value>
     </data>
     <data name="InputDefaultPlaceholder" xml:space="preserve">
         <value>Введите значение...</value>
@@ -126,20 +90,17 @@
     <data name="FormProductionSiteDefaultPlaceholder" xml:space="preserve">
         <value>Выберите площадку</value>
     </data>
-    <data name="DataGridContextMenuOpenInDialog" xml:space="preserve">
-        <value>Открыть в окне</value>
+    <data name="DataGridContextMenuOpen" xml:space="preserve">
+        <value>Просмотр</value>
     </data>
     <data name="DataGridContextMenuOpenInNewTab" xml:space="preserve">
-        <value>Открыть во вкладке</value>
+        <value>Открыть в новой вкладке</value>
     </data>
     <data name="DataGridContextMenuDelete" xml:space="preserve">
         <value>Удалить</value>
     </data>
     <data name="ToastResetItem" xml:space="preserve">
         <value>Исходные значения восстановлены</value>
-    </data>
-    <data name="ToastUrlCopyToClipboard" xml:space="preserve">
-        <value>Ссылка сохранена в буфер обмена</value>
     </data>
     <data name="ToastCreateItem" xml:space="preserve">
         <value>Объект успешно создан</value>
@@ -150,20 +111,8 @@
     <data name="ToastUpdateItem" xml:space="preserve">
         <value>Объект успешно обновлен</value>
     </data>
-    <data name="SectionPluNesting" xml:space="preserve">
-        <value>Вложенность</value>
-    </data>
-    <data name="FormEmptyItemPlaceholder" xml:space="preserve">
-        <value>Пусто</value>
-    </data>
     <data name="LabelsPreviewErrorMsg" xml:space="preserve">
         <value>Ошибка ковертации zpl кода в изображение</value>
-    </data>
-    <data name="LabelsPreviewNoData" xml:space="preserve">
-        <value>Изображение отсутствует</value>
-    </data>
-    <data name="LabelsPreviewTitle" xml:space="preserve">
-        <value>Предпросмотр</value>
     </data>
     <data name="ToastCopyToClipboard" xml:space="preserve">
         <value>Значение сохранено в буфер обмена</value>
@@ -174,20 +123,11 @@
     <data name="FormSelectEmptyDefaultPlaceholder" xml:space="preserve">
         <value>Пустой результат</value>
     </data>
-    <data name="SectionRoles" xml:space="preserve">
-        <value>Роли</value>
-    </data>
     <data name="SectionPalletMen" xml:space="preserve">
-        <value>Сдатчик</value>
+        <value>Сдатчики</value>
     </data>
     <data name="BtnCancel" xml:space="preserve">
         <value>Отмена</value>
-    </data>
-    <data name="FormActionShare" xml:space="preserve">
-        <value>Поделиться</value>
-    </data>
-    <data name="FormActionDelete" xml:space="preserve">
-        <value>Удалить</value>
     </data>
     <data name="FormActionReset" xml:space="preserve">
         <value>Сброс</value>
@@ -201,32 +141,14 @@
     <data name="DataGridTotalItems" xml:space="preserve">
         <value>элементов</value>
     </data>
-    <data name="FormActionLock" xml:space="preserve">
-        <value>Заблокировать</value>
-    </data>
-    <data name="FormActionUnlock" xml:space="preserve">
-        <value>Разблокировать</value>
-    </data>
     <data name="FormActionsTitle" xml:space="preserve">
         <value>Действия</value>
     </data>
     <data name="BtnBack" xml:space="preserve">
         <value>Назад</value>
     </data>
-    <data name="NavMenuDeveloperVersion" xml:space="preserve">
-        <value>Версия разработчика</value>
-    </data>
     <data name="ToastReloginUser" xml:space="preserve">
         <value>Повторных вход систему выполнен</value>
-    </data>
-    <data name="ToastErrorGettingData" xml:space="preserve">
-        <value>При попытке получить данные произошла ошибка. Попробуйте еще раз позже</value>
-    </data>
-    <data name="SectionPluCharacteristics" xml:space="preserve">
-        <value>Характеристики</value>
-    </data>
-    <data name="ToastDeleteItemError" xml:space="preserve">
-        <value>Ошибка при удалении элемента. Попробуйте еще раз позже.</value>
     </data>
     <data name="UnknownError" xml:space="preserve">
         <value>Неизвестная ошибка</value>
@@ -236,9 +158,6 @@
     </data>
     <data name="FieldLocation" xml:space="preserve">
         <value>Местоположение</value>
-    </data>
-    <data name="BtnClear" xml:space="preserve">
-        <value>Очистить</value>
     </data>
     <data name="BtnAdd" xml:space="preserve">
         <value>Добавить</value>
@@ -267,17 +186,11 @@
     <data name="ProductionSiteSuspenseDescription" xml:space="preserve">
         <value>Площадка не настроена для данного аккаунта. Обратитесь к поддержке.</value>
     </data>
-    <data name="FormFieldNotSelected" xml:space="preserve">
-        <value>{0} не выбран</value>
-    </data>
     <data name="SectionMigrations" xml:space="preserve">
         <value>Миграции</value>
     </data>
     <data name="SectionTables" xml:space="preserve">
         <value>Таблицы</value>
-    </data>
-    <data name="SectionAnalytics" xml:space="preserve">
-        <value>Аналитика</value>
     </data>
     <data name="ArmPluRemovedUnsuccessfully" xml:space="preserve">
         <value>Не удалось убрать {0} ПЛУ с АРМ</value>
@@ -323,5 +236,11 @@
     </data>
     <data name="NotFoundMessage" xml:space="preserve">
         <value>Такой страницы не существует</value>
+    </data>
+    <data name="SectionPluCharacteristics" xml:space="preserve">
+        <value>ПЛУ Характеристики</value>
+    </data>
+    <data name="DataGridContextMenuUpdate" xml:space="preserve">
+        <value>Изменить</value>
     </data>
 </root>

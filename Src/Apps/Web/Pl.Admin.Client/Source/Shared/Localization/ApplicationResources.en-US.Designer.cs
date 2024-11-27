@@ -60,15 +60,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Device control.
-        /// </summary>
-        public static string ApplicationName {
-            get {
-                return ResourceManager.GetString("ApplicationName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Failed to add {0} PLU to the arm.
         /// </summary>
         public static string ArmPluAddedUnsuccessfully {
@@ -177,15 +168,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clear.
-        /// </summary>
-        public static string BtnClear {
-            get {
-                return ResourceManager.GetString("BtnClear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         public static string BtnReset {
@@ -213,11 +195,11 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open in a dialog.
+        ///   Looks up a localized string similar to View.
         /// </summary>
-        public static string DataGridContextMenuOpenInDialog {
+        public static string DataGridContextMenuOpen {
             get {
-                return ResourceManager.GetString("DataGridContextMenuOpenInDialog", resourceCulture);
+                return ResourceManager.GetString("DataGridContextMenuOpen", resourceCulture);
             }
         }
         
@@ -227,6 +209,15 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         public static string DataGridContextMenuOpenInNewTab {
             get {
                 return ResourceManager.GetString("DataGridContextMenuOpenInNewTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string DataGridContextMenuUpdate {
+            get {
+                return ResourceManager.GetString("DataGridContextMenuUpdate", resourceCulture);
             }
         }
         
@@ -276,24 +267,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete.
-        /// </summary>
-        public static string FormActionDelete {
-            get {
-                return ResourceManager.GetString("FormActionDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lock.
-        /// </summary>
-        public static string FormActionLock {
-            get {
-                return ResourceManager.GetString("FormActionLock", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Relogin.
         /// </summary>
         public static string FormActionRelogin {
@@ -312,47 +285,11 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Share.
-        /// </summary>
-        public static string FormActionShare {
-            get {
-                return ResourceManager.GetString("FormActionShare", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Actions.
         /// </summary>
         public static string FormActionsTitle {
             get {
                 return ResourceManager.GetString("FormActionsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unlock.
-        /// </summary>
-        public static string FormActionUnlock {
-            get {
-                return ResourceManager.GetString("FormActionUnlock", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Empty.
-        /// </summary>
-        public static string FormEmptyItemPlaceholder {
-            get {
-                return ResourceManager.GetString("FormEmptyItemPlaceholder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} field is not selected.
-        /// </summary>
-        public static string FormFieldNotSelected {
-            get {
-                return ResourceManager.GetString("FormFieldNotSelected", resourceCulture);
             }
         }
         
@@ -420,15 +357,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click on the menu section to continue.
-        /// </summary>
-        public static string HomeMsgDescription {
-            get {
-                return ResourceManager.GetString("HomeMsgDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Enter value....
         /// </summary>
         public static string InputDefaultPlaceholder {
@@ -443,24 +371,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         public static string LabelsPreviewErrorMsg {
             get {
                 return ResourceManager.GetString("LabelsPreviewErrorMsg", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No image.
-        /// </summary>
-        public static string LabelsPreviewNoData {
-            get {
-                return ResourceManager.GetString("LabelsPreviewNoData", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Preview.
-        /// </summary>
-        public static string LabelsPreviewTitle {
-            get {
-                return ResourceManager.GetString("LabelsPreviewTitle", resourceCulture);
             }
         }
         
@@ -528,15 +438,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Developer version.
-        /// </summary>
-        public static string NavMenuDeveloperVersion {
-            get {
-                return ResourceManager.GetString("NavMenuDeveloperVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to This page could not be found.
         /// </summary>
         public static string NotFoundMessage {
@@ -555,65 +456,11 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1C Logs.
-        /// </summary>
-        public static string Section1CLogs {
-            get {
-                return ResourceManager.GetString("Section1CLogs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Agg. labels.
-        /// </summary>
-        public static string SectionAggregatedLabels {
-            get {
-                return ResourceManager.GetString("SectionAggregatedLabels", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Analytics.
-        /// </summary>
-        public static string SectionAnalytics {
-            get {
-                return ResourceManager.GetString("SectionAnalytics", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to App&apos;s logs.
-        /// </summary>
-        public static string SectionAppsLogs {
-            get {
-                return ResourceManager.GetString("SectionAppsLogs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ARM.
         /// </summary>
         public static string SectionArm {
             get {
                 return ResourceManager.GetString("SectionArm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to PLU ARM.
-        /// </summary>
-        public static string SectionArmPlu {
-            get {
-                return ResourceManager.GetString("SectionArmPlu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Barcodes.
-        /// </summary>
-        public static string SectionBarcodes {
-            get {
-                return ResourceManager.GetString("SectionBarcodes", resourceCulture);
             }
         }
         
@@ -654,24 +501,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Database.
-        /// </summary>
-        public static string SectionDatabase {
-            get {
-                return ResourceManager.GetString("SectionDatabase", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Labels.
-        /// </summary>
-        public static string SectionLabels {
-            get {
-                return ResourceManager.GetString("SectionLabels", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Migrations.
         /// </summary>
         public static string SectionMigrations {
@@ -699,20 +528,11 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Characteristics.
+        ///   Looks up a localized string similar to PLU Characteristics.
         /// </summary>
         public static string SectionPluCharacteristics {
             get {
                 return ResourceManager.GetString("SectionPluCharacteristics", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nestring.
-        /// </summary>
-        public static string SectionPluNesting {
-            get {
-                return ResourceManager.GetString("SectionPluNesting", resourceCulture);
             }
         }
         
@@ -731,24 +551,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         public static string SectionProductionSites {
             get {
                 return ResourceManager.GetString("SectionProductionSites", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Roles.
-        /// </summary>
-        public static string SectionRoles {
-            get {
-                return ResourceManager.GetString("SectionRoles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Storage Methods.
-        /// </summary>
-        public static string SectionStorageMethods {
-            get {
-                return ResourceManager.GetString("SectionStorageMethods", resourceCulture);
             }
         }
         
@@ -789,29 +591,11 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Versions.
-        /// </summary>
-        public static string SectionVersions {
-            get {
-                return ResourceManager.GetString("SectionVersions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Warehouses.
         /// </summary>
         public static string SectionWarehouses {
             get {
                 return ResourceManager.GetString("SectionWarehouses", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Weightings.
-        /// </summary>
-        public static string SectionWeightings {
-            get {
-                return ResourceManager.GetString("SectionWeightings", resourceCulture);
             }
         }
         
@@ -897,24 +681,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error deleting an item. Try again later..
-        /// </summary>
-        public static string ToastDeleteItemError {
-            get {
-                return ResourceManager.GetString("ToastDeleteItemError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to An error occurred while trying to retrieve the data. Try again later.
-        /// </summary>
-        public static string ToastErrorGettingData {
-            get {
-                return ResourceManager.GetString("ToastErrorGettingData", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to A relogin has been executed.
         /// </summary>
         public static string ToastReloginUser {
@@ -938,15 +704,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         public static string ToastUpdateItem {
             get {
                 return ResourceManager.GetString("ToastUpdateItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Url copied to clipboard.
-        /// </summary>
-        public static string ToastUrlCopyToClipboard {
-            get {
-                return ResourceManager.GetString("ToastUrlCopyToClipboard", resourceCulture);
             }
         }
         

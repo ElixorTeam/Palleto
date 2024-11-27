@@ -26,10 +26,13 @@
         <ArrowLeftIcon class="mr-2 size-[1.1rem]" />
         Узнать больше
       </Button>
-      <Button Link="https://github.com/ElixorTeam/Palleto" Variant="ButtonVariantType.Outline" class="rounded-full">
-        <CodeBracketIcon class="mr-2 size-[1.1rem]" />
-        Github
-      </Button>
+      @if (!IsProduction)
+      {
+        <Button Link="https://github.com/ElixorTeam/Palleto" Variant="ButtonVariantType.Outline" class="rounded-full">
+          <CodeBracketIcon class="mr-2 size-[1.1rem]" />
+          Github
+        </Button>
+      }
     </div>
   </div>
 </div>
@@ -135,7 +138,9 @@
         Работа с Zebra и TSK принтерами
       </CardDescription>
     </CardHeader>
-    <CardContent class="size-full" />
+    <CardContent class="size-full flex items-center justify-center">
+      <PrinterIcon class="size-28 text-muted-foreground stroke-[0.5]" />
+    </CardContent>
   </Card>
 </div>
 
@@ -162,5 +167,7 @@
 
 @code {
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  private static bool IsProduction => !ConfigurationUtils.IsDevelop;
   private Random Random { get; } = new();
 }

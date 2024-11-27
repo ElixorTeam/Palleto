@@ -6,7 +6,7 @@
   <UseParameterlessEndpoint Endpoint="@ArmEndpoints.ArmEndpoint" Context="query">
     @if (query.IsLoading)
     {
-      <Skeleton Class="@Css.Class("!rounded-full shrink-0", Small ? "size-[3.25rem]" : "size-16")"/>
+      <Skeleton Class="@Css.Class("rounded-full shrink-0", Small ? "size-[3.25rem]" : "size-16")"/>
     }
     else
     {
@@ -38,8 +38,8 @@
     <div class="flex w-full overflow-hidden flex-col px-3 justify-start">
       @if (query.IsLoading)
       {
-        <Skeleton Class="w-32 h-4 !bg-primary/10"/>
-        <Skeleton Class="w-32 h-4 !bg-primary/10 mt-1"/>
+        <Skeleton Class="w-32 h-4 bg-primary/10" />
+        <Skeleton Class="w-32 h-4 bg-primary/10 mt-1" />
       }
       else if (!query.HasData)
       {

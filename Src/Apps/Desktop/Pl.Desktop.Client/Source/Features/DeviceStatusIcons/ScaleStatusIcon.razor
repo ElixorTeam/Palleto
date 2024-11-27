@@ -47,7 +47,7 @@
       return ScalesState.Value.Status switch
       {
         MassaKStatus.Disabled => "bg-muted-foreground",
-        MassaKStatus.Detached => "bg-red-500 animate-ping",
+        MassaKStatus.Detached => "bg-destructive animate-ping",
         MassaKStatus.Initializing => "bg-amber-500",
         _ => "bg-green-500"
       };

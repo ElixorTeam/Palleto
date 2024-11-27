@@ -1,6 +1,6 @@
 using Pl.Desktop.Models.Features.Plus.Weight.Output;
 
-namespace Pl.Desktop.Client.Source.Pages.Labels.PluSelectDialog;
+namespace Pl.Desktop.Client.Source.Pages.Labels.LabelConfig;
 
 // ReSharper disable ClassNeverInstantiated.Global
 public sealed partial class PluSelectDialog : ComponentBase, IDialogContentComponent<PluDialogContent>

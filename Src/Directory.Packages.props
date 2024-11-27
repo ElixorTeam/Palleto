@@ -29,7 +29,7 @@
     <PackageVersion Include="Svg" Version="3.4.7" />
     <PackageVersion Include="Scrutor" Version="5.0.2" />
     <PackageVersion Include="FluentValidation" Version="11.11.0" />
-    <PackageVersion Include="BarcodeScanning.Native.Maui" Version="1.6.0" />
+    <PackageVersion Include="BarcodeScanning.Native.Maui" Version="1.7.1" />
     <!--Tests-->
     <PackageVersion Include="bunit" Version="1.36.0" />
     <PackageVersion Include="xunit" Version="2.9.2" />

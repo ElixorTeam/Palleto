@@ -45,7 +45,7 @@
       if (PrinterService.IsMock()) return "bg-blue-500";
       return PrinterState.Value.Status switch
       {
-        PrinterStatus.Disconnected => "bg-red-500 animate-ping",
+        PrinterStatus.Disconnected => "bg-destructive animate-ping",
         PrinterStatus.Busy or PrinterStatus.Ready => "bg-green-500",
         _ => "bg-amber-500 animate-ping"
       };
