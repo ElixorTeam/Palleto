@@ -1,33 +1,42 @@
-using MassaK.Plugin.Abstractions.Enums;
-using Pl.Desktop.Client.Source.Shared.Api.Desktop.Endpoints;
-using Pl.Desktop.Client.Source.Shared.Localization;
-using Pl.Desktop.Client.Source.Shared.Models;
-using Pl.Desktop.Client.Source.Shared.Services.Devices;
-using Pl.Desktop.Client.Source.Shared.Services.Stores;
-using Pl.Desktop.Models.Features.Arms.Output;
-using Pl.Desktop.Models.Features.Labels.Input;
-using Pl.Desktop.Models.Features.Labels.Output;
-using Pl.Shared.Web.Extensions;
-using TscZebra.Plugin.Abstractions.Enums;
-using TscZebra.Plugin.Abstractions.Exceptions;
+@using MassaK.Plugin.Abstractions.Enums
+@using Pl.Desktop.Client.Source.Shared.Services.Devices
+@using Pl.Desktop.Models.Features.Arms.Output
+@using Pl.Desktop.Models.Features.Labels.Input
+@using Pl.Desktop.Models.Features.Labels.Output
+@using TscZebra.Plugin.Abstractions.Enums
+@using TscZebra.Plugin.Abstractions.Exceptions
 
-namespace Pl.Desktop.Client.Source.Features;
+@implements IAsyncDisposable
+@inherits FluxorComponent
 
-public sealed partial class LabelPrint : FluxorComponent
-{
-    # region Injects
+<Button
+  Size="ButtonSizeType.Full"
+  OnClick="@PrintLabel"
+  Disabled="@GetPrintLabelDisabledStatus()"
+>
+  <div class="flex flex-col items-center">
+    <span class="xl:text-xl">@Localizer["BtnLabelPrint"]</span>
+    <span class="text-sm xl:text-base font-light">@WsDataLocalizer["ColCounter"]: @Arm.Counter</span>
+  </div>
+</Button>
+
+@code {
+
+  # region Injects
 
     [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
     [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
     [Inject] private IToastService ToastService { get; set; } = default!;
     [Inject] private IPrinterService PrinterService { get; set; } = default!;
     [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
-    [Inject] private IDesktopApi DesktopApi { get; set; } = default!;
-    [Inject] private ArmEndpoints ArmEndpoints { get; set; } = default!;
+
     [Inject] private IState<PrinterState> PrinterState { get; set; } = default!;
     [Inject] private IState<WeightState> WeightState { get; set; } = default!;
     [Inject] private IState<ScalesState> ScalesState { get; set; } = default!;
     [Inject] private IState<PluState> PluState { get; set; } = default!;
+
+    [Inject] private ArmEndpoints ArmEndpoints { get; set; } = default!;
+    [Inject] private IDesktopApi DesktopApi { get; set; } = default!;
 
     #endregion
 
@@ -152,4 +161,5 @@ public sealed partial class LabelPrint : FluxorComponent
             // pass
         }
     }
+
 }

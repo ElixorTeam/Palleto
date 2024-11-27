@@ -1,11 +1,9 @@
 using FluentValidation;
-using Pl.Desktop.Client.Source.Shared.Localization;
-using Pl.Desktop.Client.Source.Shared.Services.Stores;
 using Pl.Desktop.Models.Features.PalletMen;
 using Pl.Shared.Web.Extensions;
 using IDispatcher = Fluxor.IDispatcher;
 
-namespace Pl.Desktop.Client.Source.Features;
+namespace Pl.Desktop.Client.Source.Pages.Pallet;
 
 // ReSharper disable once ClassNeverInstantiated.Global
 public sealed partial class PalletManForm : ComponentBase

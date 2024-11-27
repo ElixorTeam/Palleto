@@ -1,22 +1,24 @@
-@attribute [Route(Routes.Labels)]
 @using Pl.Desktop.Client.Source.Shared.Services.Devices
 @using Pl.Desktop.Client.Source.Features.DeviceStatusIcons
-@using Pl.Desktop.Client.Source.Widgets.LabelConfig
-@using Pl.Desktop.Client.Source.Widgets.LabelCreateForm
-@using Pl.Desktop.Client.Source.Widgets.MainHeader
 @using Pl.Desktop.Client.Source.Features.ErrorBoundaries
+@using Pl.Desktop.Client.Source.Widgets
+@using Pl.Desktop.Client.Source.Pages.Labels.LabelConfig
+@using Pl.Desktop.Client.Source.Pages.Labels.LabelCreateForm
+
+@attribute [Route(Routes.Labels)]
+
 @implements IDisposable
 
 <ArmErrorBoundary>
   <div class="flex flex-col grow size-full">
-    <MainHeader>
+    <AppHeader>
       <div class="size-full items-center justify-end flex pr-10">
         <ul class="flex justify-between items-center gap-3">
           <li><PrinterStatusIcon/></li>
           <li><ScaleStatusIcon/></li>
         </ul>
       </div>
-    </MainHeader>
+    </AppHeader>
     <div class="size-full flex flex-col grow overflow-hidden items-center justify-center px-8 pt-2 pb-4">
       <div class="w-full grid grid-rows-1 gap-4 grid-cols-[1fr,1.5fr] h-[34rem] max-w-screen-2xl overflow-hidden">
         <LabelConfig />

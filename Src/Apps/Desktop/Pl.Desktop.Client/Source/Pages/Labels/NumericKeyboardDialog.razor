@@ -1,0 +1,21 @@
+@using Pl.Desktop.Client.Source.Features.MobileNumericInput
+@implements IDialogContentComponent<ushort>
+
+<Dialog Class="max-w-screen-sm select-none p-3 md:p-6">
+  <MobileNumericInput @bind-Value="@InputValue" OnSubmit="@OnSubmit" />
+</Dialog>
+
+@code {
+  [CascadingParameter] public FluentDialog Dialog { get; set; } = default!;
+  [Parameter, EditorRequired] public ushort Content { get; set; }
+
+  private int InputValue { get; set; }
+
+  protected override void OnInitialized() => InputValue = Content;
+
+  private async Task OnSubmit()
+  {
+    ushort newValue = ushort.Max((ushort)InputValue, 1);
+    await Dialog.CloseAsync(newValue);
+  }
+}

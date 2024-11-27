@@ -1,0 +1,21 @@
+<input
+  type="text"
+  name="numeric-input"
+  @bind="Parent.Value"
+  @bind:event="oninput"
+  @onkeydown="HandleKeyDown"
+  maxlength="@Parent.MaxDigitCount"
+  placeholder="1"
+  inputmode="none"
+  class="w-full border px-3 py-2 focus:border-border focus:outline-none rounded-lg focus:ring-0 text-right text-4xl"
+/>
+
+@code {
+  [CascadingParameter] public MobileNumericInput Parent { get; set; } = default!;
+
+  private async Task HandleKeyDown(KeyboardEventArgs e)
+  {
+    if (e.Code is "Enter" or "NumpadEnter")
+      await Parent.SubmitInput();
+  }
+}

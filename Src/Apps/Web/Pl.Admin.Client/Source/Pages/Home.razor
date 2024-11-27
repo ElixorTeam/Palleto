@@ -11,17 +11,17 @@
 </div>
 
 <div id="welcome" class="h-[70vh] flex items-center justify-center">
-  <div class="flex flex-col items-center max-w-2xl">
+  <div class="flex flex-col items-center max-sm md:max-w-md lg:max-w-2xl">
     <div>
       <Badge Variant="@BadgeVariants.Outline" Class="mb-3">
         <BoltIcon class="size-3.5 mr-1.5" />
         Новый дизайн
       </Badge>
     </div>
-    <h2 class="text-center text-6xl font-medium tracking-tighter">
+    <h2 class="text-center text-2xl font-medium tracking-tighter md:text-4xl lg:text-6xl">
       Управлять паллетами стало еще легче
     </h2>
-    <div class="flex gap-3 w-fit mt-9">
+    <div class="flex flex-col gap-3 w-fit mt-9 md:flex-row">
       <Button Link="#func" Variant="ButtonVariantType.Secondary" class="rounded-full">
         <ArrowLeftIcon class="mr-2 size-[1.1rem]" />
         Узнать больше
@@ -36,8 +36,8 @@
 
 <h2 id="func" class="text-center text-3xl mb-10 font-medium tracking-tighter">Реальные возможности</h2>
 
-<div class="max-w-5xl mx-auto grid grid-cols-3 gap-6 mb-20">
-  <Card class="col-span-2 flex flex-col h-64">
+<div class="max-w-5xl mx-auto flex flex-col gap-3 mb-20 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-6">
+  <Card class="flex flex-col h-64 md:col-span-2">
     <CardHeader>
       <CardTitle>
         Общение с мастер данными
@@ -94,7 +94,7 @@
       </div>
     </CardContent>
   </Card>
-  <Card class="col-span-2 flex flex-col h-64">
+  <Card class="flex flex-col h-64 md:col-span-2">
     <CardHeader>
       <CardTitle>
         Конфигуратор штрихкодов
@@ -109,7 +109,7 @@
       <div class="absolute h-14 w-[142px] rounded border-blue-500 bg-blue-500/10 border-2 border-dashed top-7 left-[404px]"></div>
     </CardContent>
   </Card>
-  <Card class="col-span-2 flex flex-col h-64">
+  <Card class="flex flex-col h-64 col-span-2">
     <CardHeader>
       <CardTitle>
         Аналитика производства
@@ -126,7 +126,7 @@
       />
     </CardContent>
   </Card>
-  <Card class="flex flex-col h-64">
+  <Card class="hidden lg:flex lg:flex-col h-64">
     <CardHeader>
       <CardTitle class="font-bold">
         Поддержка принтеров

@@ -15,7 +15,14 @@
     </Button>
   </div>
   <div class="w-full flex justify-center">
-    <QRCode Value="@DeviceInfo()"/>
+    <QRCode Value="@DeviceInfo()">
+      <LoadingContent>
+        <Spinner Class="size-20 text-primary" />
+      </LoadingContent>
+      <ErrorContent>
+        <ExclamationTriangleIcon class="size-20 text-destructive" />
+      </ErrorContent>
+    </QRCode>
   </div>
   <div class="flex w-full justify-end gap-2 pt-4">
     <Button OnClick="@CloseDialog">

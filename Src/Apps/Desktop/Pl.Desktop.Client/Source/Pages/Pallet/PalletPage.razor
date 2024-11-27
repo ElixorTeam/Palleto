@@ -1,22 +1,23 @@
-@attribute [Route(Routes.Pallet)]
-@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @using Pl.Desktop.Client.Source.Shared.Services.Devices
 @using Pl.Desktop.Client.Source.Features.DeviceStatusIcons
-@using Pl.Desktop.Client.Source.Widgets.FunctionalityDescription
-@using Pl.Desktop.Client.Source.Widgets.MainHeader
-@using Pl.Desktop.Client.Source.Widgets.PalletWorkspace
+@using Pl.Desktop.Client.Source.Pages.Pallet.FunctionalityDescription
 @using Pl.Desktop.Client.Source.Features.ErrorBoundaries
 @using Pl.Desktop.Client.Source.Widgets.PalletSelect
+@using Pl.Desktop.Client.Source.Widgets
+@using Pl.Desktop.Client.Source.Pages.Pallet.PalletSelect
+@using Pl.Desktop.Client.Source.Pages.Pallet.PalletWorkspace
 
+@attribute [Route(Routes.Pallet)]
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @implements IDisposable
 
 <ArmErrorBoundary>
   <div class="flex flex-col grow size-full">
-    <MainHeader>
+    <AppHeader>
       <div class="size-full items-center justify-end flex pr-10">
         <PrinterStatusIcon />
       </div>
-    </MainHeader>
+    </AppHeader>
     <div class="size-full flex flex-col grow overflow-hidden items-center justify-center px-8 pt-2 pb-4 xl:p-10">
       @if (PalletManState.Value.PalletMan == null)
       {
@@ -29,13 +30,13 @@
         <div class="size-full overflow-hidden">
           @if (PalletState.Value.Pallet == null)
           {
-          <div class="size-full flex items-center justify-center p-6 overflow-hidden">
-            <FunctionalityDescription />
-          </div>
+            <div class="size-full flex items-center justify-center p-6 overflow-hidden">
+              <FunctionalityDescription />
+            </div>
           }
           else
           {
-          <PalletWorkspace Pallet="@PalletState.Value.Pallet" />
+            <PalletWorkspace Pallet="@PalletState.Value.Pallet" />
           }
         </div>
       </div>

@@ -1,10 +1,8 @@
-using Pl.Desktop.Client.Source.Shared.Localization;
-using Pl.Desktop.Client.Source.Shared.Services.Stores;
 using Pl.Desktop.Models.Features.Pallets.Input;
 using Pl.Desktop.Models.Features.Pallets.Output;
 using Pl.Shared.Web.Extensions;
 
-namespace Pl.Desktop.Client.Source.Features.PalletCreate;
+namespace Pl.Desktop.Client.Source.Pages.Pallet.PalletCreate;
 
 public sealed partial class PalletResultStageForm : ComponentBase
 {

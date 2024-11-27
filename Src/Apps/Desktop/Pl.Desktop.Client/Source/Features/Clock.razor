@@ -1,6 +1,11 @@
 @using System.Timers
+@inherits PlComponentBase
 
-<div class="bg-secondary px-2 py-0.5 rounded-md overflow-hidden">
+<div
+  @attributes="AdditionalAttributes"
+  id="@Id"
+  class="@ClassMerge("bg-secondary px-2 py-0.5 rounded-md overflow-hidden", Class)"
+>
   @CurrentTime
 </div>
 

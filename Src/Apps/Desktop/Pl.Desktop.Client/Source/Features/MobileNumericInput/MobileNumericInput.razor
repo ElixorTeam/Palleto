@@ -1,0 +1,61 @@
+@inherits PlComponentBase
+
+<CascadingValue Value="this">
+  <div @attributes="@AdditionalAttributes" id="@Id" class="@Css.Class("space-y-6", Class)">
+    <MobileNumericDisplay />
+    <div class="grid grid-cols-3 grid-rows-4 gap-2">
+      @foreach (CalculatorControl control in Controls)
+      {
+        <MobileNumericButton Label="@control.Title" OnClick="control.CalculatorAction" />
+      }
+    </div>
+  </div>
+</CascadingValue>
+
+@code {
+  [Parameter] public int MaxDigitCount { get; set; } = 3;
+  [Parameter] public int Value { get; set; }
+  [Parameter] public EventCallback<int> ValueChanged { get; set; }
+  [Parameter] public EventCallback OnSubmit { get; set; }
+
+  private List<CalculatorControl> Controls => [
+      new() { Title = "1", CalculatorAction = async () => await SetNumber(1) },
+      new() { Title = "2", CalculatorAction = async () => await SetNumber(2) },
+      new() { Title = "3", CalculatorAction = async () => await SetNumber(3) },
+      new() { Title = "4", CalculatorAction = async () => await SetNumber(4) },
+      new() { Title = "5", CalculatorAction = async () => await SetNumber(5) },
+      new() { Title = "6", CalculatorAction = async () => await SetNumber(6) },
+      new() { Title = "7", CalculatorAction = async () => await SetNumber(7) },
+      new() { Title = "8", CalculatorAction = async () => await SetNumber(8) },
+      new() { Title = "9", CalculatorAction = async () => await SetNumber(9) },
+      new() { Title = "C", CalculatorAction = async () => await  ClearNumber() },
+      new() { Title = "0", CalculatorAction = async () => await SetNumber(0) },
+      new() { Title = "Enter", CalculatorAction = async () => await SubmitInput() }
+  ];
+
+  internal Task SubmitInput() => OnSubmit.InvokeAsync(Value);
+
+  private async Task SetNumber(int newDigit)
+  {
+    string valueString = Value.ToString() + newDigit;
+    if (valueString.Length > MaxDigitCount) return;
+    bool isParsed = int.TryParse(valueString, out int result);
+    if (!isParsed) return;
+    Value = result;
+    await ValueChanged.InvokeAsync(Value);
+    StateHasChanged();
+  }
+
+  private async Task ClearNumber()
+  {
+      Value = 0;
+      await ValueChanged.InvokeAsync(Value);
+      StateHasChanged();
+  }
+
+  internal class CalculatorControl
+  {
+    public string Title { get; init; } = string.Empty;
+    public Action CalculatorAction { get; init; } = () => { };
+  }
+}

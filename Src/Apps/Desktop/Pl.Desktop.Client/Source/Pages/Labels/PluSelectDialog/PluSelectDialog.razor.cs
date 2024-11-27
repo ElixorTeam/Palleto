@@ -1,7 +1,6 @@
-using Pl.Desktop.Client.Source.Shared.Localization;
 using Pl.Desktop.Models.Features.Plus.Weight.Output;
 
-namespace Pl.Desktop.Client.Source.Features.PluSelectDialog;
+namespace Pl.Desktop.Client.Source.Pages.Labels.PluSelectDialog;
 
 // ReSharper disable ClassNeverInstantiated.Global
 public sealed partial class PluSelectDialog : ComponentBase, IDialogContentComponent<PluDialogContent>

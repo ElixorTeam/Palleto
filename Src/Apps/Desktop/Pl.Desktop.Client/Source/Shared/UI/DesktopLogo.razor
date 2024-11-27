@@ -1,11 +1,11 @@
 <div class="@Css.Class("shrink-0 flex items-center gap-1.5 justify-center", Class)">
-  <div class="@Css.Class("bg-primary rounded-md overflow-hidden p-1.5", IsSmall ? "size-8" : "size-9")">
+  <div class="@Css.Class("bg-primary rounded-md overflow-hidden p-1.5", Small ? "size-8" : "size-9")">
     <DesktopIcon Class="text-background pl-px" />
   </div>
-  <h2 class="@Css.Class(IsSmall ? "text-xl tracking-widest" : "text-2xl tracking-[.25rem]")">ESKTOP</h2>
+  <h2 class="@Css.Class(Small ? "text-xl tracking-widest" : "text-2xl tracking-[.25rem]")">ESKTOP</h2>
 </div>
 
 @code {
   [Parameter] public string? Class { get; set; } = string.Empty;
-  [Parameter] public bool IsSmall { get; set; }
+  [Parameter] public bool Small { get; set; }
 }

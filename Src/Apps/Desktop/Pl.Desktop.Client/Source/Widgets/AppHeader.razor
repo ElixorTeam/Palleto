@@ -1,8 +1,20 @@
 @using Blazor.Heroicons.Outline
+@inherits PlComponentBase
 
-<div class="w-full h-[3.25rem] shrink-0 border-b bg-background">
+<div
+  @attributes="@AdditionalAttributes"
+  id="@Id"
+  class="@ClassMerge("w-full h-[3.25rem] shrink-0 border-b bg-background", Class)"
+>
   <div class="size-full max-w-screen-2xl mx-auto px-8 flex items-center justify-between">
-    <HeaderAppName Class="shrink-0 w-2/5" />
+    <div class="w-2/5 flex items-center justify-start">
+      @if (ConfigurationUtils.IsDevelop)
+      {
+        <Badge Variant="@BadgeVariants.Outline" Class="mr-3">DEV</Badge>
+      }
+      <DesktopLogo Small />
+      <span class="pb-1 pl-1 text-sm">@VersionTracking.CurrentVersion</span>
+    </div>
     <div class="w-1/5 flex items-center justify-center">
       <Clock />
     </div>

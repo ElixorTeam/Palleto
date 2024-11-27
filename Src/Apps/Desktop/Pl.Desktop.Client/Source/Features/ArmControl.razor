@@ -6,11 +6,11 @@
   <UseParameterlessEndpoint Endpoint="@ArmEndpoints.ArmEndpoint" Context="query">
     @if (query.IsLoading)
     {
-      <Skeleton Class="@Css.Class("!rounded-full shrink-0",IsSmall ? "size-[3.25rem]" : "size-16")"/>
+      <Skeleton Class="@Css.Class("!rounded-full shrink-0", Small ? "size-[3.25rem]" : "size-16")"/>
     }
     else
     {
-      <div class="@Css.Class("shrink-0 border rounded-full", IsSmall ? "size-[3.25rem] p-3 bg-background" : "size-16 bg-secondary p-4")">
+      <div class="@Css.Class("shrink-0 border rounded-full", Small ? "size-[3.25rem] p-3 bg-background" : "size-16 bg-secondary p-4")">
         @if (query.HasData)
         {
           @switch (query.Data.Type)
@@ -43,20 +43,20 @@
       }
       else if (!query.HasData)
       {
-        <span class="@Css.Class("font-medium truncate text-destructive", IsSmall ? "" : "text-lg")">Нет данных</span>
-        <span class="@Css.Class("truncate text-destructive", IsSmall ? "text-sm" : "")">Нет данных</span>
+        <span class="@Css.Class("font-medium truncate text-destructive", Small ? "" : "text-lg")">Нет данных</span>
+        <span class="@Css.Class("truncate text-destructive", Small ? "text-sm" : "")">Нет данных</span>
       }
       else
       {
-        <span class="@Css.Class("font-medium truncate", IsSmall ? "" : "text-lg")">@query.Data.Name</span>
-        <span class="@Css.Class("truncate text-muted-foreground", IsSmall ? "text-sm" : "")">@query.Data.Warehouse.Name</span>
+        <span class="@Css.Class("font-medium truncate", Small ? "" : "text-lg")">@query.Data.Name</span>
+        <span class="@Css.Class("truncate text-muted-foreground", Small ? "text-sm" : "")">@query.Data.Warehouse.Name</span>
       }
     </div>
     <Button
       Class="shrink-0 border"
       OnClick="@(async () => await RefetchArm(query))"
-      Variant="@(IsSmall ? ButtonVariantType.Outline : ButtonVariantType.Secondary)"
-      Size="@(IsSmall ? ButtonSizeType.Small : ButtonSizeType.Default)"
+      Variant="@(Small ? ButtonVariantType.Outline : ButtonVariantType.Secondary)"
+      Size="@(Small ? ButtonSizeType.Small : ButtonSizeType.Default)"
       Disabled="@query.IsFetching"
     >
       <ArrowPathIcon class="size-4 mr-2"/>
@@ -72,7 +72,7 @@
   [Inject] private ArmEndpoints ArmEndpoints { get; set; } = default!;
 
   [Parameter] public EventCallback OnArmRefetch { get; set; }
-  [Parameter] public bool IsSmall { get; set; }
+  [Parameter] public bool Small { get; set; }
 
   private async Task RefetchArm(Query<ArmDto> query)
   {

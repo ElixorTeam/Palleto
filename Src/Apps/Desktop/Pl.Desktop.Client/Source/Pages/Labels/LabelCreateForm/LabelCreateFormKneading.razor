@@ -37,8 +37,7 @@
 
   private async Task ShowNumericKeyboard()
   {
-    NumericKeyboardDialogContent data = new() { Kneading = Kneading };
-    IDialogReference dialog = await DialogService.ShowDialogAsync<NumericKeyboardDialog>(data, new());
+    IDialogReference dialog = await DialogService.ShowDialogAsync<NumericKeyboardDialog>(Kneading, new());
     DialogResult result = await dialog.Result;
     if (result is { Cancelled: false, Data: ushort newKneading })
     {

@@ -7,7 +7,7 @@
   Size="ButtonSizeType.Full"
   OnClick="@HandleButtonOpenScalesTerminal"
   Disabled="@(!(ScalesState.Value.Status == MassaKStatus.Ready && !IsOnceClicked))"
-  Class="border disabled:!opacity-70"
+  Class="border disabled:opacity-70"
 >
   <div class="flex items-center flex-col">
     <span class="xl:text-xl">@Localizer["BtnScaleCalibration"]</span>
@@ -19,7 +19,6 @@
 </Button>
 
 @code {
-
   #region Injects
 
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;

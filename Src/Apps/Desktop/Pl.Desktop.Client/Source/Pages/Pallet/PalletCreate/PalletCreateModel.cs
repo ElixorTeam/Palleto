@@ -1,6 +1,6 @@
 using Pl.Desktop.Models.Features.Plus.Piece.Output;
 
-namespace Pl.Desktop.Client.Source.Features.PalletCreate;
+namespace Pl.Desktop.Client.Source.Pages.Pallet.PalletCreate;
 
 public class PalletCreateModel
 {

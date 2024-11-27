@@ -20,7 +20,7 @@
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
 
   [Parameter] public RenderFragment? ChildContent { get; set; }
-  [Parameter] public bool IsDisabled { get; set; } = false;
+  [Parameter] public bool IsDisabled { get; set; }
   [CascadingParameter] public FluentDialog Dialog { get; set; } = default!;
 
   private async Task CloseAsync() => await Dialog.CloseAsync();

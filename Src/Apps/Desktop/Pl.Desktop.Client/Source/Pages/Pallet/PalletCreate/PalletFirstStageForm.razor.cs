@@ -1,8 +1,7 @@
 using FluentValidation;
 using Pl.Desktop.Client.Source.Shared.Api.Desktop.Endpoints;
-using Pl.Desktop.Client.Source.Shared.Localization;
 
-namespace Pl.Desktop.Client.Source.Features.PalletCreate;
+namespace Pl.Desktop.Client.Source.Pages.Pallet.PalletCreate;
 
 public sealed partial class PalletFirstStageForm : ComponentBase
 {
