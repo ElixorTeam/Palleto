@@ -33,20 +33,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="Source\Shared\Localization\ApplicationResources.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>ApplicationResources.resx</DependentUpon>
-        </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
         <EmbeddedResource Update="Source\Shared\Localization\ApplicationResources.en-US.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
-        </EmbeddedResource>
-        <EmbeddedResource Update="Source\Shared\Localization\ApplicationResources.resx">
-            <Generator>PublicResXFileCodeGenerator</Generator>
-            <LastGenOutput>ApplicationResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Source\Shared\Localization\ApplicationResources.ru-RU.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>

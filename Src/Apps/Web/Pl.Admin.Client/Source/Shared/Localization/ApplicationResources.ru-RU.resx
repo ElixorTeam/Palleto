@@ -303,4 +303,13 @@
     <data name="PrinterControlDescriptionGuideLink" xml:space="preserve">
         <value>данному руководству</value>
     </data>
+    <data name="WelcomeBadge" xml:space="preserve">
+        <value>Новый дизайн</value>
+    </data>
+    <data name="WelcomeTitle" xml:space="preserve">
+        <value>Управлять паллетами стало еще легче</value>
+    </data>
+    <data name="WelcomeLearnMore" xml:space="preserve">
+        <value>Узнать больше</value>
+    </data>
 </root>

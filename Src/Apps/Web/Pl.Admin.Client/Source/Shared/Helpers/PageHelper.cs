@@ -1,5 +1,6 @@
 // ReSharper disable ClassNeverInstantiated.Global
 
+using System.Collections.Specialized;
 using Microsoft.JSInterop;
 using Phetch.Core;
 using Pl.Shared.Web.Extensions;
@@ -29,6 +30,13 @@ public class PageHelper(IJSRuntime jsRuntime, NavigationManager navigationManage
     {
         navigationManager.NavigateTo(url);
         return Task.CompletedTask;
+    }
+
+    public string? GetUrlQueryParam(string key)
+    {
+        Uri uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
+        NameValueCollection query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        return query[key];
     }
 
     public async Task ApiActionWrapper(

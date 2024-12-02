@@ -105,6 +105,12 @@
 
   private string CurrentTab { get; set; } = "info";
 
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    CurrentTab = PageHelper.GetUrlQueryParam("tab") ?? "info";
+  }
+
   private async Task DeleteItem(ArmDto item)
   {
     await WebApi.DeleteArm(item.Id);

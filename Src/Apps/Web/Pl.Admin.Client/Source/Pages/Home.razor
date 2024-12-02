@@ -15,16 +15,16 @@
     <div>
       <Badge Variant="@BadgeVariants.Outline" Class="mb-3">
         <BoltIcon class="size-3.5 mr-1.5" />
-        Новый дизайн
+        @Localizer["WelcomeBadge"]
       </Badge>
     </div>
     <h2 class="text-center text-2xl font-medium tracking-tighter md:text-4xl lg:text-6xl">
-      Управлять паллетами стало еще легче
+      @Localizer["WelcomeTitle"]
     </h2>
     <div class="flex flex-col gap-3 w-fit mt-9 md:flex-row">
       <Button Link="#func" Variant="ButtonVariantType.Secondary" class="rounded-full">
         <ArrowLeftIcon class="mr-2 size-[1.1rem]" />
-        Узнать больше
+        @Localizer["WelcomeLearnMore"]
       </Button>
       @if (!IsProduction)
       {

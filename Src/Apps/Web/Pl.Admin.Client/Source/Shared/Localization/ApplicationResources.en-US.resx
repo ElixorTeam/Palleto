@@ -303,4 +303,13 @@
     <data name="PrinterControlTitle" xml:space="preserve">
         <value>Remote printer control</value>
     </data>
+    <data name="WelcomeBadge" xml:space="preserve">
+        <value>New Design</value>
+    </data>
+    <data name="WelcomeTitle" xml:space="preserve">
+        <value>Managing pallets has become easier</value>
+    </data>
+    <data name="WelcomeLearnMore" xml:space="preserve">
+        <value>Learn more</value>
+    </data>
 </root>

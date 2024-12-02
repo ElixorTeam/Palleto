@@ -7,7 +7,9 @@
 </button>
 
 @code {
+  [Inject] private NavigationManager NavigationManager { get; set; } = default!;
   [Inject] private TwMerge TwMerge { get; set; } = default!;
+
   [Parameter] public string CurrentTab { get; set; } = string.Empty;
   [Parameter] public EventCallback<string> CurrentTabChanged { get; set; }
   [Parameter] public string Value { get; set; } = string.Empty;
@@ -17,6 +19,8 @@
   private async Task SetValue()
   {
     CurrentTab = Value;
+    string uri = NavigationManager.GetUriWithQueryParameter("tab", CurrentTab);
+    NavigationManager.NavigateTo(uri, false, true);
     await CurrentTabChanged.InvokeAsync(CurrentTab);
   }
 }

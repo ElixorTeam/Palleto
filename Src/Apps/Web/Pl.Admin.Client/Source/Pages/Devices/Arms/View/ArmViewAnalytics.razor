@@ -1,7 +1,7 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
 
-<h2 class="text-xl font-medium pb-3">@Localizer["SectionViewWorkshiftArmAnalytics"]</h2>
+<h2 class="text-xl font-medium mb-4">@Localizer["SectionViewWorkshiftArmAnalytics"]</h2>
 <div class="grid w-full gap-6 grid-cols-1 xl:grid-cols-2">
   <Card class="w-full h-96 flex flex-col">
     <UseEndpoint
@@ -10,9 +10,11 @@
       Context="armAnalyticsQuery"
     >
       <CardHeader class="flex-row gap-4 items-center space-y-0">
-        <CardTitle class="text-lg">
-          @WsDataLocalizer["ColLoad"] (@DateTime.Today.ToString("dd.MM.yy"))
-        </CardTitle>
+        <DataGridLabelWithCounter
+          Label="@($"{WsDataLocalizer["ColLoad"]} ({DateTime.Today:dd.MM.yy})")"
+          ItemsCount="@((int?)armAnalyticsQuery.Data?.Sum(x => x.Count))"
+          IsLoading="armAnalyticsQuery.IsLoading"
+        />
         <DataGridActionReload
           OnClick="@armAnalyticsQuery.RefetchAsync"
           IsLoading="@armAnalyticsQuery.IsFetching"
@@ -37,23 +39,25 @@
     <UseEndpoint
       Endpoint="@DevicesEndpoints.ArmAnalytics"
       Arg="@(new ArmAnalyticsArg(Model.Id, DateOnly.FromDateTime(DateTime.Today.AddDays(-1))))"
-      Context="armAnalyticsQuery"
+      Context="armPastAnalyticsQuery"
     >
       <CardHeader class="flex-row gap-4 items-center space-y-0">
-        <CardTitle class="text-lg">
-          @WsDataLocalizer["ColLoad"] (@DateTime.Today.AddDays(-1).ToString("dd.MM.yy"))
-        </CardTitle>
+        <DataGridLabelWithCounter
+          Label="@($"{WsDataLocalizer["ColLoad"]} ({DateTime.Today.AddDays(-1):dd.MM.yy})")"
+          ItemsCount="@((int?)armPastAnalyticsQuery.Data?.Sum(x => x.Count))"
+          IsLoading="armPastAnalyticsQuery.IsLoading"
+        />
         <DataGridActionReload
-          OnClick="@armAnalyticsQuery.RefetchAsync"
-          IsLoading="@armAnalyticsQuery.IsFetching"
+          OnClick="@armPastAnalyticsQuery.RefetchAsync"
+          IsLoading="@armPastAnalyticsQuery.IsFetching"
         />
       </CardHeader>
       <CardContent class="size-full">
-        @if (armAnalyticsQuery.HasData)
+        @if (armPastAnalyticsQuery.HasData)
         {
           <LineChart
-            Labels="@(armAnalyticsQuery.Data.Select(x => x.Date.ToString("HH:mm")).ToList())"
-            Data="@(armAnalyticsQuery.Data.Select(x => (decimal?)Convert.ToDecimal(x.Count)).ToList())"
+            Labels="@(armPastAnalyticsQuery.Data.Select(x => x.Date.ToString("HH:mm")).ToList())"
+            Data="@(armPastAnalyticsQuery.Data.Select(x => (decimal?)Convert.ToDecimal(x.Count)).ToList())"
           />
         }
         else

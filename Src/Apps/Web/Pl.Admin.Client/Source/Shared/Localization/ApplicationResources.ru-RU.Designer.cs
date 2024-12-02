@@ -897,6 +897,33 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Новый дизайн.
+        /// </summary>
+        public static string WelcomeBadge {
+            get {
+                return ResourceManager.GetString("WelcomeBadge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Узнать больше.
+        /// </summary>
+        public static string WelcomeLearnMore {
+            get {
+                return ResourceManager.GetString("WelcomeLearnMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Управлять паллетами стало еще легче.
+        /// </summary>
+        public static string WelcomeTitle {
+            get {
+                return ResourceManager.GetString("WelcomeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Значок.
         /// </summary>
         public static string ZplResourceTypeEnumSign {

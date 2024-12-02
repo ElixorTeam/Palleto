@@ -76,6 +76,12 @@
 
   private string CurrentTab { get; set; } = "info";
 
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    CurrentTab = PageHelper.GetUrlQueryParam("tab") ?? "info";
+  }
+
   private async Task DeleteItem(PrinterDto item)
   {
     await WebApi.DeletePrinter(item.Id);

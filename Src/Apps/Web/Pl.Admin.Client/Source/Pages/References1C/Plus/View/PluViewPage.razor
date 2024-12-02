@@ -58,12 +58,20 @@
 
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+
   [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
 
   # endregion
 
   [Parameter] public Guid Id { get; set; }
 
   private string CurrentTab { get; set; } = "info";
+
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    CurrentTab = PageHelper.GetUrlQueryParam("tab") ?? "info";
+  }
 }
