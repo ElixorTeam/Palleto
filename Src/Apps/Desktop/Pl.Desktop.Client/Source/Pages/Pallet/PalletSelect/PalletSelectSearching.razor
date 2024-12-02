@@ -1,0 +1,75 @@
+@using System.Timers
+@using Blazor.Heroicons.Outline
+
+<div class="h-14 flex gap-2 w-full px-4 items-center shrink-0">
+  <div class="border px-2 gap-1 flex items-center rounded-md overflow-hidden w-full h-9">
+    <MagnifyingGlassIcon class="size-5 pb-[2px] text-gray-500"/>
+    <input
+      type="text"
+      name="pallet-search"
+      @bind="SearchingString"
+      @bind:event="oninput"
+      @bind:after="OnInputChanged"
+      class="size-full border-none text-sm pl-1 focus:outline-none focus:ring-0"
+      placeholder="@Localizer["SearchByNumberPlaceholder"]"/>
+  </div>
+  <div class="w-9">
+    <SelectSingle
+      TItem="PalletFilterType"
+      Items="@(Enum.GetValues(typeof(PalletFilterType)).Cast<PalletFilterType>())"
+      @bind-Value="Filter"
+      @bind-Value:after="OnSortingChanged"
+      ItemDisplayName="@(value => Localizer[value.GetDescription()])"
+      IgnoreWidth
+    >
+      <TriggerContent Context="select">
+        <Button
+          Id="@select.HtmlId"
+          Variant="ButtonVariantType.Outline"
+          Size="ButtonSizeType.Icon"
+          Class="shrink-0"
+          OnClick="@(() => select.ToggleDropdown())"
+          role="combobox"
+          aria-haspopup="listbox"
+          aria-expanded="@select.IsDropdownOpened.ToString()"
+          aria-disabled="false"
+        >
+          <FunnelIcon class="size-5" />
+        </Button>
+      </TriggerContent>
+    </SelectSingle>
+  </div>
+</div>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Parameter] public PalletFilterType Filter { get; set; } = PalletFilterType.NotShipped;
+  [Parameter] public EventCallback<PalletFilterType> FilterChanged { get; set; }
+  [Parameter] public string SearchingString { get; set; } = string.Empty;
+  [Parameter] public EventCallback<string> SearchingStringChanged { get; set; }
+
+  private Timer DebounceTimer { get; set; } = default!;
+  private const int DebounceDelay = 800;
+
+  private void OnInputChanged()
+  {
+    DebounceTimer.Stop();
+    DebounceTimer.Start();
+  }
+
+  protected override void OnInitialized()
+  {
+    DebounceTimer = new(DebounceDelay);
+    DebounceTimer.Elapsed += async (_, _) =>
+    {
+      DebounceTimer.Stop();
+      await InvokeAsync(OnSearchingStringChanged);
+    };
+    DebounceTimer.AutoReset = false;
+  }
+
+  private async Task OnSortingChanged() => await FilterChanged.InvokeAsync(Filter);
+
+  private async Task OnSearchingStringChanged() => await SearchingStringChanged.InvokeAsync(SearchingString);
+}

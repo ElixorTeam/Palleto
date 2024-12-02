@@ -1,0 +1,111 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Models.Features.References1C.Plus.Queries
+
+<ViewFieldGrid Label="@Localizer["FieldCommon"]" Border>
+  <ViewFieldGuid Value="@Model.Id" />
+
+  <ViewField Label="@WsDataLocalizer["ColNumber"]" Value="@Model.Number.ToString()" />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColNumber"]"
+    Value="@Model.Number.ToString()"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColType"]"
+    Value="@GetPluTypeName(Model.IsWeight)"
+  />
+
+  <ViewField
+    Label="@($"{WsDataLocalizer["ColWeight"]} ({WsDataLocalizer["MeasureKg"]})")"
+    Value="@Model.Weight.ToString(CultureInfo.InvariantCulture)"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColBrand"]"
+    Value="@Model.Brand.Name"
+    Link="@RedirectHelper.ToBrand(Model.Brand.Id)"
+  />
+
+  @if (Model.Template != null)
+  {
+    <ViewField
+      Label="@WsDataLocalizer["ColTemplate"]"
+      Value="@Model.Template.Name"
+      Link="@RedirectHelper.ToTemplate(Model.Template.Id)"
+    />
+  }
+
+  <ViewField
+    Label="@WsDataLocalizer["ColShelfLifeDays"]"
+    Value="@Model.ShelfLifeDays.ToString()"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColStorageMethod"]"
+    Value="@Model.StorageMethod"
+  />
+</ViewFieldGrid>
+
+<ViewFieldGrid Label="@WsDataLocalizer["ColDescription"]" Border>
+  <ViewField
+    Label="@WsDataLocalizer["ColName"]"
+    Value="@Model.Name"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColFullName"]"
+    Value="@Model.FullName"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColDescription"]"
+    Value="@Model.Description"
+  />
+</ViewFieldGrid>
+
+<ViewFieldGrid Label="@Localizer["FieldPackaging"]" Border>
+  @if (Model.Bundle != null)
+  {
+    <ViewField
+      Label="@WsDataLocalizer["ColBundle"]"
+      Value="@Model.Bundle.Name"
+      Link="@RedirectHelper.ToBundle(Model.Bundle.Id)"
+    />
+  }
+
+  @if (Model.Clip != null)
+  {
+    <ViewField
+      Label="@WsDataLocalizer["ColClip"]"
+      Value="@Model.Clip.Name"
+      Link="@RedirectHelper.ToClip(Model.Clip.Id)"
+    />
+  }
+</ViewFieldGrid>
+
+<ViewFieldGrid Label="@WsDataLocalizer["ColBarcode"]">
+  <ViewField
+    Label="Ean13"
+    Value="@Model.Ean13"
+    Copyable
+  />
+
+  <ViewField
+    Label="Gtin"
+    Value="@Model.Gtin"
+    Copyable
+  />
+</ViewFieldGrid>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+
+  [Parameter, EditorRequired] public PluDto Model { get; set; } = default!;
+
+  private string GetPluTypeName(bool isWeight) =>
+    isWeight ? WsDataLocalizer["ColPluWeight"] : WsDataLocalizer["ColPluPiece"];
+}

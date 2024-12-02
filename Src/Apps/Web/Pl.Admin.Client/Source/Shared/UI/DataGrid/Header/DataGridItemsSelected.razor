@@ -1,0 +1,19 @@
+@if (IsLoading)
+{
+  <Skeleton Class="h-8 w-28" />
+}
+else
+{
+  <div class="px-3 truncate shrink-0 h-8 items-center border flex gap-2 rounded-md overflow-hidden transition-colors">
+    <span class="text-sm">
+      @SelectedCount / @Count
+    </span>
+  </div>
+}
+
+
+@code {
+  [Parameter] public bool IsLoading { get; set; }
+  [Parameter] public int Count { get; set; }
+  [Parameter] public int SelectedCount { get; set; }
+}

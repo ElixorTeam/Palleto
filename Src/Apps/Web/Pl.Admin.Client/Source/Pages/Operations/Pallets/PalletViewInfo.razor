@@ -1,0 +1,28 @@
+@using Pl.Admin.Models.Features.Print.Pallets
+
+<ViewFieldGrid Label="@Localizer["FieldCommon"]" Border>
+  <ViewFieldGuid Value="@Model.Id" />
+  <ViewField Label="@WsDataLocalizer["ColNumber"]" Value="@Model.Number" />
+  <ViewField Label="@WsDataLocalizer["ColBarcode"]" Value="@Model.Barcode" />
+  <ViewField Label="@WsDataLocalizer["ColArm"]" Value="@Model.Arm.Name" Link="@RedirectHelper.ToArm(Model.Arm.Id)" />
+  <ViewField Label="@WsDataLocalizer["ColWarehouse"]" Value="@Model.Warehouse.Name" Link="@RedirectHelper.ToWarehouse(Model.Warehouse.Id)" />
+  <ViewField Label="@WsDataLocalizer["ColPalletMan"]" Value="@Model.PalletMan.Name" />
+</ViewFieldGrid>
+
+<ViewFieldGrid Label="@Localizer["FieldParameters"]">
+  <ViewField Label="@WsDataLocalizer["ColPlu"]" Value="@(Model.Plus.FirstOrDefault()?.Plu.Name ?? "Неизвестно")" />
+  <ViewField Label="@WsDataLocalizer["ColKneading"]" Value="@Model.Kneadings.FirstOrDefault().ToString()" />
+  <ViewField Label="@WsDataLocalizer["ColGrossWeight"]" Value="@Model.WeightBrutto.ToString(CultureInfo.InvariantCulture)"/>
+  <ViewField Label="@WsDataLocalizer["ColNetWeight"]" Value="@Model.WeightNet.ToString(CultureInfo.InvariantCulture)"/>
+  <ViewField Label="@WsDataLocalizer["ColTareWeight"]" Value="@Model.WeightTray.ToString(CultureInfo.InvariantCulture)"/>
+  <ViewField Label="@WsDataLocalizer["ColCount"]" Value="@Model.BoxCount.ToString()"/>
+  <ViewField Label="@WsDataLocalizer["ColCount"]" Value="@Model.BundleCount.ToString()"/>
+</ViewFieldGrid>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+
+  [Parameter, EditorRequired] public PalletDto Model { get; set; } = default!;
+}

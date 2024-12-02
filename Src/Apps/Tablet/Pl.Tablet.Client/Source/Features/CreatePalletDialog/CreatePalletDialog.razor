@@ -1,0 +1,23 @@
+@implements IDialogContentComponent<CreateDialogProps>
+
+<Dialog Class="max-w-screen-md select-none">
+  <DialogHeader>
+    <Button
+      Variant="ButtonVariantType.Secondary"
+      Class="disabled:!opacity-100"
+      Disabled
+    >
+      Добавление паллеты
+    </Button>
+  </DialogHeader>
+  <div class="flex flex-col w-full max-h-full bg-secondary overflow-y-auto px-4">
+    <CreatePalletForm
+      Model="@(new() { DocumentNumber = Content.DocumentNumber, Batches = [new()] })"
+      OnPalletCreated="@Content.OnPalletCreated"
+    />
+  </div>
+</Dialog>
+
+@code {
+  [Parameter] public CreateDialogProps Content { get; set; } = default!;
+}

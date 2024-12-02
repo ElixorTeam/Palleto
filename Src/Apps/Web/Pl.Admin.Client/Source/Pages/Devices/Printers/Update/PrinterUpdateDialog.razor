@@ -1,0 +1,16 @@
+@using Pl.Admin.Models.Features.Devices.Printers
+@using Pl.Admin.Models.Features.Devices.Printers.Queries
+
+@implements IDialogContentComponent<PrinterDto>
+
+<SectionDialog>
+  <Tab Id="@typeof(PrinterUpdateForm).ToString()" Label="@Localizer["SectionPrinters"]">
+    <PrinterUpdateForm Model="Content" FormModel="@PrinterMapper.DtoToUpdateDto(Content)" />
+  </Tab>
+</SectionDialog>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Parameter] public PrinterDto Content { get; set; } = default!;
+}

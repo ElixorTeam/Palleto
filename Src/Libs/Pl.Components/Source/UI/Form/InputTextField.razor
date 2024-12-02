@@ -1,0 +1,18 @@
+@inherits InputBase<string>
+
+<input
+  @attributes="AdditionalAttributes"
+  id="@Id"
+  type="@Type.GetDescription()"
+  @bind="Value"
+  @bind:after="OnValueChanged"
+  class="@ClassMerge("flex h-9 w-full rounded-md border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50", Class)"
+  disabled="@Disabled"
+  readonly="@ReadOnly"
+  autofocus="@AutoFocus"
+  placeholder="@Placeholder"
+/>
+
+@code {
+  [Parameter] public TextInputType Type { get; set; } = TextInputType.Text;
+}

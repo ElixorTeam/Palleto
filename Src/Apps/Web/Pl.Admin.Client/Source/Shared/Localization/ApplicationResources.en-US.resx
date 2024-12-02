@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="Menu1CReferences" xml:space="preserve">
+        <value>1C References</value>
+    </data>
+    <data name="MenuAdministration" xml:space="preserve">
+        <value>Administration</value>
+    </data>
+    <data name="MenuDevices" xml:space="preserve">
+        <value>Devices</value>
+    </data>
+    <data name="MenuDiagnostics" xml:space="preserve">
+        <value>Diagnostics</value>
+    </data>
+    <data name="MenuOperations" xml:space="preserve">
+        <value>Operations</value>
+    </data>
+    <data name="MenuReferences" xml:space="preserve">
+        <value>References</value>
+    </data>
+    <data name="SectionBoxes" xml:space="preserve">
+        <value>Boxes</value>
+    </data>
+    <data name="SectionBrands" xml:space="preserve">
+        <value>Brands</value>
+    </data>
+    <data name="SectionBundles" xml:space="preserve">
+        <value>Bundles</value>
+    </data>
+    <data name="SectionClips" xml:space="preserve">
+        <value>Clips</value>
+    </data>
+    <data name="SectionArm" xml:space="preserve">
+        <value>ARM</value>
+    </data>
+    <data name="SectionProductionSites" xml:space="preserve">
+        <value>Production Sites</value>
+    </data>
+    <data name="SectionPlu" xml:space="preserve">
+        <value>PLU</value>
+    </data>
+    <data name="SectionPrinters" xml:space="preserve">
+        <value>Printers</value>
+    </data>
+    <data name="SectionTemplates" xml:space="preserve">
+        <value>Templates</value>
+    </data>
+    <data name="SectionTemplateResources" xml:space="preserve">
+        <value>Templates Resources</value>
+    </data>
+    <data name="SectionUsers" xml:space="preserve">
+        <value>Users</value>
+    </data>
+    <data name="SectionWarehouses" xml:space="preserve">
+        <value>Warehouses</value>
+    </data>
+    <data name="BtnSubmit" xml:space="preserve">
+        <value>Submit</value>
+    </data>
+    <data name="InputDefaultPlaceholder" xml:space="preserve">
+        <value>Enter value...</value>
+    </data>
+    <data name="FormWarehouseDefaultPlaceholder" xml:space="preserve">
+        <value>Select the warehouse</value>
+    </data>
+    <data name="FormPrinterDefaultPlaceholder" xml:space="preserve">
+        <value>Select the printer</value>
+    </data>
+    <data name="FormPrinterControl" xml:space="preserve">
+        <value>Printer control</value>
+    </data>
+    <data name="FormProductionSiteDefaultPlaceholder" xml:space="preserve">
+        <value>Select the production site</value>
+    </data>
+    <data name="DataGridContextMenuOpen" xml:space="preserve">
+        <value>View</value>
+    </data>
+    <data name="DataGridContextMenuOpenInNewTab" xml:space="preserve">
+        <value>Open in new tab</value>
+    </data>
+    <data name="DataGridContextMenuDelete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="ToastResetItem" xml:space="preserve">
+        <value>Original values restored</value>
+    </data>
+    <data name="ToastCreateItem" xml:space="preserve">
+        <value>The item was created</value>
+    </data>
+    <data name="ToastDeleteItem" xml:space="preserve">
+        <value>The item was deleted</value>
+    </data>
+    <data name="ToastUpdateItem" xml:space="preserve">
+        <value>The item was updated</value>
+    </data>
+    <data name="LabelsPreviewErrorMsg" xml:space="preserve">
+        <value>Error while converting zpl code to image</value>
+    </data>
+    <data name="ToastCopyToClipboard" xml:space="preserve">
+        <value>Value copied to clipboard</value>
+    </data>
+    <data name="FormSelectSearchDefaultPlaceholder" xml:space="preserve">
+        <value>Search...</value>
+    </data>
+    <data name="FormSelectEmptyDefaultPlaceholder" xml:space="preserve">
+        <value>No results</value>
+    </data>
+    <data name="SectionPalletMen" xml:space="preserve">
+        <value>Pallet Men</value>
+    </data>
+    <data name="BtnCancel" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="FormActionReset" xml:space="preserve">
+        <value>Reset</value>
+    </data>
+    <data name="FormActionRelogin" xml:space="preserve">
+        <value>Relogin</value>
+    </data>
+    <data name="MenuPrintSettings" xml:space="preserve">
+        <value>Print settings</value>
+    </data>
+    <data name="DataGridTotalItems" xml:space="preserve">
+        <value>items</value>
+    </data>
+    <data name="FormActionsTitle" xml:space="preserve">
+        <value>Actions</value>
+    </data>
+    <data name="BtnBack" xml:space="preserve">
+        <value>Back</value>
+    </data>
+    <data name="ToastReloginUser" xml:space="preserve">
+        <value>A relogin has been executed</value>
+    </data>
+    <data name="UnknownError" xml:space="preserve">
+        <value>Unknown error</value>
+    </data>
+    <data name="FieldPackaging" xml:space="preserve">
+        <value>Packaging</value>
+    </data>
+    <data name="FieldLocation" xml:space="preserve">
+        <value>Location</value>
+    </data>
+    <data name="BtnAdd" xml:space="preserve">
+        <value>Add</value>
+    </data>
+    <data name="BarcodeEditorConstInputPlaceholder" xml:space="preserve">
+        <value>Enter the const...</value>
+    </data>
+    <data name="BarcodeEditorVariableSelectPlaceholder" xml:space="preserve">
+        <value>Select variable...</value>
+    </data>
+    <data name="BarcodeEditorEmptyPlaceholder" xml:space="preserve">
+        <value>Field are missing</value>
+    </data>
+    <data name="BarcodeEditorMaskPlaceholder" xml:space="preserve">
+        <value>Enter the mask...</value>
+    </data>
+    <data name="ArmTypeEnumPc" xml:space="preserve">
+        <value>PC</value>
+    </data>
+    <data name="ArmTypeEnumTablet" xml:space="preserve">
+        <value>Tablet</value>
+    </data>
+    <data name="ArmTypeEnumUniversal" xml:space="preserve">
+        <value>Universal</value>
+    </data>
+    <data name="ProductionSiteSuspenseDescription" xml:space="preserve">
+        <value>The platform is not configured for this account. Contact support.</value>
+    </data>
+    <data name="SectionMigrations" xml:space="preserve">
+        <value>Migrations</value>
+    </data>
+    <data name="SectionTables" xml:space="preserve">
+        <value>Tables</value>
+    </data>
+    <data name="ArmPluRemovedUnsuccessfully" xml:space="preserve">
+        <value>Failed to remove {0} PLU from the arm</value>
+    </data>
+    <data name="ArmPluAddedUnsuccessfully" xml:space="preserve">
+        <value>Failed to add {0} PLU to the arm</value>
+    </data>
+    <data name="ZplResourceTypeEnumSign" xml:space="preserve">
+        <value>Sign</value>
+    </data>
+    <data name="ZplResourceTypeEnumText" xml:space="preserve">
+        <value>Text</value>
+    </data>
+    <data name="SelectItemNotSelected" xml:space="preserve">
+        <value>Not selected</value>
+    </data>
+    <data name="FormTemplateDefaultPlaceholder" xml:space="preserve">
+        <value>Select the template</value>
+    </data>
+    <data name="ThemeDark" xml:space="preserve">
+        <value>Dark</value>
+    </data>
+    <data name="ThemeLight" xml:space="preserve">
+        <value>Light</value>
+    </data>
+    <data name="ThemeSystem" xml:space="preserve">
+        <value>System</value>
+    </data>
+    <data name="StateOff" xml:space="preserve">
+        <value>Off</value>
+    </data>
+    <data name="StateOn" xml:space="preserve">
+        <value>On</value>
+    </data>
+    <data name="DeleteDialogTitle" xml:space="preserve">
+        <value>Are you sure you want to delete the item?</value>
+    </data>
+    <data name="DeleteDialogDescription" xml:space="preserve">
+        <value>This action cannot be undone. This will permanently delete the item from the server.</value>
+    </data>
+    <data name="BtnReset" xml:space="preserve">
+        <value>Reset</value>
+    </data>
+    <data name="NotFoundMessage" xml:space="preserve">
+        <value>This page could not be found</value>
+    </data>
+    <data name="SectionPluCharacteristics" xml:space="preserve">
+        <value>PLU Characteristics</value>
+    </data>
+    <data name="DataGridContextMenuUpdate" xml:space="preserve">
+        <value>Update</value>
+    </data>
+    <data name="SectionArmPlu" xml:space="preserve">
+        <value>ARM PLU</value>
+    </data>
+    <data name="SectionViewAnalytics" xml:space="preserve">
+        <value>Analytics</value>
+    </data>
+    <data name="SectionViewInfo" xml:space="preserve">
+        <value>Information</value>
+    </data>
+    <data name="SectionViewPreview" xml:space="preserve">
+        <value>Preview</value>
+    </data>
+    <data name="SectionViewControl" xml:space="preserve">
+        <value>Control</value>
+    </data>
+    <data name="BtnDelete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="BtnRefetch" xml:space="preserve">
+        <value>Refetch</value>
+    </data>
+    <data name="BtnUpdate" xml:space="preserve">
+        <value>Update</value>
+    </data>
+    <data name="BtnShare" xml:space="preserve">
+        <value>Share</value>
+    </data>
+    <data name="FieldCommon" xml:space="preserve">
+        <value>Common</value>
+    </data>
+    <data name="FieldParameters" xml:space="preserve">
+        <value>Parameters</value>
+    </data>
+    <data name="SectionViewWorkshiftPallets" xml:space="preserve">
+        <value>Work shift pallets</value>
+    </data>
+    <data name="SectionViewWorkshiftLabels" xml:space="preserve">
+        <value>Work shift labels</value>
+    </data>
+    <data name="SectionViewWorkshiftArmAnalytics" xml:space="preserve">
+        <value>Work shift arm analytics</value>
+    </data>
+    <data name="ShareDialogDescription" xml:space="preserve">
+        <value>You can either copy the link manually, or use the built-in functionality of social networks</value>
+    </data>
+    <data name="ShareDialogTitle" xml:space="preserve">
+        <value>Share an entry</value>
+    </data>
+    <data name="PrinterControlDescription" xml:space="preserve">
+        <value>If you see an empty block, it means that the browser is blocking the request to the printer through the site. You can follow the {0} to the device or disable the browser security settings for the site by following {1}.</value>
+    </data>
+    <data name="PrinterControlDescriptionDirectLink" xml:space="preserve">
+        <value>direct link</value>
+    </data>
+    <data name="PrinterControlDescriptionGuideLink" xml:space="preserve">
+        <value>this guide</value>
+    </data>
+    <data name="PrinterControlTitle" xml:space="preserve">
+        <value>Remote printer control</value>
+    </data>
+    <data name="WelcomeBadge" xml:space="preserve">
+        <value>New Design</value>
+    </data>
+    <data name="WelcomeTitle" xml:space="preserve">
+        <value>Managing pallets has become easier</value>
+    </data>
+    <data name="WelcomeLearnMore" xml:space="preserve">
+        <value>Learn more</value>
+    </data>
+</root>

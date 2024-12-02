@@ -1,0 +1,18 @@
+@using Blazor.Heroicons.Outline
+@using Pl.Mobile.Client.Source.Shared.Stores
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<div class="flex justify-between items-center max-w-full overflow-hidden">
+    <div class="size-[3.25rem] p-3 border shrink-0 rounded-full flex items-center justify-center bg-background">
+      <DeviceTabletIcon class="size-full rotate-[270deg]"/>
+    </div>
+    <div class="flex w-full flex-col px-3 justify-start overflow-hidden">
+      <span class="font-medium truncate">@UserState.Value.User?.Fio.DisplayShortName</span>
+      <span class="truncate text-muted-foreground text-sm">@UserState.Value.User?.WarehouseName</span>
+    </div>
+</div>
+
+@code {
+  [Inject] private IState<UserState> UserState { get; set; } = default!;
+}

@@ -1,0 +1,168 @@
+@using Blazor.Heroicons.Outline
+@using Pl.Print.Features.Barcodes.Models
+@using Pl.Print.Features.Barcodes.Utils
+
+<li class="size-full h-10 flex bg-background divide-x">
+  <div class="sortable-grab shrink-0 !w-12 !bg-secondary transition-opacity flex items-center justify-center px-3 text-sm opacity-75 hover:opacity-100">
+    <ChevronUpDownIcon class="size-5"/>
+  </div>
+  <div class="sortable-item-content grid grid-cols-[14rem_1fr_1fr_7rem_1fr_3rem] divide-x size-full">
+    <div class="size-full flex items-center justify-center px-2">
+      <BarcodeTypeSwitcher
+        @bind-Value="@Value.IsConst"
+        @bind-Value:after="@OnTypeSelect"
+      />
+    </div>
+    <div class="size-full overflow-hidden">
+      @if (Value.IsConst)
+      {
+        <InputTextField
+          @bind-Value="@Value.Property"
+          @bind-Value:after="@OnConstInputValue"
+          Placeholder="@Localizer["BarcodeEditorConstInputPlaceholder"]"
+          Class="border-none rounded-none"
+        />
+      }
+      else
+      {
+        <SelectSingle
+          TItem="string"
+          Items="@GetFilteredValues().Select(x => x.Property)"
+          @bind-Value="@Value.Property"
+          @bind-Value:after="@OnVarSelect"
+          ItemDisplayName="@(item => string.IsNullOrWhiteSpace(item) ? Localizer["BarcodeEditorVariableSelectPlaceholder"] : item.ToString())"
+          Class="border-none rounded-none h-full"
+        />
+      }
+    </div>
+    <div class="size-full flex items-center transition-colors hover:bg-accent hover:text-accent-foreground">
+      @if (!Value.IsConst)
+      {
+        <Combobox
+          Items="@([Value.CachedMask])"
+          @bind-Value="@Value.FormatStr"
+          @bind-Value:after="@OnMaskEnter"
+          Placeholder="@Localizer["BarcodeEditorMaskPlaceholder"]"
+          Class="border-none rounded-none bg-inherit h-full"
+        />
+        @if (GetTypedBarcode()?.Type == typeof(DateTime))
+        {
+          <InformationCircleIcon id="@MaskId" class="text-muted-foreground size-5 mr-2 shrink-0 cursor-pointer"/>
+          <Tooltip Anchor="@MaskId">
+            <b>yy</b>: Год (00-99)<br/>
+            <b>MM</b>: Месяц (01-12)<br/>
+            <b>dd</b>: День (01-31)<br/>
+            <b>HH</b>: Часы (00-23)<br/>
+            <b>mm</b>: Минуты (00-59)<br/>
+            <b>ss</b>: Секунды (00-59)<br/>
+          </Tooltip>
+        }
+      }
+      else
+      {
+        <SelectSingle
+          TItem="string"
+          @bind-Value="@Value.FormatStr"
+          @bind-Value:after="@OnMaskEnter"
+          Items="@BarcodeVarUtils.BarcodeVarConstantsFormats"
+          Placeholder="@Localizer["BarcodeEditorMaskPlaceholder"]"
+          Class="border-none rounded-none bg-inherit h-full"
+        />
+      }
+    </div>
+    <div class="size-full flex items-center px-3 gap-1 text-sm">
+      <span>
+        @Value.Example.Count(char.IsDigit)
+      </span>
+      @if (Value.DefaultLength != -1 && !Value.IsConst)
+      {
+        <span class="text-muted-foreground text-xs pt-0.5">(мин. @Value.DefaultLength)</span>
+      }
+    </div>
+    <div class="size-full flex items-center px-3 text-sm truncate">
+      @if (string.IsNullOrWhiteSpace(Value.Example))
+      {
+        <span class="text-destructive text-sm">Ошибка</span>
+      }
+      else
+      {
+        <span>@Value.Example</span>
+      }
+    </div>
+    <div class="size-full flex items-center justify-center">
+      <Button
+        Variant="ButtonVariantType.Ghost"
+        Size="ButtonSizeType.Icon"
+        OnClick="@(() => Parent.DeleteBarcodeItem(Value))">
+        <TrashIcon class="size-5 text-destructive"/>
+      </Button>
+    </div>
+  </div>
+</li>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+
+  [CascadingParameter] public BarcodeConfigurator Parent { get; set; } = default!;
+
+  [Parameter, EditorRequired] public ExtendedBarcodeItemDto Value { get; set; } = default!;
+  [Parameter] public EventCallback<ExtendedBarcodeItemDto> ValueChanged { get; set; }
+
+  private string MaskId { get; set; } = $"mask-info-{Guid.NewGuid()}";
+
+  private async Task UpdateValueAsync() => await ValueChanged.InvokeAsync(Value);
+
+  private BarcodeVarInfo? GetTypedBarcode() =>
+    Parent.BarcodeVariables.FirstOrDefault(x => x.Property == Value.Property);
+
+  private IEnumerable<BarcodeVarInfo> GetFilteredValues()
+  {
+    IEnumerable<string> currentValues = Parent.BarcodeDictionary.Select(y => y.Property);
+    return Parent.BarcodeVariables.Where(x => x.IsRepeatable || !currentValues.Contains(x.Property));
+  }
+
+  private async Task OnVarSelect()
+  {
+    BarcodeVarInfo? typedVar = Parent.BarcodeVariables.FirstOrDefault(x => x.Property == Value.Property);
+    if (typedVar != null) await SetTypedBarcode(typedVar);
+  }
+
+  private async Task OnMaskEnter()
+  {
+    Value.Example = BarcodeMapper.GetBarcodeExample(Value, Parent.BarcodeVariables);
+    await UpdateValueAsync();
+  }
+
+  private async Task OnTypeSelect()
+  {
+    BarcodeVarInfo? typedVar = !Value.IsConst ? GetFilteredValues().FirstOrDefault() : null;
+    if (typedVar != null) await SetTypedBarcode(typedVar);
+    else await ResetBarcode();
+  }
+
+  private async Task OnConstInputValue()
+  {
+    Value.Property = string.Concat(Value.Property.Where(char.IsDigit));
+    Value.Example = BarcodeMapper.GetBarcodeExample(Value, Parent.BarcodeVariables);
+    await UpdateValueAsync();
+  }
+
+  private async Task SetTypedBarcode(BarcodeVarInfo typedVar)
+  {
+    Value.Property = typedVar.Property;
+    Value.FormatStr = Value.CachedMask = typedVar.Format;
+    Value.Example = BarcodeMapper.GetBarcodeExample(Value, Parent.BarcodeVariables);
+    Value.DefaultLength = BarcodeMapper.GetDefaultMaskLength(Value, Parent.BarcodeVariables);
+    await UpdateValueAsync();
+  }
+
+  private async Task ResetBarcode()
+  {
+    Value.Property = Value.Example = Value.CachedMask = string.Empty;
+    Value.FormatStr = BarcodeVarUtils.BarcodeVarConstantsFormats.First();
+    Value.IsConst = true;
+    Value.DefaultLength = -1;
+    await UpdateValueAsync();
+  }
+}

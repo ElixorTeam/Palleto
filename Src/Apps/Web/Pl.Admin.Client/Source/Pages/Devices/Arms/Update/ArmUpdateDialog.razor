@@ -1,0 +1,16 @@
+@using Pl.Admin.Models.Features.Devices.Arms
+@using Pl.Admin.Models.Features.Devices.Arms.Queries
+
+@implements IDialogContentComponent<ArmDto>
+
+<SectionDialog>
+  <Tab Id="@typeof(ArmUpdateForm).ToString()" Label="@Localizer["SectionArm"]">
+    <ArmUpdateForm Model="Content" FormModel="@ArmMapper.DtoToUpdateDto(Content)" />
+  </Tab>
+</SectionDialog>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Parameter] public ArmDto Content { get; set; } = default!;
+}

@@ -1,0 +1,28 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Models.Features.References.Template
+@using Pl.Admin.Models.Features.References.Template.Queries
+
+@implements IDialogContentComponent<TemplateDto>
+
+<SectionDialog>
+  <Tab Id="@typeof(TemplateUpdateForm).ToString()" Label="@Localizer["SectionTemplates"]">
+    <TemplateUpdateForm Model="Content" FormModel="@TemplateMapper.DtoToUpdateDto(Content)" />
+  </Tab>
+
+  <Tab Id="@typeof(TemplateBarcodeForm).ToString()" Label="@WsDataLocalizer["ColBarcode"]">
+    <UseEndpoint Endpoint="PrintSettingsEndpoints.BarcodesEndpoint" Arg="@Content.Id" Context="barcodesQuery">
+      @if (barcodesQuery.HasData)
+      {
+        <TemplateBarcodeForm Template="Content" Barcodes="@barcodesQuery.Data"/>
+      }
+    </UseEndpoint>
+  </Tab>
+</SectionDialog>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+
+  [Parameter] public TemplateDto Content { get; set; } = default!;
+}

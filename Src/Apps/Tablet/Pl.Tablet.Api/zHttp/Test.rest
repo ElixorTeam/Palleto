@@ -1,0 +1,23 @@
+GET {{url}}/users?code=4321
+
+###
+POST {{url}}/pallets
+Authorization: ArmAuthenticationScheme PC473
+Content-Type: application/json
+
+{
+   "documentBarcode": "d123213",
+    "UserId": "00000000-0000-0000-0000-000000000000",
+    "batches": [
+        {
+            "pluId": "00000000-0000-0000-0000-000000000000",
+            "weight": 0.125,
+            "date": "2024-06-13T08:35:26"
+        },
+        {
+            "pluId": "00000000-0000-0000-0000-000000000000",
+            "weight": 0.127,
+            "date": "2024-06-13T08:35:26"
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+<ViewFieldGrid Label="@Localizer["FieldCommon"]">
+  <ViewFieldGuid Value="@Model.Id" />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColName"]"
+    Value="@Model.Name"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColWeight"]"
+    Value="@Model.Weight.ToString(CultureInfo.InvariantCulture)"
+  />
+
+</ViewFieldGrid>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+
+  [Parameter, EditorRequired] public PackageDto Model { get; set; } = default!;
+}

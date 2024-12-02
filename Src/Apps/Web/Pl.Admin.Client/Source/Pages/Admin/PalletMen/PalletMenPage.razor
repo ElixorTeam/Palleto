@@ -1,0 +1,108 @@
+@using Pl.Admin.Client.Source.Features
+@using Pl.Admin.Client.Source.Pages.Admin.PalletMen.Create
+@using Pl.Admin.Client.Source.Pages.Admin.PalletMen.Update
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Client.Source.Shared.Services.Stores
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.Admins.PalletMen.Queries
+
+@attribute [Route(Urls.PalletMen)]
+@attribute [Authorize(Policy = PolicyEnum.Support)]
+@rendermode InteractiveServer
+
+<BrowserTitle Label="@Localizer["SectionPalletMen"]" />
+
+<UserProductionSiteErrorSuspense>
+  <UseEndpoint
+    Endpoint="@AdminEndpoints.PalletMenEndpoint"
+    Arg="@ProductionSiteState.Value.ProductionSite.Id"
+    Options="@PageHelper.DefaultEndpointOptions"
+    Context="query"
+  >
+    <Breadcrumbs Class="pb-5">
+      <Breadcrumb Label=@Localizer["SectionPalletMen"] Link="@Urls.PalletMen" />
+    </Breadcrumbs>
+
+    <DataGridHeader>
+      <DataGridLabelWithCounter
+        Label="@Localizer["SectionPalletMen"]"
+        ItemsCount="@query.Data?.Length"
+        IsLoading="query.IsLoading"
+      />
+      <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching" />
+      <AuthorizeView Policy="@PolicyEnum.SeniorSupport">
+        <DataGridActionCreate OnClick="@OpenCreateDialog" />
+      </AuthorizeView>
+    </DataGridHeader>
+
+    <DataGridContainer
+      TItem="PalletManDto"
+      Items="@(query.HasData ? query.Data : [])"
+      OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToPalletMan(item.Id)))"
+      IsFilterable
+    >
+      <ColumnsContent>
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColChangeDt"]"
+          Field="@nameof(PalletManDto.ChangeDt)"
+          Width="20%"
+          Filterable="false"
+        />
+
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColFIO"]"
+          Field="@(nameof(PalletManDto.Fio))"
+          Width="25%"
+        >
+          <DisplayTemplate>
+            @context.Fio.DisplayFullName
+          </DisplayTemplate>
+        </DataGridColumn>
+
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColWarehouse"]"
+          Field="@($"{nameof(PalletManDto.Warehouse)}.{nameof(ProxyDto.Name)}")"
+          Width="25%"
+          Filterable="false"
+        />
+      </ColumnsContent>
+      <ContextMenuContent>
+        <DataGridActionUpdateItem TItem="PalletManDto" Action="@OpenUpdateDialog" />
+        <DataGridActionOpenItem Link="@(RedirectHelper.ToPalletMan(context.Item.Id))" />
+        <DataGridActionOpenInNewTab TItem="PalletManDto" Link="@(RedirectHelper.ToPalletMan(context.Item.Id))" />
+        <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
+          <DataGridActionDeleteItem TItem="PalletManDto" Action="@DeleteItem" />
+        </AuthorizeView>
+      </ContextMenuContent>
+    </DataGridContainer>
+  </UseEndpoint>
+</UserProductionSiteErrorSuspense>
+
+@code {
+  #region Inject
+
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private AdminEndpoints AdminEndpoints { get; set; } = default!;
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+
+  #endregion
+
+  private Task OpenCreateDialog() =>
+    DialogService.ShowDialogAsync<PalletManCreateDialog>(PageHelper.DialogParameters);
+
+  private Task OpenUpdateDialog(PalletManDto item) =>
+    DialogService.ShowDialogAsync<PalletManUpdateDialog>(item, PageHelper.DialogParameters);
+
+  private async Task DeleteItem(PalletManDto item)
+  {
+    await WebApi.DeletePalletMan(item.Id);
+    AdminEndpoints.DeletePalletMan(item.ProductionSite.Id, item.Id);
+  }
+}

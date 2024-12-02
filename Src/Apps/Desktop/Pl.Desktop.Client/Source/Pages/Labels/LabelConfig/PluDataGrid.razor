@@ -1,0 +1,32 @@
+@using Pl.Desktop.Models.Features.Plus.Weight.Output
+
+<FluentDataGrid
+  TGridItem="PluWeightDto"
+  GridTemplateColumns="1fr 3fr"
+  Items="Items"
+  Pagination="Pagination"
+  OnRowFocus="@(row => OnItemSelect.InvokeAsync(row.Item))"
+  RowClass="@(_ => "border-b [&_fluent-data-grid-cell]:!px-3 hover:bg-secondary/[.5] hover:cursor-pointer md:[&_fluent-data-grid-cell]:!text-lg")"
+  Class="@Css.Class("[&>.header]:border-b [&_fluent-data-grid-cell]:!text-primary [&_fluent-data-grid-cell]:!py-2 md:[&_fluent-data-grid-cell]:!py-3",
+           "[&_.col-sort-button]:!text-primary [&_.col-options-button]:pl-1 [&_.col-sort-button]:pl-1")"
+>
+  <PropertyColumn
+    Property="@(p => p.Number)"
+    Title="@WsDataLocalizer["ColPluNumber"]"
+  />
+  <PropertyColumn
+    Property="@(p => p.Name)"
+    Title="@WsDataLocalizer["ColName"]"
+  />
+</FluentDataGrid>
+
+<DataGridPaginationMobile Pagination="Pagination" />
+
+@code {
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+
+  [Parameter] public IQueryable<PluWeightDto> Items { get; set; } = new List<PluWeightDto>().AsQueryable();
+  [Parameter] public EventCallback<PluWeightDto> OnItemSelect { get; set; }
+
+  private PaginationState Pagination { get; } = new() { ItemsPerPage = 7 };
+}

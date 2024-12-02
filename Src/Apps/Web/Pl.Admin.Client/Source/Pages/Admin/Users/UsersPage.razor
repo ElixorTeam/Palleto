@@ -1,0 +1,107 @@
+@using Pl.Admin.Client.Source.Features
+@using Pl.Admin.Client.Source.Pages.Admin.Users.Update
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Api.Web.Models
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Client.Source.Shared.Services.Stores
+@using Pl.Admin.Models
+
+@attribute [Route($"{Urls.Users}")]
+@attribute [Authorize(Policy = PolicyEnum.SeniorSupport)]
+@rendermode InteractiveServer
+
+<BrowserTitle Label="@Localizer["SectionUsers"]" />
+
+<UseParameterlessEndpoint
+  Endpoint="@AdminEndpoints.UsersEndpoint"
+  Options="@PageHelper.DefaultEndpointOptions"
+  Context="query"
+>
+  <Breadcrumbs Class="pb-5">
+    <Breadcrumb Label=@Localizer["SectionUsers"] Link="@Urls.Users" />
+  </Breadcrumbs>
+
+  <DataGridHeader>
+    <DataGridLabelWithCounter
+      Label="@Localizer["SectionUsers"]"
+      ItemsCount="@(query.Data?.Count(x => x.ProductionSite.Id == ProductionSiteState.Value.ProductionSite.Id))"
+      IsLoading="@query.IsLoading"
+    />
+    <DataGridActionReload OnClick="@(() => { query.Refetch(); })" IsLoading="@(query.IsFetching)" />
+  </DataGridHeader>
+
+  <DataGridContainer
+    TItem="UserModel"
+    Items="@(query.Data ?? [])"
+    OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToUser(item.KcId)))"
+    IsFilterable
+  >
+    <ColumnsContent>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColUser"]"
+        Field="@($"{nameof(UserModel.Fio)}.{nameof(Fio.DisplayFullName)}")"
+        Width="30%"
+      />
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColProductionSite"]"
+        Field="@(nameof(UserModel.ProductionSite))"
+        Width="40%"
+        FilterCellClass="!font-normal"
+        CustomFilter="@((item, _) => ProductionSiteFilter(item))"
+      >
+        <FilterTemplate>
+          <ProductionSiteSelect
+            Value="@CurrentProductionSite"
+            ValueChanged="@(value => { ProductionSite = value; context.TriggerFilterChange(ProductionSite.Id); })"
+            AllowIsNew
+          />
+        </FilterTemplate>
+        <DisplayTemplate>
+          @context.ProductionSite.Name
+        </DisplayTemplate>
+      </DataGridColumn>
+    </ColumnsContent>
+    <ContextMenuContent>
+      <DataGridActionUpdateItem TItem="UserModel" Action="@OpenUpdateDialog" />
+      <DataGridActionOpenItem Link="@(RedirectHelper.ToUser(context.Item.Id))" />
+      <DataGridActionOpenInNewTab TItem="UserModel" Link="@(RedirectHelper.ToUser(context.Item.Id))" />
+      <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
+        <DataGridActionDeleteItem TItem="UserModel" Action="@DeleteItem" />
+      </AuthorizeView>
+    </ContextMenuContent>
+  </DataGridContainer>
+</UseParameterlessEndpoint>
+
+@code {
+  #region Inject
+
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private AdminEndpoints AdminEndpoints { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+
+  #endregion
+
+  private ProxyDto? ProductionSite { get; set; }
+  private ProxyDto CurrentProductionSite => ProductionSite ?? ProductionSiteState.Value.ProductionSite;
+
+  private bool ProductionSiteFilter(object dto)
+  {
+    if (dto is not ProxyDto productionSite) return false;
+    return productionSite.Id.Equals(CurrentProductionSite.Id);
+  }
+
+  private Task OpenUpdateDialog(UserModel item) =>
+    DialogService.ShowDialogAsync<UserUpdateDialog>(item, PageHelper.DialogParameters);
+
+  private async Task DeleteItem(UserModel item)
+  {
+    await WebApi.DeleteUser(item.Id);
+    AdminEndpoints.DeleteUser(item.Id);
+  }
+}

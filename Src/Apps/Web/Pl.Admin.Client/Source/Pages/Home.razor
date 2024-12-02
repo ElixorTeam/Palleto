@@ -1,0 +1,173 @@
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Blazor.Heroicons.Outline
+
+@attribute [Route(Urls.Home)]
+@attribute [Authorize]
+
+<div class="divide-x justify-center flex">
+  <Button Link="#welcome" Variant="ButtonVariantType.Link" Class="rounded-none h-7">Palleto</Button>
+  <Button Link="#func" Variant="ButtonVariantType.Link" Class="rounded-none h-7">Функционал</Button>
+  <Button Link="#guides" Variant="ButtonVariantType.Link" Class="rounded-none h-7">Статьи</Button>
+</div>
+
+<div id="welcome" class="h-[70vh] flex items-center justify-center">
+  <div class="flex flex-col items-center max-sm md:max-w-md lg:max-w-2xl">
+    <div>
+      <Badge Variant="@BadgeVariants.Outline" Class="mb-3">
+        <BoltIcon class="size-3.5 mr-1.5" />
+        @Localizer["WelcomeBadge"]
+      </Badge>
+    </div>
+    <h2 class="text-center text-2xl font-medium tracking-tighter md:text-4xl lg:text-6xl">
+      @Localizer["WelcomeTitle"]
+    </h2>
+    <div class="flex flex-col gap-3 w-fit mt-9 md:flex-row">
+      <Button Link="#func" Variant="ButtonVariantType.Secondary" class="rounded-full">
+        <ArrowLeftIcon class="mr-2 size-[1.1rem]" />
+        @Localizer["WelcomeLearnMore"]
+      </Button>
+      @if (!IsProduction)
+      {
+        <Button Link="https://github.com/ElixorTeam/Palleto" Variant="ButtonVariantType.Outline" class="rounded-full">
+          <CodeBracketIcon class="mr-2 size-[1.1rem]" />
+          Github
+        </Button>
+      }
+    </div>
+  </div>
+</div>
+
+<h2 id="func" class="text-center text-3xl mb-10 font-medium tracking-tighter">Реальные возможности</h2>
+
+<div class="max-w-5xl mx-auto flex flex-col gap-3 mb-20 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-6">
+  <Card class="flex flex-col h-64 md:col-span-2">
+    <CardHeader>
+      <CardTitle>
+        Общение с мастер данными
+      </CardTitle>
+      <CardDescription>
+        Синхронизация данных о паллетах со внешним сервисом
+      </CardDescription>
+    </CardHeader>
+    <CardContent class="size-full flex flex-col items-center justify-center overflow-hidden px-0">
+      <div class="relative w-full h-px bg-muted">
+        <div class="absolute w-5 h-1.5 -top-[2px] left-[110%] rounded-full bg-primary animate-move-horizontal" style="animation-delay: 0.7s;"></div>
+      </div>
+      <div class="relative w-full h-px bg-muted mt-10">
+        <div class="absolute w-5 h-1.5 -top-[2px] -left-[10%] rounded-full bg-primary animate-move-horizontal" style="animation-direction: reverse;"></div>
+        <div class="absolute w-5 h-1.5 -top-[2px] -left-[10%] rounded-full bg-primary animate-move-horizontal" style="animation-delay: 0.3s;animation-direction: reverse;"></div>
+      </div>
+    </CardContent>
+  </Card>
+  <Card class="flex flex-col h-64">
+    <CardHeader>
+      <CardTitle>
+        Шаблоны этикеток
+      </CardTitle>
+      <CardDescription>
+        Изменение zpl шаблона в реальном времени
+      </CardDescription>
+    </CardHeader>
+    <CardContent class="size-full flex items-center justify-center">
+      <div class="rounded-md size-full p-4 flex flex-col gap-2 overflow-hidden border">
+        <Skeleton class="h-4 w-28" />
+        <Skeleton class="h-4 w-full" />
+      </div>
+    </CardContent>
+  </Card>
+  <Card class="flex flex-col h-64">
+    <CardHeader>
+      <CardTitle>
+        Приложение для нескольких платформ
+      </CardTitle>
+      <CardDescription class="text-muted-foreground text-sm">
+        Web, Android, Windows
+      </CardDescription>
+    </CardHeader>
+    <CardContent class="size-full flex items-center justify-center">
+      <div class="flex gap-6">
+        <div class="size-16 p-3 relative border rounded-md">
+          <DevicePhoneMobileIcon class="size-full stroke-[0.8]" />
+          <div class="absolute rounded-full bg-primary overflow-hidden size-4 animate-pulse -bottom-1.5 -right-1.5"></div>
+        </div>
+        <div class="size-16 p-3 relative border rounded-md">
+          <ComputerDesktopIcon class="size-full stroke-[0.8]" />
+          <div class="absolute rounded-full bg-primary overflow-hidden size-4 animate-pulse -bottom-1.5 -right-1.5"></div>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+  <Card class="flex flex-col h-64 md:col-span-2">
+    <CardHeader>
+      <CardTitle>
+        Конфигуратор штрихкодов
+      </CardTitle>
+      <CardDescription>
+        Собрать штрихкод любой длины из реальный данных
+      </CardDescription>
+    </CardHeader>
+    <CardContent class="size-full relative overflow-hidden select-none">
+      <span class="absolute top-8 text-5xl text-muted-foreground left-8">01146071002372253103007500112411251724</span>
+      <div class="absolute h-14 w-[184px] rounded border-blue-500 bg-blue-500/10 border-2 border-dashed top-7 left-20"></div>
+      <div class="absolute h-14 w-[142px] rounded border-blue-500 bg-blue-500/10 border-2 border-dashed top-7 left-[404px]"></div>
+    </CardContent>
+  </Card>
+  <Card class="flex flex-col h-64 col-span-2">
+    <CardHeader>
+      <CardTitle>
+        Аналитика производства
+      </CardTitle>
+      <CardDescription class="text-muted-foreground text-sm">
+        Просмотр работы производства в реальном времени
+      </CardDescription>
+    </CardHeader>
+    <CardContent class="size-full">
+      <LineChart
+        Data="@(Enumerable.Range(0, 10).Select(_ => (decimal?)(Random.NextDouble() * 10)).ToList())"
+        Labels="@(Enumerable.Repeat(string.Empty, 10).ToList())"
+        Clear
+      />
+    </CardContent>
+  </Card>
+  <Card class="hidden lg:flex lg:flex-col h-64">
+    <CardHeader>
+      <CardTitle class="font-bold">
+        Поддержка принтеров
+      </CardTitle>
+      <CardDescription class="text-muted-foreground text-sm">
+        Работа с Zebra и TSK принтерами
+      </CardDescription>
+    </CardHeader>
+    <CardContent class="size-full flex items-center justify-center">
+      <PrinterIcon class="size-28 text-muted-foreground stroke-[0.5]" />
+    </CardContent>
+  </Card>
+</div>
+
+<h2 id="guides" class="text-center text-3xl mb-6 font-medium tracking-tighter">Полезные статьи</h2>
+
+<div class="w-full max-w-2xl mx-auto mb-10">
+  <ul class="flex flex-col gap-3 w-full">
+    <li class="w-full">
+      <a href="@Urls.PrinterControlGuide" class="w-full rounded-lg border shadow-sm flex gap-1 items-center h-12 px-4 overflow-hidden transition-colors hover:bg-secondary">
+        <BookOpenIcon class="size-5 mr-2 pb-px" />
+        <span class="font-medium">Работа с принтерами на сайте</span>
+        <Badge Variant="@BadgeVariants.Secondary">2 мин</Badge>
+      </a>
+    </li>
+    <li class="w-full">
+      <a href="@Urls.ErrorReportGuide" class="w-full rounded-lg border shadow-sm flex gap-1 items-center h-12 px-4 overflow-hidden transition-colors hover:bg-secondary">
+        <BookOpenIcon class="size-5 mr-2 pb-px" />
+        <span class="font-medium">Репорт ошибок приложений</span>
+        <Badge Variant="@BadgeVariants.Secondary">3 мин</Badge>
+      </a>
+    </li>
+  </ul>
+</div>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  private static bool IsProduction => !ConfigurationUtils.IsDevelop;
+  private Random Random { get; } = new();
+}

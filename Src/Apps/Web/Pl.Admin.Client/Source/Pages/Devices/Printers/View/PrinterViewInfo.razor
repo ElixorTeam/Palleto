@@ -1,0 +1,38 @@
+@using Pl.Admin.Models.Features.Devices.Printers.Queries
+
+<ViewFieldGrid Label="@Localizer["FieldCommon"]">
+  <ViewFieldGuid Value="@Model.Id" />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColName"]"
+    Value="@Model.Name"
+  />
+
+  <ViewField
+    Label="IP"
+    Value="@Model.Ip.ToString()"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColType"]"
+    Value="@Model.Type.ToString()"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColProductionSite"]"
+    Value="@Model.ProductionSite.Name"
+    Link="@RedirectHelper.ToProductionSite(Model.ProductionSite.Id)"
+  />
+</ViewFieldGrid>
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+
+  # endregion
+
+  [Parameter, EditorRequired] public PrinterDto Model { get; set; } = default!;
+}

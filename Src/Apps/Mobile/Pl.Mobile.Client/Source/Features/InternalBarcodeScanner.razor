@@ -1,0 +1,34 @@
+@implements IAsyncDisposable
+
+@code {
+  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
+
+  [Parameter] public EventCallback<string> ValueChanged { get; set; }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (!firstRender) return;
+    await JsRuntime.InvokeVoidAsync("subscribeBarcodeEnterEvent", DotNetObjectReference.Create(this), nameof(HandleInputEvent));
+  }
+
+  [JSInvokable]
+  public async Task HandleInputEvent(string value)
+  {
+    if (string.IsNullOrWhiteSpace(value)) return;
+    string formattedValue = value.Trim();
+    formattedValue = new(formattedValue.Where(char.IsDigit).ToArray());
+    await ValueChanged.InvokeAsync(formattedValue);
+  }
+
+  public async ValueTask DisposeAsync()
+  {
+    try
+    {
+      await JsRuntime.InvokeVoidAsync("unsubscribeBarcodeEnterEvent");
+    }
+    catch
+    {
+      // pass
+    }
+  }
+}

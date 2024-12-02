@@ -1,0 +1,48 @@
+@using System.Timers
+@inherits PlComponentBase
+
+<div
+  @attributes="AdditionalAttributes"
+  id="@Id"
+  class="@ClassMerge("bg-secondary px-2 py-0.5 rounded-md overflow-hidden", Class)"
+>
+  @CurrentTime
+</div>
+
+@code {
+  private string CurrentTime { get; set; } = "00:00";
+
+  protected override void OnInitialized()
+  {
+    UpdateCurrentTime();
+    DateTime now = DateTime.Now;
+    int timeToNextMinute = (60 - now.Second) * 1000 - now.Millisecond;
+
+    Timer initialTimer = new (timeToNextMinute);
+    initialTimer.Elapsed += async (_, _) =>
+    {
+      initialTimer.Stop();
+      await StartMinuteTimer();
+    };
+    initialTimer.Start();
+  }
+
+  private void UpdateCurrentTime() => CurrentTime = DateTime.Now.ToString("HH:mm");
+
+  private async Task StartMinuteTimer()
+  {
+    UpdateCurrentTime();
+    await InvokeAsync(StateHasChanged);
+
+    Timer timer = new(60000);
+    timer.Elapsed += UpdateTime;
+    timer.Start();
+  }
+
+  private async void UpdateTime(object? source, ElapsedEventArgs e) =>
+    await InvokeAsync(() =>
+    {
+      UpdateCurrentTime();
+      StateHasChanged();
+    });
+}

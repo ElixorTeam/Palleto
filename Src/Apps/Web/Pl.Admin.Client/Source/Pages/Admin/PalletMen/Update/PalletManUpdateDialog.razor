@@ -1,0 +1,16 @@
+@using Pl.Admin.Models.Features.Admins.PalletMen
+@using Pl.Admin.Models.Features.Admins.PalletMen.Queries
+
+@implements IDialogContentComponent<PalletManDto>
+
+<SectionDialog>
+  <Tab Id="@typeof(PalletManUpdateForm).ToString()" Label="@Localizer["SectionPalletMen"]">
+    <PalletManUpdateForm Model="Content" FormModel="@PalletManMapper.DtoToUpdateDto(Content)" />
+  </Tab>
+</SectionDialog>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Parameter] public PalletManDto Content { get; set; } = default!;
+}

@@ -1,0 +1,28 @@
+@using Blazor.Heroicons.Outline
+@using MassaK.Plugin.Abstractions.Enums
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@if (ScalesState.Value.Status is MassaKStatus.Detached or MassaKStatus.Disabled)
+{
+  <div class="flex flex-col size-full items-center justify-center">
+    <ExclamationTriangleIcon class="size-16 stroke-[0.9] text-destructive" />
+    <span class="text-center text-destructive text-xl xl:text-2xl">
+      @Localizer["ScalesStatusDetached"]
+    </span>
+  </div>
+}
+else
+{
+  @ChildContent
+}
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IState<ScalesState> ScalesState { get; set; } = default!;
+
+  # endregion
+
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+}

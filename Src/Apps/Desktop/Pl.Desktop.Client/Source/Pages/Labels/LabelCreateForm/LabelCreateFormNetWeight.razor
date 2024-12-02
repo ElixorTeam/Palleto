@@ -1,0 +1,65 @@
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@using MassaK.Plugin.Abstractions.Enums
+@using Pl.Desktop.Client.Source.Shared.Services.Devices
+@implements IDisposable
+
+<LabelCreateFormFieldItem Label="@WsDataLocalizer["ColNetWeight"]">
+  @if (ScalesState.Value.Status == MassaKStatus.Initializing)
+  {
+    <Spinner Class="size-8 inline text-gray-200 animate-spin fill-primary" />
+  }
+  else
+  {
+    <div class="text-[2rem] flex items-end mx-auto px-4 text-center rounded-lg overflow-hidden xl:text-[2.5rem]
+             @(!WeightState.Value.IsStable || Weight <= 0 ? "text-destructive" : "text-green-400")">
+      <span class="w-5 flex justify-center xl:w-6">@Sign</span>
+      @foreach (char i in NetWeightAbsStr)
+      {
+        <span class="@(char.IsDigit(i) ? "w-5 flex justify-center xl:w-6" : string.Empty)">@i</span>
+      }
+      <span>@WsDataLocalizer["MeasureKg"]</span>
+    </div>
+  }
+</LabelCreateFormFieldItem>
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IScalesService ScalesService { get; set; } = default!;
+  [Inject] private IState<WeightState> WeightState { get; set; } = default!;
+  [Inject] private IState<ScalesState> ScalesState { get; set; } = default!;
+  [Inject] private IState<PluState> PluState { get; set; } = default!;
+
+  # endregion
+
+  [Parameter, EditorRequired] public decimal Weight { get; set; }
+  [Parameter] public EventCallback<decimal> WeightChanged { get; set; }
+
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    WeightState.StateChanged += UpdateModelWeight;
+    ScalesService.StartPolling();
+  }
+
+  private void UpdateModelWeight(object? sender, EventArgs e)
+  {
+    Weight = (decimal)WeightState.Value.Weight / 1000 - PluState.Value.Plu?.TareWeight ?? 0;
+    InvokeAsync(() =>
+    {
+      WeightChanged.InvokeAsync(Weight);
+      StateHasChanged();
+    });
+  }
+
+  private string Sign => Weight >= 0 ? string.Empty : "-";
+
+  private string NetWeightAbsStr => Weight.ToString("0000.000;0000.000");
+
+  public void Dispose()
+  {
+    ScalesService.StopPolling();
+    WeightState.StateChanged -= UpdateModelWeight;
+  }
+}

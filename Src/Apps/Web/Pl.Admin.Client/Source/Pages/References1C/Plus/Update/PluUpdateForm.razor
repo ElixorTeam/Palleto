@@ -1,0 +1,86 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.References1C.Plus.Commands.Update
+@using Pl.Admin.Models.Features.References1C.Plus.Queries
+
+@inherits SectionFormBase<PluUpdateDto>
+
+<SectionForm
+  FormModel="@FormModel"
+  ChangeDate="Model.ChangeDt"
+  CreateDate="Model.CreateDt"
+  Validator="@(new PluUpdateValidator(WsDataLocalizer))"
+  OnCancelAction="@OnCancelAction"
+  OnSubmitAction="@UpdateItem"
+>
+  <FieldsContent>
+    <SectionAdminGuidField Value="@Model.Id" />
+
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColName"]"
+      Value="@Model.Name"
+    />
+
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColNumber"]"
+      Value="@Model.Number"
+    />
+
+    <SectionInputWrapper
+      Path="@RedirectHelper.ToTemplate(FormModel.TemplateId)"
+      Label="@WsDataLocalizer["ColTemplate"]"
+      HtmlFor="plu-template"
+    >
+      <UseEndpoint
+        Endpoint="@PrintSettingsEndpoints.ProxyTemplatesEndpoint"
+        Arg="@Model.IsWeight"
+        Context="templatesQuery"
+      >
+        @if (templatesQuery.HasData)
+        {
+          <SelectSingle
+            TItem="ProxyDto?"
+            HtmlId="plu-template"
+            Items="templatesQuery.Data"
+            Value="@templatesQuery.Data.SingleOrDefault(x => x.Id == FormModel.TemplateId)"
+            ValueChanged="@(value => FormModel.TemplateId = value?.Id ?? Guid.Empty)"
+            Placeholder="@Localizer["FormTemplateDefaultPlaceholder"]"
+            EmptyPlaceholder="@Localizer["FormSelectEmptyDefaultPlaceholder"]"
+            SearchPlaceholder="@Localizer["FormSelectSearchDefaultPlaceholder"]"
+            ItemDisplayName="@(item => item!.Name)"
+          />
+        }
+        else
+        {
+          <Skeleton class="h-9 w-full" />
+        }
+      </UseEndpoint>
+      <FieldValidation For="@(() => FormModel.TemplateId)" />
+    </SectionInputWrapper>
+  </FieldsContent>
+  <ActionsContent>
+    <FormActionReset OnClick="@ResetAction" />
+  </ActionsContent>
+</SectionForm>
+
+@code {
+  # region Injects
+
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
+  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+
+  # endregion
+
+  [Parameter, EditorRequired] public PluDto Model { get; set; } = default!;
+
+  protected override async Task UpdateItemAction(PluUpdateDto item)
+  {
+    PluDto dto = await WebApi.UpdatePlu(Model.Id, item);
+    References1CEndpoints.UpdatePlu(dto);
+  }
+}

@@ -1,0 +1,68 @@
+@using Blazor.Heroicons.Outline
+@using Pl.Desktop.Client.Source.Shared.Services.Devices
+@using Pl.Desktop.Models.Features.Plus.Weight.Output
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<div class="size-full bg-background border rounded-lg flex flex-col overflow-hidden">
+  <div class="flex flex-col overflow-hidden items-start h-12 shrink-0 justify-center w-full px-6 border-b xl:px-8">
+    <h2 class="line-clamp-1 text-center font-medium xl:text-lg">
+      @Localizer["LabelConfigHeader"]
+    </h2>
+  </div>
+  <div class="flex flex-col gap-3 size-full p-4 overflow-hidden justify-between xl:p-6 xl:gap-4">
+    <div class="w-full h-10 lg:h-12 shrink-0">
+      <UseParameterlessEndpoint Endpoint="@PluEndpoints.WeightPlusEndpoint" Context="pluQuery">
+        @if (pluQuery.HasData)
+        {
+        <Button
+          Size="ButtonSizeType.Full"
+          Variant="ButtonVariantType.Outline"
+          OnClick="@(() => ShowPluSelectDialog(pluQuery.Data))"
+        >
+          <div class="size-full font-normal px-5 flex items-center justify-between lg:text-lg">
+            <span class="truncate">
+              @(PluState.Value.Plu == null ? Localizer["PluSelectPlaceholder"] : PluState.Value.Plu.Name)
+            </span>
+            <ChevronDownIcon class="size-5" />
+          </div>
+        </Button>
+        }
+        else
+        {
+          <Skeleton Class="size-full" />
+        }
+      </UseParameterlessEndpoint>
+    </div>
+    <PluDescription Plu="@PluState.Value.Plu" />
+    <ArmControl OnArmRefetch="OnArmRefetchAction" />
+  </div>
+</div>
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private IPrinterService PrinterService { get; set; } = default!;
+  [Inject] private IState<PluState> PluState { get; set; } = default!;
+  [Inject] private IDispatcher Dispatcher { get; set; } = default!;
+  [Inject] private PluEndpoints PluEndpoints { get; set; } = default!;
+
+  # endregion
+
+  private async Task ShowPluSelectDialog(PluWeightDto[] plu)
+  {
+    PluDialogContent data = new() { Data = plu.AsQueryable() };
+    IDialogReference dialog = await DialogService.ShowDialogAsync<PluSelectDialog>(data, new());
+    DialogResult result = await dialog.Result;
+    if (result is { Cancelled: false, Data: PluWeightDto pluEntity })
+      Dispatcher.Dispatch(new ChangePluAction(pluEntity));
+  }
+
+  private async Task OnArmRefetchAction()
+  {
+    Dispatcher.Dispatch(new ResetPluAction());
+    await PrinterService.ConnectAsync();
+    PluEndpoints.WeightPlusEndpoint.InvalidateAll();
+  }
+}

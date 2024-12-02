@@ -1,0 +1,46 @@
+<CascadingValue Value="this">
+  @ChildContent
+</CascadingValue>
+
+@code {
+  /// <summary>
+  /// The content to be rendered inside the component.
+  /// </summary>
+  /// <remark>
+  /// Expect to see Tab components
+  /// </remark>
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+  [Parameter] public string? DefaultTab { get; set; }
+  [Parameter] public string ActiveTabId { get; set; } = string.Empty;
+  [Parameter] public EventCallback<string> ActiveTabIdChanged { get; set; }
+
+  public List<Tab> TabsList { get; private set; } = [];
+
+  protected override async Task OnInitializedAsync()
+  {
+    if (!string.IsNullOrWhiteSpace(DefaultTab))
+      await ChangeActiveTabId(DefaultTab);
+  }
+
+  public void ChangeTab(string id) => ActiveTabId = id;
+
+  internal async Task RegisterTab(Tab tab)
+  {
+    if (!TabsList.Contains(tab))
+      TabsList.Add(tab);
+    if (string.IsNullOrWhiteSpace(ActiveTabId))
+      await ChangeActiveTabId(tab.Id);
+  }
+
+  internal void UnregisterTab(Tab tab)
+  {
+    if (TabsList.Contains(tab))
+      TabsList.Remove(tab);
+  }
+
+  private async Task ChangeActiveTabId(string newActiveTabId)
+  {
+    ActiveTabId = newActiveTabId;
+    await ActiveTabIdChanged.InvokeAsync(ActiveTabId);
+  }
+}

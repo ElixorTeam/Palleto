@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    </PropertyGroup>
+    
+    <ItemGroup Label="Directory.Packages.props">
+        <PackageReference Include="Refit" PrivateAssets="All" />
+        <PackageReference Include="Scrutor" PrivateAssets="All" />
+    </ItemGroup>
+
+    <ItemGroup Label="Packages">
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" VersionOverride="8.0.1" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" VersionOverride="8.0.0"  PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" VersionOverride="8.0.2" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" VersionOverride="8.0.0" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" VersionOverride="8.0.1" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" VersionOverride="8.0.1" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" VersionOverride="2.2.0" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride="8.0.1"  PrivateAssets="All" />
+        <PackageReference Include="Microsoft.AspNetCore.Localization" VersionOverride="2.2.0" PrivateAssets="All" />
+
+        <PackageReference Include="Microsoft.Extensions.Localization" VersionOverride="8.0.10" />
+    </ItemGroup>
+
+</Project>

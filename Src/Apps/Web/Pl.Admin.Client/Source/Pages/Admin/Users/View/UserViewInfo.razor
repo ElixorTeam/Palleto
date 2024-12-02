@@ -1,0 +1,34 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Models
+
+<ViewFieldGrid Label="@Localizer["FieldCommon"]" Border>
+  <ViewFieldGuid Value="@Model.Id" />
+
+  <ViewFieldGuid Value="@Model.KcId" Label="UID KC" />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColProductionSite"]"
+    Value="@Model.ProductionSite.Name"
+    Link="@(RedirectHelper.ToProductionSite(Model.ProductionSite.Id))"
+  />
+</ViewFieldGrid>
+
+<ViewFieldGrid Label="@WsDataLocalizer["ColFIO"]">
+  <ViewField
+    Label="@WsDataLocalizer["ColSurname"]"
+    Value="@Model.Fio.Surname"/>
+
+  <ViewField
+    Label="@WsDataLocalizer["ColFirstName"]"
+    Value="@Model.Fio.Name"/>
+
+  <ViewField
+    Label="@WsDataLocalizer["ColPatronymic"]"
+    Value="@Model.Fio.Patronymic"/>
+</ViewFieldGrid>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Parameter, EditorRequired] public UserModel Model { get; set; } = default!;
+}

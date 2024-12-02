@@ -1,0 +1,26 @@
+@using Blazor.Heroicons.Outline
+
+<div class="h-14 shrink-0 w-full grid grid-cols-4 bg-background border-b px-4">
+  <div class="flex h-full items-center">
+    <Button
+      Size="ButtonSizeType.Icon"
+      Variant="ButtonVariantType.Ghost"
+      OnClick="@CloseAsync"
+      Disabled="@IsDisabled"
+    >
+      <ArrowLeftIcon class="size-4" />
+    </Button>
+  </div>
+  <div class="h-full flex items-center justify-center w-full col-span-2 grow overflow-hidden">
+    @ChildContent
+  </div>
+</div>
+
+@code {
+
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+  [Parameter] public bool IsDisabled { get; set; }
+  [CascadingParameter] public FluentDialog Dialog { get; set; } = default!;
+
+  private async Task CloseAsync() => await Dialog.CloseAsync();
+}

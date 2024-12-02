@@ -135,6 +135,7 @@ dotnet_naming_symbols.types.applicable_kinds = class, struct, interface, enum
 dotnet_naming_symbols.types.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
 
 # Roslynator
+dotnet_diagnostic.rcs1194.severity = none
 dotnet_diagnostic.rcs1123.severity = none
 dotnet_diagnostic.rcs1001.severity = none
 dotnet_diagnostic.rcs1003.severity = none

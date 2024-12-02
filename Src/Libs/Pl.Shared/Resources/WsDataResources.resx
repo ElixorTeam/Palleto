@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"
+                id="root"
+                xmlns="">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <data name="ColAddress" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColBoxWeight" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColBrand" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColBundle" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColChangeDt" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColClip" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColCount" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColCounter" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColData" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColTables" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColDescription" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColDevice" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColExpirationDt" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColFile" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColFIO" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColFirstName" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColFullName" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColArm" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColPluWeight" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColPluPiece" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColPatronymic" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColDefault" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColLoginDt" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColMaxTemp" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColMinTemp" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColName" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColMessage" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColNumber" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColSystemKey" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColPlu" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColNetWeight" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColGrossWeight" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColTareWeight" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColWarehouse" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColNesting" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColType" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColDt" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColKneading" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="MeasureKg" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="MeasureSec" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColPallet" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColPalletMan" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColBarcode" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColPassword" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColUser" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColCreateDt" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColLabel" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColVersion" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColProductionSite" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColShelfLifeDays" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColStatus" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColPrinter" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColPort" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColStorageMethod" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColTemplate" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColProductDt" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColPluName" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColPluNumber" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColWeight" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColSurname" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColRoles" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColActive" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="MeasureMb" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColTable" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColScheme" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColSize" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColPercentages" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColBox" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColWeightGross" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColWidth" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColHeight" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColTemplatePiece" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColTemplateWeight" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColBarcodeTop" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColBarcodeBottom" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColBarcodeRight" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColMask" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColSequence" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColConst" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColVariable" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColLength" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="MeasurePc" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColPallets" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColBoxCount" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColPalletCard" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColDate" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColCreateTime" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColBoxes" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColTotal" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColNomenclature" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColProductUnitsCount" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColRotation" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="MeasureMm" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColTrayWeight" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColWeightTotal" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ColPluActive" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ColExample" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ColIp" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ColUid1C" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ColZplResource" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ColManufacturer" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ColLabels" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ColCharacteristics" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ColLoad" xml:space="preserve">
+        <value />
+    </data>
+</root>

@@ -1,6 +1,0 @@
-POST https://{{url}}/api/arms/27bb9d44-cae9-4a6d-9204-b15500e1258a/plus/dc7209f0-84ee-4d42-8128-12d680c174a2
-Authorization: Bearer {{$auth.token("access-token")}}
-
-###
-
-GET https://scales-api-dev.kolbasa-vs.local/api/device-control/database/tables

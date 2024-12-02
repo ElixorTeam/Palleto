@@ -1,0 +1,41 @@
+@inherits PlComponentBase
+
+@if (!string.IsNullOrWhiteSpace(Link))
+{
+  <label
+    @attributes="AdditionalAttributes"
+    for="@HtmlFor"
+    class="@ClassMerge("text-sm text-blue-400 font-medium leading-none hover:cursor-pointer", Class)"
+  >
+    <a href="@Link" target="_blank">
+      @ChildContent
+    </a>
+  </label>
+}
+else
+{
+  <label
+    @attributes="AdditionalAttributes"
+    for="@HtmlFor"
+    class="@ClassMerge("text-sm font-medium leading-none", Class)"
+  >
+    @ChildContent
+  </label>
+}
+
+@code {
+  /// <summary>
+  /// The content to be rendered inside the component.
+  /// </summary>
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  /// <summary>
+  /// The URL that the label text will link to. If provided, the label becomes a hyperlink.
+  /// </summary>
+  [Parameter] public string Link { get; set; } = string.Empty;
+
+  /// <summary>
+  /// The id of the element that the label is associated with.
+  /// </summary>
+  [Parameter] public string? HtmlFor { get; set; }
+}

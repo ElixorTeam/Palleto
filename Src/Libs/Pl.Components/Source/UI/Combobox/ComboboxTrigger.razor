@@ -1,0 +1,40 @@
+@using Blazor.Heroicons.Outline
+@using Pl.Components.Source.UI.Select
+
+@inherits PlComponentBase
+
+<div
+  id="@Parent.HtmlId"
+  class="@ClassMerge("flex w-full rounded-md h-9 border bg-background disabled:cursor-not-allowed disabled:opacity-50", Class)"
+  role="combobox"
+  aria-haspopup="listbox"
+  aria-expanded="@Parent.IsDropdownOpened.ToString()"
+>
+  <input
+    @bind-value="TriggerValue"
+    class="bg-inherit focus:outline-none pl-3 w-full text-sm"
+    disabled="@Disabled"
+  />
+  <button type="button" disabled="@Disabled" @onclick="@Parent.ToggleDropdown" class="pr-3 pl-2">
+    <ChevronDownIcon class="@Css.Class("transition-transform text-muted-foreground size-4", Parent.IsDropdownOpened ? "rotate-180" : "rotate-0")"/>
+  </button>
+</div>
+
+@code {
+  [CascadingParameter] public SelectBase<string, string> Parent { get; set; } = default!;
+
+  /// <summary>
+  /// Indicates whether the trigger is disabled, preventing user interaction.
+  /// </summary>
+  [Parameter] public bool Disabled { get; set; }
+
+  private string? TriggerValue
+  {
+    get => Parent.Value;
+    set
+    {
+      if (value == Parent.Value) return;
+      _ = Parent.SetValueDirect(value);
+    }
+  }
+}

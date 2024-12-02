@@ -1,0 +1,47 @@
+@using Blazor.Heroicons.Outline
+@inherits PlComponentBase
+
+<button
+  type="button"
+  @onclick="@(VisibilitySwitch)"
+  class="@Css.Class("w-full flex items-center justify-between py-4 font-medium  hover:underline", Visible ? string.Empty : "border-b")"
+>
+  <span>@Label</span>
+  <ChevronDownIcon class="@Css.Class("size-5 transition-transform", Visible ? "rotate-180" : "rotate-0")" />
+</button>
+
+<div
+  @attributes="@AdditionalAttributes"
+  id="@Id"
+  class="@ClassMerge("w-full", Visible ? "block" : "hidden", Class)"
+>
+  @ChildContent
+</div>
+
+@code {
+  /// <summary>
+  /// The content to be rendered inside the component.
+  /// </summary>
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  /// <summary>
+  /// The text label displayed in the trigger.
+  /// </summary>
+  [Parameter] public string Label { get; set; } = string.Empty;
+
+  /// <summary>
+  /// A value indicating whether the component is visible.
+  /// </summary>
+  [Parameter] public bool Visible { get; set; }
+
+  /// <summary>
+  /// Callback for when visible state changes.
+  /// </summary>
+  [Parameter] public EventCallback<bool> VisibleChanged { get; set; }
+
+  private async Task VisibilitySwitch()
+  {
+    Visible = !Visible;
+    await VisibleChanged.InvokeAsync(Visible);
+  }
+}

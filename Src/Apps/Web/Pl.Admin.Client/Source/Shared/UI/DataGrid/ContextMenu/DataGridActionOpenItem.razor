@@ -1,0 +1,13 @@
+@using Blazor.Heroicons.Outline
+
+<a href="@Link" class="w-full">
+  <DropdownItem>
+    <ArrowTopRightOnSquareIcon class="size-4 mr-4" />
+    @Localizer["DataGridContextMenuOpen"]
+  </DropdownItem>
+</a>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Parameter] public string Link { get; set; } = "/";
+}

@@ -1,0 +1,58 @@
+@using vNext.BlazorComponents.FluentValidation
+
+<EditForm
+  Model="@Model"
+  OnValidSubmit="@OnSubmitAction"
+  class="max-w-md w-full pb-4 pt-6 mx-auto"
+>
+  <FluentValidationValidator Validator="@(new PluStageValidator())" />
+  <div class="w-full space-y-5">
+    <FormFieldWrapper Label="Тип паллеты">
+      <TypeSwitcher
+        @bind-Value="@Model.Mono"
+        @bind-Value:after="OnMonoChanged"
+      />
+      <FieldValidation For="@(() => Model.Mono)" />
+    </FormFieldWrapper>
+    <FormFieldWrapper Label="Номер ПЛУ" For="pallet-plu">
+      <PluInput
+        HtmlId="pallet-plu"
+        @bind-Plu="@Model.DefaultPlu"
+        @bind-Plu:after="OnPluChanged"
+        Disabled="@(!Model.Mono)"
+      />
+      <FieldValidation For="@(() => Model.DefaultPlu.Id)" />
+      <FieldValidation For="@(() => Model.DefaultPlu.Number)" />
+    </FormFieldWrapper>
+  </div>
+  <div class="flex justify-end gap-2 mt-10">
+    <Button Variant="ButtonVariantType.Outline" OnClick="@OnCancelAction">
+      Отмена
+    </Button>
+    <Button Type="@ButtonType.Submit">
+      Продолжить
+    </Button>
+  </div>
+</EditForm>
+
+@code {
+  [Parameter] public EventCallback OnSubmitAction { get; set; }
+  [Parameter] public EventCallback OnCancelAction { get; set; }
+  [Parameter] public PalletCreateModel Model { get; set; } = new();
+  [Parameter] public EventCallback<PalletCreateModel> ModelChanged { get; set; }
+
+  private Task OnModelChanged() => ModelChanged.InvokeAsync(Model);
+
+  private async Task OnPluChanged()
+  {
+    if (Model.DefaultPlu.Id != Guid.Empty && Model.Mono && Model.Batches.Any())
+      Model.Batches.ForEach(batch => batch.Plu = Model.DefaultPlu);
+    await OnModelChanged();
+  }
+
+  private async Task OnMonoChanged()
+  {
+    if (!Model.Mono) Model.DefaultPlu = new();
+    await OnModelChanged();
+  }
+}

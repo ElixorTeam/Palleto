@@ -1,0 +1,26 @@
+@using System.Net
+@inherits InputBase<System.Net.IPAddress>
+
+<InputTextField
+  Id="@Id"
+  @attributes="@AdditionalAttributes"
+  @bind-Value="InputValue"
+  Class="@Class"
+  Disabled="Disabled"
+  ReadOnly="@ReadOnly"
+  AutoFocus="@AutoFocus"
+  Placeholder="@Placeholder"
+/>
+
+@code {
+  private string InputValue
+  {
+    get => Value == null ? string.Empty : Value.ToString();
+    set
+    {
+      if (Value == null) return;
+      Value = StrUtils.TryParseToIpV4Address(value, out IPAddress? address) ? address : Value;
+      ValueChanged.InvokeAsync(Value);
+    }
+  }
+}

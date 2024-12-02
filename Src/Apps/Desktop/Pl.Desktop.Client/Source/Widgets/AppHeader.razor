@@ -1,0 +1,36 @@
+@using Blazor.Heroicons.Outline
+@inherits PlComponentBase
+
+<div
+  @attributes="@AdditionalAttributes"
+  id="@Id"
+  class="@ClassMerge("w-full h-[3.25rem] shrink-0 border-b bg-background", Class)"
+>
+  <div class="size-full max-w-screen-2xl mx-auto px-8 flex items-center justify-between">
+    <div class="w-2/5 flex items-center justify-start">
+      @if (ConfigurationUtils.IsDevelop)
+      {
+        <Badge Variant="@BadgeVariants.Outline" Class="mr-3">DEV</Badge>
+      }
+      <DesktopLogo Small />
+      <span class="pb-1 pl-1 text-sm">@VersionTracking.CurrentVersion</span>
+    </div>
+    <div class="w-1/5 flex items-center justify-center">
+      <Clock />
+    </div>
+    <div class="w-2/5 flex items-center">
+      <div class="flex grow size-full">
+        @ChildContent
+      </div>
+      <Button Link="@Routes.Home" Variant="ButtonVariantType.Outline">
+        <HomeIcon class="size-5 mr-2"/>
+        <span>@Localizer["BtnMenu"]</span>
+      </Button>
+    </div>
+  </div>
+</div>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+}

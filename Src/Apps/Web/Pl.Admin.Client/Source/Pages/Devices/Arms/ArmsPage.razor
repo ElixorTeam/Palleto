@@ -1,0 +1,136 @@
+@using Blazor.Heroicons.Outline
+@using Pl.Admin.Client.Source.Features
+@using Pl.Admin.Client.Source.Pages.Devices.Arms.Create
+@using Pl.Admin.Client.Source.Pages.Devices.Arms.Update
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Client.Source.Shared.Services.Stores
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.Devices.Arms.Queries
+
+@attribute [Route(Urls.Arms)]
+@attribute [Authorize(Policy = PolicyEnum.Support)]
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@rendermode InteractiveServer
+
+<BrowserTitle Label="@Localizer["SectionArm"]" />
+
+<UserProductionSiteErrorSuspense>
+  <UseEndpoint
+    Endpoint="@DevicesEndpoints.ArmsEndpoint"
+    Arg="@ProductionSiteState.Value.ProductionSite.Id"
+    Options="@PageHelper.DefaultEndpointOptions"
+    Context="query"
+  >
+    <Breadcrumbs Class="pb-5">
+      <Breadcrumb Label=@Localizer["SectionArm"] Link="@Urls.Arms" />
+    </Breadcrumbs>
+
+    <DataGridHeader>
+      <DataGridLabelWithCounter
+        Label="@Localizer["SectionArm"]"
+        ItemsCount="@query.Data?.Length"
+        IsLoading="query.IsLoading"
+      />
+      <DataGridActionReload
+        OnClick="@query.RefetchAsync"
+        IsLoading="query.IsFetching"
+      />
+      <AuthorizeView Policy="@PolicyEnum.SeniorSupport">
+        <DataGridActionCreate OnClick="@OpenCreateDialog"/>
+      </AuthorizeView>
+    </DataGridHeader>
+
+    <DataGridContainer
+      TItem="ArmDto"
+      Items="@(query.HasData ? query.Data : [])"
+      OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToArm(item.Id)))"
+      IsFilterable
+    >
+      <ColumnsContent>
+        <DataGridColumn
+          Field="@(nameof(ArmDto.Type))"
+          Caption="@WsDataLocalizer["ColType"]"
+          Width="10%"
+          Filterable="false"
+        >
+          <DisplayTemplate>
+            @switch (context.Type)
+            {
+              case ArmType.Pc:
+                <ComputerDesktopIcon class="size-5"/>
+                break;
+              case ArmType.Tablet:
+                <DeviceTabletIcon class="size-5"/>
+                break;
+              case ArmType.Universal:
+                <ServerIcon class="size-5"/>
+                break;
+              default:
+                <ExclamationTriangleIcon class="size-5 text-destructive"/>
+                break;
+            }
+          </DisplayTemplate>
+        </DataGridColumn>
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColVersion"]"
+          Field="@nameof(ArmDto.Version)"
+          Width="10%"
+          Filterable="false"
+        />
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColName"]"
+          Field="@nameof(ArmDto.Name)"
+          Width="25%"
+        />
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColPrinter"]"
+          Field="Printer.Name"
+          Width="25%"
+        />
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColWarehouse"]"
+          Field="@($"{nameof(ArmDto.Warehouse)}.{nameof(ProxyDto.Name)}")"
+          Width="25%"
+        >
+        </DataGridColumn>
+      </ColumnsContent>
+      <ContextMenuContent>
+        <DataGridActionUpdateItem TItem="ArmDto" Action="@OpenUpdateDialog" />
+        <DataGridActionOpenItem Link="@(RedirectHelper.ToArm(context.Item.Id))" />
+        <DataGridActionOpenInNewTab TItem="ArmDto" Link="@(RedirectHelper.ToArm(context.Item.Id))" />
+        <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
+          <DataGridActionDeleteItem TItem="ArmDto" Action="@DeleteItem" />
+        </AuthorizeView>
+      </ContextMenuContent>
+    </DataGridContainer>
+  </UseEndpoint>
+</UserProductionSiteErrorSuspense>
+
+@code {
+  #region Inject
+
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+
+  #endregion
+
+  private Task OpenCreateDialog() =>
+    DialogService.ShowDialogAsync<ArmCreateDialog>(PageHelper.DialogParameters);
+
+  private Task OpenUpdateDialog(ArmDto item) =>
+    DialogService.ShowDialogAsync<ArmUpdateDialog>(item, PageHelper.DialogParameters);
+
+  private async Task DeleteItem(ArmDto item)
+  {
+    await WebApi.DeleteArm(item.Id);
+    DevicesEndpoints.DeleteArm(item.ProductionSite.Id, item.Id);
+  }
+}

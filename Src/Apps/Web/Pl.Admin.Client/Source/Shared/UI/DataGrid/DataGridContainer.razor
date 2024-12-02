@@ -1,0 +1,107 @@
+@using Blazor.Heroicons.Outline
+@typeparam TItem
+
+<div class="w-full [&>form>table]:w-full [&>div>div>ul]:flex [&>div>div>ul]:mt-2 [&>div>div>ul]:bg-primary-foreground [&>div>div>ul]:dark:bg-secondary/10 [&>div>div>ul]:overflow-hidden [&>div>div>ul]:rounded-md [&>div>div>ul]:justify-center [&>div>div>ul]:gap-1 [&>div>div>ul]:py-1.5 [&>div>div>ul]:border [&>div>div>ul_li:empty]:hidden">
+  <DataGrid
+    TItem="TItem"
+    Data="Items"
+
+    SelectedRow="ContextMenuItem"
+    RowDoubleClicked="@OnRowDoubleClick"
+    RowContextMenu="@OnRowContextMenu"
+    RowContextMenuPreventDefault
+
+    HeaderRowStyling="@(new DataGridRowStyling{ Class="h-12 text-left cursor-pointer items-center px-4 [&_th]:relative [&_th]:after:absolute [&_th]:after:size-full [&_th]:after:border-border [&_th]:after:inset-0 [&_th]:after:border-y [&_th:last-child]:after:rounded-r-md [&_th:last-child]:after:border-r [&_th:first-child]:after:rounded-l-md [&_th:first-child]:after:border-l [&_th]:transition-colors [&_th]:font-medium [&_th]:text-muted-foreground [&_th:hover]:text-foreground [&_th:first-child]:rounded-l-md [&_th:last-child]:rounded-r-md [&_th]:bg-primary-foreground [&_th]:dark:bg-secondary/10 [&_th>div]:truncate [&_th]:px-4 [&_th]:text-sm [&_th_div]:flex [&_th_div]:gap-1.5 [&_i]:pt-1" })"
+    CellStyling="@((_, _, style) => style.Class = "px-4 py-3 text-sm truncate")"
+    RowStyling="@((_, style) => style.Class = "transition-colors font-light text-muted-foreground hover:bg-secondary/[.5] hover:cursor-pointer [&_td:first-child]:rounded-l-md [&_td:last-child]:rounded-r-md")"
+    SelectedRowStyling="@((_, style) => style.Class = "bg-secondary/[.8] text-sm text-primary font-normal [&_td]:px-4 [&_td]:py-3 [&_td]:overflow-hidden [&_td:first-child]:rounded-l-md [&_td:last-child]:rounded-r-md hover:cursor-pointer")"
+    Class="@Css.Class("table-fixed [&_thead>tr:last-child:not(:first-child)]:h-14 [&_thead>tr:last-child_th]:px-2 [&_thead>tr:last-child_th>input]:h-9 [&_thead>tr:last-child_th>input]:w-full [&_thead>tr:last-child_th>input]:overflow-hidden [&_thead>tr:last-child_th>input]:text-sm [&_thead>tr:last-child_th>input]:border [&_thead>tr:last-child_th>input]:bg-inherit [&_thead>tr:last-child_th>input]:rounded-md [&_thead>tr:last-child_th>input]:px-3 [&_thead>tr:last-child_th>input]:font-light [&_thead>tr:last-child_th>input:focus]:outline-none [&_thead>tr:last-child_th>input:focus]:ring-0 [&_tbody>tr>td[colspan='1000']]:h-12 [&_tbody>tr>td[colspan='1000']]:px-4 [&_tbody>tr>td[colspan='1000']]:space-x-3", IsFilterable ? "" : "[&_tbody]:before:leading-[0.5rem] [&_tbody]:before:block [&_tbody]:before:h-2")"
+
+    PagerPosition="@DataGridPagerPosition.Bottom"
+    PagerOptions="@(new () { PaginationPosition = PagerElementPosition.Center })"
+    PageSize="@(IsGroupable ? 1000 : ItemsPerPage)"
+    ShowPager="@((!IsGroupable && Items.Count() > ItemsPerPage) || IsForcePagination)"
+
+    Groupable="@IsGroupable"
+    Filterable="@IsFilterable"
+    SortMode="@DataGridSortMode.Single"
+  >
+    <DataGridColumns>
+      @ColumnsContent
+    </DataGridColumns>
+    <EmptyFilterTemplate>
+      <div class="h-11"></div>
+    </EmptyFilterTemplate>
+    <EmptyTemplate>
+      <div class="h-11"></div>
+    </EmptyTemplate>
+    <PageButtonTemplate>
+      <Button
+        Variant="@(context.Active ? ButtonVariantType.Ghost : ButtonVariantType.Outline)"
+        Size="ButtonSizeType.Icon"
+        Class="size-[2.1rem]"
+      >
+        <span class="text-muted-foreground">@context.PageNumber</span>
+      </Button>
+    </PageButtonTemplate>
+    <NextPageButtonTemplate>
+      <Button
+        Variant="ButtonVariantType.Outline"
+        Size="ButtonSizeType.Icon"
+        Class="size-[2.1rem]"
+      >
+        <ChevronRightIcon class="size-4 text-muted-foreground" />
+        <span class="sr-only">Next page</span>
+      </Button>
+    </NextPageButtonTemplate>
+    <PreviousPageButtonTemplate>
+      <Button
+        Variant="ButtonVariantType.Outline"
+        Size="ButtonSizeType.Icon"
+        Class="size-[2.1rem]"
+      >
+        <ChevronLeftIcon class="size-4 text-muted-foreground" />
+        <span class="sr-only">Previous page</span>
+      </Button>
+    </PreviousPageButtonTemplate>
+    <LastPageButtonTemplate>
+      <Button
+        Variant="ButtonVariantType.Outline"
+        Size="ButtonSizeType.Icon"
+        Class="size-[2.1rem]"
+      >
+        <ChevronDoubleRightIcon class="size-4 text-muted-foreground" />
+        <span class="sr-only">Last page</span>
+      </Button>
+    </LastPageButtonTemplate>
+    <FirstPageButtonTemplate>
+      <Button
+        Variant="ButtonVariantType.Outline"
+        Size="ButtonSizeType.Icon"
+        Class="size-[2.1rem]"
+      >
+        <ChevronDoubleLeftIcon class="size-4 text-muted-foreground" />
+        <span class="sr-only">First page</span>
+      </Button>
+    </FirstPageButtonTemplate>
+    <TotalItemsTemplate>
+      <div class="hidden"></div>
+    </TotalItemsTemplate>
+    <TotalItemsShortTemplate>
+      <div class="hidden"></div>
+    </TotalItemsShortTemplate>
+    <PageSelectorTemplate />
+    <PageSizesTemplate>
+      <div class="hidden"></div>
+    </PageSizesTemplate>
+  </DataGrid>
+</div>
+
+<DataGridContextMenu @ref="ContextMenuRef">
+  @if (ContextMenuContent != null && ContextMenuItem != null)
+  {
+    <CascadingValue Value="@(new ContextMenuContext<TItem>(ContextMenuItem, EventCallback.Factory.Create(this, ContextMenuRef.CloseContextMenu)))">
+      @ContextMenuContent(new(ContextMenuItem, EventCallback.Factory.Create(this, ContextMenuRef.CloseContextMenu)))
+    </CascadingValue>
+  }
+</DataGridContextMenu>

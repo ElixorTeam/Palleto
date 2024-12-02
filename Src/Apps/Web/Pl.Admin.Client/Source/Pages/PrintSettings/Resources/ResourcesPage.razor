@@ -1,0 +1,118 @@
+@using Pl.Admin.Client.Source.Pages.PrintSettings.Resources.Create
+@using Pl.Admin.Client.Source.Pages.PrintSettings.Resources.Update
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.References.TemplateResources.Queries
+
+@attribute [Route(Urls.Resources)]
+@attribute [Authorize(Policy = PolicyEnum.Support)]
+@rendermode InteractiveServer
+
+<BrowserTitle Label="@Localizer["SectionTemplateResources"]" />
+
+<UseParameterlessEndpoint
+  Endpoint="PrintSettingsEndpoints.ResourcesEndpoint"
+  Options="PageHelper.DefaultEndpointOptions"
+  Context="query"
+>
+  <Breadcrumbs Class="pb-5">
+    <Breadcrumb Label=@Localizer["SectionTemplateResources"] Link="@Urls.Resources" />
+  </Breadcrumbs>
+
+  <DataGridHeader>
+    <DataGridLabelWithCounter
+      Label="@Localizer["SectionTemplateResources"]"
+      ItemsCount="@query.Data?.Length"
+      IsLoading="query.IsLoading"
+    />
+    <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching" />
+    <AuthorizeView Policy="@PolicyEnum.Developer">
+      <DataGridActionCreate OnClick="@OpenCreateDialog"/>
+    </AuthorizeView>
+  </DataGridHeader>
+
+  <DataGridContainer
+    TItem="TemplateResourceDto"
+    Items="@(query.HasData ? query.Data : [])"
+    OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToResource(item.Id)))"
+    IsFilterable
+  >
+    <ColumnsContent>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColChangeDt"]"
+        Field="@nameof(TemplateResourceDto.ChangeDt)"
+        Width="20%"
+        Filterable="false"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColType"]"
+        Field="@nameof(TemplateResourceDto.Type)"
+        Width="20%"
+        Sortable="false"
+        FilterCellClass="!font-normal"
+      >
+        <FilterTemplate>
+          @{ context.SearchValue = Type; }
+          <SelectSingle
+            TItem="ZplResourceType?"
+            Items="@(Enum.GetValues(typeof(ZplResourceType)).Cast<ZplResourceType?>().ToList().Union([null]))"
+            @bind-Value="@Type"
+            @bind-Value:after="@(() => context.TriggerFilterChange(Type))"
+            Placeholder="@Localizer["SelectItemNotSelected"]"
+            ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] : Localizer[item.Value.GetDescription()])"
+          />
+        </FilterTemplate>
+        <DisplayTemplate>
+          @Localizer[context.Type.GetDescription()]
+        </DisplayTemplate>
+      </DataGridColumn>
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColName"]"
+        Field="@nameof(TemplateResourceDto.Name)"
+        Width="60%"
+      />
+    </ColumnsContent>
+    <ContextMenuContent>
+      <AuthorizeView Policy="@PolicyEnum.Developer" Context="authContext">
+        <DataGridActionUpdateItem TItem="TemplateResourceDto" Action="@OpenUpdateDialog"/>
+      </AuthorizeView>
+      <DataGridActionOpenItem Link="@(RedirectHelper.ToResource(context.Item.Id))"/>
+      <DataGridActionOpenInNewTab TItem="TemplateResourceDto" Link="@(RedirectHelper.ToResource(context.Item.Id))"/>
+      <AuthorizeView Policy="@PolicyEnum.Developer" Context="authContext">
+        <DataGridActionDeleteItem TItem="TemplateResourceDto" Action="@DeleteItem"/>
+      </AuthorizeView>
+    </ContextMenuContent>
+  </DataGridContainer>
+</UseParameterlessEndpoint>
+
+@code {
+  #region Inject
+
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+
+  #endregion
+
+  private ZplResourceType? Type { get; set; }
+
+  private Task OpenCreateDialog() =>
+    DialogService.ShowDialogAsync<ResourceCreateDialog>(PageHelper.DialogParameters);
+
+  private Task OpenUpdateDialog(TemplateResourceDto item) =>
+    DialogService.ShowDialogAsync<ResourceUpdateDialog>(item, PageHelper.DialogParameters);
+
+  private async Task DeleteItem(TemplateResourceDto item)
+  {
+    await WebApi.DeleteResource(item.Id);
+    PrintSettingsEndpoints.DeleteResource(item.Id);
+  }
+}

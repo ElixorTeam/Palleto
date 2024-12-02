@@ -1,0 +1,46 @@
+<li>
+  @if (string.IsNullOrWhiteSpace(Link))
+  {
+    <button
+      type="button"
+      class="@Css.Class(BaseClass, Class)"
+      @onclick="OnClick"
+    >
+      <AppMenuItemContent
+        Description="@Description"
+        Title="@Title"
+        DescriptionContent="@DescriptionContent"
+        TitleContent="@TitleContent"
+        IconContent="@IconContent"
+      />
+    </button>
+  }
+  else
+  {
+    <a class="@Css.Class(BaseClass, Class)" href="@Link">
+      <AppMenuItemContent
+        Description="@Description"
+        Title="@Title"
+        DescriptionContent="@DescriptionContent"
+        TitleContent="@TitleContent"
+        IconContent="@IconContent"
+      />
+    </a>
+  }
+</li>
+
+@code {
+  [Parameter] public string Link { get; set; } = string.Empty;
+  [Parameter] public string Class { get; set; } = string.Empty;
+  [Parameter] public EventCallback OnClick { get; set; }
+
+  [Parameter] public string Title { get; set; } = string.Empty;
+  [Parameter] public string Description { get; set; } = string.Empty;
+
+  [Parameter] public RenderFragment? IconContent { get; set; }
+  [Parameter] public RenderFragment<MenuItemContext>? TitleContent { get; set; }
+  [Parameter] public RenderFragment<MenuItemContext>? DescriptionContent { get; set; }
+
+  private const string BaseClass = "h-14 w-full rounded-md px-2 overflow-hidden flex items-center gap-4 my-2 transition-colors hover:bg-secondary";
+
+}

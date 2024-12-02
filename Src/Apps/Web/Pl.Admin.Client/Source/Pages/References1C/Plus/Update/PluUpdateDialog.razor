@@ -1,0 +1,16 @@
+@using Pl.Admin.Models.Features.References1C.Plus
+@using Pl.Admin.Models.Features.References1C.Plus.Queries
+
+@implements IDialogContentComponent<PluDto>
+
+<SectionDialog>
+  <Tab Id="@typeof(PluUpdateForm).ToString()" Label="@Localizer["SectionPlu"]">
+    <PluUpdateForm Model="Content" FormModel="@PluMapper.DtoToUpdateDto(Content)" />
+  </Tab>
+</SectionDialog>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Parameter] public PluDto Content { get; set; } = default!;
+}

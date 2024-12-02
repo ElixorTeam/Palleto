@@ -1,0 +1,30 @@
+<div class="h-14 w-full flex items-center justify-center gap-2 md:h-16">
+  <Button
+    Variant="ButtonVariantType.Outline"
+    OnClick="@(() => GoToPageAsync(Pagination.CurrentPageIndex - 1))"
+    Disabled="@(Pagination.CurrentPageIndex == 0)"
+    Class="md:h-12 md:px-4"
+  >
+    @Localizer["BtnPaginationPrev"]
+  </Button>
+  <div class="h-9 px-3 flex border items-center justify-center text-sm rounded-md overflow-hidden md:h-12 md:text-base">
+    @(Pagination.CurrentPageIndex + 1) / @(Pagination.LastPageIndex + 1)
+  </div>
+  <Button
+    Variant="ButtonVariantType.Outline"
+    OnClick="@(() => GoToPageAsync(Pagination.CurrentPageIndex + 1))"
+    Disabled="@(Pagination.CurrentPageIndex == Pagination.LastPageIndex)"
+    Class="md:h-12 md:px-4"
+  >
+    @Localizer["BtnPaginationNext"]
+  </Button>
+</div>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Parameter, EditorRequired] public PaginationState Pagination { get; set; } = default!;
+
+  private async Task GoToPageAsync(int pageIndex) =>
+    await Pagination.SetCurrentPageIndexAsync(pageIndex);
+}

@@ -1,0 +1,40 @@
+<div
+  id="@HtmlId"
+  tabindex="0"
+  @onkeydown="HandleKeyDown"
+  class="@Css.Class("w-full flex h-9 px-3 border border-input rounded-md overflow-hidden py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2", Class)"
+>
+  @if (Value == string.Empty)
+  {
+    <span class="text-muted-foreground">@Placeholder</span>
+  }
+  else
+  {
+    <span>@Value</span>
+  }
+</div>
+
+@code {
+  [Parameter] public string Value { get; set; } = string.Empty;
+  [Parameter] public EventCallback<string> ValueChanged { get; set; }
+  [Parameter] public string? HtmlId { get; set; }
+  [Parameter] public string Placeholder { get; set; } = string.Empty;
+  [Parameter] public string Class { get; set; } = string.Empty;
+  [Parameter] public int? MaxLength { get; set; }
+
+  private async Task UpdateValueAsync(string newValue)
+  {
+    Value = newValue;
+    await ValueChanged.InvokeAsync(Value);
+  }
+
+  private async Task HandleKeyDown(KeyboardEventArgs e)
+  {
+    if (IsDigit(e.Key) && MaxLength != null && Value.Length < MaxLength)
+      await UpdateValueAsync(Value + e.Key);
+    else if (e.Key == "Backspace" && Value.Length > 0)
+      await UpdateValueAsync(Value[..^1]);
+  }
+
+  private static bool IsDigit(string key) => key.Length == 1 && char.IsDigit(key[0]);
+}

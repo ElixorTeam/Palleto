@@ -1,0 +1,32 @@
+<input
+  type="text"
+  value="@(IsFocused ? Value : GetFormattedDate())"
+  @oninput="@(OnInput)"
+  placeholder="Введите дату (1231)..."
+  @onfocus="@(() => IsFocused = true)"
+  @onblur="@(() => IsFocused = false)"
+  class="px-3 bg-background size-full"
+  inputmode="numeric"
+  maxlength="6"
+/>
+
+@code {
+  [Parameter] public string Value { get; set; } = string.Empty;
+  [Parameter] public EventCallback<string> ValueChanged { get; set; }
+
+  private bool IsFocused { get; set; }
+
+  private async Task OnInput(ChangeEventArgs e)
+  {
+    string inputValue = e.Value?.ToString()?.Trim() ?? string.Empty;
+    Value = inputValue;
+    await ValueChanged.InvokeAsync(Value);
+  }
+
+  private string GetFormattedDate()
+  {
+    if (string.IsNullOrWhiteSpace(Value)) return string.Empty;
+    bool parsed = DateTimeUtil.TryParseStringDate(Value, out DateTime parsedDate);
+    return parsed ? parsedDate.ToString("dd.MM.yy") : "Ошибка ввода";
+  }
+}

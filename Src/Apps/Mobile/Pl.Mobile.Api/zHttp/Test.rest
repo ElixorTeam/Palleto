@@ -1,0 +1,4 @@
+GET {{url}}/warehouses
+
+###
+GET {{url}}/plus?number=4321

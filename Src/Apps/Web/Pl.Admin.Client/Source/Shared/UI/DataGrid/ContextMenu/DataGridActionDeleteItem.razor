@@ -1,0 +1,25 @@
+@typeparam TItem
+@using Blazor.Heroicons.Outline
+
+<DropdownItem OnClick="@OnClickAction">
+  <TrashIcon class="size-4 mr-4" />
+  @Localizer["DataGridContextMenuDelete"]
+</DropdownItem>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+
+  [CascadingParameter] public ContextMenuContext<TItem> Context { get; set; } = default!;
+  [Parameter] public EventCallback<TItem> Action { get; set; }
+
+  private async Task OnClickAction()
+  {
+    EventCallback action = EventCallback.Factory.Create(this, DeleteAction);
+    await DialogService.ShowDialogAsync<DeleteItemDialog>(action, PageHelper.DialogParameters);
+    await Context.CloseContextMenu.InvokeAsync();
+  }
+
+  private Task DeleteAction() => PageHelper.ApiActionWrapper(() => Action.InvokeAsync(Context.Item));
+}

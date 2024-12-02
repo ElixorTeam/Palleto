@@ -1,0 +1,42 @@
+@using Blazor.Heroicons.Outline
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Services.Stores
+@using IToastService = Microsoft.FluentUI.AspNetCore.Components.IToastService
+@using Refit
+
+<UseParameterlessEndpoint
+  Endpoint="ReferencesEndpoints.ProxyUserProductionSiteEndpoint"
+  Context="userProductionSiteQuery"
+>
+  @if (userProductionSiteQuery.IsLoading)
+  {
+    <Breadcrumbs Start="BreadcrumbStart.Back" Class="pb-5" />
+    <DataGridHeader>
+      <Skeleton Class="h-8 w-32" />
+    </DataGridHeader>
+  }
+  else if (userProductionSiteQuery.IsError || !userProductionSiteQuery.HasData)
+  {
+    <div class="size-full flex items-center justify-center p-6">
+      <div class="max-w-md flex flex-col gap-2 text-center items-center">
+        <ExclamationTriangleIcon class="size-16"/>
+        @Localizer["ProductionSiteSuspenseDescription"]
+      </div>
+    </div>
+  }
+  else
+  {
+    @ChildContent
+  }
+</UseParameterlessEndpoint>
+
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
+  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+  [Inject] private IDispatcher Dispatcher { get; set; } = default!;
+  [Inject] private IToastService ToastService { get; set; } = default!;
+
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+}

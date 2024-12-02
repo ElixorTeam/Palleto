@@ -1,0 +1,68 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Services.Stores
+@using TscZebra.Plugin.Abstractions.Enums
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.Devices.Printers.Commands
+@using Pl.Admin.Models.Features.Devices.Printers.Queries
+
+@inherits SectionFormBase<PrinterCreateDto>
+
+<SectionForm
+  FormModel="@FormModel"
+  Validator="@PrinterCreateValidator"
+  OnCancelAction="@OnCancelAction"
+  OnSubmitAction="@CreateItem"
+>
+  <FieldsContent>
+    <SectionTextField
+      Label="@WsDataLocalizer["ColName"]"
+      @bind-Value="@FormModel.Name"
+      For="@(() => FormModel.Name)"
+      MaxLength="16"
+    />
+
+    <SectionIpField
+      Label="@WsDataLocalizer["ColIp"]"
+      @bind-Value="@FormModel.Ip"
+      For="@(() => FormModel.Ip)"
+    />
+
+    <SectionSelectSingleField
+      TItem="PrinterTypes"
+      Label="@WsDataLocalizer["ColManufacturer"]"
+      Items="PrinterTypes"
+      @bind-Value="@FormModel.Type"
+      For="@(() => FormModel.Type)"
+    />
+
+    <SectionReadOnlyField
+      Path="@RedirectHelper.ToProductionSite(FormModel.ProductionSiteId)"
+      Label="@WsDataLocalizer["ColProductionSite"]"
+      Value="@ProductionSiteState.Value.ProductionSite.Name"
+      For="@(() => FormModel.ProductionSiteId)"
+    />
+  </FieldsContent>
+</SectionForm>
+
+@code {
+  # region Injects
+
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+  [Inject] private PrinterCreateValidator PrinterCreateValidator { get; set; } = default!;
+
+  # endregion
+
+  private IEnumerable<PrinterTypes> PrinterTypes { get; set; } = Enum.GetValues(typeof(PrinterTypes)).Cast<PrinterTypes>().ToList();
+
+  protected override async Task CreateItemAction(PrinterCreateDto item)
+  {
+    PrinterDto dto = await WebApi.CreatePrinter(item);
+    DevicesEndpoints.AddPrinter(FormModel.ProductionSiteId, dto);
+  }
+}

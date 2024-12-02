@@ -1,0 +1,94 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models.Features.Database
+
+@attribute [Route($"{Urls.Tables}")]
+@attribute [Authorize(Policy = PolicyEnum.Developer)]
+@rendermode InteractiveServer
+
+<BrowserTitle Label="@Localizer["SectionTables"]" />
+
+<UseParameterlessEndpoint
+  Endpoint="@DiagnosticEndpoints.TablesEndpoint"
+  Context="query"
+>
+  <Breadcrumbs Class="pb-5">
+    <Breadcrumb Label="@Localizer["SectionTables"]" Link="@Urls.Tables" />
+  </Breadcrumbs>
+
+  <DataGridHeader>
+    <DataGridLabelWithCounter
+      Label="@Localizer["SectionTables"]"
+      ItemsCount="@query.Data?.Length"
+      IsLoading="query.IsLoading"
+    />
+    <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching"/>
+  </DataGridHeader>
+
+  <DataGridContainer
+    TItem="DataBaseTableDto"
+    Items="@(query.HasData ? query.Data : [])"
+    IsFilterable
+  >
+    <ColumnsContent>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColScheme"]"
+        Field="@nameof(DataBaseTableDto.Schema)"
+        Width="20%"
+        Sortable="false"
+        FilterMethod="DataGridColumnFilterMethod.Equals"
+        FilterCellClass="!font-normal"
+      >
+        <FilterTemplate>
+          @{ context.SearchValue = Scheme; }
+          @if (query.HasData)
+          {
+            <SelectSingle
+              TItem="string?"
+              Items="@(query.Data.Select(x => x.Schema).ToHashSet().Union([null]))"
+              @bind-Value="@Scheme"
+              @bind-Value:after="@(() => context.TriggerFilterChange(Scheme))"
+              Placeholder="@Localizer["SelectItemNotSelected"]"
+              ItemDisplayName="@(item => item ?? Localizer["SelectItemNotSelected"])"
+            />
+          }
+          else
+          {
+            <Skeleton Class="h-9 w-full" />
+          }
+        </FilterTemplate>
+      </DataGridColumn>
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColName"]"
+        Field="@nameof(DataBaseTableDto.Table)"
+        Width="30%"
+      />
+
+      <DataGridColumn
+        Caption="Количество записей"
+        Field="@nameof(DataBaseTableDto.Rows)"
+        Width="25%"
+        Filterable="false"
+      />
+      <DataGridColumn
+        Caption="@($"{WsDataLocalizer["ColSize"]} ({WsDataLocalizer["MeasureMb"]})")"
+        Field="@nameof(DataBaseTableDto.UsedMb)"
+        Width="25%"
+        Filterable="false"
+      />
+    </ColumnsContent>
+  </DataGridContainer>
+</UseParameterlessEndpoint>
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private DiagnosticEndpoints DiagnosticEndpoints { get; set; } = default!;
+
+  # endregion
+
+  private string? Scheme { get; set; }
+}

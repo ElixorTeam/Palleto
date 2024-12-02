@@ -1,0 +1,76 @@
+@using Blazor.Heroicons.Outline
+@using Pl.Desktop.Models.Features.Plus.Weight.Output
+
+@if (Plu == null)
+{
+  <div class="size-full flex items-center border justify-center rounded-md overflow-hidden p-4">
+    <div class="flex flex-col text-center">
+      <h3 class="font-medium xl:text-lg">@Localizer["PluDescriptionNoDataTitle"]</h3>
+      <h4 class="text-muted-foreground text-sm xl:text-base">
+        @Localizer["PluDescriptionNoDataDescription"]
+      </h4>
+    </div>
+  </div>
+}
+else
+{
+  <div class="grid grow w-full overflow-hidden border rounded-md px-4 py-4 grid-cols-[auto_1fr] gap-y-2 gap-x-4 xl:text-lg">
+    <div class="flex items-start">
+      <div class="flex items-center text-muted-foreground">
+        <MagnifyingGlassIcon class="size-4 mr-1"/>
+        <h3>@WsDataLocalizer["ColNumber"]</h3>
+      </div>
+    </div>
+    <div class="line-clamp-2">
+      @Plu.Number
+    </div>
+
+    <div class="flex items-start">
+      <div class="flex items-center text-muted-foreground">
+        <DocumentTextIcon class="size-4 mr-1 mt-1.5" />
+        <h3>@WsDataLocalizer["ColName"]</h3>
+      </div>
+    </div>
+    <div class="line-clamp-2 xl:line-clamp-3">
+      @Plu.FullName.Replace("|", "")
+    </div>
+
+    <div class="flex items-start">
+      <div class="flex items-center text-muted-foreground">
+        <ArchiveBoxIcon class="size-4 mr-1 mt-1.5" />
+        <h3>@WsDataLocalizer["ColBox"]</h3>
+      </div>
+    </div>
+    <div class="line-clamp-2">
+      @Plu.Box
+    </div>
+
+    <div class="flex items-start">
+      <div class="flex items-center text-muted-foreground">
+        <ShoppingBagIcon class="size-4 mr-1" />
+        <h3>@WsDataLocalizer["ColBundle"]</h3>
+      </div>
+    </div>
+    <div class="line-clamp-2">
+      @Plu.Bundle
+    </div>
+
+    <div class="flex items-start">
+      <div class="flex items-center text-muted-foreground">
+        <InboxStackIcon class="size-4 mr-1" />
+        <h3>@WsDataLocalizer["ColCount"]</h3>
+      </div>
+    </div>
+    <div class="line-clamp-2">
+      @Plu.BundleCount @WsDataLocalizer["MeasurePc"]
+    </div>
+  </div>
+}
+
+
+@code {
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Parameter] public PluWeightDto? Plu { get; set; }
+}

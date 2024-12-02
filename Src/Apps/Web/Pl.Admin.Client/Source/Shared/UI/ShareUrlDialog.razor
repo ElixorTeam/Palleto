@@ -1,0 +1,72 @@
+@using Blazor.Heroicons.Outline
+
+@implements IDialogContentComponent<string>
+
+<Dialog Class="max-w-lg p-6">
+  <div class="shrink-0 w-full flex items-center justify-between bg-background">
+    <h3 class="font-semibold">@Localizer["ShareDialogTitle"]</h3>
+    <Button
+      Variant="ButtonVariantType.Ghost"
+      Size="ButtonSizeType.Icon"
+      OnClick="@(OnCancelAction)"
+    >
+      <XMarkIcon class="size-5"/>
+    </Button>
+  </div>
+  <p class="text-sm text-muted-foreground pt-1">
+    @Localizer["ShareDialogDescription"]
+  </p>
+  <div class="w-full flex gap-2 pb-2 pt-3">
+    <div class="rounded-md h-9 w-full overflow-hidden border items-center flex pl-2 pr-1 gap-1">
+      <input
+        value="@Content"
+        class="border-none w-full pr-0 pl-1.5 text-sm bg-transparent focus:outline-none focus:border-none focus:ring-0"
+        readonly
+      />
+      <Button
+        OnClick="@CopyToClipboard"
+        Size="ButtonSizeType.Icon"
+        Variant="ButtonVariantType.Ghost"
+        Class="h-[1.6rem] w-7 shrink-0"
+      >
+        <ClipboardIcon class="size-4" />
+      </Button>
+    </div>
+    <Button
+      Link="@TelegramUrl"
+      Class="bg-blue-500 text-white hover:bg-blue-600"
+      target="_blank"
+    >
+      Telegram
+    </Button>
+  </div>
+</Dialog>
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
+  [Inject] private IToastService ToastService { get; set; } = default!;
+
+  # endregion
+
+  [CascadingParameter] protected FluentDialog Dialog { get; set; } = default!;
+  [Parameter] public string Content { get; set; } = string.Empty;
+
+  private Task OnCancelAction() => Dialog.CloseAsync();
+
+  private async Task CopyToClipboard()
+  {
+    try
+    {
+      await JsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Content);
+    }
+    catch
+    {
+      ToastService.ShowError("Ваш браузер не поддерживает копирование в буфер обмена");
+    }
+  }
+
+  private string TelegramUrl => $"https://t.me/share/url?url={Uri.EscapeDataString(Content)}";
+}

@@ -1,0 +1,105 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models.Features.Devices.Arms.Queries
+@using Pl.Admin.Models.Features.Print.Labels
+@using Pl.Shared.ValueTypes
+
+<UseEndpoint
+  Endpoint="@DevicesEndpoints.ArmLabels"
+  Arg="@Model.Id"
+  Options="@(new() { RefetchInterval=TimeSpan.FromMinutes(5) })"
+  Context="labelsQuery"
+>
+  <DataGridHeader>
+    <DataGridLabelWithCounter Label="@($"{Localizer["SectionViewWorkshiftPallets"]} ({WorkShift.Start:dd.MM.yy} - {WorkShift.End:dd.MM.yy})")"
+                              ItemsCount="@labelsQuery.Data?.Length" IsLoading="labelsQuery.IsLoading"/>
+    <DataGridActionReload OnClick="@labelsQuery.RefetchAsync" IsLoading="labelsQuery.IsFetching" />
+  </DataGridHeader>
+
+  <DataGridContainer
+    TItem="LabelDto"
+    Items="@(labelsQuery.HasData ? labelsQuery.Data : [])"
+    OnItemSelect="@(item => NavigationManager.NavigateTo($"{Urls.Labels}/{item.Id}"))"
+    ItemsPerPage="11"
+    IsFilterable
+  >
+    <ColumnsContent>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColCreateDt"]"
+        Field="@nameof(LabelDto.CreateDt)"
+        Filterable="false"
+        Width="10%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColProductDt"]"
+        Field="@nameof(LabelDto.ProductDt)"
+        DisplayFormat="{0:dd.MM.yyyy}"
+        Filterable="false"
+        Width="10%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColPlu"]"
+        Field="@($"{nameof(LabelDto.Plu)}.{nameof(ProxyDto.Name)}")"
+        Width="20%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColBarcodeTop"]"
+        Field="@nameof(LabelDto.BarcodeTop)"
+        Sortable="false"
+        Width="30%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColBundle"]"
+        Field="@nameof(LabelDto.BundleCount)"
+        Filterable="false"
+        Width="7%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColKneading"]"
+        Field="@nameof(LabelDto.Kneading)"
+        Filterable="false"
+        Width="7%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColNetWeight"]"
+        Field="@nameof(LabelDto.WeightNet)"
+        Filterable="false"
+        Width="8%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColTareWeight"]"
+        Field="@nameof(LabelDto.WeightTare)"
+        Filterable="false"
+        Width="8%"
+      />
+    </ColumnsContent>
+    <ContextMenuContent>
+      <DataGridActionOpenItem Link="@(RedirectHelper.ToLabel(context.Item.Id))" />
+      <DataGridActionOpenInNewTab TItem="ArmDto" Link="@(RedirectHelper.ToLabel(context.Item.Id))" />
+    </ContextMenuContent>
+  </DataGridContainer>
+</UseEndpoint>
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+
+  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+  [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+
+  # endregion
+
+  [Parameter, EditorRequired] public ArmDto Model { get; set; } = default!;
+
+  private WorkShift WorkShift { get; set; } = new();
+}

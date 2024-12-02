@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup Label="Directory.Packages.props">
+      <PackageReference Include="Svg" />
+      <PackageReference Include="FluentValidation" />
+    </ItemGroup>
+
+    <ItemGroup Label="Packages">
+        <PackageReference Include="BinaryKits.Zpl.Label" VersionOverride="3.2.1" />
+        <PackageReference Include="Scriban" VersionOverride="5.12.0" />
+    </ItemGroup>
+
+</Project>

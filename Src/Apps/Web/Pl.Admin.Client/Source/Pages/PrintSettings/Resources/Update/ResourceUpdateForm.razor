@@ -1,0 +1,101 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.References.TemplateResources.Commands
+@using Pl.Admin.Models.Features.References.TemplateResources.Queries
+
+@inherits SectionFormBase<ZplResourceUpdateDto>
+
+<SectionForm
+  FormModel="@FormModel"
+  ChangeDate="@Model.ChangeDt"
+  CreateDate="@Model.CreateDt"
+  Validator="@ZplResourceUpdateValidator"
+  OnCancelAction="@OnCancelAction"
+  OnSubmitAction="@UpdateItem"
+>
+  <FieldsContent>
+    <SectionAdminGuidField Value="@Model.Id" />
+
+    <SectionTextField
+      Label="@WsDataLocalizer["ColName"]"
+      @bind-Value="@FormModel.Name"
+      For="@(() => FormModel.Name)"
+    />
+
+    <SectionTextField
+      Label="@WsDataLocalizer["ColType"]"
+      Value="@Localizer[Model.Type.GetDescription()]"
+      Disabled
+    />
+
+    <UseEndpoint
+      Endpoint="@PrintSettingsEndpoints.ResourceBodyEndpoint"
+      Arg="Model.Id"
+      Context="resourceBodyQuery"
+    >
+      @if (resourceBodyQuery.HasData)
+      {
+        {
+          if (string.IsNullOrWhiteSpace(FormModel.Body)) FormModel.Body = resourceBodyQuery.Data;
+          if (string.IsNullOrWhiteSpace(DialogItemCopy.Body)) DialogItemCopy.Body = resourceBodyQuery.Data;
+        }
+        <SectionTextAreaField
+          Label="@WsDataLocalizer["ColTemplate"]"
+          @bind-Value="@FormModel.Body"
+          For="@(() => FormModel.Body)"
+          IsCopyable
+        />
+      }
+      else
+      {
+        <Skeleton Class="h-20 w-full" />
+      }
+    </UseEndpoint>
+  </FieldsContent>
+  <ActionsContent>
+    <FormActionReset OnClick="@ResetAction" />
+
+    @if (Model.Type == ZplResourceType.Sign)
+    {
+      <div class="w-full h-32 p-2 flex items-center rounded-md justify-center select-none overflow-hidden border bg-background [&>svg]:fill-primary">
+        <UseEndpoint
+          Endpoint="@PrintSettingsEndpoints.ResourceBodyEndpoint"
+          Arg="Model.Id"
+          Context="resourceBodyQuery"
+        >
+          @if (resourceBodyQuery.HasData)
+          {
+            @((MarkupString)FormModel.Body)
+          }
+          else
+          {
+            <Spinner Class="size-6 inline text-gray-200 animate-spin fill-primary" />
+          }
+        </UseEndpoint>
+      </div>
+    }
+  </ActionsContent>
+</SectionForm>
+
+@code {
+  #region Inject
+
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+  [Inject] private ZplResourceUpdateValidator ZplResourceUpdateValidator { get; set; } = default!;
+
+  #endregion
+
+  [Parameter, EditorRequired] public TemplateResourceDto Model { get; set; } = default!;
+
+  private IList<ZplResourceType> ZplResourceTypes { get; set; } = Enum.GetValues(typeof(ZplResourceType)).Cast<ZplResourceType>().ToList();
+
+  protected override async Task UpdateItemAction(ZplResourceUpdateDto item)
+  {
+    TemplateResourceDto dto = await WebApi.UpdateResource(Model.Id, item);
+    PrintSettingsEndpoints.UpdateResource(dto, item.Body);
+  }
+}

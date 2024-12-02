@@ -1,0 +1,13 @@
+﻿@using Pl.Mobile.Client.Source.Features.AuthSuspense
+@inherits LayoutComponentBase
+
+<AuthSuspense>
+  <div class="w-screen h-screen overflow-hidden text-black overscroll-none">
+    @Body
+  </div>
+</AuthSuspense>
+
+
+<FluentDialogProvider />
+<FluentToastProvider Position="@ToastPosition.TopCenter" />
+<StoreInitializer />

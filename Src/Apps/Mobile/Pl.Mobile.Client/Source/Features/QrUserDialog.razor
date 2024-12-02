@@ -1,0 +1,34 @@
+@using Blazor.Heroicons.Outline
+@using Android.Provider
+
+@implements IDialogContentComponent
+
+<Dialog Class="max-w-md p-6">
+  <div class="shrink-0 w-full flex items-center justify-between bg-background">
+    <h3 class="font-semibold">Информация устройства</h3>
+    <Button
+      Variant="ButtonVariantType.Ghost"
+      Size="ButtonSizeType.Icon"
+      OnClick="@CloseDialog"
+    >
+      <XMarkIcon class="size-5"/>
+    </Button>
+  </div>
+  <div class="w-full flex justify-center">
+    <QRCode
+      Value="@Settings.Secure.GetString(Android.App.Application.Context.ContentResolver, Settings.Secure.AndroidId)"
+      BlockSize="15"
+    />
+  </div>
+  <div class="flex w-full justify-end gap-2 pt-4">
+    <Button OnClick="@CloseDialog">
+      Закрыть
+    </Button>
+  </div>
+</Dialog>
+
+@code {
+  [CascadingParameter] public FluentDialog Dialog { get; set; } = default!;
+
+  private async Task CloseDialog() => await Dialog.CloseAsync();
+}

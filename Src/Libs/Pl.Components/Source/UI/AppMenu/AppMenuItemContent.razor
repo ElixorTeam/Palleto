@@ -1,0 +1,38 @@
+@if (IconContent == null)
+{
+  <div class="size-10 shrink-0">
+    <span> </span>
+  </div>
+}
+else
+{
+  <div class="size-10 p-2 bg-background rounded-md border shrink-0">
+    @IconContent
+  </div>
+}
+<div class="flex w-full flex-col text-left overflow-hidden">
+  @if (TitleContent == null)
+  {
+    <span class="font-medium truncate">@Title</span>
+  }
+  else
+  {
+    @TitleContent(new(Title))
+  }
+  @if (DescriptionContent == null)
+  {
+    <span class="text-sm text-muted-foreground truncate">@Description</span>
+  }
+  else
+  {
+    @DescriptionContent(new(Description))
+  }
+</div>
+
+@code {
+  [Parameter] public RenderFragment? IconContent { get; set; }
+  [Parameter] public string Title { get; set; } = string.Empty;
+  [Parameter] public RenderFragment<MenuItemContext>? TitleContent { get; set; }
+  [Parameter] public string Description { get; set; } = string.Empty;
+  [Parameter] public RenderFragment<MenuItemContext>? DescriptionContent { get; set; }
+}

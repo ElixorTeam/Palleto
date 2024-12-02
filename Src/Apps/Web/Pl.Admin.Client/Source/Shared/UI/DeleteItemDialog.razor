@@ -1,0 +1,57 @@
+@using Blazor.Heroicons.Outline
+
+@implements IDialogContentComponent<EventCallback>
+
+<Dialog Class="max-w-lg p-6">
+  <div class="shrink-0 w-full flex items-center justify-between bg-background">
+    <h3 class="font-semibold">@Localizer["DeleteDialogTitle"]</h3>
+    <Button
+      Variant="ButtonVariantType.Ghost"
+      Size="ButtonSizeType.Icon"
+      OnClick="@(OnCancelAction)"
+    >
+      <XMarkIcon class="size-5"/>
+    </Button>
+  </div>
+  <p class="text-sm text-muted-foreground pt-1">
+    @Localizer["DeleteDialogDescription"]
+  </p>
+  <div class="flex w-full justify-end gap-2 pt-4">
+    <Button
+      Variant="ButtonVariantType.Outline"
+      OnClick="@(OnCancelAction)"
+    >
+      @Localizer["BtnCancel"]
+    </Button>
+    <Button
+      OnClick="@(OnSubmitAction)"
+      Disabled="@IsLoading"
+    >
+      @Localizer["BtnSubmit"]
+    </Button>
+  </div>
+</Dialog>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [CascadingParameter] protected FluentDialog Dialog { get; set; } = default!;
+  [Parameter] public EventCallback Content { get; set; }
+
+  private bool IsLoading { get; set; } = true;
+
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync();
+    await Task.Delay(2000);
+    IsLoading = false;
+  }
+
+  private Task OnCancelAction() => Dialog.CloseAsync();
+
+  private async Task OnSubmitAction()
+  {
+    await Content.InvokeAsync();
+    await OnCancelAction();
+  }
+}

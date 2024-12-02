@@ -1,0 +1,92 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Models.Features.References1C.Plus.Queries
+
+@rendermode InteractiveServer
+
+<UseEndpoint
+  Endpoint="@References1CEndpoints.CharacteristicsEndpoint"
+  Arg="Model.Id"
+  Options="@(PageHelper.DefaultEndpointOptions)"
+  Context="characteristicsQuery"
+>
+  <DataGridHeader>
+    <DataGridLabelWithCounter
+      Label="@Localizer["SectionPluCharacteristics"]"
+      ItemsCount="@characteristicsQuery.Data?.Length"
+      IsLoading="characteristicsQuery.IsLoading"
+    />
+    <DataGridActionReload OnClick="@characteristicsQuery.RefetchAsync" IsLoading="characteristicsQuery.IsFetching"/>
+  </DataGridHeader>
+
+  <DataGridContainer
+    TItem="CharacteristicDto"
+    Items="@(characteristicsQuery.HasData ? characteristicsQuery.Data : [])"
+    ItemsPerPage="6"
+    IsForcePagination
+    IsFilterable
+  >
+    <ColumnsContent>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColName"]"
+        Field="@nameof(CharacteristicDto.Name)"
+        Sortable="false"
+        Width="15%"
+      />
+      <DataGridColumn
+        Caption="@($"{WsDataLocalizer["ColCount"]} ({WsDataLocalizer["MeasurePc"]})")"
+        Field="@nameof(CharacteristicDto.Count)"
+        Width="10%"
+      />
+      @if (!Model.IsWeight)
+      {
+        <DataGridColumn
+          Caption="@($"{WsDataLocalizer["ColWeight"]} ({WsDataLocalizer["MeasureKg"]})")"
+          Field="@nameof(CharacteristicDto.PluWeight)"
+          Width="15%"
+        />
+      }
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColBundle"]"
+        Width="15%"
+        Sortable="false"
+      >
+        <DisplayTemplate>
+          @context.Bundle.Weight @WsDataLocalizer["MeasureKg"] * @context.Count @WsDataLocalizer["MeasurePc"]
+        </DisplayTemplate>
+      </DataGridColumn>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColClip"]"
+        Width="15%"
+        Sortable="false"
+      >
+        <DisplayTemplate>
+          @context.Clip.Weight @WsDataLocalizer["MeasureKg"] * @context.Count @WsDataLocalizer["MeasurePc"]
+        </DisplayTemplate>
+      </DataGridColumn>
+      <DataGridColumn
+        Caption="@($"{WsDataLocalizer["ColBox"]} ({WsDataLocalizer["MeasureKg"]})")"
+        Field="@($"{nameof(CharacteristicDto.Box)}.{nameof(CharacteristicPackageDto.Weight)}")"
+        Width="15%"
+        Sortable="false"
+      />
+      <DataGridColumn
+        Caption="@((Model.IsWeight ? WsDataLocalizer["ColTareWeight"] : WsDataLocalizer["ColWeightGross"]) + $" ({WsDataLocalizer["MeasureKg"]})")"
+        Field="@nameof(CharacteristicDto.TotalWeight)"
+        Width="15%"
+      />
+    </ColumnsContent>
+  </DataGridContainer>
+</UseEndpoint>
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+
+  # endregion
+
+  [Parameter, EditorRequired] public PluDto Model { get; set; } = default!;
+}

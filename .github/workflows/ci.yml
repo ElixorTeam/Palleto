@@ -20,7 +20,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 20
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -33,5 +33,5 @@ jobs:
       - name: Run tests
         run: |
           dotnet test Src/Tests/Ws.Components.Tests/Ws.Components.Tests.csproj --no-restore --verbosity quiet --configuration ReleaseVS
-          dotnet test Src/Tests/Ws.Domain.Models.Tests/Ws.Domain.Models.Tests.csproj --no-restore --verbosity quiet --configuration ReleaseVS
-          dotnet test Src/Tests/Ws.Shared.Tests/Ws.Shared.Tests.csproj --no-restore --verbosity quiet --configuration ReleaseVS
+          dotnet test Src/Tests/Ws.Architecture.Tests/Ws.Architecture.Tests.csproj --no-restore --verbosity quiet --configuration ReleaseVS
+          dotnet test Src/Tests/Ws.Print.Tests/Ws.Print.Tests.csproj --no-restore --verbosity quiet --configuration ReleaseVS

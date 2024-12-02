@@ -1,0 +1,38 @@
+@using System.Drawing
+
+<div
+  tabindex="0"
+  @ref="DivRef"
+  @onblur="@CloseContextMenuOnBlur"
+  class="@Css.Class("flex-col shadow-md rounded-md p-1 border bg-popover overflow-hidden focus:outline-none", IsOpen ? "fixed" : "hidden")"
+  style="@($"left:{ContextMenuPos.X}px;top:{ContextMenuPos.Y}px;")"
+>
+  @ChildContent
+</div>
+
+@code {
+  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
+
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  private bool IsOpen { get; set; }
+  private Point ContextMenuPos { get; set; }
+  private ElementReference DivRef { get; set; }
+
+  public async Task OpenContextMenu(Point position)
+  {
+    ContextMenuPos = position;
+    IsOpen = true;
+    await Task.Yield();
+    await DivRef.FocusAsync();
+  }
+
+  public void CloseContextMenu() => IsOpen = false;
+
+  private async Task CloseContextMenuOnBlur()
+  {
+    if (ChildContent == null || IsOpen == false) return;
+    if (await JsRuntime.InvokeAsync<bool>("isElementContainsFocusedItem", DivRef)) return;
+    CloseContextMenu();
+  }
+}

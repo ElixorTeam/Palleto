@@ -1,0 +1,64 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+
+@attribute [Route(Urls.Labels + "/{Id:guid}")]
+
+<UseEndpoint
+  Endpoint="@OperationsEndpoints.LabelEndpoint"
+  Arg="@Id"
+  Context="query"
+>
+  <BrowserTitle Label="@WsDataLocalizer["ColLabel"]" />
+
+  <Breadcrumbs Start="BreadcrumbStart.Back">
+    @if (query.HasData)
+    {
+      <Breadcrumb Label="@(WsDataLocalizer["ColLabel"] + " №" + query.Data.Id)" />
+    }
+  </Breadcrumbs>
+
+  <ViewHeader Title="@(query.HasData ? WsDataLocalizer["ColLabel"] + " №" + query.Data.Id : string.Empty)">
+    <ButtonsContent>
+      @if (query.HasData)
+      {
+        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToLabel(query.Data.Id))" />
+      }
+    </ButtonsContent>
+    <TabsContent>
+      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
+        @Localizer["SectionViewInfo"]
+      </ViewTabButton>
+      <ViewTabButton Value="preview" @bind-CurrentTab="CurrentTab">
+        @Localizer["SectionViewPreview"]
+      </ViewTabButton>
+    </TabsContent>
+  </ViewHeader>
+
+  <Tabs @bind-ActiveTabId="@CurrentTab">
+    @if (query.HasData)
+    {
+      <Tab Id="info">
+        <LabelViewInfo Model="query.Data"/>
+      </Tab>
+      <Tab Id="preview">
+        <LabelViewPreview Model="query.Data"/>
+      </Tab>
+    }
+  </Tabs>
+</UseEndpoint>
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+
+  [Inject] private OperationsEndpoints OperationsEndpoints { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+
+  # endregion
+
+  [Parameter] public Guid Id { get; set; }
+
+  private string CurrentTab { get; set; } = "info";
+}

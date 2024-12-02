@@ -1,0 +1,78 @@
+@using BarcodeStandard
+@using Microsoft.Extensions.Localization
+@using SkiaSharp
+@using Pl.Tablet.Models.Features.Pallets.Output
+@using Type=BarcodeStandard.Type
+
+<div style="width: 100%; display: flex; flex-direction: column; gap: 1.2rem; font-family: Arial,serif; padding: 1rem; box-sizing: border-box;">
+  <span style="font-weight: 600; font-size: 1.5rem; text-align: center;">@WsDataLocalizer["ColPalletCard"] №@Pallet.Number</span>
+  <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+    <span>@WsDataLocalizer["ColDate"]</span>
+    <span style="font-size: 3.7rem; font-weight: 600;">@Pallet.CreateDt.ToString("dd.MM.yyyy")</span>
+  </div>
+  <div style="width: 100%;display: inline-grid; grid-template-columns: repeat(2, minmax(0, 1fr));">
+    <span style="align-self: center;">@WsDataLocalizer["ColWeight"]</span>
+    <div style="width: 100%; border: 1px black solid; align-self: center; padding: 0.3rem; border-bottom: none; box-sizing: border-box;">
+      @Pallet.Weight.ToString("F3", CultureInfo.InvariantCulture) @WsDataLocalizer["MeasureKg"]
+    </div>
+    <span style="align-self: center;">@WsDataLocalizer["ColWarehouse"]</span>
+    <div style="width: 100%; border: 1px black solid; align-self: center; padding: 0.3rem; border-bottom: none; box-sizing: border-box;">
+      @Pallet.WarehouseName
+    </div>
+    <span style="align-self: center;">@WsDataLocalizer["ColPalletMan"]</span>
+    <div style="width: 100%; border: 1px black solid; align-self: center; padding: 0.3rem; box-sizing: border-box;">
+      @Pallet.User.DisplayFullName
+    </div>
+  </div>
+  <table style="border-collapse: collapse;">
+    <thead style="font-weight: 300;">
+    <tr>
+      <th style="border: 1px black solid; width: 50%; padding: 0.2rem;">Номенклатура</th>
+      <th style="border: 1px black solid; width: 12.5%; padding: 0.2rem;">Вес</th>
+      <th style="border: 1px black solid; width: 12.5%; padding: 0.2rem;">Дата</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (BatchDto batch in Pallet.Batches)
+    {
+      <tr>
+        <td style="border: 1px black solid; padding: 0.2rem; font-weight: 600; font-size: 2.5rem;">@batch.PluName</td>
+        <td style="border: 1px black solid; padding: 0.2rem;">@batch.Weight.ToString("F3", CultureInfo.InvariantCulture) @WsDataLocalizer["MeasureKg"]</td>
+        <td style="border: 1px black solid; padding: 0.2rem;">@batch.Date.ToString("dd.MM.yyyy")</td>
+      </tr>
+    }
+    <tr style="font-weight: 600;">
+      <td style="border: 1px black solid; padding: 0.2rem;">@WsDataLocalizer["ColTotal"]</td>
+      <td style="border: 1px black solid; padding: 0.2rem;">@Pallet.Weight.ToString("F3", CultureInfo.InvariantCulture) @WsDataLocalizer["MeasureKg"]</td>
+      <td style="border: 1px black solid; padding: 0.2rem;"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  @if (!string.IsNullOrWhiteSpace(Base64BarcodeImage))
+  {
+    <div style="width: 100%; gap: 0.4rem; display: flex; flex-direction: column;">
+      <img src="data:image/png;base64,@Base64BarcodeImage" alt="Barcode Image" style="padding-top: 1rem;" />
+      <span style="text-align: center; font-size: 2.2rem;">@Pallet.PalletBarcode</span>
+    </div>
+
+  }
+</div>
+
+@code {
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Parameter, EditorRequired] public PalletDto Pallet { get; set; } = default!;
+
+  private string Base64BarcodeImage { get; set; } = string.Empty;
+
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    Barcode b = new();
+    SKImage? img = b.Encode(Type.Code128, Pallet.PalletBarcode, 500, 70);
+
+    if (img == null) return;
+    using SKData data = img.Encode(SKEncodedImageFormat.Png, 100);
+    Base64BarcodeImage = Convert.ToBase64String(data.ToArray());
+  }
+}

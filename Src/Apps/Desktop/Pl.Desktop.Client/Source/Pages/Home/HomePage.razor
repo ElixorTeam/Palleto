@@ -1,0 +1,20 @@
+@attribute [Route(Routes.Home)]
+
+<div class="size-full flex items-center overflow-hidden justify-center px-3 py-4">
+  <div class="max-w-sm w-full max-h-full flex gap-4 flex-col">
+    <div class="flex flex-col gap-1.5 items-center justify-center text-center">
+      <DesktopLogo />
+      <h3 class="text-sm text-muted-foreground">
+        @Localizer["HomePageCardDescription"]
+      </h3>
+    </div>
+    <HomeMenu />
+    <div class="max-w-xs w-full mx-auto">
+      <ArmControl Small />
+    </div>
+  </div>
+</div>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+}

@@ -1,0 +1,62 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Services.Stores
+@using Blazor.Heroicons.Outline
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<UseParameterlessEndpoint
+  Endpoint="ReferencesEndpoints.ProxyProductionSiteEndpoint"
+  Context="productionSiteQuery"
+>
+  <UseParameterlessEndpoint
+    Endpoint="ReferencesEndpoints.ProxyUserProductionSiteEndpoint"
+    Context="userProdSiteQuery"
+  >
+    @if (productionSiteQuery.HasData && userProdSiteQuery.IsSuccess)
+    {
+      <SelectSingle
+        TItem="ProxyDto"
+        Items="productionSiteQuery.Data"
+        Value="ProductionSiteState.Value.ProductionSite"
+        ValueChanged="@OnItemChanged"
+        ItemDisplayName="@(item => item.Name)"
+        Position="VerticalPosition.Top"
+      >
+        <TriggerContent Context="select">
+          <Button
+            Id="@select.HtmlId"
+            Variant="ButtonVariantType.Ghost"
+            Size="ButtonSizeType.Small"
+            Class="shrink-0 h-8 w-full items-center disabled:opacity-100"
+            OnClick="@(() => select.ToggleDropdown())"
+            Disabled="@(productionSiteQuery.Data.Length <= 1)"
+            role="combobox"
+            aria-haspopup="listbox"
+            aria-expanded="@select.IsDropdownOpened.ToString()"
+            aria-disabled="false"
+          >
+            <HomeIcon class="size-4 mr-2" />
+            <span class="truncate pt-px">@(select.Value?.Name ?? "Склад не выбран")</span>
+            <ChevronUpDownIcon class="size-4 ml-auto" />
+          </Button>
+        </TriggerContent>
+      </SelectSingle>
+    }
+    else
+    {
+      <Skeleton Class="h-8 w-full" />
+    }
+  </UseParameterlessEndpoint>
+</UseParameterlessEndpoint>
+
+@code {
+  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
+  [Inject] private IDispatcher Dispatcher { get; set; } = default!;
+
+  private void OnItemChanged(ProxyDto? value)
+  {
+    if (value == null) return;
+    Dispatcher.Dispatch(new ChangeProductionSiteAction(value));
+  }
+}

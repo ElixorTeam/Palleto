@@ -1,0 +1,103 @@
+@using Pl.Desktop.Models.Features.Pallets.Output
+
+<div class="w-full grid grid-cols-1 gap-x-10 gap-y-3 lg:grid-cols-2 items-start">
+  <FormDivider Class="pb-0">@Localizer["PalletOverviewDividerCommon"]</FormDivider>
+
+  <PalletViewFormField
+    Label="@WsDataLocalizer["ColNumber"]"
+    Value="@Pallet.Number"
+    HtmlId="pallet-number"
+    IsCopyable
+  />
+
+  <PalletViewFormField
+    Label="@Localizer["СolPalletProductDt"]"
+    Value="@Pallet.ProdDt.ToString("dd.MM.yyyy")"
+    HtmlId="pallet-date"
+  />
+
+  <PalletViewFormField
+    Label="@WsDataLocalizer["ColBarcode"]"
+    Value="@Pallet.Barcode"
+    HtmlId="pallet-barcode"
+    IsCopyable
+  />
+
+  <PalletViewFormField
+    Label="@WsDataLocalizer["ColPalletMan"]"
+    Value="@Pallet.PalletMan.DisplayShortName"
+    HtmlId="pallet-pallet-man"
+  />
+
+  <PalletViewFormField
+    Label="@($"{WsDataLocalizer["ColBoxCount"]} ({WsDataLocalizer["MeasurePc"]})")"
+    Value="@Pallet.BoxCount.ToString()"
+    HtmlId="pallet-box-count"
+  />
+
+  <PalletViewFormField
+    Label="@($"{WsDataLocalizer["ColProductUnitsCount"]} ({WsDataLocalizer["MeasurePc"]})")"
+    Value="@Pallet.BundleCount.ToString()"
+    HtmlId="pallet-bundle-count"
+  />
+
+  <FormDivider Class="pb-0">@WsDataLocalizer["ColPlu"]</FormDivider>
+
+  @foreach (PluPalletDto item in Pallet.Plus)
+  {
+    <PalletViewFormField
+      Label="@WsDataLocalizer["ColNumber"]"
+      Value="@item.Number.ToString()"
+      HtmlId="@($"plu-{item.Number}")"
+    />
+
+    <PalletViewFormField
+      Label="@WsDataLocalizer["ColName"]"
+      Value="@item.Name"
+      HtmlId="@($"plu-{item.Number}-name")"
+    />
+
+    <PalletViewFormField
+      Label="@($"{Localizer["ColNestingPerBox"]} ({WsDataLocalizer["MeasurePc"]})")"
+      Value="@((item.BundleCount/item.BoxCount).ToString())"
+      HtmlId="@($"plu-{item.Number}-nesting")"
+    />
+  }
+
+  <FormDivider Class="pb-0">@WsDataLocalizer["ColWeight"]</FormDivider>
+
+  <PalletViewFormField
+    Label="@($"{WsDataLocalizer["ColNetWeight"]} ({WsDataLocalizer["MeasureKg"]})")"
+    Value="@Pallet.WeightNet.ToString(CultureInfo.InvariantCulture)"
+    HtmlId="pallet-netto"
+  />
+
+  <PalletViewFormField
+    Label="@($"{WsDataLocalizer["ColGrossWeight"]} ({WsDataLocalizer["MeasureKg"]})")"
+    Value="@Pallet.WeightBrutto.ToString(CultureInfo.InvariantCulture)"
+    HtmlId="pallet-brutto"
+  />
+
+  <PalletViewFormField
+    Label="@($"{WsDataLocalizer["ColTrayWeight"]} ({WsDataLocalizer["MeasureKg"]})")"
+    Value="@Pallet.WeightTray.ToString(CultureInfo.InvariantCulture)"
+    HtmlId="pallet-tray-weight"
+  />
+
+  <PalletViewFormField
+    Label="@($"{WsDataLocalizer["ColWeightTotal"]} ({WsDataLocalizer["MeasureKg"]})")"
+    Value="@((Pallet.WeightTray + Pallet.WeightBrutto).ToString(CultureInfo.InvariantCulture))"
+    HtmlId="pallet-weight-total"
+  />
+</div>
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  # endregion
+
+  [Parameter, EditorRequired] public PalletDto Pallet { get; set; } = default!;
+}

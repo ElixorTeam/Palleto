@@ -1,0 +1,53 @@
+@using Blazor.Heroicons.Outline
+@rendermode InteractiveServer
+
+<Button
+  id="theme-button"
+  Variant="ButtonVariantType.Ghost"
+  Size="ButtonSizeType.Icon"
+  OnClick="@(() => IsOpen = !IsOpen)"
+  Class="shrink-0"
+>
+   <SunIcon class="size-5 dark:hidden" />
+   <MoonIcon class="size-5 hidden dark:block" />
+   <span class="sr-only">Toggle theme</span>
+</Button>
+
+<Dropdown
+  Anchor="theme-button"
+  @bind-Visible="@IsOpen"
+  VerticalThreshold="300"
+  Position="@Position"
+>
+  <ul class="flex flex-col p-1">
+    <li>
+      <DropdownItem OnClick="@(() => SetTheme("light"))">
+        <SunIcon class="size-4 mr-2" />
+        <span>@Localizer[ThemeType.Light.GetDescription()]</span>
+      </DropdownItem>
+    </li>
+    <li>
+      <DropdownItem OnClick="@(() => SetTheme("dark"))">
+        <MoonIcon class="size-4 mr-2" />
+        <span>@Localizer[ThemeType.Dark.GetDescription()]</span>
+      </DropdownItem>
+    </li>
+    <li>
+      <DropdownItem OnClick="@(() => SetTheme("system"))">
+        <ComputerDesktopIcon class="size-4 mr-2" />
+        <span>@Localizer[ThemeType.System.GetDescription()]</span>
+      </DropdownItem>
+    </li>
+  </ul>
+</Dropdown>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
+
+  [Parameter] public VerticalPosition? Position { get; set; }
+
+  private bool IsOpen { get; set; }
+
+  private async Task SetTheme(string theme) => await JsRuntime.InvokeVoidAsync("switchTheme", theme);
+}

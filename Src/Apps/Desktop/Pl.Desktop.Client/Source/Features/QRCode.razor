@@ -1,0 +1,66 @@
+@using QRCoder
+@inherits PlComponentBase
+
+@if (IsLoading && LoadingContent != null)
+{
+  @LoadingContent
+}
+else if (IsError && ErrorContent != null)
+{
+  @ErrorContent
+}
+else if (!IsError && !IsLoading)
+{
+  <img
+    @attributes="@AdditionalAttributes"
+    id="@Id"
+    src="data:image/png;base64, @CodeString"
+    class="@Class"
+    alt="Barcode Image"
+  />
+}
+
+@code {
+  [Parameter, EditorRequired] public string Value { get; set; } = string.Empty;
+  [Parameter] public RenderFragment? LoadingContent { get; set; }
+  [Parameter] public RenderFragment? ErrorContent { get; set; }
+  [Parameter] public int BlockSize { get; set; } = 5;
+
+  private string CodeString { get; set; } = string.Empty;
+  private bool IsLoading { get; set; } = true;
+  private bool IsError { get; set; } = false;
+
+  protected override async Task OnInitializedAsync()
+  {
+    await UpdateQrCodeAsync();
+  }
+
+  public async Task UpdateQrCodeAsync()
+  {
+    IsError = false;
+    IsLoading = true;
+    try
+    {
+      CodeString = await GenerateQrCodeAsync();
+    }
+    catch
+    {
+      IsError = true;
+    }
+    finally
+    {
+      IsLoading = false;
+    }
+  }
+
+  private Task<string> GenerateQrCodeAsync()
+  {
+    return Task.Run(() =>
+    {
+      using QRCodeGenerator qrGenerator = new();
+      using QRCodeData qrCodeData = qrGenerator.CreateQrCode(Value, QRCodeGenerator.ECCLevel.Q);
+      using Base64QRCode qrCode = new(qrCodeData);
+      return qrCode.GetGraphic(BlockSize);
+    });
+  }
+}

@@ -1,0 +1,13 @@
+@using Blazor.Heroicons.Outline
+
+<Button Size="ButtonSizeType.Small" Variant="ButtonVariantType.Outline" OnClick="@OnClick" Disabled="@IsLoading" Class="border-dashed">
+  <ArrowPathIcon class="size-4 sm:mr-2" />
+  <span class="sr-only sm:not-sr-only">@Localizer["BtnRefetch"]</span>
+</Button>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Parameter] public EventCallback OnClick { get; set; }
+  [Parameter] public bool IsLoading { get; set; }
+}

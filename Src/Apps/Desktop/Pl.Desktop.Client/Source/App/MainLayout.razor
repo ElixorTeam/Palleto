@@ -1,0 +1,11 @@
+﻿@inherits LayoutComponentBase
+
+<div class="w-screen h-screen overflow-hidden select-none text-black overscroll-none">
+  @Body
+</div>
+<ArmDebug />
+
+<FluentDialogProvider />
+<FluentTooltipProvider />
+<FluentToastProvider Position="@ToastPosition.TopCenter" />
+<StoreInitializer />

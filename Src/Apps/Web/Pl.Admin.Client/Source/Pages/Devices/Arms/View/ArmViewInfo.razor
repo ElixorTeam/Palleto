@@ -1,0 +1,63 @@
+@using Pl.Admin.Models.Features.Devices.Arms.Queries
+
+<ViewFieldGrid Label="@Localizer["FieldCommon"]" Border>
+  <ViewFieldGuid Value="@Model.Id" />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColName"]"
+    Value="@Model.Name"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColNumber"]"
+    Value="@Model.Number.ToString()"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColVersion"]"
+    Value="@Model.Version"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColCounter"]"
+    Value="@Model.Counter.ToString()"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColType"]"
+    Value="@Localizer[Model.Type.GetDescription()]"
+  />
+</ViewFieldGrid>
+
+<ViewFieldGrid Label="@Localizer["FieldParameters"]">
+  <ViewField
+    Label="@WsDataLocalizer["ColSystemKey"]"
+    Value="@Model.SystemKey.ToString()"
+    Copyable
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColPrinter"]"
+    Value="@Model.Printer.Name"
+    Link="@RedirectHelper.ToPrinter(Model.Printer.Id)"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColWarehouse"]"
+    Value="@Model.Warehouse.Name"
+    Link="@RedirectHelper.ToWarehouse(Model.Warehouse.Id)"
+  />
+
+  <ViewField
+    Label="@WsDataLocalizer["ColProductionSite"]"
+    Value="@Model.ProductionSite.Name"
+    Link="@RedirectHelper.ToProductionSite(Model.ProductionSite.Id)"
+  />
+</ViewFieldGrid>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Parameter, EditorRequired] public ArmDto Model { get; set; } = default!;
+}

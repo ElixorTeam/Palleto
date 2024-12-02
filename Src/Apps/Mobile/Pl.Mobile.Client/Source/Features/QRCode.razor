@@ -1,0 +1,30 @@
+@using QRCoder
+
+@if (string.IsNullOrEmpty(CodeString))
+{
+  <Spinner Class="size-20 text-primary" />
+}
+else
+{
+  <img src="data:image/png;base64,@CodeString" alt="Barcode Image" />
+}
+@code {
+  [Parameter, EditorRequired] public string Value { get; set; } = string.Empty;
+  [Parameter] public int BlockSize { get; set; } = 5;
+
+  private string CodeString { get; set; } = string.Empty;
+
+  protected override Task OnInitializedAsync()
+  {
+    CodeString = GenerateQrCode();
+    return Task.CompletedTask;
+  }
+
+  private string GenerateQrCode()
+  {
+    using QRCodeGenerator qrGenerator = new();
+    using QRCodeData qrCodeData = qrGenerator.CreateQrCode(Value, QRCodeGenerator.ECCLevel.Q);
+    using Base64QRCode qrCode = new(qrCodeData);
+    return qrCode.GetGraphic(BlockSize);
+  }
+}

@@ -1,0 +1,25 @@
+@using Pl.Admin.Client.Source.Shared.Constants
+
+<div data-sidebar="header" class="flex flex-col gap-2 px-2 pt-2">
+  <a href="@Urls.Home" data-sidebar="menu-button" class="flex h-14 w-full items-center transition-colors gap-2 overflow-hidden rounded-md px-2 text-left hover:bg-secondary">
+    <div class="size-10 flex shrink-0 rounded-lg items-center justify-center bg-primary">
+      <AdminLogo Class="size-6 text-background" />
+    </div>
+    <div class="grid flex-1 pt-1 text-left leading-tight">
+      <div class="flex gap-1">
+        <span class="truncate font-medium leading-4">Admin Web</span>
+        @if (!IsProduction)
+        {
+        <Badge Class="py-0 px-1.5" Variant="@BadgeVariants.Secondary">
+          dev
+        </Badge>
+        }
+      </div>
+      <span class="truncate font-light text-sm">Palleto</span>
+    </div>
+  </a>
+</div>
+
+@code {
+  private static bool IsProduction => !ConfigurationUtils.IsDevelop;
+}

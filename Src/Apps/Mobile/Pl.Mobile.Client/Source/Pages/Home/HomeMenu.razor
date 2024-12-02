@@ -1,0 +1,35 @@
+@using Blazor.Heroicons.Outline
+@using Microsoft.Extensions.Localization
+@using Pl.Components.Source.UI.AppMenu
+
+<AppMenu>
+  <AppMenuItem Title="Валидация" Description="Подтверждение паллеты" Link="/">
+    <IconContent>
+      <MagnifyingGlassIcon class="size-full" />
+    </IconContent>
+  </AppMenuItem>
+  <AppMenuItem Title="Перенос" Description="Перенос паллет на склад" Link="@Routes.Transfer">
+    <IconContent>
+      <ArrowTrendingUpIcon class="size-full" />
+    </IconContent>
+  </AppMenuItem>
+  <AppMenuItem Title="Информация" Description="QR код с данными устройства" OnClick="@ShowQrUserDialog">
+    <IconContent>
+      <QrCodeIcon class="size-full" />
+    </IconContent>
+  </AppMenuItem>
+  <AppMenuItem Title="Выход" Description="Завершение текущей сессии" OnClick="@ShowCloseAppDialog">
+    <IconContent>
+      <ArrowRightStartOnRectangleIcon class="size-full" />
+    </IconContent>
+  </AppMenuItem>
+</AppMenu>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+
+  private async Task ShowCloseAppDialog() => await DialogService.ShowDialogAsync<CloseAppDialog>(new());
+
+  private async Task ShowQrUserDialog() => await DialogService.ShowDialogAsync<QrUserDialog>(new());
+}

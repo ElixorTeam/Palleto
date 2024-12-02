@@ -1,0 +1,56 @@
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Blazor.Heroicons.Outline
+@using Pl.Admin.Client.Source.Features.ThemeSwitcher
+
+<div class="h-12 px-2 flex items-center w-full shrink-0 transition-colors hover:bg-secondary rounded-md overflow-hidden hover:has-[button:hover]:!bg-inherit" data-sidebar="footer">
+  <AuthorizeView>
+    <Authorized>
+      <div class="flex w-full items-center overflow-hidden justify-between">
+        <div class="flex items-center gap-2 overflow-hidden w-full">
+          <div class="@Css.Class("size-9 rounded-full overflow-hidden border bg-gradient-to-br shrink-0", CurrentGradient)"></div>
+          <div class="flex flex-col w-full pt-1 overflow-hidden">
+            <span class="text-sm truncate leading-4">@GetUserShortName()</span>
+            <span class="text-xs text-muted-foreground truncate">@($"@{User.Identity?.Name}")</span>
+          </div>
+        </div>
+        <form method="post" action="@($"{Urls.Authorization}/logout")" class="shrink-0">
+          <Button Variant="ButtonVariantType.Ghost" Size="ButtonSizeType.Icon" Type="@ButtonType.Submit">
+            <span class="sr-only">Logout</span>
+            <ArrowLeftOnRectangleIcon class="size-5"/>
+          </Button>
+          <AntiforgeryToken/>
+        </form>
+      </div>
+    </Authorized>
+    <NotAuthorized>
+      <div class="flex w-full items-center justify-center">
+        <Button Link="@($"{Urls.Authorization}/login")" Variant="ButtonVariantType.Outline">
+          Log in
+        </Button>
+      </div>
+    </NotAuthorized>
+  </AuthorizeView>
+  <ThemeSwitcher Position="VerticalPosition.Top" />
+</div>
+
+@code {
+  [CascadingParameter] private Task<AuthenticationState> AuthState { get; set; } = default!;
+
+  private ClaimsPrincipal User { get; set; } = default!;
+  private string[] Gradients { get; } = ["from-teal-400 to-indigo-600", "from-yellow-200 to-teal-400",
+    "from-fuchsia-500 to-cyan-500", "from-amber-500 to-pink-500", "from-violet-200 to-pink-200"];
+
+  private string CurrentGradient { get; set; } = string.Empty;
+
+  protected override async Task OnInitializedAsync() => User = (await AuthState).User;
+
+  protected override void OnInitialized() => CurrentGradient = Gradients[new Random().Next(Gradients.Length)];
+
+  private string GetUserShortName()
+  {
+    string fullName = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value ?? "";
+    string[] nameParts = fullName.Split(" ");
+    IEnumerable<string> initialChar = nameParts.Skip(1).Select(s => string.IsNullOrWhiteSpace(s) ? "" : $"{char.ToUpper(s[0])}.");
+    return $"{nameParts[0]} {string.Concat(initialChar)}".Capitalize();
+  }
+}

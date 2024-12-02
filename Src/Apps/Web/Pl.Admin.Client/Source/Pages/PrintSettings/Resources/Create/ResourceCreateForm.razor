@@ -1,0 +1,55 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.References.TemplateResources.Commands
+@using Pl.Admin.Models.Features.References.TemplateResources.Queries
+@inherits SectionFormBase<ZplResourceCreateDto>
+
+<SectionForm
+  FormModel="@FormModel"
+  Validator="@ZplResourceCreateValidator"
+  OnCancelAction="@OnCancelAction"
+  OnSubmitAction="@CreateItem"
+>
+  <FieldsContent>
+    <SectionTextField
+      Label="@WsDataLocalizer["ColName"]"
+      @bind-Value="@FormModel.Name"
+      For="@(() => FormModel.Name)"
+    />
+
+    <SectionSelectSingleField
+      TItem="ZplResourceType"
+      Label="@WsDataLocalizer["ColType"]"
+      Items="ZplResourceTypes"
+      @bind-Value="@FormModel.Type"
+      ItemDisplayName="item => Localizer[item.GetDescription()]"
+      For="@(() => FormModel.Type)"
+    />
+
+    <SectionTextAreaField
+      @bind-Value="@FormModel.Body"
+      Label="@WsDataLocalizer["ColData"]"
+      For="@(() => FormModel.Body)"
+    />
+  </FieldsContent>
+</SectionForm>
+
+@code {
+  #region Inject
+
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private ZplResourceCreateValidator ZplResourceCreateValidator { get; set; } = default!;
+
+  #endregion
+
+  private IList<ZplResourceType> ZplResourceTypes { get; set; } = Enum.GetValues(typeof(ZplResourceType)).Cast<ZplResourceType>().ToList();
+
+  protected override async Task CreateItemAction(ZplResourceCreateDto item)
+  {
+    TemplateResourceDto dto = await WebApi.CreateResource(item);
+    PrintSettingsEndpoints.AddResource(dto, item.Body);
+  }
+}

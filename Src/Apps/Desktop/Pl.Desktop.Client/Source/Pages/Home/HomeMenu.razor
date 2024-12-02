@@ -1,0 +1,66 @@
+@using Blazor.Heroicons.Outline
+@using Pl.Components.Source.UI.AppMenu
+
+<AppMenu>
+  <UseParameterlessEndpoint Endpoint="@ArmEndpoints.ArmEndpoint" Context="query">
+    @if (query.HasData)
+    {
+      @if (query.Data.Type is ArmType.Tablet or ArmType.Universal)
+      {
+        <AppMenuItem Description="Этикирование весовой продукции" Title="@WsDataLocalizer["ColLabel"]" Link="@Routes.Labels">
+          <IconContent>
+            <TagIcon class="size-full" />
+          </IconContent>
+          <TitleContent>
+            <div class="flex gap-2 items-center">
+              <span class="font-medium truncate">@context.Value</span>
+              <Badge Class="text-[10px] h-5 px-1.5">Arm</Badge>
+            </div>
+          </TitleContent>
+        </AppMenuItem>
+      }
+      @if (query.Data.Type is ArmType.Pc or ArmType.Universal)
+      {
+        <AppMenuItem Description="Создание штучной паллетной карты" Title="@WsDataLocalizer["ColPallet"]" Link="@Routes.Pallet">
+          <IconContent>
+            <ClipboardIcon class="size-full" />
+          </IconContent>
+          <TitleContent>
+            <div class="flex gap-2 items-center">
+              <span class="font-medium truncate">@context.Value</span>
+              <Badge Class="text-[10px] h-5 px-1.5">PC</Badge>
+            </div>
+          </TitleContent>
+        </AppMenuItem>
+      }
+    }
+  </UseParameterlessEndpoint>
+
+  <AppMenuItem Title="Информация" Description="QR код с данными устройства" OnClick="@ShowQrUserDialog">
+    <IconContent>
+      <QrCodeIcon class="size-full" />
+    </IconContent>
+  </AppMenuItem>
+
+  <AppMenuItem Description="Завершение текущего сеанса" Title="@Localizer["BtnExit"]" OnClick="@ShowCloseAppDialog">
+    <IconContent>
+      <ArrowLeftOnRectangleIcon class="size-full" />
+    </IconContent>
+  </AppMenuItem>
+</AppMenu>
+
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private ArmEndpoints ArmEndpoints { get; set; } = default!;
+
+  # endregion
+
+  private async Task ShowCloseAppDialog() => await DialogService.ShowDialogAsync<CloseAppDialog>(new());
+
+  private async Task ShowQrUserDialog() => await DialogService.ShowDialogAsync<QrUserDialog>(new());
+}

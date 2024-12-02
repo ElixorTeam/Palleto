@@ -1,0 +1,33 @@
+@using Pl.Tablet.Models.Features.Pallets.Output
+<Tabs ActiveTabId="@CurrentTab">
+  <Tab Id="@typeof(PluStage).ToString()">
+    <PluStage
+      @bind-Model="@Model"
+      OnCancelAction="@(() => Dialog.CancelAsync())"
+      OnSubmitAction="@(() => CurrentTab = typeof(BatchesStage).ToString())"
+    />
+  </Tab>
+  <Tab Id="@typeof(BatchesStage).ToString()">
+    <BatchesStage
+      @bind-Model="@Model"
+      OnCancelAction="@(() => CurrentTab = typeof(PluStage).ToString())"
+      OnSubmitAction="@(() => CurrentTab = typeof(ResultStage).ToString())"
+    />
+  </Tab>
+  <Tab Id="@typeof(ResultStage).ToString()">
+    <ResultStage
+      Model="@Model"
+      OnPalletCreated="@(OnPalletCreated)"
+      OnCancelAction="@(() => CurrentTab = typeof(BatchesStage).ToString())"
+      OnSubmitAction="@(() => Dialog.CloseAsync())"
+    />
+  </Tab>
+</Tabs>
+
+@code {
+  [CascadingParameter] public FluentDialog Dialog { get; set; } = default!;
+  [Parameter] public PalletCreateModel Model { get; set; } = default!;
+  [Parameter] public EventCallback<PalletDto> OnPalletCreated { get; set; }
+
+  private string CurrentTab { get; set; } = typeof(PluStage).ToString();
+}

@@ -1,0 +1,39 @@
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@if (PalletState.Value.Pallet != null)
+{
+  <div class="flex gap-3 overflow-hidden items-center">
+    <h2 class="font-medium truncate text-xl">
+      @WsDataLocalizer["ColPallet"] №@PalletState.Value.Pallet.Number от @PalletState.Value.Pallet.ProdDt.ToString("dd.MM.yyyy")
+    </h2>
+    @if (PalletState.Value.Pallet.IsShipped)
+    {
+      <Badge Class="pb-1">@Localizer["PalletFlagShipped"]</Badge>
+    }
+    else
+    {
+      <Badge Variant="@BadgeVariants.Secondary" Class="pb-1">@Localizer["PalletFlagNotShipped"]</Badge>
+    }
+    @if (PalletState.Value.Pallet.IsDelete)
+    {
+      <Badge Variant="@BadgeVariants.Destructive" Class="pb-1" id="badge-deleted-pallet">Удалено</Badge>
+      <Tooltip Anchor="badge-deleted-pallet">
+        @PalletState.Value.Pallet.DeletedAt
+      </Tooltip>
+    }
+  </div>
+}
+else
+{
+  <h2 class="text-destructive">Неизвестная паллета</h2>
+}
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IState<PalletState> PalletState { get; set; } = default!;
+
+  # endregion
+}

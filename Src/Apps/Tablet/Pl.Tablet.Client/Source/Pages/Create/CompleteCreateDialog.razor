@@ -1,0 +1,36 @@
+@using Blazor.Heroicons.Outline
+
+@implements IDialogContentComponent
+
+<Dialog Class="max-w-lg p-6">
+  <div class="shrink-0 w-full flex items-center justify-between bg-background">
+    <h3 class="font-semibold">Вы уверены, что хотите завершить создание?</h3>
+    <Button
+      Variant="ButtonVariantType.Ghost"
+      Size="ButtonSizeType.Icon"
+      OnClick="@OnCancelAction"
+    >
+      <XMarkIcon class="size-5"/>
+    </Button>
+  </div>
+  <p class="text-sm text-muted-foreground pt-1">
+    Это действие сбросит номер документа и перенаправит вас на главную страницу.
+  </p>
+  <div class="flex w-full justify-end gap-2 pt-4">
+    <Button
+      Variant="ButtonVariantType.Outline"
+      OnClick="@OnCancelAction"
+    >
+      Отмена
+    </Button>
+    <Button Link="@Urls.Home">
+      Подтвердить
+    </Button>
+  </div>
+</Dialog>
+
+@code {
+  [CascadingParameter] protected FluentDialog Dialog { get; set; } = default!;
+
+  private Task OnCancelAction() => Dialog.CancelAsync();
+}

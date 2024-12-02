@@ -1,0 +1,64 @@
+@using Microsoft.AspNetCore.Components.Web.HtmlRendering
+@using Pl.Tablet.Client.Source.Shared
+@using Blazor.Heroicons.Outline
+
+@typeparam TComponent where TComponent: IComponent
+
+<Button
+  Variant="@Variant"
+  Size="@Size"
+  Class="@Class"
+  Disabled="@IsDisabled"
+  OnClick="@OnClick"
+>
+  @if (ChildContent == null)
+  {
+    <PrinterIcon class="size-5 mr-2" />
+    <span>Печать документа</span>
+  }
+  else
+  {
+    @ChildContent
+  }
+</Button>
+
+@code {
+  [Inject] private IPrintService PrintService { get; set; } = default!;
+  [Inject] private HtmlRenderer HtmlRenderer { get; set; } = default!;
+  [Inject] private IToastService ToastService { get; set; } = default!;
+
+  [Parameter] public Dictionary<string, object?> Parameters { get; set; } = new();
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+  [Parameter] public ButtonVariantType Variant { get; set; } = ButtonVariantType.Default;
+  [Parameter] public ButtonSizeType Size { get; set; } = ButtonSizeType.Default;
+  [Parameter] public string Class { get; set; } = string.Empty;
+  [Parameter] public bool Disabled { get; set; }
+
+  private bool IsLoading { get; set; }
+
+  private bool IsDisabled => IsLoading || Disabled;
+
+  private async Task OnClick()
+  {
+    IsLoading = true;
+    StateHasChanged();
+
+    try
+    {
+      await HtmlRenderer.Dispatcher.InvokeAsync(async () =>
+      {
+        ParameterView parameterView = ParameterView.FromDictionary(Parameters);
+        HtmlRootComponent output = await HtmlRenderer.RenderComponentAsync<TComponent>(parameterView);
+        PrintService.Print(output.ToHtmlString());
+      });
+    }
+    catch
+    {
+      ToastService.ShowError("Ошибка формирования документа");
+    }
+
+    IsLoading = false;
+    StateHasChanged();
+  }
+
+}

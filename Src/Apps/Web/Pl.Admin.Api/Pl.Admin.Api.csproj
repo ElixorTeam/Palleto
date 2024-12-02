@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <ItemGroup Label="Directory.Packages.props">
+        <PackageReference Include="Svg" />
+        <PackageReference Include="Scrutor" />
+    </ItemGroup>
+
+    <ItemGroup Label="Packages">
+        <PackageReference Include="LINQKit.Microsoft.EntityFrameworkCore" VersionOverride="8.1.7" />
+        <PackageReference Include="Keycloak.AuthServices.Authentication" VersionOverride="2.5.3" />
+        <PackageReference Include="Keycloak.AuthServices.Authorization" VersionOverride="2.5.3" />
+        <PackageReference Include="Keycloak.AuthServices.Common" VersionOverride="2.5.3" />
+        <PackageReference Include="ProjectionTools" VersionOverride="1.0.17" />
+    </ItemGroup>
+
+    <ItemGroup Label="Projects">
+        <ProjectReference Include="..\..\..\Libs\Pl.Print\Pl.Print.csproj" />
+        <ProjectReference Include="..\..\..\Libs\Pl.Shared.Web\Pl.Shared.Web.csproj" />
+        <ProjectReference Include="..\Pl.Admin.Models\Pl.Admin.Models.csproj" />
+        <ProjectReference Include="..\..\..\Infrastructure\Pl.Database\Pl.Database.csproj" PrivateAssets="All" />
+    </ItemGroup>
+
+    <ItemGroup Label="For testing additional files">
+        <Content Include="zHttp\.profiles\*" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="App\Shared\Localization\ApplicationResources.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>ApplicationResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="App\Shared\Localization\ApplicationResources.en-US.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>ApplicationResources.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="App\Shared\Localization\ApplicationResources.ru-RU.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>ApplicationResources.ru-RU.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="App\Shared\Localization\ApplicationResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ApplicationResources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="App\Shared\Localization\ApplicationResources.en-US.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ApplicationResources.en-US.resx</DependentUpon>
+      </Compile>
+      <Compile Update="App\Shared\Localization\ApplicationResources.ru-RU.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ApplicationResources.ru-RU.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+</Project>

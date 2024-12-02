@@ -1,0 +1,80 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models.Features.Admins.PalletMen.Queries
+@using Pl.Admin.Models
+@using Pl.Admin.Client.Source.Pages.Admin.PalletMen.Update
+@using Pl.Admin.Client.Source.Features
+
+@attribute [Route(Urls.PalletMen + "/{Id:guid}")]
+
+<UseEndpoint
+  Endpoint="@AdminEndpoints.PalletManEndpoint"
+  Arg="@Id"
+  Context="query"
+>
+  <BrowserTitle Label="@(query.Data?.Fio.DisplayShortName ?? Localizer["SectionPalletMen"])" />
+
+  <Breadcrumbs Start="BreadcrumbStart.Back">
+    <Breadcrumb Label="@Localizer["SectionPalletMen"]" Link="@Urls.PalletMen" />
+    @if (query.HasData)
+    {
+      <Breadcrumb Label="@query.Data.Fio.DisplayShortName" />
+    }
+  </Breadcrumbs>
+
+  <ViewHeader Title="@query.Data?.Fio.DisplayShortName">
+    <ButtonsContent>
+      @if (query.HasData)
+      {
+        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPalletMan(query.Data.Id))" />
+
+        <SupportAuthView ProductionSiteUid="@query.Data.ProductionSite.Id">
+          <ViewButtonUpdate TDialog="PalletManUpdateDialog" Model="query.Data" />
+        </SupportAuthView>
+
+        <AuthorizeView Policy="@PolicyEnum.SeniorSupport">
+          <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
+        </AuthorizeView>
+      }
+    </ButtonsContent>
+
+    <TabsContent>
+      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
+        @Localizer["SectionViewInfo"]
+      </ViewTabButton>
+    </TabsContent>
+  </ViewHeader>
+
+  <Tabs @bind-ActiveTabId="@CurrentTab">
+    @if (query.HasData)
+    {
+      <Tab Id="info">
+        <PalletManViewInfo Model="@query.Data"/>
+      </Tab>
+    }
+  </Tabs>
+</UseEndpoint>
+
+@code {
+  # region Injects
+
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private AdminEndpoints AdminEndpoints { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+
+  # endregion
+
+  [Parameter] public Guid Id { get; set; }
+
+  private string CurrentTab { get; set; } = "info";
+
+  private async Task DeleteItem(PalletManDto item)
+  {
+    await WebApi.DeletePalletMan(item.Id);
+    AdminEndpoints.DeletePalletMan(item.ProductionSite.Id, item.Id);
+    await PageHelper.OpenLink(Urls.PalletMen);
+  }
+}

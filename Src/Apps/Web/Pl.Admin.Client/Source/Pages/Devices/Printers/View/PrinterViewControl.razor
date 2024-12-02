@@ -1,0 +1,34 @@
+@using Pl.Admin.Models.Features.Devices.Printers.Queries
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Blazor.Heroicons.Outline
+
+<div class="flex flex-col pb-2 px-2">
+  <div class="flex gap-1 mb-2 items-center">
+    <h2 class="text-xl font-medium">@Localizer["PrinterControlTitle"]</h2>
+    <Button
+      Link="@PrinterUrl"
+      Size="ButtonSizeType.Icon"
+      Variant="ButtonVariantType.Ghost"
+      Class="size-7"
+      target="_blank"
+    >
+      <ArrowTopRightOnSquareIcon class="size-[1.1rem]" />
+    </Button>
+  </div>
+  <span class="text-muted-foreground text-sm">
+    @((MarkupString)string.Format(Localizer["PrinterControlDescription"],
+      $"<a href='{PrinterUrl}' target='_blank' class='underline text-primary hover:cursor-pointer'>{Localizer["PrinterControlDescriptionDirectLink"]}</a>",
+      $"<a href='{Urls.PrinterControlGuide}' class='underline text-primary hover:cursor-pointer'>{Localizer["PrinterControlDescriptionGuideLink"]}</a>"))
+  </span>
+</div>
+
+<div class="w-full py-4 flex items-center justify-center">
+  <iframe src="@PrinterUrl" class="rounded-md overflow-hidden border w-full max-w-screen-2xl h-96 lg:h-[36rem]"></iframe>
+</div>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Parameter, EditorRequired] public PrinterDto Model { get; set; } = default!;
+
+  private string PrinterUrl => $"http://{Model.Ip}";
+}

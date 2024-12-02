@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup Label="Directory.Packages.props">
+        <PackageReference Include="Refit" />
+    </ItemGroup>
+
+    <ItemGroup Label="Packages">
+      <PackageReference Include="TscZebra.Plugin.Abstractions" VersionOverride="1.0.4" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root"
+                xmlns="">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <data name="BtnCooldown" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnEnter" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnLabelPrint" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnScaleCalibration" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnSelectAllLabels" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnBack" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnCreate" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnLogIn" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnPrintPC" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnSelectedLabelsPrinting" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="CreatePalletFormHeader" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="FuncCardCreationDescription" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="FuncCardCreationTitle" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="FuncCardDescription" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="FuncCardHeader" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="FuncCardLabelPrintingDescription" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="FuncCardLabelPrintingTitle" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="FuncCardPCPrintingDescription" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="FuncCardPCPrintingTitle" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="FuncCardViewingDescription" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="FuncCardViewingTitle" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="KneadingInputPlaceholder" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="LabelConfigHeader" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="LabelCountInputPlaceholder" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PalletManFormHeader" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PalletSelectEmpty" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="TrayWeightInputPlaceholder" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PasswordInputPlaceholder" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PluSelectHeader" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PrinterStatusHeadOpen" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PrinterStatusDisconnected" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PrinterStatusPaperJam" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PrinterStatusPaperOut" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PrinterStatusPaused" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PrinterStatusUnknown" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ScalesStatusTooLight" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ScalesStatusUnstable" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="SearchByNumberPlaceholder" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="UserSelectPlaceholder" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PluSelectPlaceholder" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="NestingSelectPlaceholder" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnSelect" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ExitAppDialogTitle" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ExitAppDialogDescription" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnCancel" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="AppName" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="HomePageCardDescription" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnExit" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnUpdate" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnPaginationNext" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnPaginationPrev" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnMenu" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnNext" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ArmIsNewWarningTitle" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ArmIsNewWarningDescription" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ToastErrorWhileGettingData" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ToastPalletCreateError" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PrinterStatusReady" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ScalesStatusReady" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ScalesStatusDetached" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ScalesStatusDisabled" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PluDescriptionNoDataTitle" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PluDescriptionNoDataDescription" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnReconnect" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PluDisplayUnselectedTitle" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PluDisplayUnselectedDescription" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PluDisplayUnselectedStatusesInfo" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ScalesStatusInitializing" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PalletOverviewDividerCommon" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PalletCreateFinalTitle" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PalletManFormInvalidPassword" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PalletDocumentGenerationError" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ApiResponseError" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PrinterStatusCommonError" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ZplCodeError" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="IndexedLabelNotPrinted" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="BtnUnselectAllLabels" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="LabelsDataGridSelectedInfo" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PalletCreateDialogProgressToastTitle" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PalletCreateDialogProgressToastDescription" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PalletCreateDialogSuccess" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="UserSelectEmptyPlaceholder" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="UserSelectSearchPlaceholder" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="PrintingStoppedDueToErrors" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="LabelsPrintingSuccess" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="LabelsPrintingToastTitle" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="LabelsPrintingToastDescription" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="СolPalletProductDt" xml:space="preserve">
+        <value/>
+    </data>
+    <data name="ColNestingPerBox" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ColPrint" xml:space="preserve">
+        <value />
+    </data>
+    <data name="BtnDelete" xml:space="preserve">
+        <value />
+    </data>
+    <data name="BtnRestore" xml:space="preserve">
+        <value />
+    </data>
+    <data name="PalletFlagShipped" xml:space="preserve">
+        <value />
+    </data>
+    <data name="PalletFlagNotShipped" xml:space="preserve">
+        <value />
+    </data>
+    <data name="PalletFilterNotShipped" xml:space="preserve">
+        <value />
+    </data>
+    <data name="PalletFilterShipped" xml:space="preserve">
+        <value />
+    </data>
+    <data name="PalletFilterDeleted" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ToastPalletMarkedDeleted" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ToastPalletMarkedNotDeleted" xml:space="preserve">
+        <value />
+    </data>
+    <data name="PalletFilterAll" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ToastValueCopiedToClipboard" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ToastValueCopiedToClipboardUnsuccessful" xml:space="preserve">
+        <value />
+    </data>
+</root>

@@ -1,0 +1,31 @@
+@typeparam TSelectItem
+@typeparam TSelectType where TSelectType : TSelectItem
+
+@inherits SelectBase<TSelectItem, TSelectType>
+@attribute [CascadingTypeParameter(nameof(TSelectItem))]
+@attribute [CascadingTypeParameter(nameof(TSelectType))]
+
+<CascadingValue Value="this">
+  @ChildContent
+</CascadingValue>
+
+@code {
+  /// <summary>
+  /// The content to be rendered inside the component.
+  /// </summary>
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  protected internal override async Task SetValue(TSelectItem item, bool withClose = true)
+  {
+    if (item is TSelectType or null)
+    {
+      Value = (TSelectType?) item;
+      await TriggerValueChanged();
+      if (!withClose) return;
+      IsDropdownOpened = false;
+      Reset();
+    }
+  }
+
+  protected internal override bool IsItemSelected(TSelectItem item) => (Value == null && item == null) || (Value != null && Value.Equals(item));
+}

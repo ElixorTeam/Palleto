@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="@Thread.CurrentThread.CurrentCulture.Name">
+<head>
+  <title>Palleto Admin</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <base href="/"/>
+  <link rel="icon" href="favicon.svg"/>
+  <link rel="stylesheet" href="./_content/Pl.Components/app.min.css" />
+  <link rel="stylesheet" href="./_content/Pl.Components/fonts/font.css" />
+  <link rel="stylesheet" href="./_content/Blazorise.Icons.FontAwesome/v6/css/all.min.css" />
+  <link rel="stylesheet" href="Pl.Admin.Client.styles.css" />
+  <link rel="stylesheet" href="./app.min.css"/>
+  <script src="./_content/Pl.Components/index.js"></script>
+  <script>initializeTheme()</script>
+  <HeadOutlet @rendermode="@(new InteractiveServerRenderMode(prerender: false))" />
+</head>
+<body class="min-h-screen font-sans bg-background antialiased scroll-smooth">
+  <a id="blazor-error-ui" href="" class="reload animate-bounce fixed z-50 bottom-6 right-6 hidden size-12 p-2 rounded-md overflow-hidden bg-background border shadow-sm hover:animate-none">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-full text-destructive">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+    </svg>
+  </a>
+  <Routes @rendermode="@(new InteractiveServerRenderMode(prerender: false))"/>
+  <script src="./sortable.min.js"></script>
+  <script src="_content/PSC.Blazor.Components.Chartjs/lib/Chart.js/chart.js"></script>
+  <script src="_content/PSC.Blazor.Components.Chartjs/Chart.js" type="module"></script>
+  <script src="_framework/blazor.web.js"></script>
+</body>
+</html>

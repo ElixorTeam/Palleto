@@ -1,0 +1,45 @@
+<div class="size-full grow flex flex-col overflow-hidden">
+  <Stepper @bind-CurrentIndex="CurrentTabIndex" Class="mt-4">
+    <StepperItem Label="Документ" Disabled />
+    <StepperItem Label="Паллеты" Disabled />
+    <StepperItem Label="Склад" Disabled />
+    <StepperItem Label="Результат" Disabled />
+  </Stepper>
+  @if (CurrentTabIndex == 1)
+  {
+    <DocumentStage
+      @bind-DocumentNumber="@Model.DocumentNumber"
+      OnSuccessAction="@(() => CurrentTabIndex = 2)"
+    />
+  }
+  else if (CurrentTabIndex == 2)
+  {
+    <PalletsStage
+      @bind-Pallets="@Model.Pallets"
+      OnCancelAction="@(() => CurrentTabIndex = 1)"
+      OnSuccessAction="@(() => CurrentTabIndex = 3)"
+    />
+  }
+  else if (CurrentTabIndex == 3)
+  {
+    <WarehouseStage
+      @bind-Warehouse="@Model.Warehouse"
+      OnCancelAction="@(() => CurrentTabIndex = 2)"
+      OnSuccessAction="@(() => CurrentTabIndex = 4)"
+    />
+  }
+  else if (CurrentTabIndex == 4)
+  {
+    <ResultStage
+      Model="@Model"
+      OnCancelAction="@(() => CurrentTabIndex = 3)"
+      ResetAction="@(() => { Model = new(); CurrentTabIndex = 1; })"
+    />
+  }
+</div>
+
+@code {
+  [Parameter] public TransferFormModel Model { get; set; } = new();
+
+  private int CurrentTabIndex { get; set; } = 1;
+}

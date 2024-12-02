@@ -1,0 +1,30 @@
+@using vNext.BlazorComponents.FluentValidation
+
+<div class="rounded-lg overflow-hidden max-w-sm p-6 border shadow-sm bg-background w-full">
+  <div class="w-full pb-4 border-b">
+    <h2 class="text-lg font-semibold leading-none tracking-tight">
+      @Localizer["PalletManFormHeader"]
+    </h2>
+  </div>
+  <EditForm
+    Model="Model"
+    OnValidSubmit="OnValidSubmit"
+    class="space-y-4 pt-3"
+  >
+    <FluentValidationValidator Validator="@(new PalletManFormValidator(WsDataLocalizer))" />
+    <FormFieldWrapper Label="@WsDataLocalizer["ColPassword"]" For="login-password">
+      <InputTextField
+        id="login-password"
+        @bind-Value="@Model.Password"
+        Type="TextInputType.Password"
+        Placeholder="@Localizer["PasswordInputPlaceholder"]"
+      />
+      <FieldValidation For="@(() => Model.Password)" />
+    </FormFieldWrapper>
+    <div class="w-full flex justify-end">
+      <Button Type="@ButtonType.Submit" Class="!mt-4" Disabled="@IsLoading">
+        @Localizer["BtnLogIn"]
+      </Button>
+    </div>
+  </EditForm>
+</div>

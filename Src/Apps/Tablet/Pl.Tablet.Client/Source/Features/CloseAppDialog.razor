@@ -1,0 +1,42 @@
+@using Blazor.Heroicons.Outline
+
+@implements IDialogContentComponent
+
+<Dialog Class="max-w-lg p-6">
+  <div class="shrink-0 w-full flex items-center justify-between bg-background">
+    <h3 class="font-semibold">Вы уверены, что хотите выйти из приложения?</h3>
+    <Button
+      Variant="ButtonVariantType.Ghost"
+      Size="ButtonSizeType.Icon"
+      OnClick="@CloseDialog"
+    >
+      <XMarkIcon class="size-5"/>
+    </Button>
+  </div>
+  <p class="text-sm text-muted-foreground pt-1">
+    Это действие не обратимо. Чтобы повторно запустить приложение нажмите на иконку на главном экране.
+  </p>
+  <div class="flex w-full justify-end gap-2 pt-4">
+    <Button
+      Variant="ButtonVariantType.Outline"
+      OnClick="@CloseDialog"
+    >
+      Отмена
+    </Button>
+    <Button OnClick="@ExitApp">
+      Подтвердить
+    </Button>
+  </div>
+</Dialog>
+
+@code {
+  [CascadingParameter] public FluentDialog Dialog { get; set; } = default!;
+
+  private static void ExitApp()
+  {
+    if (Application.Current == null) return;
+    Application.Current.Quit();
+  }
+
+  private async Task CloseDialog() => await Dialog.CloseAsync();
+}

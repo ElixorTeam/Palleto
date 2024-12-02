@@ -1,0 +1,13 @@
+<div class="flex items-start">
+  <div class="flex items-center text-sm text-muted-foreground">
+    @TitleContext
+  </div>
+</div>
+<div class="truncate pb-px">
+  @ValueContext
+</div>
+
+@code {
+  [Parameter] public RenderFragment? TitleContext { get; set; }
+  [Parameter] public RenderFragment? ValueContext { get; set; }
+}

@@ -1,0 +1,77 @@
+@typeparam TValue
+@inherits InputBase<TValue>
+
+<input
+  type="number"
+  inputmode="numeric"
+  id="@Id"
+  @attributes="AdditionalAttributes"
+  @bind-value="InputValue"
+  class="@ClassMerge("flex h-9 w-full rounded-md border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50", Class)"
+  disabled="@Disabled"
+  readonly="@ReadOnly"
+  autofocus="@AutoFocus"
+  placeholder="@Placeholder"
+  step="@Step"
+  min="@Min"
+  max="@Max"
+/>
+
+@code {
+  /// <summary>
+  /// Minimum value for the input. If set, the value will not go below this threshold.
+  /// </summary>
+  [Parameter] public string? Min { get; set; }
+
+  /// <summary>
+  /// Maximum value for the input. If set, the value will not exceed this threshold.
+  /// </summary>
+  [Parameter] public string? Max { get; set; }
+
+  /// <summary>
+  /// The step value for the input. This defines the increment/decrement step for numeric values.
+  /// </summary>
+  [Parameter] public string Step { get; set; } = "1";
+
+  /// <summary>
+  /// The culture to use for formatting the input value.
+  /// </summary>
+  [Parameter] public CultureInfo Culture { get; set; } = CultureInfo.InvariantCulture;
+
+  private string InputValue
+  {
+    get
+    {
+      if (Value is IFormattable formattable)
+        return formattable.ToString(null, Culture);
+      return Value?.ToString() ?? string.Empty;
+    }
+    set
+    {
+      if (!TryConvertValue(value, out TValue result)) return;
+
+      if (!string.IsNullOrWhiteSpace(Min) && TryConvertValue(Min, out TValue minValue) && Comparer<TValue>.Default.Compare(result, minValue) < 0)
+        result = minValue;
+
+      if (!string.IsNullOrWhiteSpace(Max) && TryConvertValue(Max, out TValue maxValue) && Comparer<TValue>.Default.Compare(result, maxValue) > 0)
+        result = maxValue;
+
+      Value = result;
+      ValueChanged.InvokeAsync(Value);
+    }
+  }
+
+  private bool TryConvertValue(string value, out TValue result)
+  {
+    try
+    {
+      result = (TValue)Convert.ChangeType(value, typeof(TValue), Culture);
+      return true;
+    }
+    catch
+    {
+      result = default!;
+      return false;
+    }
+  }
+}

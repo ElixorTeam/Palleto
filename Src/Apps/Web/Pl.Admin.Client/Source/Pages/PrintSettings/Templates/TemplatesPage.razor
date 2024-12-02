@@ -1,0 +1,132 @@
+@using Pl.Admin.Client.Source.Pages.PrintSettings.Templates.Create
+@using Pl.Admin.Client.Source.Pages.PrintSettings.Templates.Update
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.References.Template.Queries
+
+@attribute [Route(Urls.Templates)]
+@attribute [Authorize(Policy = PolicyEnum.Support)]
+@rendermode InteractiveServer
+
+<BrowserTitle Label="@Localizer["SectionTemplates"]" />
+
+<UseParameterlessEndpoint
+  Endpoint="PrintSettingsEndpoints.TemplatesEndpoint"
+  Options="PageHelper.DefaultEndpointOptions"
+  Context="query"
+>
+  <Breadcrumbs Class="pb-5">
+    <Breadcrumb Label=@Localizer["SectionTemplates"] Link="@Urls.Templates" />
+  </Breadcrumbs>
+
+  <DataGridHeader>
+    <DataGridLabelWithCounter
+      Label="@Localizer["SectionTemplates"]"
+      ItemsCount="@query.Data?.Length"
+      IsLoading="query.IsLoading"
+    />
+    <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching" />
+    <AuthorizeView Policy="@PolicyEnum.Developer">
+      <DataGridActionCreate OnClick="@OpenCreateDialog"/>
+    </AuthorizeView>
+  </DataGridHeader>
+
+  <DataGridContainer
+    TItem="TemplateDto"
+    Items="@(query.HasData ? query.Data : [])"
+    OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToTemplate(item.Id)))"
+    IsFilterable
+  >
+    <ColumnsContent>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColChangeDt"]"
+        Field="@nameof(TemplateDto.ChangeDt)"
+        Width="20%"
+        Filterable="false"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColName"]"
+        Field="@nameof(TemplateDto.Name)"
+        Width="20%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColType"]"
+        Width="20%"
+        Field="@nameof(TemplateDto.IsWeight)"
+        FilterCellClass="!font-normal"
+      >
+        <FilterTemplate>
+          @{ context.SearchValue = Type; }
+          <SelectSingle
+            TItem="bool?"
+            Items="@([false, true, null])"
+            @bind-Value="@Type"
+            @bind-Value:after="@(() => context.TriggerFilterChange(Type))"
+            Placeholder="@Localizer["SelectItemNotSelected"]"
+            ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] : GetTemplateTypeName(item.Value))"
+          />
+        </FilterTemplate>
+        <DisplayTemplate>
+        <span>
+          @GetTemplateTypeName(context.IsWeight)
+        </span>
+        </DisplayTemplate>
+      </DataGridColumn>
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColSize"]"
+        Width="20%"
+        Filterable="false"
+      >
+        <DisplayTemplate>
+          @context.Width x @context.Height
+        </DisplayTemplate>
+      </DataGridColumn>
+    </ColumnsContent>
+    <ContextMenuContent>
+      <AuthorizeView Policy="@PolicyEnum.Developer" Context="authContext">
+        <DataGridActionUpdateItem TItem="TemplateDto" Action="@OpenUpdateDialog" />
+      </AuthorizeView>
+      <DataGridActionOpenItem Link="@(RedirectHelper.ToTemplate(context.Item.Id))" />
+      <DataGridActionOpenInNewTab TItem="TemplateDto" Link="@(RedirectHelper.ToTemplate(context.Item.Id))" />
+      <AuthorizeView Policy="@PolicyEnum.Developer" Context="authContext">
+        <DataGridActionDeleteItem TItem="TemplateDto" Action="@DeleteItem" />
+      </AuthorizeView>
+    </ContextMenuContent>
+  </DataGridContainer>
+</UseParameterlessEndpoint>
+
+@code {
+  #region Region
+
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+
+  #endregion
+
+  private bool? Type { get; set; }
+
+  private Task OpenCreateDialog() =>
+    DialogService.ShowDialogAsync<TemplateCreateDialog>(PageHelper.DialogParameters);
+
+  private Task OpenUpdateDialog(TemplateDto item) =>
+    DialogService.ShowDialogAsync<TemplateUpdateDialog>(item, PageHelper.DialogParameters);
+
+  private async Task DeleteItem(TemplateDto item)
+  {
+    await WebApi.DeleteTemplate(item.Id);
+    PrintSettingsEndpoints.DeleteTemplate(item.IsWeight, item.Id);
+  }
+
+  private string GetTemplateTypeName(bool isWeight) =>
+    isWeight ? WsDataLocalizer["ColTemplateWeight"] : WsDataLocalizer["ColTemplatePiece"];
+}

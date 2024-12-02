@@ -1,0 +1,80 @@
+@using Blazor.Heroicons.Outline
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models.Features.References1C.Brands
+
+@attribute [Route(Urls.Brands)]
+@rendermode InteractiveServer
+
+<BrowserTitle Label="@Localizer["SectionBrands"]" />
+
+<UseParameterlessEndpoint
+  Endpoint="@References1CEndpoints.BrandsEndpoint"
+  Options="@(PageHelper.DefaultEndpointOptions)"
+  Context="query"
+>
+  <Breadcrumbs Class="pb-5">
+    <Breadcrumb Label=@Localizer["SectionBrands"] Link="@Urls.Brands" />
+  </Breadcrumbs>
+
+  <DataGridHeader>
+    <DataGridLabelWithCounter
+      Label="@Localizer["SectionBrands"]"
+      ItemsCount="@query.Data?.Length"
+      IsLoading="query.IsLoading"
+    />
+    <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching" />
+  </DataGridHeader>
+
+  <DataGridContainer
+    TItem="BrandDto"
+    Items="@(query.HasData ? query.Data : [])"
+    OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToBrand(item.Id)))"
+  >
+    <ColumnsContent>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColStatus"]"
+        Width="5%"
+        Filterable="false"
+      >
+        <DisplayTemplate>
+          @if (context.Name.StartsWith('я'))
+          {
+            <div class="w-full flex items-center justify-center">
+              <TrashIcon class="text-red-600 size-5"/>
+            </div>
+          }
+        </DisplayTemplate>
+      </DataGridColumn>
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColChangeDt"]"
+        Field="@nameof(BrandDto.ChangeDt)"
+        Width="20%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColName"]"
+        Field="@nameof(BrandDto.Name)"
+        Width="55%"
+      />
+    </ColumnsContent>
+    <ContextMenuContent>
+      <DataGridActionOpenItem Link="@RedirectHelper.ToBrand(context.Item.Id)" />
+      <DataGridActionOpenInNewTab TItem="BrandDto" Link="@RedirectHelper.ToBrand(context.Item.Id)" />
+    </ContextMenuContent>
+  </DataGridContainer>
+</UseParameterlessEndpoint>
+
+@code {
+  #region Inject
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
+
+  #endregion
+}

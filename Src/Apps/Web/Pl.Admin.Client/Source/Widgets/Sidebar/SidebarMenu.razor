@@ -1,0 +1,20 @@
+@using WMBlazorOverlayScrollbars.WMBOS
+
+<div class="size-full [&>.WMBOS]:h-full [&>.WMBOS>.os-theme-dark.os-host-transition>.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle]:!bg-primary/[.2] [&>.WMBOS>.os-theme-dark.os-host-transition>.os-scrollbar>.os-scrollbar-track>.os-scrollbar-handle:hover]:!bg-primary/[.3]" data-sidebar="content">
+  <BlazorOverlayScrollbars CssClass="h-full">
+    <BlazorOverlayScrollbarsContent>
+      <ul class="flex flex-col select-none w-full p-2 gap-0.5" data-sidebar="menu">
+        @foreach (MenuSection menu in MenuSections)
+        {
+          <SidebarMenuItem
+            Icon="@menu.Icon"
+            Label="@menu.Label"
+            Items="@menu.Items"
+            RequiredClaim="@menu.Claim"
+          />
+        }
+      </ul>
+    </BlazorOverlayScrollbarsContent>
+    <BlazorOverlayScrollbarsLoading><span class="hidden"/></BlazorOverlayScrollbarsLoading>
+  </BlazorOverlayScrollbars>
+</div>

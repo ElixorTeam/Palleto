@@ -1,0 +1,49 @@
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<LabelCreateFormFieldItem Label="@WsDataLocalizer["ColKneading"]">
+  <div class="size-full grid grid-cols-7 items-center">
+    <div class="col-span-2"></div>
+    <div class="col-span-3 flex items-center justify-center size-full overflow-hidden">
+      <span class="text-xl font-medium xl:text-3xl">
+        @Kneading
+      </span>
+    </div>
+    <div class="col-span-2 size-full overflow-hidden">
+      <Button
+        Size="ButtonSizeType.Full"
+        Variant="ButtonVariantType.Outline"
+        OnClick="@ShowNumericKeyboard"
+      >
+        <span class="text-lg xl:text-2xl">
+          @Localizer["BtnEnter"]
+        </span>
+      </Button>
+    </div>
+  </div>
+</LabelCreateFormFieldItem>
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+  [Inject] private IState<PluState> PluState { get; set; } = default!;
+
+  # endregion
+
+  [Parameter, EditorRequired] public ushort Kneading { get; set; }
+  [Parameter] public EventCallback<ushort> KneadingChanged { get; set; }
+
+  private async Task ShowNumericKeyboard()
+  {
+    IDialogReference dialog = await DialogService.ShowDialogAsync<KneadingInputDialog>(Kneading, new());
+    DialogResult result = await dialog.Result;
+    if (result is { Cancelled: false, Data: ushort newKneading })
+    {
+      Kneading = newKneading;
+      await KneadingChanged.InvokeAsync(newKneading);
+      StateHasChanged();
+    }
+  }
+}

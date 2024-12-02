@@ -1,0 +1,28 @@
+<div class="w-full flex h-10 gap-2 p-1.5 border bg-primary/5 rounded-md" id="@HtmlId">
+  <button
+    type="button"
+    class="@Css.Class("w-1/2 h-full flex items-center text-sm transition-colors justify-center rounded-md", Value ? "bg-background" : "")"
+    @onclick="@(() => SetValue(true))"
+  >
+    Монопаллета
+  </button>
+  <button
+    type="button"
+    class="@Css.Class("w-1/2 h-full flex items-center text-sm transition-colors justify-center rounded-md", !Value ? "bg-background" : "")"
+    @onclick="@(() => SetValue(false))"
+  >
+    Многопаллета
+  </button>
+</div>
+
+@code {
+  [Parameter] public bool Value { get; set; }
+  [Parameter] public EventCallback<bool> ValueChanged { get; set; }
+  [Parameter] public string HtmlId { get; set; } = $"switcher-{Guid.NewGuid()}";
+
+  private async Task SetValue(bool newValue)
+  {
+    Value = newValue;
+    await ValueChanged.InvokeAsync(Value);
+  }
+}

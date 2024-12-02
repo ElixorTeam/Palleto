@@ -1,0 +1,171 @@
+@using Blazor.Heroicons.Outline
+@using Pl.Admin.Client.Source.Pages.References1C.Plus.Update
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Models.Features.References1C.Brands
+@using Pl.Admin.Models.Features.References1C.Plus.Queries
+
+@attribute [Route(Urls.Plus)]
+@rendermode InteractiveServer
+
+<BrowserTitle Label="@Localizer["SectionPlu"]" />
+
+<UseParameterlessEndpoint
+  Endpoint="@References1CEndpoints.PlusEndpoint"
+  Options="@(PageHelper.DefaultEndpointOptions)"
+  Context="query"
+>
+  <Breadcrumbs Class="pb-5">
+    <Breadcrumb Label="@Localizer["SectionPlu"]" Link="@Urls.Plus" />
+  </Breadcrumbs>
+
+  <DataGridHeader>
+    <DataGridLabelWithCounter
+      Label="@Localizer["SectionPlu"]"
+      ItemsCount="@query.Data?.Length"
+      IsLoading="query.IsLoading"
+    />
+    <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching"/>
+  </DataGridHeader>
+
+  <DataGridContainer
+    TItem="PluDto"
+    Items="@(query.HasData ? query.Data : [])"
+    OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToPlu(item.Id)))"
+    IsFilterable
+  >
+    <ColumnsContent>
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColStatus"]"
+        Width="5%"
+        Sortable="false"
+        Filterable="false"
+      >
+        <DisplayTemplate>
+          @if (context.Name.StartsWith('я'))
+          {
+            <div class="w-full flex items-center justify-center">
+              <TrashIcon class="text-destructive size-5"/>
+            </div>
+          }
+          else if (context.Template?.Id.IsEmpty() == true)
+          {
+            <div class="w-full flex items-center justify-center">
+              <BookmarkSlashIcon class="text-purple-500 size-5 transition-colors hover:text-purple-700 dark:hover:text-purple-300"/>
+            </div>
+          }
+          else if (!PluViewValidator.Validate(context).IsValid)
+          {
+            <div class="w-full flex items-center justify-center">
+              <ExclamationTriangleIcon class="text-orange-400 size-5"/>
+            </div>
+          }
+        </DisplayTemplate>
+      </DataGridColumn>
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColNumber"]"
+        Field="@nameof(PluDto.Number)"
+        FilterMethod="DataGridColumnFilterMethod.StartsWith"
+        Width="10%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColName"]"
+        Field="@nameof(PluDto.Name)"
+        FilterMethod="DataGridColumnFilterMethod.Contains"
+        Width="25%"
+      />
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColType"]"
+        Field="@nameof(PluDto.IsWeight)"
+        Width="10%"
+        Sortable="false"
+        FilterCellClass="!font-normal"
+      >
+        <FilterTemplate>
+          @{ context.SearchValue = IsWeightFilter; }
+          <SelectSingle
+            TItem="bool?"
+            Items="@( [false, true, null])"
+            @bind-Value="@IsWeightFilter"
+            @bind-Value:after="@(() => context.TriggerFilterChange(IsWeightFilter))"
+            Placeholder="@Localizer["SelectItemNotSelected"]"
+            ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] :
+                               item.Value ? WsDataLocalizer["ColPluWeight"] : WsDataLocalizer["ColPluPiece"])"
+          />
+        </FilterTemplate>
+        <DisplayTemplate>
+          <span>
+            @(context.IsWeight ? WsDataLocalizer["ColPluWeight"] : WsDataLocalizer["ColPluPiece"])
+          </span>
+        </DisplayTemplate>
+      </DataGridColumn>
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColBrand"]"
+        Field="@($"{nameof(PluDto.Brand)}.{nameof(ProxyDto.Name)}")"
+        Width="20%"
+        Sortable="false"
+        FilterMethod="DataGridColumnFilterMethod.Equals"
+        FilterCellClass="!font-normal"
+      >
+        <FilterTemplate>
+          <UseParameterlessEndpoint Endpoint="@References1CEndpoints.BrandsEndpoint" Context="brandsQuery">
+            @if (brandsQuery.HasData)
+            {
+              <SelectSingle
+                TItem="BrandDto?"
+                Items="@(brandsQuery.Data.Concat([null]))"
+                @bind-Value="@BrandFilter"
+                @bind-Value:after="@(() => context.TriggerFilterChange(BrandFilter?.Name))"
+                Placeholder="@Localizer["SelectItemNotSelected"]"
+                ItemDisplayName="@(item => item?.Name ?? Localizer["SelectItemNotSelected"])"
+              />
+            }
+            else
+            {
+              <Skeleton Class="h-9 w-full" />
+            }
+          </UseParameterlessEndpoint>
+        </FilterTemplate>
+      </DataGridColumn>
+
+      <DataGridColumn
+        Caption="@WsDataLocalizer["ColChangeDt"]"
+        Field="@nameof(PluDto.ChangeDt)"
+        Width="15%"
+        Filterable="false"
+      />
+    </ColumnsContent>
+    <ContextMenuContent>
+      <AuthorizeView Policy="@PolicyEnum.Support" Context="authContext">
+        <DataGridActionUpdateItem TItem="PluDto" Action="@OpenUpdateDialog"/>
+      </AuthorizeView>
+      <DataGridActionOpenItem Link="@RedirectHelper.ToPlu(context.Item.Id)"/>
+      <DataGridActionOpenInNewTab TItem="PluDto" Link="@RedirectHelper.ToPlu(context.Item.Id)"/>
+    </ContextMenuContent>
+  </DataGridContainer>
+</UseParameterlessEndpoint>
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
+  [Inject] private PluViewValidator PluViewValidator { get; set; } = default!;
+
+  # endregion
+
+  private bool? IsWeightFilter { get; set; }
+  private BrandDto? BrandFilter { get; set; }
+
+  private Task OpenUpdateDialog(PluDto item) =>
+    DialogService.ShowDialogAsync<PluUpdateDialog>(item, PageHelper.DialogParameters);
+}

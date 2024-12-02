@@ -1,0 +1,4 @@
+POST https://{{url}}/brands
+Authorization: Bearer {{$auth.token("access-token")}}
+
+###

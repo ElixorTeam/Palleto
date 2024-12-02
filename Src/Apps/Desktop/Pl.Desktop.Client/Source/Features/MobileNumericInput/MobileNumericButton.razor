@@ -1,0 +1,8 @@
+<Button Variant="ButtonVariantType.Secondary" OnClick="@OnClick" Class="h-16 text-xl border">
+  @Label
+</Button>
+
+@code {
+  [Parameter] public string Label { get; set; } = string.Empty;
+  [Parameter] public EventCallback OnClick { get; set; }
+}

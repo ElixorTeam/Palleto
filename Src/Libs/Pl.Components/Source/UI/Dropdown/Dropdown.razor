@@ -1,0 +1,52 @@
+@inherits PlComponentBase
+
+<FluentPopover
+  AdditionalAttributes="@AdditionalAttributes"
+  AnchorId="@Anchor"
+  @bind-Open="Visible"
+  @bind-Open:after="OnIsOpenChanged"
+  VerticalThreshold="@VerticalThreshold"
+  VerticalPosition="@Position"
+  Class="@ClassMerge("!bg-background rounded-md border !shadow-md", Class)"
+  Style="@Style"
+>
+  <Header></Header>
+  <Body>@ChildContent</Body>
+  <Footer></Footer>
+</FluentPopover>
+
+@code {
+  /// <summary>
+  /// The content to be rendered inside the component.
+  /// </summary>
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  /// <summary>
+  /// A value indicating whether the component is visible.
+  /// </summary>
+  [Parameter] public bool Visible { get; set; }
+
+  /// <summary>
+  /// Callback for when visible state changes.
+  /// </summary>
+  [Parameter] public EventCallback<bool> VisibleChanged { get; set; }
+
+  /// <summary>
+  /// The control identifier associated with the tooltip.
+  /// </summary>
+  [Parameter] public string Anchor { get; set; } = string.Empty;
+
+  /// <summary>
+  /// A value indicating the space allocated fot the default vertical position.
+  /// </summary>
+  [Parameter] public int VerticalThreshold { get; set; }
+
+  /// <summary>
+  /// The vertical position of component relative to the anchor element.
+  /// </summary>
+  [Parameter] public VerticalPosition? Position { get; set; }
+
+  [Parameter] public string? Style { get; set; }
+
+  private async Task OnIsOpenChanged() => await VisibleChanged.InvokeAsync(Visible);
+}

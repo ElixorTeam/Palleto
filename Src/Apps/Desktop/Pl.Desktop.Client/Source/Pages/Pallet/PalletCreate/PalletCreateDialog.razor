@@ -1,0 +1,60 @@
+@implements IDialogContentComponent
+
+<Dialog class="max-w-screen-md">
+  <DialogHeader IsDisabled="@IsHeaderBlocked">
+    <Button
+      Variant="ButtonVariantType.Secondary"
+      Class="disabled:opacity-100"
+      Disabled
+    >
+      @Localizer["CreatePalletFormHeader"]
+    </Button>
+  </DialogHeader>
+  <div class="max-h-full bg-secondary/30 w-full overflow-y-auto py-4">
+    <Stepper @bind-CurrentIndex="CurrentStepIndex" Class="mb-4 mt-2">
+      <StepperItem Label="@WsDataLocalizer["ColPlu"]" Disabled />
+      <StepperItem Label="@WsDataLocalizer["ColPallet"]" Disabled />
+      <StepperItem Label="@Localizer["PalletCreateFinalTitle"]" Disabled />
+    </Stepper>
+    @if (CurrentStepIndex == 1)
+    {
+      <PalletFirstStageForm
+        FormModel="FormModel"
+        OnCancelAction="@(async() => await Dialog.CloseAsync())"
+        OnValidSubmit="@(() => CurrentStepIndex = 2)"
+      />
+    }
+    @if (CurrentStepIndex == 2)
+    {
+      <PalletSecondStageForm
+        FormModel="FormModel"
+        OnCancelAction="@(() => CurrentStepIndex = 1)"
+        OnValidSubmit="@(() => CurrentStepIndex = 3)"
+      />
+    }
+    @if (CurrentStepIndex == 3)
+    {
+      <PalletResultStageForm
+        FormModel="FormModel"
+        OnCancelAction="@(() => CurrentStepIndex = 2)"
+        OnSubmitAction="@(async value => await Dialog.CloseAsync(value))"
+        OnBlockAction="@(value => IsHeaderBlocked = value)"
+      />
+    }
+  </div>
+</Dialog>
+
+@code {
+  # region Injects
+
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+
+  # endregion
+
+  [CascadingParameter] public FluentDialog Dialog { get; set; } = default!;
+
+  private int CurrentStepIndex { get; set; } = 1;
+  private PalletCreateModel FormModel { get; } = new();
+  private bool IsHeaderBlocked { get; set; }
+}

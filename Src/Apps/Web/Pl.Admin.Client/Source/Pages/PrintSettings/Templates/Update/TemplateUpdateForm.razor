@@ -1,0 +1,110 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.References.Template.Commands
+@using Pl.Admin.Models.Features.References.Template.Queries
+
+@inherits SectionFormBase<TemplateUpdateDto>
+
+<SectionForm
+  FormModel="@FormModel"
+  ChangeDate="@Model.ChangeDt"
+  CreateDate="@Model.CreateDt"
+  Validator="@TemplateUpdateValidator"
+  OnCancelAction="@OnCancelAction"
+  OnSubmitAction="@UpdateItem"
+>
+  <FieldsContent>
+    <SectionAdminGuidField Value="@Model.Id" />
+
+    <FormDivider>@WsDataLocalizer["ColDescription"]</FormDivider>
+
+    <SectionTextField
+      Label="@WsDataLocalizer["ColName"]"
+      @bind-Value="@FormModel.Name"
+      For="@(() => FormModel.Name)"
+    />
+
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColType"]"
+      Value="@GetTemplateTypeName(Model.IsWeight)"
+    />
+
+    <FormDivider>@WsDataLocalizer["ColSize"]</FormDivider>
+
+    <SectionNumericField
+      @bind-Value="@FormModel.Width"
+      Max="255"
+      Label="@($"{WsDataLocalizer["ColWidth"]} ({WsDataLocalizer["MeasureMm"]})")"
+      For="@(() => FormModel.Width)"
+    />
+
+    <SectionNumericField
+      @bind-Value="@FormModel.Height"
+      Max="255"
+      Label="@($"{WsDataLocalizer["ColHeight"]} ({WsDataLocalizer["MeasureMm"]})")"
+      For="@(() => FormModel.Height)"
+    />
+
+    <SectionSelectSingleField
+      TItem="short"
+      @bind-Value="@FormModel.Rotate"
+      Items="@([0, 90])"
+      Label="@WsDataLocalizer["ColRotation"]"
+      ItemDisplayName="@(value => $"{value}°")"
+      For="@(() => FormModel.Rotate)"
+    />
+
+    <FormDivider>@WsDataLocalizer["ColTemplate"]</FormDivider>
+
+    <UseEndpoint
+      Endpoint="@PrintSettingsEndpoints.TemplateBodyEndpoint"
+      Arg="Model.Id"
+      Context="templateBodyQuery"
+    >
+      @if (templateBodyQuery.HasData)
+      {
+        {
+          if (string.IsNullOrWhiteSpace(FormModel.Body)) FormModel.Body = templateBodyQuery.Data;
+          if (string.IsNullOrWhiteSpace(DialogItemCopy.Body)) DialogItemCopy.Body = templateBodyQuery.Data;
+        }
+        <SectionTextAreaField
+          Label="@WsDataLocalizer["ColTemplate"]"
+          @bind-Value="@FormModel.Body"
+          For="@(() => FormModel.Body)"
+          IsCopyable
+        />
+      }
+      else
+      {
+        <Skeleton Class="h-20 w-full" />
+      }
+    </UseEndpoint>
+  </FieldsContent>
+  <ActionsContent>
+    <FormActionReset OnClick="@ResetAction" />
+  </ActionsContent>
+</SectionForm>
+
+@code {
+  #region Inject
+
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
+  [Inject] private TemplateUpdateValidator TemplateUpdateValidator { get; set; } = default!;
+
+  #endregion
+
+  [Parameter] public TemplateDto Model { get; set; } = default!;
+
+  protected override async Task UpdateItemAction(TemplateUpdateDto item)
+  {
+    TemplateDto dto = await WebApi.UpdateTemplate(Model.Id, item);
+    PrintSettingsEndpoints.UpdateTemplate(dto, FormModel.Body);
+  }
+
+  private string GetTemplateTypeName(bool isWeight) =>
+    isWeight ? WsDataLocalizer["ColTemplateWeight"] : WsDataLocalizer["ColTemplatePiece"];
+}

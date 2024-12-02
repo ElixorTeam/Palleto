@@ -1,0 +1,19 @@
+@inherits InputBase<bool>
+
+<FluentCheckbox
+  AdditionalAttributes="AdditionalAttributes"
+  @bind-Value="Value"
+  @bind-Value:after="OnValueChanged"
+  Class="@Class"
+  Label="@Label"
+  Autofocus="@AutoFocus"
+  Disabled="Disabled"
+  ReadOnly="ReadOnly"
+/>
+
+@code {
+  /// <summary>
+  /// The text label displayed.
+  /// </summary>
+  [Parameter] public string? Label { get; set; }
+}

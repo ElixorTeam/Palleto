@@ -1,0 +1,13 @@
+@using Pl.Admin.Client.Source.Shared.Services.Stores
+@implements IDialogContentComponent
+
+<SectionDialog>
+  <Tab Id="@typeof(WarehouseCreateForm).ToString()" Label="@Localizer["SectionWarehouses"]">
+    <WarehouseCreateForm FormModel="@(new() { ProductionSiteId = ProductionSiteState.Value.ProductionSite.Id })" />
+  </Tab>
+</SectionDialog>
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+}

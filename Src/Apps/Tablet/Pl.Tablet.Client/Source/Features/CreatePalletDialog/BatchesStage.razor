@@ -1,0 +1,138 @@
+@using Blazor.Heroicons.Outline
+@using FluentValidation.Results
+
+<div class="w-full py-4 max-w-2xl mx-auto">
+  <div class="w-full flex justify-between items-center pb-3">
+    <h2 class="text-lg">Список партий</h2>
+    <Button Size="ButtonSizeType.Small" OnClick="@AddItem">
+      <PlusIcon class="size-5 mr-2" />
+      <span>Добавить</span>
+    </Button>
+  </div>
+  <div class="w-full max-h-full bg-background rounded-md border divide-y">
+    <div class="w-full h-12 grid grid-cols-[3rem,1fr,1.5fr,1fr,5rem] divide-x">
+      <div class="size-full text-sm font-medium flex items-center justify-center">№</div>
+      <div class="size-full text-sm font-medium flex items-center px-3">ПЛУ</div>
+      <div class="size-full text-sm font-medium flex items-center px-3">Дата</div>
+      <div class="size-full text-sm font-medium flex items-center px-3">Вес</div>
+      <div class="size-full text-sm font-medium flex items-center px-3"></div>
+    </div>
+    @if (!Model.Batches.Any())
+    {
+      <div class="w-full flex items-center text-sm justify-center h-12">
+        <span>Список пуст</span>
+      </div>
+    }
+    @foreach ((BatchCreateModel item, int index) in Model.Batches.Select((value, index) => (value, index)))
+    {
+      <div class="w-full h-12 grid grid-cols-[3rem,1fr,1.5fr,1fr,5rem] divide-x">
+        <div class="size-full text-sm font-medium flex items-center justify-center">
+          @(index + 1)
+        </div>
+        <PluInput
+          @bind-Plu="@item.Plu"
+          @bind-Plu:after="@(() => OnItemChanged(item))"
+          Disabled="@Model.Mono"
+          Class="rounded-none border-l-none border-y-0 h-full"
+        />
+        <NumericDateInput @bind-Value="@item.Date" />
+        <input
+          @bind-value="@item.Weight"
+          @bind-value:after="@(() => OnItemChanged(item))"
+          class="px-3 bg-background size-full"
+          placeholder="Введите вес..."
+          type="number"
+          step="0.001"
+        />
+        <div class="size-full flex items-center justify-center">
+          <Button
+            OnClick="@(() => DeleteItem(item.Id))"
+            Variant="ButtonVariantType.Ghost"
+            Size="ButtonSizeType.Icon"
+          >
+            <TrashIcon class="size-5 text-destructive"/>
+          </Button>
+        </div>
+      </div>
+    }
+  </div>
+  <div class="flex justify-end gap-2 mt-10">
+    <Button Variant="ButtonVariantType.Outline" OnClick="@OnCancelAction">
+      Назад
+    </Button>
+    <Button OnClick="@SubmitBatches">
+      Подтвердить
+    </Button>
+  </div>
+</div>
+
+@code {
+  [Inject] private IToastService ToastService { get; set; } = default!;
+
+  [Parameter] public EventCallback OnSubmitAction { get; set; }
+  [Parameter] public EventCallback OnCancelAction { get; set; }
+  [Parameter] public PalletCreateModel Model { get; set; } = new();
+  [Parameter] public EventCallback<PalletCreateModel> ModelChanged { get; set; }
+
+  private BatchValidator Validator { get; } = new();
+
+  private Task OnModelChanged() => ModelChanged.InvokeAsync(Model);
+
+  private async Task AddItem()
+  {
+    BatchCreateModel newItem = new();
+    if (Model.Mono) newItem.Plu = Model.DefaultPlu;
+    Model.Batches.Add(newItem);
+    await OnModelChanged();
+  }
+
+  private async Task OnItemChanged(BatchCreateModel item)
+  {
+    int index = Model.Batches.FindIndex(x => x.Id.Equals(item.Id));
+    if (index == -1) return;
+    Model.Batches[index] = item;
+    await OnModelChanged();
+  }
+
+  private async Task DeleteItem(Guid itemId)
+  {
+    int index = Model.Batches.FindIndex(x => x.Id.Equals(itemId));
+    if (index == -1) return;
+    Model.Batches.RemoveAt(index);
+    await OnModelChanged();
+  }
+
+  private async Task SubmitBatches()
+  {
+    ToastService.ClearAll();
+    if (!Model.Batches.Any())
+    {
+      ToastService.ShowError("Партии не указаны");
+      return;
+    }
+
+    List<BatchError> batchesErrors = await ValidateBatches(Model.Batches);
+
+    if (batchesErrors.Any())
+    {
+      foreach (BatchError error in batchesErrors.Take(2))
+        ToastService.ShowError($"Партия {error.Index + 1}. {error.Message}");
+      return;
+    }
+
+    await OnSubmitAction.InvokeAsync();
+  }
+
+  private async Task<List<BatchError>> ValidateBatches(List<BatchCreateModel> batches)
+  {
+    List<BatchError> errorList = [];
+    foreach ((BatchCreateModel item, int index) in batches.Select((value, index) => (value, index)))
+    {
+      ValidationResult? result = await Validator.ValidateAsync(item);
+      if (result == null || !result.Errors.Any()) continue;
+      BatchError error = new(index, result.Errors.First().ErrorMessage);
+      errorList = errorList.Append(error).ToList();
+    }
+    return errorList;
+  }
+}

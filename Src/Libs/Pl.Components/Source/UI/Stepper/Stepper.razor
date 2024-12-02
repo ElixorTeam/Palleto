@@ -1,0 +1,53 @@
+@inherits PlComponentBase
+
+<nav
+  @attributes="@AdditionalAttributes"
+  id="@Id"
+  class="@ClassMerge("w-fit max-w-full mx-auto", Class)"
+>
+  <ul class="flex items-center justify-between pb-4">
+    @if (ChildContent != null)
+    {
+      <CascadingValue Value="this">
+        @ChildContent
+      </CascadingValue>
+    }
+  </ul>
+</nav>
+
+@code {
+  /// <summary>
+  /// A value indicating the current step id
+  /// </summary>
+  [Parameter] public int CurrentIndex { get; set; } = 1;
+
+  /// <summary>
+  /// Callback for when index state changes.
+  /// </summary>
+  [Parameter] public EventCallback<int> CurrentIndexChanged { get; set; }
+
+  /// <summary>
+  /// The content to be rendered inside the component.
+  /// </summary>
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  /// <summary>
+  /// Count of registered stepper item components
+  /// </summary>
+  public int ItemsCount { get; private set; }
+
+  internal event Action? OnIndexChanged;
+
+  public int GetItemIndex()
+  {
+    ItemsCount++;
+    return ItemsCount;
+  }
+
+  public async Task SetCurrentIndex(int index)
+  {
+    CurrentIndex = index;
+    await CurrentIndexChanged.InvokeAsync(index);
+    OnIndexChanged?.Invoke();
+  }
+}

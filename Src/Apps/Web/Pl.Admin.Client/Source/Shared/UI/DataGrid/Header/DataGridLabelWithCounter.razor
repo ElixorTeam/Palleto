@@ -1,0 +1,21 @@
+<div class="gap-1 flex items-center">
+  <span class="text-xl font-medium">@Label</span>
+  <Badge Variant="@BadgeVariants.Secondary" Class="px-1.5 py-px mb-1">
+  @if (IsLoading)
+  {
+    <Spinner Class="inline size-3 text-muted animate-spin fill-primary" />
+  }
+  else
+  {
+    @(ItemsCount ?? 0)
+  }
+  </Badge>
+</div>
+
+@code {
+
+  [Parameter] public bool IsLoading { get; set; }
+  [Parameter] public int? ItemsCount { get; set; }
+  [Parameter] public string Label { get; set; } = string.Empty;
+
+}

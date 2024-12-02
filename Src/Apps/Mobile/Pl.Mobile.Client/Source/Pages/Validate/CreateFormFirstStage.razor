@@ -1,0 +1,84 @@
+@using Blazor.Heroicons.Outline
+@using Microsoft.Maui.Controls
+@using Button=Pl.Components.Source.UI.Button
+@using Pl.Mobile.Client.Source.Shared
+
+@implements IAsyncDisposable
+
+<div class="size-full flex flex-col items-center justify-center">
+  @if (string.IsNullOrEmpty(BarcodeValue))
+  {
+  <div class="flex max-w-sm flex-col px-2 gap-1 items-center">
+    <DocumentTextIcon class="size-14 stroke-1" />
+    <div class="flex flex-col text-center gap-1">
+      <h2 class="text-lg font-semibold">Отсканируйте штрихкода</h2>
+      <p class="text-xs">
+        Для создания паллеты необходимо отсканировать штрихкод продукции, по которой будет создана паллета
+      </p>
+    </div>
+  </div>
+  }
+  else
+  {
+    <div class="size-full flex flex-col px-2">
+      <div class="size-full items-center justify-center flex flex-col grow">
+        <span class="text-sm">Значение штрихкода:</span>
+        <span>@BarcodeValue</span>
+      </div>
+      <div class="w-full gap-2 flex flex-col shrink-0 py-3 px-2">
+        <Button
+          OnClick="@ResetBarcode"
+          Variant="ButtonVariantType.Outline"
+        >
+          Изменить
+        </Button>
+        <Button
+          OnClick="@OnSuccessAction"
+          Disabled="@Model.Id.Equals(Guid.Empty)">
+          Продолжить
+        </Button>
+      </div>
+    </div>
+  }
+</div>
+
+@code {
+  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
+
+  [Parameter] public EventCallback OnSuccessAction { get; set; }
+  [Parameter] public PluDto Model { get; set; } = new();
+  [Parameter] public EventCallback<PluDto> ModelChanged { get; set; }
+
+  private string BarcodeValue { get; set; } = string.Empty;
+  private IEnumerable<Label> LabelEntities { get; set; } = [];
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (!firstRender) return;
+    await JsRuntime.InvokeVoidAsync("subscribeBarcodeEnterEvent", DotNetObjectReference.Create(this), nameof(HandleInputEvent));
+  }
+
+  [JSInvokable]
+  public void HandleInputEvent(string inputValue)
+  {
+    BarcodeValue = inputValue;
+    StateHasChanged();
+  }
+
+  private void ResetBarcode()
+  {
+    BarcodeValue = string.Empty;
+  }
+
+  public async ValueTask DisposeAsync()
+  {
+    try
+    {
+      await JsRuntime.InvokeVoidAsync("unsubscribeBarcodeEnterEvent");
+    }
+    catch
+    {
+      // pass
+    }
+  }
+}

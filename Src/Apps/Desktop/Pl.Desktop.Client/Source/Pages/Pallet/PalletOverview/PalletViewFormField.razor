@@ -1,0 +1,49 @@
+@using Blazor.Heroicons.Outline
+
+<div class="space-y-2 relative">
+  <FieldLabel HtmlFor="@HtmlId">@Label</FieldLabel>
+  <InputTextField
+    Id="@HtmlId"
+    Value="@Value"
+    ReadOnly
+  />
+  @if (IsCopyable && !string.IsNullOrWhiteSpace(Value))
+  {
+    <Button
+      Variant="ButtonVariantType.Ghost"
+      Size="ButtonSizeType.Icon"
+      OnClick="@(() => SaveToClipboard(Value))"
+      class="text-muted-foreground absolute size-7 top-7 right-1.5"
+    >
+      <ClipboardIcon class="size-[1.1rem]" />
+    </Button>
+  }
+</div>
+
+@code {
+  # region Injects
+
+  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
+  [Inject] private IToastService ToastService { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+
+  # endregion
+
+  [Parameter] public string Label { get; set; } = string.Empty;
+  [Parameter] public string Value { get; set; } = string.Empty;
+  [Parameter] public string HtmlId { get; set; } = $"field-{Guid.NewGuid()}";
+  [Parameter] public bool IsCopyable { get; set; }
+
+  private async Task SaveToClipboard(string value)
+  {
+    try
+    {
+      await JsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", value);
+      ToastService.ShowInfo(Localizer["ToastValueCopiedToClipboard"]);
+    }
+    catch
+    {
+      ToastService.ShowError(Localizer["ToastValueCopiedToClipboardUnsuccessful"]);
+    }
+  }
+}

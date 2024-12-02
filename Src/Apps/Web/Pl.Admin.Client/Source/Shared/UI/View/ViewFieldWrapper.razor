@@ -1,0 +1,14 @@
+<div class="@Css.Class("w-full overflow-hidden flex flex-col", Class)">
+  <span class="truncate text-muted-foreground">
+    @Label
+  </span>
+  <div class="flex w-full">
+    @ChildContent
+  </div>
+</div>
+
+@code {
+  [Parameter] public string Label { get; set; } = string.Empty;
+  [Parameter] public string Class { get; set; } = string.Empty;
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+}

@@ -1,0 +1,63 @@
+@using Blazor.Heroicons.Outline
+
+<div class="w-full overflow-hidden flex flex-col">
+  <span class="truncate text-muted-foreground">
+    @Label
+  </span>
+  <div class="flex w-full gap-0.5">
+    @if (string.IsNullOrWhiteSpace(Value))
+    {
+      <Skeleton Class="h-6 w-full" />
+    }
+    else
+    {
+      <span class="line-clamp-2">@Value</span>
+    }
+    @if (Copyable)
+    {
+      <Button
+        Variant="ButtonVariantType.Ghost"
+        Size="ButtonSizeType.Icon"
+        Class="size-6 shrink-0"
+        OnClick="SaveToClipboard"
+      >
+        <ClipboardIcon class="size-4" />
+      </Button>
+    }
+    @if (!string.IsNullOrWhiteSpace(Link))
+    {
+      <Button
+        Link="@Link"
+        Variant="ButtonVariantType.Ghost"
+        Size="ButtonSizeType.Icon"
+        Class="size-6 shrink-0"
+      >
+        <ArrowTopRightOnSquareIcon class="size-4" />
+      </Button>
+    }
+  </div>
+</div>
+
+@code {
+  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
+  [Inject] private IToastService ToastService { get; set; } = default!;
+
+  [Parameter] public string Label { get; set; } = string.Empty;
+  [Parameter] public string? Value { get; set; }
+  [Parameter] public string Link { get; set; } = string.Empty;
+  [Parameter] public bool Copyable { get; set; }
+
+  private async Task SaveToClipboard()
+  {
+    if (string.IsNullOrWhiteSpace(Value)) return;
+
+    try
+    {
+      await JsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Value);
+    }
+    catch
+    {
+      ToastService.ShowError("Ваш браузер не потдерживает копирование");
+    }
+  }
+}

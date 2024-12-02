@@ -1,0 +1,72 @@
+@implements IDisposable
+@using Blazor.Heroicons.Outline
+
+<Button
+  OnClick="@OpenCameraScannerWithCooldown"
+  Variant="@Variant"
+  Size="@Size"
+  Class="@Class"
+  Disabled="@CurrentDisabledState"
+>
+  @if (ChildContent == null)
+  {
+    <CameraIcon class="size-5 mr-2"/>
+    <span>Камера</span>
+  }
+  else
+  {
+    @ChildContent
+  }
+</Button>
+
+@code {
+  [Parameter] public EventCallback<string> ValueChanged { get; set; }
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+  [Parameter] public ButtonVariantType Variant { get; set; } = ButtonVariantType.Default;
+  [Parameter] public ButtonSizeType Size { get; set; } = ButtonSizeType.Default;
+  [Parameter] public string Class { get; set; } = string.Empty;
+  [Parameter] public bool Disabled { get; set; }
+
+  private static readonly Lazy<ScanPage> ScanPage = new(() => new());
+  private bool IsCooldownActive { get; set; } = false;
+  private bool CurrentDisabledState => Disabled || IsCooldownActive;
+  private const ushort CooldownTime = 2000;
+
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    ScanPage.Value.ScanCompleted += OnScanCompleted;
+  }
+
+  private async Task OpenCameraScanner()
+  {
+  if (Application.Current?.MainPage == null) return;
+  await Application.Current.MainPage.Navigation.PushModalAsync(ScanPage.Value);
+  }
+
+  private async Task OpenCameraScannerWithCooldown()
+  {
+    if (IsCooldownActive || Disabled) return;
+    IsCooldownActive = true;
+    StateHasChanged();
+
+    await OpenCameraScanner();
+
+    await Task.Delay(CooldownTime);
+    IsCooldownActive = false;
+    StateHasChanged();
+  }
+
+  private async void OnScanCompleted(object? sender, string value)
+  {
+    if (string.IsNullOrWhiteSpace(value)) return;
+    string formattedValue = value.Trim();
+    formattedValue = new(formattedValue.Where(char.IsDigit).ToArray());
+    await ValueChanged.InvokeAsync(formattedValue);
+  }
+
+  public void Dispose()
+  {
+    ScanPage.Value.ScanCompleted -= OnScanCompleted;
+  }
+}

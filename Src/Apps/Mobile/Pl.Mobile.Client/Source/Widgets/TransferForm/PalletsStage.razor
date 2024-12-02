@@ -1,0 +1,81 @@
+@using Blazor.Heroicons.Outline
+@using Pl.Mobile.Client.Source.Features.Debug
+
+<InternalBarcodeScanner ValueChanged="@AddNewPallet" />
+
+<div class="flex flex-col size-full justify-between overflow-hidden py-3 px-2">
+  @if (!Pallets.Any())
+  {
+    <div class="size-full flex items-center justify-center py-4">
+      <div class="flex flex-col items-center gap-1 text-center">
+        <DocumentTextIcon class="size-10 stroke-[0.95]"/>
+        <h3 class="text-lg font-medium">Отсканируйте штрихкод паллеты</h3>
+      </div>
+    </div>
+  }
+  else
+  {
+    <div class="size-full flex flex-col py-4 gap-1 overflow-hidden">
+      <h3 class="text-sm font-medium">Штрихкода паллет</h3>
+      <ul class="size-full items-center flex flex-col gap-1 overflow-y-auto">
+        @foreach (string item in Pallets.ToArray().Reverse())
+        {
+          <li class="w-full">
+            <button
+              type="button"
+              @onclick="@(() => DeletePalletItem(item))"
+              Class="w-full overflow-hidden items-center h-8 text-sm rounded-md bg-background border px-3 flex gap-2"
+            >
+              <XMarkIcon class="size-4 shrink-0"/>
+              <span class="truncate">@item</span>
+            </button>
+          </li>
+        }
+      </ul>
+    </div>
+  }
+  <div class="shrink-0 w-full flex flex-col gap-2">
+    <Button OnClick="@OnCancelAction" Variant="ButtonVariantType.Outline">
+      Назад
+    </Button>
+
+    @{
+      #if DEBUG
+    }
+    @* ReSharper disable once Razor.UnresolvedComponent *@
+    <CameraBarcodeScanner Variant="ButtonVariantType.Outline" ValueChanged="@AddNewPallet"/>
+    @{
+      #endif
+    }
+
+    <Button OnClick="@OnSuccessAction" Disabled="@(!Pallets.Any())">
+      Продолжить
+    </Button>
+  </div>
+</div>
+
+@code {
+  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
+
+  [Parameter] public EventCallback OnSuccessAction { get; set; }
+  [Parameter] public EventCallback OnCancelAction { get; set; }
+  [Parameter] public List<string> Pallets { get; set; } = [];
+  [Parameter] public EventCallback<List<string>> PalletsChanged { get; set; }
+
+  private IEnumerable<Label> LabelEntities { get; set; } = [];
+
+  private async Task AddNewPallet(string value)
+  {
+    if (Pallets.Contains(value)) return;
+    Pallets.Add(value);
+    await PalletsChanged.InvokeAsync(Pallets);
+  }
+
+  private async Task DeletePalletItem(string item)
+  {
+    int index = Pallets.FindIndex(x => x.Equals(item));
+    if (index == -1) return;
+    Pallets.RemoveAt(index);
+    await PalletsChanged.InvokeAsync(Pallets);
+  }
+}

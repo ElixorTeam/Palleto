@@ -1,0 +1,118 @@
+@using Pl.Admin.Client.Source.Features
+@using Pl.Admin.Client.Source.Pages.Devices.Printers.Create
+@using Pl.Admin.Client.Source.Pages.Devices.Printers.Update
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Admin.Client.Source.Shared.Services.Stores
+@using TscZebra.Plugin.Abstractions.Enums
+@using Pl.Admin.Models
+@using Pl.Admin.Models.Features.Devices.Printers.Queries
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@attribute [Route(Urls.Printers)]
+@attribute [Authorize(Policy = PolicyEnum.Support)]
+@rendermode InteractiveServer
+
+<BrowserTitle Label="@Localizer["SectionPrinters"]" />
+
+<UserProductionSiteErrorSuspense>
+  <UseEndpoint
+    Endpoint="@DevicesEndpoints.PrintersEndpoint"
+    Arg="@ProductionSiteState.Value.ProductionSite.Id"
+    Options="@PageHelper.DefaultEndpointOptions"
+    Context="query"
+  >
+    <Breadcrumbs Class="pb-5">
+      <Breadcrumb Label="@Localizer["SectionPrinters"]" Link="@Urls.Printers" />
+    </Breadcrumbs>
+
+    <DataGridHeader>
+      <DataGridLabelWithCounter
+        Label="@Localizer["SectionPrinters"]"
+        ItemsCount="@query.Data?.Length"
+        IsLoading="query.IsLoading"
+      />
+      <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching" />
+      <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
+        <DataGridActionCreate OnClick="@OpenCreateDialog"/>
+      </AuthorizeView>
+    </DataGridHeader>
+
+    <DataGridContainer
+      TItem="PrinterDto"
+      Items="@(query.HasData ? query.Data : [])"
+      OnItemSelect="@(item => PageHelper.OpenLink(RedirectHelper.ToPrinter(item.Id)))"
+      IsFilterable
+    >
+      <ColumnsContent>
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColManufacturer"]"
+          Field="@nameof(PrinterDto.Type)"
+          Width="20%"
+          FilterCellClass="!font-normal"
+        >
+          <FilterTemplate>
+            @{ context.SearchValue = Type; }
+            <SelectSingle
+              TItem="PrinterTypes?"
+              Items="@(Enum.GetValues(typeof(PrinterTypes)).Cast<PrinterTypes?>().Union([null]))"
+              @bind-Value="@Type"
+              @bind-Value:after="@(() => context.TriggerFilterChange(Type))"
+              Placeholder="@Localizer["SelectItemNotSelected"]"
+              ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] : item.Value.ToString())"
+            />
+          </FilterTemplate>
+        </DataGridColumn>
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColName"]"
+          Field="@nameof(PrinterDto.Name)"
+          Width="40%"
+        />
+        <DataGridColumn
+          Caption="@WsDataLocalizer["ColIp"]"
+          Field="@nameof(PrinterDto.Ip)"
+          Width="40%"
+          Sortable="false"
+        />
+      </ColumnsContent>
+      <ContextMenuContent>
+        <DataGridActionUpdateItem TItem="PrinterDto" Action="@OpenUpdateDialog" />
+        <DataGridActionOpenItem Link="@(RedirectHelper.ToPrinter(context.Item.Id))"/>
+        <DataGridActionOpenInNewTab TItem="PrinterDto" Link="@RedirectHelper.ToPrinter(context.Item.Id)"/>
+        <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
+          <DataGridActionDeleteItem TItem="PrinterDto" Action="@DeleteItem"/>
+        </AuthorizeView>
+      </ContextMenuContent>
+    </DataGridContainer>
+  </UseEndpoint>
+</UserProductionSiteErrorSuspense>
+
+@code {
+  #region Inject
+
+  [Inject] private IWebApi WebApi { get; set; } = default!;
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
+  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+  [Inject] private IDialogService DialogService { get; set; } = default!;
+
+  [Inject] private PageHelper PageHelper { get; set; } = default!;
+  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
+  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
+
+  #endregion
+
+  private PrinterTypes? Type { get; set; }
+
+  private Task OpenCreateDialog() =>
+    DialogService.ShowDialogAsync<PrinterCreateDialog>(PageHelper.DialogParameters);
+
+  private Task OpenUpdateDialog(PrinterDto item) =>
+    DialogService.ShowDialogAsync<PrinterUpdateDialog>(item, PageHelper.DialogParameters);
+
+  private async Task DeleteItem(PrinterDto item)
+  {
+    await WebApi.DeletePrinter(item.Id);
+    DevicesEndpoints.DeletePrinter(item.ProductionSite.Id, item.Id);
+  }
+}

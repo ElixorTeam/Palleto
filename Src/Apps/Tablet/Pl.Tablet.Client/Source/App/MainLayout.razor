@@ -1,0 +1,14 @@
+﻿@using Pl.Tablet.Client.Source.Features.AuthSuspense
+
+@inherits LayoutComponentBase
+
+<AuthSuspense>
+  <div class="w-screen h-screen overflow-hidden overscroll-none">
+    @Body
+  </div>
+</AuthSuspense>
+
+<FluentDialogProvider />
+<FluentToastProvider Position="@ToastPosition.TopCenter" />
+<FluentTooltipProvider />
+<StoreInitializer />

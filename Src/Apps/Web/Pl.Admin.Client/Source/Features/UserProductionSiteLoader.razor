@@ -1,0 +1,37 @@
+@using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Services.Stores
+@using IToastService = Microsoft.FluentUI.AspNetCore.Components.IToastService
+@using Refit
+
+<UseParameterlessEndpoint
+  Endpoint="ReferencesEndpoints.ProxyUserProductionSiteEndpoint"
+  Options="@(new() { OnSuccess = OnSuccess, OnFailure = OnFailure })"
+>
+  @ChildContent
+</UseParameterlessEndpoint>
+
+
+@code {
+  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
+  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
+  [Inject] private IDispatcher Dispatcher { get; set; } = default!;
+  [Inject] private IToastService ToastService { get; set; } = default!;
+
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  private void OnSuccess(QuerySuccessEventArgs<Unit, ProxyDto> querySuccessEventArgs)
+  {
+    if (!ProductionSiteState.Value.ProductionSite.Id.IsEmpty()) return;
+    Dispatcher.Dispatch(new ChangeProductionSiteAction(querySuccessEventArgs.Result));
+  }
+
+  private void OnFailure(QueryFailureEventArgs<Unit> obj)
+  {
+    String message;
+    if (obj.Exception is ApiException apiException)
+      message = apiException.GetMessage("Неизвестная ошибка сервера");
+    else message = obj.Exception.Message;
+    ToastService.ShowError(message);
+  }
+}
