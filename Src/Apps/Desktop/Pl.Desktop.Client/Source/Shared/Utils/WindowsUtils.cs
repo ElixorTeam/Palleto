@@ -1,4 +1,3 @@
-using System.Management;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
@@ -14,18 +13,19 @@ public static class WindowsUtils
     [Pure]
     public static Guid GetBiosId()
     {
-        try
-        {
-            ManagementObjectSearcher searcher = new("SELECT UUID FROM Win32_ComputerSystemProduct");
-            ManagementObject? queryObj = searcher.Get().OfType<ManagementObject>().FirstOrDefault();
-            if (queryObj?["UUID"] == null) return Guid.Empty;
-            string uuid = queryObj["UUID"].ToString() ?? string.Empty;
-            return Guid.TryParse(uuid, out Guid guid) ? guid : Guid.Empty;
-        }
-        catch
-        {
-            return Guid.Empty;
-        }
+        return Guid.Empty;
+        // try
+        // {
+        //     ManagementObjectSearcher searcher = new("SELECT UUID FROM Win32_ComputerSystemProduct");
+        //     ManagementObject? queryObj = searcher.Get().OfType<ManagementObject>().FirstOrDefault();
+        //     if (queryObj?["UUID"] == null) return Guid.Empty;
+        //     string uuid = queryObj["UUID"].ToString() ?? string.Empty;
+        //     return Guid.TryParse(uuid, out Guid guid) ? guid : Guid.Empty;
+        // }
+        // catch
+        // {
+        //     return Guid.Empty;
+        // }
     }
 
     [Pure]

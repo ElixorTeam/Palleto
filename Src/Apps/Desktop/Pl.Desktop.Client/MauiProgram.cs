@@ -10,9 +10,9 @@ using TailwindMerge.Extensions;
 
 namespace Pl.Desktop.Client;
 
-public static class MauiProgram
+public static partial class MauiProgram
 {
-    public static MauiAppBuilder CreateMauiApp()
+    public static MauiApp CreateMauiApp()
     {
         MauiAppBuilder builder = MauiApp.CreateBuilder();
         builder.Configuration.LoadAppSettings<IDesktopAssembly>();
@@ -50,13 +50,14 @@ public static class MauiProgram
         });
 
         IConfigurationSection systemSection = builder.Configuration.GetSection("System");
-        bool isScalesMock = systemSection.GetValueOrDefault("MockScales", false);
+        // bool isScalesMock = systemSection.GetValueOrDefault("MockScales", false);
         bool isPrinterMock = systemSection.GetValueOrDefault("MockPrinter", false);
 
+        builder.Services.AddSingleton<IScalesService, MockScalesService>();
+
         builder.Services
-            .AddServiceOrMock<IScalesService, ScalesService, MockScalesService>(isScalesMock, ServiceLifetime.Singleton)
             .AddServiceOrMock<IPrinterService, PrinterService, MockPrinterService>(isPrinterMock, ServiceLifetime.Singleton);
 
-        return builder;
+        return builder.Build();
     }
 }

@@ -1,4 +1,6 @@
 using Microsoft.Extensions.Configuration;
+using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
+using Application = Microsoft.Maui.Controls.Application;
 
 namespace Pl.Desktop.Client;
 
@@ -8,6 +10,8 @@ public partial class App : Application
 
     public App(IConfiguration configuration)
     {
+        Current?.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>().UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
+
         if (!Mutex.WaitOne(TimeSpan.Zero, true))
         {
             Current?.Quit();

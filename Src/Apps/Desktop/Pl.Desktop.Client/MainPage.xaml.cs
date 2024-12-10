@@ -17,8 +17,8 @@ public partial class MainPage : ContentPage
 
     private void Bwv_BlazorWebViewInitialized(object sender, BlazorWebViewInitializedEventArgs e)
     {
-        e.WebView.CoreWebView2.Settings.IsPinchZoomEnabled = false;
-        e.WebView.CoreWebView2.Settings.IsZoomControlEnabled = false;
+        // e.WebView.CoreWebView2.Settings.IsPinchZoomEnabled = false;
+        // e.WebView.CoreWebView2.Settings.IsZoomControlEnabled = false;
         if (_fullScreen) Controls.FullScreen();
     }
 }

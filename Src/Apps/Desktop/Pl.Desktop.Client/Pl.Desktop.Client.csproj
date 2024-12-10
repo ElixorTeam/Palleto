@@ -1,49 +1,43 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <ItemGroup Label="Static assets">
+        <MauiIcon Include="Resources\appicon.svg" BaseSize="32,32" Color="#fff" />
         <MauiSplashScreen Include="Resources\organization_icon.svg" Color="#f5f5f6" />
     </ItemGroup>
-
+    
     <PropertyGroup Label="Primary">
-        <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
-
-        <!-- / Delete FUTURE -->
-        <WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
-        <!-- Delete FUTURE \ -->
-        <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-        <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+        <TargetFramework>net8.0-android34.0</TargetFramework>
 
         <OutputType>Exe</OutputType>
-        <UseInterpreter Condition="'$(Configuration)' == 'DevelopVS'">true</UseInterpreter>
-
         <UseMaui>true</UseMaui>
         <SingleProject>true</SingleProject>
-        <SelfContained>true</SelfContained>
-
-        <IncludeSymbols>false</IncludeSymbols>
-        <GenerateTestArtifacts>false</GenerateTestArtifacts>
         <EnableDefaultCssItems>false</EnableDefaultCssItems>
+        <SelfContained>false</SelfContained>
+        <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
+
+        <ApplicationTitle>Pl.Desktop.Client</ApplicationTitle>
+        <ApplicationId>ru.vladstandart.scalesdesktop</ApplicationId>
     </PropertyGroup>
 
-    <PropertyGroup Label="appInstaller/Msix">
-        <ApplicationTitle>Весовой пост</ApplicationTitle>
-        <ApplicationId>ru.vladstandart.Pl.Desktop.Client</ApplicationId>
-        <ApplicationIdGuid>D30D9BEB-99CC-4116-B15D-F73CFDE9CAB6</ApplicationIdGuid>
+    <!--    <PropertyGroup Label="appInstaller/Msix">-->
+<!--        <ApplicationTitle>Весовой пост</ApplicationTitle>-->
+<!--        <ApplicationId>ru.vladstandart.Pl.Desktop.Client</ApplicationId>-->
+<!--        <ApplicationIdGuid>D30D9BEB-99CC-4116-B15D-F73CFDE9CAB6</ApplicationIdGuid>-->
 
-        <GenerateAppInstallerFile>true</GenerateAppInstallerFile>
-        <ForceUpdateFromAnyVersion>true</ForceUpdateFromAnyVersion>
-        <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+<!--        <GenerateAppInstallerFile>true</GenerateAppInstallerFile>-->
+<!--        <ForceUpdateFromAnyVersion>true</ForceUpdateFromAnyVersion>-->
+<!--        <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>-->
 
-        <AppxBundle Label="Only for x64">Never</AppxBundle>
-        <UapAppxPackageBuildMode Label="For local usage (no MsStore)">SideLoadOnly</UapAppxPackageBuildMode>
+<!--        <AppxBundle Label="Only for x64">Never</AppxBundle>-->
+<!--        <UapAppxPackageBuildMode Label="For local usage (no MsStore)">SideLoadOnly</UapAppxPackageBuildMode>-->
 
-        <AppxSymbolPackageEnabled>false</AppxSymbolPackageEnabled>
-        <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
-        <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-        <PackageCertificateThumbprint>60D25C0106434F55B5A2D2089C7009A542A4C854</PackageCertificateThumbprint>
+<!--        <AppxSymbolPackageEnabled>false</AppxSymbolPackageEnabled>-->
+<!--        <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>-->
+<!--        <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>-->
+<!--        <PackageCertificateThumbprint>60D25C0106434F55B5A2D2089C7009A542A4C854</PackageCertificateThumbprint>-->
 
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    </PropertyGroup>
+<!--        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>-->
+<!--    </PropertyGroup>-->
 
     <ItemGroup Label="Directory.Packages.props">
         <PackageReference Include="Phetch.Blazor" />
@@ -62,8 +56,6 @@
         <PackageReference Include="Append.Blazor.Printing" VersionOverride="6.3.0" />
         <PackageReference Include="FullScreenStatus.Maui" VersionOverride="1.0.5" />
         <PackageReference Include="Microsoft.Extensions.Options" VersionOverride="8.0.2" />
-        <PackageReference Include="Microsoft.WindowsAppSDK" VersionOverride="1.6.241114003" />
-        <PackageReference Include="MassaK.Plugin" VersionOverride="1.0.2" />
         <PackageReference Include="TscZebra.Plugin" VersionOverride="1.0.4" />
         <PackageReference Include="barcodelib" VersionOverride="3.1.4" />
     </ItemGroup>
@@ -95,11 +87,11 @@
       </EmbeddedResource>
     </ItemGroup>
 
-    <ItemGroup Label="MSIX Assets">
-      <Content Include="Resources\Assets\**">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-    </ItemGroup>
+<!--    <ItemGroup Label="MSIX Assets">-->
+<!--      <Content Include="Resources\Assets\**">-->
+<!--        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>-->
+<!--      </Content>-->
+<!--    </ItemGroup>-->
 
     <ItemGroup Label="Shared blazor imports">
         <Content Include="..\..\..\Libs\Pl.Components\Shared\_Imports.razor" Link="_Imports.razor" CopyToOutputDirectory="PreserveNewest" />

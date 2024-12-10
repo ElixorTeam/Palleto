@@ -1,4 +1,5 @@
-using MassaK.Plugin.Abstractions.Enums;
+// using MassaK.Plugin.Abstractions.Enums;
+using Pl.Desktop.Client.Source.Shared.Models;
 
 namespace Pl.Desktop.Client.Source.Shared.Services.Stores;
 

@@ -1,7 +1,8 @@
 using Android.App;
 using Android.Runtime;
 
-namespace Pl.Mobile.Client;
+namespace Pl.Desktop.Client;
+
 [Application]
 public class MainApplication : MauiApplication
 {
@@ -10,5 +11,5 @@ public class MainApplication : MauiApplication
     {
     }
 
-    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    protected override MauiApp CreateMauiApp() => Pl.Desktop.Client.MauiProgram.CreateMauiApp();
 }

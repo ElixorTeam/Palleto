@@ -20,7 +20,7 @@
 
   [CascadingParameter] public FluentDialog Dialog { get; set; } = default!;
 
-  private static void ExitApp() => MauiWinUIApplication.Current.Exit();
+  private static void ExitApp() => Application.Current?.Quit();
 
   private async Task CloseDialog() => await Dialog.CloseAsync();
 }
