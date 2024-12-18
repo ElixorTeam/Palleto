@@ -68,8 +68,8 @@
 
   private async Task DeleteItem(UserModel item)
   {
-    await WebApi.DeleteUser(item.Id);
-    AdminEndpoints.DeleteUser(item.Id);
+    await WebApi.DeleteUser(item.KcId);
+    AdminEndpoints.DeleteUser(item.KcId);
     await PageHelper.OpenLink(Urls.Users);
   }
 }

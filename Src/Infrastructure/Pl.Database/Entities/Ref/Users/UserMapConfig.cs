@@ -6,6 +6,12 @@ internal sealed class UserMapConfig : IEntityTypeConfiguration<UserEntity>
     {
         builder.ToTable(SqlTables.Users, SqlSchemas.Ref);
 
+        builder.HasKey(e => e.Id);
+        builder
+            .Property(e => e.Id)
+            .ValueGeneratedNever()
+            .HasColumnName("UID");
+
         builder.HasOne(l => l.ProductionSite)
             .WithMany()
             .HasForeignKey("PRODUCTION_SITE_UID")

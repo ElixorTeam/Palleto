@@ -9,7 +9,8 @@ internal sealed class LabelZplMapConfig : IEntityTypeConfiguration<LabelZplEntit
         builder.ToTable(SqlTables.LabelsZpl, SqlSchemas.Print);
 
         builder.HasKey(e => e.Id);
-        builder.Property(e => e.Id)
+        builder
+            .Property(e => e.Id)
             .ValueGeneratedNever()
             .HasColumnName("UID");
 

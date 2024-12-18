@@ -63,8 +63,8 @@
     </ColumnsContent>
     <ContextMenuContent>
       <DataGridActionUpdateItem TItem="UserModel" Action="@OpenUpdateDialog" />
-      <DataGridActionOpenItem Link="@(RedirectHelper.ToUser(context.Item.Id))" />
-      <DataGridActionOpenInNewTab TItem="UserModel" Link="@(RedirectHelper.ToUser(context.Item.Id))" />
+      <DataGridActionOpenItem Link="@(RedirectHelper.ToUser(context.Item.KcId))" />
+      <DataGridActionOpenInNewTab TItem="UserModel" Link="@(RedirectHelper.ToUser(context.Item.KcId))" />
       <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
         <DataGridActionDeleteItem TItem="UserModel" Action="@DeleteItem" />
       </AuthorizeView>
@@ -101,7 +101,7 @@
 
   private async Task DeleteItem(UserModel item)
   {
-    await WebApi.DeleteUser(item.Id);
-    AdminEndpoints.DeleteUser(item.Id);
+    await WebApi.DeleteUser(item.KcId);
+    AdminEndpoints.DeleteUser(item.KcId);
   }
 }

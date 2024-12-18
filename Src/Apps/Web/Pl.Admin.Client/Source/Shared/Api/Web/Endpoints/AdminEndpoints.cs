@@ -32,7 +32,7 @@ public class AdminEndpoints(IWebApi webApi, IKeycloakApi keycloakApi)
 
     public void DeleteUser(Guid userId) =>
         UsersEndpoint.UpdateQueryData(new(), query =>
-            query.Data == null ? [] : query.Data.Where(x => x.Id != userId).ToArray());
+            query.Data == null ? [] : query.Data.Where(x => x.KcId != userId).ToArray());
 
     public Endpoint<Guid, PalletManDto[]> PalletMenEndpoint { get; } = new(
         webApi.GetPalletMenByProductionSite,

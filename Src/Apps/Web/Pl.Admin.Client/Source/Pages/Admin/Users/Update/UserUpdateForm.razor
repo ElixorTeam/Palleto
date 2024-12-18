@@ -13,8 +13,6 @@
   OnSubmitAction="@UpdateItem"
 >
   <FieldsContent>
-    <SectionAdminGuidField Value="@Model.Id" />
-
     <SectionAdminGuidField Value="@Model.KcId" Label="UID KC" />
 
     <SectionReadOnlyField
@@ -56,7 +54,7 @@
   </FieldsContent>
   <ActionsContent>
     <FormActionReset OnClick="@ResetAction" />
-    <FormActionRelogin UserUid="Model.Id" />
+    <FormActionRelogin UserUid="Model.KcId" />
   </ActionsContent>
 </SectionForm>
 
@@ -78,7 +76,7 @@
 
   protected override async Task UpdateItemAction(UserUpdateDto item)
   {
-    UserDto dto = await WebApi.SaveOrUpdateUser(Model.Id, item);
+    UserDto dto = await WebApi.SaveOrUpdateUser(Model.KcId, item);
     AdminEndpoints.UpdateUser(Model, dto.ProductionSite);
   }
 }

@@ -10,7 +10,6 @@ public static class UserMapper
         string[] partsOfName = keycloakUser.FirstName.Split(' ');
         return new()
         {
-            Id = userDto.Id,
             KcId = keycloakUser.Id,
             Fio = new(
                 partsOfName.ElementAtOrDefault(0) ?? string.Empty,
