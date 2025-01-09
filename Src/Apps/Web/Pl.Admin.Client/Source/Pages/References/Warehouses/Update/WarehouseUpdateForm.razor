@@ -17,28 +17,18 @@
   <FieldsContent>
     <SectionAdminGuidField Value="@Model.Id" />
 
-    <SectionGuidField
-      Label="UID 1C"
-      @bind-Value="@FormModel.Id1C"
-      For="@(() => FormModel.Id1C)"
-    />
-
     <SectionTextField
       Label="@WsDataLocalizer["ColName"]"
       @bind-Value="@FormModel.Name"
       For="@(() => FormModel.Name)"
     />
 
-    <UseParameterlessEndpoint Endpoint="ReferencesEndpoints.ProductionSitesEndpoint" Context="productionSiteQuery">
-      @if (productionSiteQuery.HasData)
-      {
-        <SectionReadOnlyField
-          Label="@WsDataLocalizer["ColProductionSite"]"
-          Value="@(productionSiteQuery.Data.FirstOrDefault(x => x.Id == Model.ProductionSite.Id)?.Name ?? string.Empty)"
-          For="@(() => FormModel.Id1C)"
-        />
-      }
-    </UseParameterlessEndpoint>
+    <SectionGuidField
+      Label="UID 1C"
+      @bind-Value="@FormModel.Id1C"
+      For="@(() => FormModel.Id1C)"
+    />
+
   </FieldsContent>
   <ActionsContent>
     <FormActionReset OnClick="@ResetAction" />

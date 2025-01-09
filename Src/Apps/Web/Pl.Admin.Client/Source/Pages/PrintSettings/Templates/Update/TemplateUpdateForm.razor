@@ -16,6 +16,11 @@
   <FieldsContent>
     <SectionAdminGuidField Value="@Model.Id" />
 
+    <SectionReadOnlyField
+      Label="@WsDataLocalizer["ColType"]"
+      Value="@GetTemplateTypeName(Model.IsWeight)"
+    />
+
     <FormDivider>@WsDataLocalizer["ColDescription"]</FormDivider>
 
     <SectionTextField
@@ -24,12 +29,14 @@
       For="@(() => FormModel.Name)"
     />
 
-    <SectionReadOnlyField
-      Label="@WsDataLocalizer["ColType"]"
-      Value="@GetTemplateTypeName(Model.IsWeight)"
+    <SectionSelectSingleField
+      TItem="short"
+      @bind-Value="@FormModel.Rotate"
+      Items="@([0, 90])"
+      Label="@WsDataLocalizer["ColRotation"]"
+      ItemDisplayName="@(value => $"{value}°")"
+      For="@(() => FormModel.Rotate)"
     />
-
-    <FormDivider>@WsDataLocalizer["ColSize"]</FormDivider>
 
     <SectionNumericField
       @bind-Value="@FormModel.Width"
@@ -43,15 +50,6 @@
       Max="255"
       Label="@($"{WsDataLocalizer["ColHeight"]} ({WsDataLocalizer["MeasureMm"]})")"
       For="@(() => FormModel.Height)"
-    />
-
-    <SectionSelectSingleField
-      TItem="short"
-      @bind-Value="@FormModel.Rotate"
-      Items="@([0, 90])"
-      Label="@WsDataLocalizer["ColRotation"]"
-      ItemDisplayName="@(value => $"{value}°")"
-      For="@(() => FormModel.Rotate)"
     />
 
     <FormDivider>@WsDataLocalizer["ColTemplate"]</FormDivider>

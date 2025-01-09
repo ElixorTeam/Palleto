@@ -1,5 +1,4 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
-@using Pl.Admin.Client.Source.Shared.Services.Stores
 @using TscZebra.Plugin.Abstractions.Enums
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Printers.Commands
@@ -34,13 +33,6 @@
       @bind-Value="@FormModel.Type"
       For="@(() => FormModel.Type)"
     />
-
-    <SectionReadOnlyField
-      Path="@RedirectHelper.ToProductionSite(FormModel.ProductionSiteId)"
-      Label="@WsDataLocalizer["ColProductionSite"]"
-      Value="@ProductionSiteState.Value.ProductionSite.Name"
-      For="@(() => FormModel.ProductionSiteId)"
-    />
   </FieldsContent>
 </SectionForm>
 
@@ -50,7 +42,6 @@
   [Inject] private IWebApi WebApi { get; set; } = default!;
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
 
   [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;

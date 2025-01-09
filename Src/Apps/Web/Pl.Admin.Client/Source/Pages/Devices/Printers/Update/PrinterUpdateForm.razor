@@ -41,12 +41,6 @@
         @bind-Value="@FormModel.Type"
         For="@(() => FormModel.Type)"
       />
-
-      <SectionReadOnlyField
-        Path="@RedirectHelper.ToProductionSite(Model.ProductionSite.Id)"
-        Label="@WsDataLocalizer["ColProductionSite"]"
-        Value="@Model.ProductionSite.Name"
-      />
     </FieldsContent>
     <ActionsContent>
       <FormActionReset OnClick="@ResetAction" />

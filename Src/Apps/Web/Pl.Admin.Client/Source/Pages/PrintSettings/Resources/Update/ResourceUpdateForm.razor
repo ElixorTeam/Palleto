@@ -17,15 +17,17 @@
     <SectionAdminGuidField Value="@Model.Id" />
 
     <SectionTextField
-      Label="@WsDataLocalizer["ColName"]"
-      @bind-Value="@FormModel.Name"
-      For="@(() => FormModel.Name)"
-    />
-
-    <SectionTextField
       Label="@WsDataLocalizer["ColType"]"
       Value="@Localizer[Model.Type.GetDescription()]"
       Disabled
+    />
+
+    <FormDivider></FormDivider>
+
+    <SectionTextField
+      Label="@WsDataLocalizer["ColName"]"
+      @bind-Value="@FormModel.Name"
+      For="@(() => FormModel.Name)"
     />
 
     <UseEndpoint

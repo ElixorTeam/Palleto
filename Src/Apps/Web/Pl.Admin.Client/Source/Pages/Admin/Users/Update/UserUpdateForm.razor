@@ -16,9 +16,11 @@
     <SectionAdminGuidField Value="@Model.KcId" Label="UID KC" />
 
     <SectionReadOnlyField
-      Label="@WsDataLocalizer["ColFIO"]"
-      Value="@Model.Fio.DisplayFullName"
+      Label="@WsDataLocalizer["ColName"]"
+      Value="@Model.Fio.DisplayShortName"
     />
+
+    <FormDivider></FormDivider>
 
     <SectionInputWrapper
       Path="@RedirectHelper.ToProductionSite(Model.ProductionSite.Id)"

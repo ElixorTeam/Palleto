@@ -18,12 +18,7 @@
 
     <SectionReadOnlyField
       Label="@WsDataLocalizer["ColName"]"
-      Value="@Model.Name"
-    />
-
-    <SectionReadOnlyField
-      Label="@WsDataLocalizer["ColNumber"]"
-      Value="@Model.Number"
+      Value="@($"{Model.Number} | {Model.Name}")"
     />
 
     <SectionInputWrapper
