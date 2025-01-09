@@ -29,6 +29,7 @@ internal static class PluDtoExtensions
     internal static NestingEntity ToNestingEntity(this PluDto dto, DateTime dateTime) =>
         new()
         {
+            Id = dto.Uid,
             BoxId = dto.BoxUid,
             BundleCount = dto.BundleCount,
             CreateDt = dateTime,

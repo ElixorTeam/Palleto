@@ -10,7 +10,7 @@ internal sealed class PalletMapConfig : IEntityTypeConfiguration<PalletEntity>
 
         builder.Property(e => e.Id)
             .HasColumnName("UID")
-            .IsRequired();
+            .ValueGeneratedNever();
 
         builder
             .HasKey(e => e.Id)
