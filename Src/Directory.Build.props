@@ -3,7 +3,7 @@
     <PropertyGroup Label="Default settings">
         <Configurations>DevelopVS;ReleaseVS</Configurations>
         <Platforms>x64</Platforms>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <Deterministic>true</Deterministic>
         <WarningLevel>9999</WarningLevel>
         <Prefer32Bit>false</Prefer32Bit>
@@ -33,7 +33,7 @@
     </PropertyGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'DevelopVS'">
-      <PackageReference Include="Roslynator.Analyzers" VersionOverride="4.12.9">
+      <PackageReference Include="Roslynator.Analyzers" VersionOverride="4.12.10">
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>

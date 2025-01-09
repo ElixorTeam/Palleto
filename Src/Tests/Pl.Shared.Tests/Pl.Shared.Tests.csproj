@@ -12,12 +12,12 @@
     </ItemGroup>
 
     <ItemGroup Label="Packages">
-        <PackageReference Include="xunit.runner.visualstudio" VersionOverride="2.8.2">
+        <PackageReference Include="xunit.runner.visualstudio" VersionOverride="3.0.0">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
 
-        <PackageReference Include="coverlet.collector" VersionOverride="6.0.2">
+        <PackageReference Include="coverlet.collector" VersionOverride="6.0.3">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
