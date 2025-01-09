@@ -5,10 +5,9 @@
   GridTemplateColumns="1fr 3fr"
   Items="Items"
   Pagination="Pagination"
-  OnRowFocus="@(row => OnItemSelect.InvokeAsync(row.Item))"
-  RowClass="@(_ => "border-b [&_fluent-data-grid-cell]:!px-3 hover:bg-secondary/[.5] hover:cursor-pointer md:[&_fluent-data-grid-cell]:!text-lg")"
-  Class="@Css.Class("[&>.header]:border-b [&_fluent-data-grid-cell]:!text-primary [&_fluent-data-grid-cell]:!py-2 md:[&_fluent-data-grid-cell]:!py-3",
-           "[&_.col-sort-button]:!text-primary [&_.col-options-button]:pl-1 [&_.col-sort-button]:pl-1")"
+  Class="[&_.col-title-text]:text-left [&_.col-title-text]:pt-1"
+  RowClass="@(_ => "!px-3 !h-12 hover:cursor-pointer")"
+  OnRowClick="@(row => OnItemSelect.InvokeAsync(row.Item))"
 >
   <PropertyColumn
     Property="@(p => p.Number)"
@@ -29,4 +28,4 @@
   [Parameter] public EventCallback<PluWeightDto> OnItemSelect { get; set; }
 
   private PaginationState Pagination { get; } = new() { ItemsPerPage = 7 };
-}
+}ГЗ

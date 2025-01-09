@@ -12,7 +12,7 @@ namespace Pl.Desktop.Client;
 
 public static class MauiProgram
 {
-    public static MauiAppBuilder CreateMauiApp()
+    public static MauiApp CreateMauiApp()
     {
         MauiAppBuilder builder = MauiApp.CreateBuilder();
         builder.Configuration.LoadAppSettings<IDesktopAssembly>();
@@ -57,6 +57,6 @@ public static class MauiProgram
             .AddServiceOrMock<IScalesService, ScalesService, MockScalesService>(isScalesMock, ServiceLifetime.Singleton)
             .AddServiceOrMock<IPrinterService, PrinterService, MockPrinterService>(isPrinterMock, ServiceLifetime.Singleton);
 
-        return builder;
+        return builder.Build();
     }
 }

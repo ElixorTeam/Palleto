@@ -23,8 +23,11 @@ public abstract class SectionFormBase<TItem> : FluxorComponent where TItem : IEq
         DialogItemCopy = FormModel;
     }
 
-    protected override async Task OnInitializedAsync() =>
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
         UserPrincipal = (await AuthState).User;
+    }
 
     protected virtual Task DeleteItemAction() =>
         throw new NotImplementedException();

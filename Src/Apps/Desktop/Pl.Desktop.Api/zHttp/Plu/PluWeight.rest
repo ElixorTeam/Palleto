@@ -2,8 +2,9 @@ GET {{url}}/api/arms/27bb9d44-cae9-4a6d-9204-b15500e1258a/plu/weight/
 
 ###
 
-POST {{url}}/api/arms/27bb9d44-cae9-4a6d-9204-b15500e1258a/plu/weight/3b9692e2-738b-4577-ac93-0c2ea780711a/label
+POST {{url}}/plu/weight/3b9692e2-738b-4577-ac93-0c2ea780711a/label
 Content-Type: application/json
+Authorization: ArmAuthenticationScheme 032e02b4-0499-0511-6006-f50700080009
 
 {
     "kneading": 0,

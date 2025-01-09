@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-// ReSharper disable ClassNeverInstantiated.Global
 
+// ReSharper disable ClassNeverInstantiated.Global
 namespace Pl.Admin.Client.Source.Shared.Auth.Handlers;
 
 public class ServerAuthorizationMessageHandler(IHttpContextAccessor httpContextAccessor) : DelegatingHandler

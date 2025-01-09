@@ -9,7 +9,7 @@
         <PackageReference Include="FluentAssertions" />
         <PackageReference Include="Microsoft.Build" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
-        <PackageReference Include="NetArchTest.eNhancedEdition"  />
+        <PackageReference Include="NetArchTest.eNhancedEdition" />
     </ItemGroup>
 
     <ItemGroup Label="Packages">

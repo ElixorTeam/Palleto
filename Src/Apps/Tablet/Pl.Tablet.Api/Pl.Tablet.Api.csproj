@@ -9,7 +9,7 @@
         <ProjectReference Include="..\..\..\Libs\Pl.Shared.Web\Pl.Shared.Web.csproj" />
         <ProjectReference Include="..\Pl.Tablet.Models\Pl.Tablet.Models.csproj" />
     </ItemGroup>
-    
+
     <ItemGroup>
       <Content Include="zHttp\.profiles\http-client.env.json" />
     </ItemGroup>

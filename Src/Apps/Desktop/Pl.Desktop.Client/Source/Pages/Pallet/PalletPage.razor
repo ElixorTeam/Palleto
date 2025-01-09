@@ -61,7 +61,11 @@
     Dispatcher.Dispatch(new ChangePalletViewTabAction(PalletViewTabType.Info));
   }
 
-  protected override async Task OnInitializedAsync() => await PrinterService.ConnectAsync();
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync();
+    await PrinterService.ConnectAsync();
+  }
 
   public void Dispose() => PrinterService.Disconnect();
 }

@@ -49,45 +49,41 @@
   </div>
   <div class="size-full grow overflow-hidden px-6 pb-6 pt-0">
     <div class="rounded-md border size-full bg-background shadow-sm overflow-hidden">
-      <UseEndpoint Endpoint="@PalletEndpoints.PalletLabelsEndpoint" Arg="@new(Pallet.Id)" Context="labelsQuery">
-        <FluentDataGrid
-          TGridItem="DataItem"
-          Items="@GetOrderedLabels(labelsQuery.HasData ? labelsQuery.Data : [])"
-          RowClass="@(_ => "border-b shrink-0 hover:bg-secondary/50 hover:cursor-pointer")"
-          Class="overflow-y-auto [&>.sticky-header]:border-b [&>.sticky-header]:!bg-background [&_fluent-data-grid-cell]:!text-primary [&_.col-sort-button]:!text-primary size-full [&_.col-options-button]:pl-1 [&_.col-sort-button]:pl-1"
-          Loading="@labelsQuery.IsLoading"
-          GenerateHeader="GenerateHeaderOption.Sticky"
-          Virtualize
-        >
-          <SelectColumn
+      <div class="size-full overflow-y-auto">
+        <UseEndpoint Endpoint="@PalletEndpoints.PalletLabelsEndpoint" Arg="@new(Pallet.Id)" Context="labelsQuery">
+          <FluentDataGrid
             TGridItem="DataItem"
-            SelectMode="DataGridSelectMode.Multiple"
-            SelectFromEntireRow="true"
-            @bind-SelectedItems="@SelectedItems"
-            Align="Align.Center"
-            Class="[&>svg]:!ml-0"
-          />
-          <PropertyColumn
-            Title="@WsDataLocalizer["ColNumber"]"
-            Property="@(p => p.Id)"
-            Width="1fr"
-          />
-          <PropertyColumn
-            Title="@WsDataLocalizer["ColBarcode"]"
-            Property="@(p => p.Label.Barcode)"
-            Width="5fr"
-          />
-          <TemplateColumn Width="4rem" Align="Align.Center">
-            <button
-              type="button"
-              onclick="@(() => SaveToClipboard(context.Label.Barcode))"
-              class="text-muted-foreground opacity-50 hover:opacity-100"
-            >
-              <ClipboardDocumentIcon class="size-5" />
-            </button>
-          </TemplateColumn>
-        </FluentDataGrid>
-      </UseEndpoint>
+            Items="@GetOrderedLabels(labelsQuery.HasData ? labelsQuery.Data : [])"
+            Loading="@labelsQuery.IsLoading"
+            GenerateHeader="GenerateHeaderOption.Sticky"
+            Class="[&_.col-title-text]:text-sm [&_.col-title-text]:text-left [&_thead]:bg-background [&_th>svg]:mx-auto"
+            Virtualize>
+            <SelectColumn
+              TGridItem="DataItem"
+              SelectMode="DataGridSelectMode.Multiple"
+              SelectFromEntireRow="true"
+              @bind-SelectedItems="@SelectedItems"
+              Width="3rem"
+              />
+            <PropertyColumn
+              Title="@WsDataLocalizer["ColNumber"]"
+              Property="@(p => p.Id)"
+              Width="1fr"/>
+            <PropertyColumn
+              Title="@WsDataLocalizer["ColBarcode"]"
+              Property="@(p => p.Label.Barcode)"
+              Width="5fr"/>
+            <TemplateColumn Width="4rem" Align="Align.Center">
+              <button
+                type="button"
+                onclick="@(() => SaveToClipboard(context.Label.Barcode))"
+                class="text-muted-foreground opacity-50 hover:opacity-100">
+                <ClipboardDocumentIcon class="size-5"/>
+              </button>
+            </TemplateColumn>
+          </FluentDataGrid>
+        </UseEndpoint>
+      </div>
     </div>
   </div>
 </PrinterErrorBoundary>
