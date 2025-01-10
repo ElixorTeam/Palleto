@@ -1,6 +1,6 @@
 import { type DotNetObjectType } from './types/dotnet-object-type'
 
-const TIMEOUT_INTERVAL = 20
+const TIMEOUT_INTERVAL = 50
 
 let timeoutId: ReturnType<typeof setInterval> | undefined
 let inputEventHandler: ((event: KeyboardEvent) => void) | undefined

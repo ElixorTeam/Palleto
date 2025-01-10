@@ -1,33 +1,24 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Mobile.Client.Source.Features.Debug
 
 <InternalBarcodeScanner ValueChanged="@SetDocumentNumber" />
 
-<div class="flex flex-col size-full justify-between py-3 px-2">
-  <div class="size-full overflow-hidden flex items-center justify-center">
-    @if (string.IsNullOrWhiteSpace(DocumentNumber))
-    {
-      <div class="flex flex-col items-center gap-1 text-center">
-        <DocumentTextIcon class="size-10 stroke-[0.95]" />
-        <h3 class="text-lg font-medium">Отсканируйте штрихкод документа</h3>
-      </div>
-    }
-    else
-    {
-      <FormFieldWrapper Label="Штрихкод документа" Class="!space-y-1">
-        <InputTextField Value="@DocumentNumber" Class="!h-8" ReadOnly />
-      </FormFieldWrapper>
-    }
+<div class="flex flex-col size-full justify-between p-4">
+  <div class="flex flex-col overflow-hidden w-full pt-1">
+    <h2 class="text-2xl font-bold text-center tracking-tight">Сканирование документа</h2>
+    <h3 class="text-xs text-muted-foreground text-center tracking-tight pt-1">Используйте считыватель штрихкода <br /> и отсканируйте основной штрихкод документа переноса паллеты</h3>
+    <div class="w-full pt-4">
+      <InputTextField Value="@DocumentNumber" Class="rounded-lg" ReadOnly />
+    </div>
   </div>
   <div class="shrink-0 w-full flex flex-col gap-2">
 
     @{
-    #if DEBUG
+#if DEBUG
     }
     @* ReSharper disable once Razor.UnresolvedComponent *@
     <CameraBarcodeScanner Variant="ButtonVariantType.Outline" ValueChanged="@SetDocumentNumber"/>
     @{
-    #endif
+#endif
     }
 
     <Button OnClick="@OnSuccessAction" Disabled="@string.IsNullOrWhiteSpace(DocumentNumber)">

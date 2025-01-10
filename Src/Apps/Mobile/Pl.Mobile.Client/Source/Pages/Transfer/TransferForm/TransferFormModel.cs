@@ -1,6 +1,6 @@
 using Pl.Mobile.Models.Features.Warehouses;
 
-namespace Pl.Mobile.Client.Source.Widgets.TransferForm;
+namespace Pl.Mobile.Client.Source.Pages.Transfer.TransferForm;
 
 public record TransferFormModel
 {
