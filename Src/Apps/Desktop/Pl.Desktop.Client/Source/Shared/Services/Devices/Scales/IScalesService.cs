@@ -1,4 +1,4 @@
-namespace Pl.Desktop.Client.Source.Shared.Services.Devices;
+namespace Pl.Desktop.Client.Source.Shared.Services.Devices.Scales;
 
 public interface IScalesService
 {

@@ -4,7 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Pl.Desktop.Client.Source.Shared.Api;
 using Pl.Desktop.Client.Source.Shared.Extensions;
-using Pl.Desktop.Client.Source.Shared.Services.Devices;
+using Pl.Desktop.Client.Source.Shared.Services.Devices.Printer;
+using Pl.Desktop.Client.Source.Shared.Services.Devices.Scales;
+using Pl.Desktop.Client.Source.Shared.Services.System;
 using Pl.Shared.Web.Extensions;
 using TailwindMerge.Extensions;
 
@@ -32,6 +34,7 @@ public static class MauiProgram
 
         builder.Services
             .AddScoped<HtmlRenderer>()
+            .AddSingleton<AppService>()
             .AddScoped<IPrintingService, PrintingService>();
 
         builder.Services.AddTailwindMerge();
@@ -49,13 +52,13 @@ public static class MauiProgram
             options.ScanAssemblies(typeof(IDesktopAssembly).Assembly);
         });
 
-        IConfigurationSection systemSection = builder.Configuration.GetSection("System");
+        IConfigurationSection systemSection = builder.Configuration.GetRequiredSection("System");
         bool isScalesMock = systemSection.GetValueOrDefault("MockScales", false);
         bool isPrinterMock = systemSection.GetValueOrDefault("MockPrinter", false);
 
         builder.Services
-            .AddServiceOrMock<IScalesService, ScalesService, MockScalesService>(isScalesMock, ServiceLifetime.Singleton)
-            .AddServiceOrMock<IPrinterService, PrinterService, MockPrinterService>(isPrinterMock, ServiceLifetime.Singleton);
+            .AddServiceOrMock<IScalesService, ScalesService, ScalesMockService>(isScalesMock, ServiceLifetime.Singleton)
+            .AddServiceOrMock<IPrinterService, PrinterService, PrinterMockService>(isPrinterMock, ServiceLifetime.Singleton);
 
         return builder.Build();
     }

@@ -1,10 +1,9 @@
-using Pl.Desktop.Client.Source.Shared.Services.Stores;
 using TscZebra.Plugin.Abstractions.Enums;
 using IDispatcher = Fluxor.IDispatcher;
 
-namespace Pl.Desktop.Client.Source.Shared.Services.Devices;
+namespace Pl.Desktop.Client.Source.Shared.Services.Devices.Printer;
 
-public class MockPrinterService(IDispatcher dispatcher) : IPrinterService
+public class PrinterMockService(IDispatcher dispatcher) : IPrinterService
 {
     public bool IsMock() => true;
 

@@ -1,11 +1,10 @@
-using Pl.Desktop.Client.Source.Shared.Services.Stores;
 using TscZebra.Plugin;
 using TscZebra.Plugin.Abstractions;
 using TscZebra.Plugin.Abstractions.Enums;
 using TscZebra.Plugin.Abstractions.Exceptions;
 using IDispatcher = Fluxor.IDispatcher;
 
-namespace Pl.Desktop.Client.Source.Shared.Services.Devices;
+namespace Pl.Desktop.Client.Source.Shared.Services.Devices.Printer;
 
 public class PrinterService(IDispatcher dispatcher) : IPrinterService, IDisposable
 {

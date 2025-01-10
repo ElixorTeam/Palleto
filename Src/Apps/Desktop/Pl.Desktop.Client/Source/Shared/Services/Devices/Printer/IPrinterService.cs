@@ -1,6 +1,6 @@
 using TscZebra.Plugin.Abstractions.Enums;
 
-namespace Pl.Desktop.Client.Source.Shared.Services.Devices;
+namespace Pl.Desktop.Client.Source.Shared.Services.Devices.Printer;
 
 public interface IPrinterService
 {

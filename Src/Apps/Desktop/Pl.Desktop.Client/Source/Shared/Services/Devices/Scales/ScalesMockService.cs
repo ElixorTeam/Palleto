@@ -1,17 +1,16 @@
 using MassaK.Plugin.Abstractions.Enums;
-using Pl.Desktop.Client.Source.Shared.Services.Stores;
 using IDispatcher = Fluxor.IDispatcher;
 
-namespace Pl.Desktop.Client.Source.Shared.Services.Devices;
+namespace Pl.Desktop.Client.Source.Shared.Services.Devices.Scales;
 
-public class MockScalesService : IScalesService
+public class ScalesMockService : IScalesService
 {
     private readonly IDispatcher _dispatcher;
     private const string DefaultComPort = "COM6";
 
     public bool IsMock() => true;
 
-    public MockScalesService(IDispatcher dispatcher)
+    public ScalesMockService(IDispatcher dispatcher)
     {
         _dispatcher = dispatcher;
         Setup();

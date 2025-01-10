@@ -3,10 +3,9 @@
 using MassaK.Plugin.Abstractions.Enums;
 using MassaK.Plugin.Abstractions.Events;
 using MassaK.Plugin.Impl;
-using Pl.Desktop.Client.Source.Shared.Services.Stores;
 using IDispatcher = Fluxor.IDispatcher;
 
-namespace Pl.Desktop.Client.Source.Shared.Services.Devices;
+namespace Pl.Desktop.Client.Source.Shared.Services.Devices.Scales;
 
 public class ScalesService : IScalesService, IDisposable
 {
