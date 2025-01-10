@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 setlocal enabledelayedexpansion
 
 :: Проверка, передана ли версия в качестве аргумента
