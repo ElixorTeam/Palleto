@@ -1,6 +1,6 @@
 using Pl.Mobile.Models.Features.Pallets;
 
-namespace Pl.Mobile.Client.Source.Widgets.TransferForm;
+namespace Pl.Mobile.Client.Source.Pages.Transfer.TransferForm;
 
 public static class TransferMapper
 {

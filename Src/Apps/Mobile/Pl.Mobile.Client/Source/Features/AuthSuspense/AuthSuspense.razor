@@ -80,14 +80,14 @@ else
 
     try
     {
-      ToastService.ShowProgressToast(new()
-      {
-        Id = toastId,
-        Intent = ToastIntent.Progress,
-        Title = "Процесс авторизации",
-        Timeout = null,
-        Content = new() { Details = "Подождите пока мы не проверим пользователя по данному коду" }
-      });
+      // ToastService.ShowProgressToast(new()
+      // {
+      //   Id = toastId,
+      //   Intent = ToastIntent.Progress,
+      //   Title = "Процесс авторизации",
+      //   Timeout = null,
+      //   Content = new() { Details = "Подождите пока мы не проверим пользователя по данному коду" }
+      // });
 
       UserDto dto = await MobileApi.GetUserByCode(parsedPassword);
 

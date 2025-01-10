@@ -40,8 +40,9 @@
 
   private async Task OpenCameraScanner()
   {
-  if (Application.Current?.MainPage == null) return;
-  await Application.Current.MainPage.Navigation.PushModalAsync(ScanPage.Value);
+    Page? mainPage = Application.Current?.Windows[0].Page;
+    if (mainPage == null) return;
+    await mainPage.Navigation.PushModalAsync(ScanPage.Value);
   }
 
   private async Task OpenCameraScannerWithCooldown()
@@ -59,10 +60,17 @@
 
   private async void OnScanCompleted(object? sender, string value)
   {
-    if (string.IsNullOrWhiteSpace(value)) return;
-    string formattedValue = value.Trim();
-    formattedValue = new(formattedValue.Where(char.IsDigit).ToArray());
-    await ValueChanged.InvokeAsync(formattedValue);
+    try
+    {
+      if (string.IsNullOrWhiteSpace(value)) return;
+      string formattedValue = value.Trim();
+      formattedValue = new(formattedValue.Where(char.IsDigit).ToArray());
+      await ValueChanged.InvokeAsync(formattedValue);
+    }
+    catch
+    {
+      // pass
+    }
   }
 
   public void Dispose()
