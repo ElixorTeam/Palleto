@@ -1,5 +1,5 @@
 using Pl.Desktop.Client.Source.Shared.Services.Devices.Printer;
-// using Pl.Desktop.Client.Source.Shared.Services.System;
+using Pl.Desktop.Client.Source.Shared.Services.System;
 using Pl.Desktop.Models.Features.Arms.Output;
 
 namespace Pl.Desktop.Client.Source.Shared.Api.Desktop.Endpoints;
@@ -13,7 +13,7 @@ public class ArmEndpoints(IDesktopApi desktopApi, IPrinterService printerService
             DefaultStaleTime = TimeSpan.FromHours(1),
             OnSuccess = data =>
             {
-                desktopApi.UpdateArm(new() { Version = VersionTracking.CurrentVersion });
+                desktopApi.UpdateArm(new() { Version = appService.Version });
                 printerService.Setup(data.Result.Printer.Ip, 9100, data.Result.Printer.Type);
             }
         });

@@ -16,31 +16,9 @@
 
         <UseMaui>true</UseMaui>
         <SingleProject>true</SingleProject>
-        <SelfContained>true</SelfContained>
-
         <IncludeSymbols>false</IncludeSymbols>
         <GenerateTestArtifacts>false</GenerateTestArtifacts>
         <EnableDefaultCssItems>false</EnableDefaultCssItems>
-    </PropertyGroup>
-
-    <PropertyGroup Label="appInstaller/Msix">
-        <ApplicationTitle>Весовой пост</ApplicationTitle>
-        <ApplicationId>ru.vladstandart.Pl.Desktop.Client</ApplicationId>
-        <ApplicationIdGuid>D30D9BEB-99CC-4116-B15D-F73CFDE9CAB6</ApplicationIdGuid>
-
-        <GenerateAppInstallerFile>true</GenerateAppInstallerFile>
-        <ForceUpdateFromAnyVersion>true</ForceUpdateFromAnyVersion>
-        <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-
-        <AppxBundle Label="Only for x64">Never</AppxBundle>
-        <UapAppxPackageBuildMode Label="For local usage (no MsStore)">SideLoadOnly</UapAppxPackageBuildMode>
-
-        <AppxSymbolPackageEnabled>false</AppxSymbolPackageEnabled>
-        <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
-        <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-        <PackageCertificateThumbprint>60D25C0106434F55B5A2D2089C7009A542A4C854</PackageCertificateThumbprint>
-
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup Label="Directory.Packages.props">
@@ -57,13 +35,17 @@
     </ItemGroup>
 
     <ItemGroup Label="Packages">
-        <PackageReference Include="Append.Blazor.Printing" VersionOverride="6.3.0" />
-        <PackageReference Include="FullScreenStatus.Maui" VersionOverride="1.0.5" />
         <PackageReference Include="Microsoft.Extensions.Options" VersionOverride="9.0.0" />
         <PackageReference Include="Microsoft.WindowsAppSDK" VersionOverride="1.6.241114003" />
+
+        <PackageReference Include="Velopack" VersionOverride="0.0.1053"/>
+
+        <PackageReference Include="barcodelib" VersionOverride="3.1.4" />
+        <PackageReference Include="FullScreenStatus.Maui" VersionOverride="1.0.5" />
+        <PackageReference Include="Append.Blazor.Printing" VersionOverride="6.3.0" />
+
         <PackageReference Include="MassaK.Plugin" VersionOverride="1.0.2" />
         <PackageReference Include="TscZebra.Plugin" VersionOverride="1.0.4" />
-        <PackageReference Include="barcodelib" VersionOverride="3.1.4" />
     </ItemGroup>
 
     <ItemGroup Label="Projects">
@@ -73,9 +55,7 @@
     </ItemGroup>
 
     <ItemGroup Label="Publish scrtipts">
-        <Content Include=".Publish\dev.cmd" />
-        <Content Include=".Publish\prod.cmd" />
-        <Content Include=".Publish\Utils\UpdateAppInstaller.ps1" />
+        <Content Include=".deploy\dev.cmd" />
     </ItemGroup>
 
     <ItemGroup>
@@ -94,6 +74,7 @@
     </ItemGroup>
 
     <ItemGroup Label="MSIX Assets">
+      <Content Include=".deploy\prod.cmd" />
       <Content Include="Resources\Assets\**">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>

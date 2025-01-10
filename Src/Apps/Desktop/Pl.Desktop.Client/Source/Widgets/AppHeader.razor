@@ -1,3 +1,4 @@
+@using Pl.Desktop.Client.Source.Shared.Services.System
 @using Blazor.Heroicons.Outline
 @inherits PlComponentBase
 
@@ -13,7 +14,7 @@
         <Badge Variant="@BadgeVariants.Outline" Class="mr-3">DEV</Badge>
       }
       <DesktopLogo Small />
-      <span class="pb-1 pl-1 text-sm">@VersionTracking.CurrentVersion</span>
+      <span class="pb-1 pl-1 text-sm">@App.Version</span>
     </div>
     <div class="w-1/5 flex items-center justify-center">
       <Clock />
@@ -32,5 +33,6 @@
 
 @code {
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+  [Inject] private AppService App { get; set; } = default!;
   [Parameter] public RenderFragment? ChildContent { get; set; }
 }
