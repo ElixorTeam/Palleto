@@ -56,7 +56,7 @@
             Items="@GetOrderedLabels(labelsQuery.HasData ? labelsQuery.Data : [])"
             Loading="@labelsQuery.IsLoading"
             GenerateHeader="GenerateHeaderOption.Sticky"
-            Class="[&_.col-title-text]:text-sm [&_.col-title-text]:text-left [&_thead]:bg-background [&_th>svg]:mx-auto"
+            Class="!h-fit [&_.col-title-text]:text-sm [&_.col-title-text]:text-left [&_thead_th]:!bg-background [&_th>svg]:mx-auto"
             Virtualize>
             <SelectColumn
               TGridItem="DataItem"
@@ -68,11 +68,13 @@
             <PropertyColumn
               Title="@WsDataLocalizer["ColNumber"]"
               Property="@(p => p.Id)"
-              Width="1fr"/>
+              Width="1fr"
+            />
             <PropertyColumn
               Title="@WsDataLocalizer["ColBarcode"]"
               Property="@(p => p.Label.Barcode)"
-              Width="5fr"/>
+              Width="5fr"
+            />
             <TemplateColumn Width="4rem" Align="Align.Center">
               <button
                 type="button"

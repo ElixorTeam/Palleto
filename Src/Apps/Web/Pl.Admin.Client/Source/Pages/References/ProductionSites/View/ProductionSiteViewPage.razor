@@ -4,7 +4,7 @@
 @using Pl.Admin.Models.Features.References.ProductionSites.Queries
 @using Pl.Admin.Models
 
-@attribute [Route(Urls.ProductionSites + "/{Id:guid}")]
+@attribute [Route(Routes.ProductionSites + "/{Id:guid}")]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
 
 <UseEndpoint
@@ -15,7 +15,7 @@
   <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionProductionSites"])" />
 
   <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label="@Localizer["SectionProductionSites"]" Link="@Urls.ProductionSites" />
+    <Breadcrumb Label="@Localizer["SectionProductionSites"]" Link="@Routes.ProductionSites" />
     @if (query.HasData)
     {
       <Breadcrumb Label="@query.Data.Name" />
@@ -71,6 +71,6 @@
   {
     await WebApi.DeleteProductionSite(item.Id);
     ReferencesEndpoints.DeleteProductionSite(item.Id);
-    await PageHelper.OpenLink(Urls.ProductionSites);
+    await PageHelper.OpenLink(Routes.ProductionSites);
   }
 }

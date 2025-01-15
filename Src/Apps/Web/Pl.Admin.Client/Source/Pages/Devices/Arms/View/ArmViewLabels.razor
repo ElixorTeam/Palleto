@@ -19,7 +19,7 @@
   <DataGridContainer
     TItem="LabelDto"
     Items="@(labelsQuery.HasData ? labelsQuery.Data : [])"
-    OnItemSelect="@(item => NavigationManager.NavigateTo($"{Urls.Labels}/{item.Id}"))"
+    OnItemSelect="@(item => NavigationManager.NavigateTo($"{Routes.Labels}/{item.Id}"))"
     ItemsPerPage="11"
     IsFilterable
   >

@@ -2,7 +2,7 @@
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Models.Features.Database
 
-@attribute [Route($"{Urls.Tables}")]
+@attribute [Route($"{Routes.Tables}")]
 @attribute [Authorize(Policy = PolicyEnum.Developer)]
 @rendermode InteractiveServer
 
@@ -13,7 +13,7 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label="@Localizer["SectionTables"]" Link="@Urls.Tables" />
+    <Breadcrumb Label="@Localizer["SectionTables"]" Link="@Routes.Tables" />
   </Breadcrumbs>
 
   <DataGridHeader>

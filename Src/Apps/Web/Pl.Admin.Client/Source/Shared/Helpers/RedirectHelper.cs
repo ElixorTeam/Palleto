@@ -21,46 +21,46 @@ public sealed class RedirectHelper(IAuthorizationService authorizationService, N
     #region For Support
 
     public string ToTemplate(Guid uid) =>
-        Link(uid, Urls.Templates, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.Templates, CheckPolicy(PolicyEnum.Support));
 
     public string ToResource(Guid uid) =>
-        Link(uid, Urls.Resources, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.Resources, CheckPolicy(PolicyEnum.Support));
 
     public string ToArm(Guid uid) =>
-        Link(uid, Urls.Arms, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.Arms, CheckPolicy(PolicyEnum.Support));
 
     public string ToPrinter(Guid uid) =>
-        Link(uid, Urls.Printers, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.Printers, CheckPolicy(PolicyEnum.Support));
 
     public string ToPalletMan(Guid uid) =>
-        Link(uid, Urls.PalletMen, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.PalletMen, CheckPolicy(PolicyEnum.Support));
 
     public string ToUser(Guid uid) =>
-        Link(uid, Urls.Users, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.Users, CheckPolicy(PolicyEnum.Support));
 
     public string ToWarehouse(Guid uid) =>
-        Link(uid, Urls.Warehouses, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.Warehouses, CheckPolicy(PolicyEnum.Support));
 
     public string ToProductionSite(Guid uid) =>
-        Link(uid, Urls.ProductionSites, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.ProductionSites, CheckPolicy(PolicyEnum.Support));
 
     #endregion
 
     #region For All
 
-    public string ToPlu(Guid uid) => Link(uid, Urls.Plus);
+    public string ToPlu(Guid uid) => Link(uid, Routes.Plus);
 
-    public string ToBox(Guid uid) => Link(uid, Urls.Boxes);
+    public string ToBox(Guid uid) => Link(uid, Routes.Boxes);
 
-    public string ToBrand(Guid uid) => Link(uid, Urls.Brands);
+    public string ToBrand(Guid uid) => Link(uid, Routes.Brands);
 
-    public string ToBundle(Guid uid) => Link(uid, Urls.Bundles);
+    public string ToBundle(Guid uid) => Link(uid, Routes.Bundles);
 
-    public string ToClip(Guid uid) => Link(uid, Urls.Clips);
+    public string ToClip(Guid uid) => Link(uid, Routes.Clips);
 
-    public string ToLabel(Guid uid) => Link(uid, Urls.Labels);
+    public string ToLabel(Guid uid) => Link(uid, Routes.Labels);
 
-    public string ToPallet(Guid uid) => Link(uid, Urls.Pallets);
+    public string ToPallet(Guid uid) => Link(uid, Routes.Pallets);
 
     #endregion
 }

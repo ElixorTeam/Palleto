@@ -4,7 +4,7 @@
 @using Pl.Admin.Models.Features.References.Warehouses.Queries
 @using Pl.Admin.Models
 
-@attribute [Route(Urls.Warehouses + "/{Id:guid}")]
+@attribute [Route(Routes.Warehouses + "/{Id:guid}")]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
 
 <UseEndpoint
@@ -15,7 +15,7 @@
   <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionWarehouses"])" />
 
   <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label="@Localizer["SectionWarehouses"]" Link="@Urls.Warehouses" />
+    <Breadcrumb Label="@Localizer["SectionWarehouses"]" Link="@Routes.Warehouses" />
     @if (query.HasData)
     {
       <Breadcrumb Label="@query.Data.Name" />
@@ -71,6 +71,6 @@
   {
     await WebApi.DeleteWarehouse(item.Id);
     ReferencesEndpoints.DeleteWarehouse(item.ProductionSite.Id, item.Id);
-    await PageHelper.OpenLink(Urls.Warehouses);
+    await PageHelper.OpenLink(Routes.Warehouses);
   }
 }

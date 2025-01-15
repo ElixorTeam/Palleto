@@ -1,9 +1,10 @@
+@using Pl.Tablet.Client.Source.Shared.Constants
 @using TscZebra.Plugin.Abstractions.Enums
 @using Pl.Tablet.Models.Features.Pallets.Output
 
 @implements IDisposable
 
-@attribute [Route($"{Urls.Create}")]
+@attribute [Route($"{Routes.Create}")]
 
 <div class="size-full flex flex-col justify-between max-w-screen-md mx-auto p-6">
   <div class="w-full flex flex-col max-h-full overflow-hidden">

@@ -2,7 +2,7 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 
-@attribute [Route(Urls.Clips)]
+@attribute [Route(Routes.Clips)]
 @rendermode InteractiveServer
 
 <BrowserTitle Label="@Localizer["SectionClips"]" />
@@ -13,7 +13,7 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label="@Localizer["SectionClips"]" Link="@Urls.Clips" />
+    <Breadcrumb Label="@Localizer["SectionClips"]" Link="@Routes.Clips" />
   </Breadcrumbs>
 
   <DataGridHeader>

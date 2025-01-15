@@ -7,7 +7,7 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References.Warehouses.Queries
 
-@attribute [Route(Urls.Warehouses)]
+@attribute [Route(Routes.Warehouses)]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
 @rendermode InteractiveServer
 
@@ -21,7 +21,7 @@
     Context="query"
   >
     <Breadcrumbs Class="pb-5">
-      <Breadcrumb Label="@Localizer["SectionWarehouses"]" Link="@Urls.Warehouses" />
+      <Breadcrumb Label="@Localizer["SectionWarehouses"]" Link="@Routes.Warehouses" />
     </Breadcrumbs>
 
     <DataGridHeader>

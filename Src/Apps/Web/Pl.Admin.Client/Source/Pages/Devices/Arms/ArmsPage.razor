@@ -8,7 +8,7 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
 
-@attribute [Route(Urls.Arms)]
+@attribute [Route(Routes.Arms)]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @rendermode InteractiveServer
@@ -23,7 +23,7 @@
     Context="query"
   >
     <Breadcrumbs Class="pb-5">
-      <Breadcrumb Label=@Localizer["SectionArm"] Link="@Urls.Arms" />
+      <Breadcrumb Label=@Localizer["SectionArm"] Link="@Routes.Arms" />
     </Breadcrumbs>
 
     <DataGridHeader>

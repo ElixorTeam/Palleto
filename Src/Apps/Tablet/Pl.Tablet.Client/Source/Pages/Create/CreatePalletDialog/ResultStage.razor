@@ -55,7 +55,7 @@
       <PrintComponentButton
         TComponent="PalletDocument"
         Variant="ButtonVariantType.Outline"
-        Parameters="@(new() { { nameof(PalletDocument.Pallet), FinalDto } })"
+        Parameters="@(new Dictionary<string,object?> { { nameof(PalletDocument.Pallet), FinalDto } })"
       />
       <Button Variant="ButtonVariantType.Outline" OnClick="@(() => PrintLabels(FinalDto.ZplLabel))">
         Печать этикеток

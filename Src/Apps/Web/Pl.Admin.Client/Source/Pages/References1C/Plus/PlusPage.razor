@@ -5,7 +5,7 @@
 @using Pl.Admin.Models.Features.References1C.Brands
 @using Pl.Admin.Models.Features.References1C.Plus.Queries
 
-@attribute [Route(Urls.Plus)]
+@attribute [Route(Routes.Plus)]
 @rendermode InteractiveServer
 
 <BrowserTitle Label="@Localizer["SectionPlu"]" />
@@ -16,7 +16,7 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label="@Localizer["SectionPlu"]" Link="@Urls.Plus" />
+    <Breadcrumb Label="@Localizer["SectionPlu"]" Link="@Routes.Plus" />
   </Breadcrumbs>
 
   <DataGridHeader>
@@ -36,6 +36,7 @@
   >
     <ColumnsContent>
       <DataGridColumn
+        TItem="PluDto"
         Caption="@WsDataLocalizer["ColStatus"]"
         Width="5%"
         Sortable="false"

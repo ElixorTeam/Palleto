@@ -42,7 +42,7 @@ public static class MauiProgram
 
         builder.Services
             .AddScoped<HtmlRenderer>()
-            .AddScoped<IPrintService, PrintService>()
+            .AddScoped<IDocumentService, DocumentService>()
             .AddSingleton<IPrinterService, PrinterService>();
 
         #if DEBUG

@@ -12,7 +12,7 @@
   </DialogHeader>
   <div class="flex flex-col w-full max-h-full bg-secondary overflow-y-auto px-4">
     <CreatePalletForm
-      Model="@(new() { DocumentNumber = Content.DocumentNumber, Batches = [new()] })"
+      Model="@(new PalletCreateModel { DocumentNumber = Content.DocumentNumber, Batches = [new()] })"
       OnPalletCreated="@Content.OnPalletCreated"
     />
   </div>

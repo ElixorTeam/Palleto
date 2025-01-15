@@ -1,7 +1,7 @@
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Blazor.Heroicons.Outline
 
-@attribute [Route(Urls.Home)]
+@attribute [Route(Routes.Home)]
 @attribute [Authorize]
 
 <div class="divide-x justify-center flex">
@@ -149,14 +149,14 @@
 <div class="w-full max-w-2xl mx-auto mb-10">
   <ul class="flex flex-col gap-3 w-full">
     <li class="w-full">
-      <a href="@Urls.PrinterControlGuide" class="w-full rounded-lg border shadow-sm flex gap-1 items-center h-12 px-4 overflow-hidden transition-colors hover:bg-secondary">
+      <a href="@Routes.PrinterControlGuide" class="w-full rounded-lg border shadow-sm flex gap-1 items-center h-12 px-4 overflow-hidden transition-colors hover:bg-secondary">
         <BookOpenIcon class="size-5 mr-2 pb-px" />
         <span class="font-medium">Работа с принтерами на сайте</span>
         <Badge Variant="@BadgeVariants.Secondary">2 мин</Badge>
       </a>
     </li>
     <li class="w-full">
-      <a href="@Urls.ErrorReportGuide" class="w-full rounded-lg border shadow-sm flex gap-1 items-center h-12 px-4 overflow-hidden transition-colors hover:bg-secondary">
+      <a href="@Routes.ErrorReportGuide" class="w-full rounded-lg border shadow-sm flex gap-1 items-center h-12 px-4 overflow-hidden transition-colors hover:bg-secondary">
         <BookOpenIcon class="size-5 mr-2 pb-px" />
         <span class="font-medium">Репорт ошибок приложений</span>
         <Badge Variant="@BadgeVariants.Secondary">3 мин</Badge>

@@ -1,4 +1,4 @@
-namespace Pl.Tablet.Client.Source.Features.CreatePalletDialog;
+namespace Pl.Tablet.Client.Source.Pages.Create.CreatePalletDialog;
 
 public record BatchCreateModel {
     public Guid Id { get; } = Guid.NewGuid();

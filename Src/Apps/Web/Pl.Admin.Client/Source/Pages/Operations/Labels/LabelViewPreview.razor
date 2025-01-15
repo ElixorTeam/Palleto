@@ -7,7 +7,7 @@
   <UseEndpoint Endpoint="OperationsEndpoints.LabelZplEndpoint" Arg="Model.Id" Context="labelZplQuery">
     @if (labelZplQuery.IsLoading)
     {
-      <Spinner Class="size-14 text-muted animate-spin fill-blue-600"/>
+      <Spinner Class="size-14"/>
     }
     else if (labelZplQuery.HasData && !string.IsNullOrWhiteSpace(labelZplQuery.Data.Zpl))
     {
@@ -18,7 +18,7 @@
       >
         @if (zplQuery.IsLoading)
         {
-          <Spinner Class="size-14 text-muted animate-spin fill-primary" />
+          <Spinner Class="size-14" />
         }
         else
         {

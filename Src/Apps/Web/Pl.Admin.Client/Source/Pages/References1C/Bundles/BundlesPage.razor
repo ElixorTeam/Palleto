@@ -2,7 +2,7 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 
-@attribute [Route(Urls.Bundles)]
+@attribute [Route(Routes.Bundles)]
 @rendermode InteractiveServer
 
 
@@ -14,7 +14,7 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label="@Localizer["SectionBundles"]" Link="@Urls.Bundles" />
+    <Breadcrumb Label="@Localizer["SectionBundles"]" Link="@Routes.Bundles" />
   </Breadcrumbs>
 
   <DataGridHeader>

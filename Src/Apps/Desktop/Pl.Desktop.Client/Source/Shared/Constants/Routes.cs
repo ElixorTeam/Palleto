@@ -1,4 +1,4 @@
-namespace Pl.Desktop.Client.Source.Shared.Utils;
+namespace Pl.Desktop.Client.Source.Shared.Constants;
 
 public static class Routes
 {

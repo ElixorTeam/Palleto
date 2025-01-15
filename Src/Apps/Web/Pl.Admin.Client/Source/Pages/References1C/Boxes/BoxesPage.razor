@@ -2,7 +2,7 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 
-@attribute [Route(Urls.Boxes)]
+@attribute [Route(Routes.Boxes)]
 @rendermode InteractiveServer
 
 <BrowserTitle Label="@Localizer["SectionBoxes"]" />
@@ -13,7 +13,7 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label=@Localizer["SectionBoxes"] Link="@Urls.Boxes" />
+    <Breadcrumb Label=@Localizer["SectionBoxes"] Link="@Routes.Boxes" />
   </Breadcrumbs>
 
   <DataGridHeader>

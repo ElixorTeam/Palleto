@@ -4,7 +4,7 @@
 @using Pl.Admin.Models.Features.References.TemplateResources.Queries
 @using Pl.Admin.Models
 
-@attribute [Route(Urls.Resources + "/{Id:guid}")]
+@attribute [Route(Routes.Resources + "/{Id:guid}")]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
 
 <UseEndpoint
@@ -15,7 +15,7 @@
   <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionTemplateResources"])" />
 
   <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label=@Localizer["SectionTemplateResources"] Link="@Urls.Resources" />
+    <Breadcrumb Label=@Localizer["SectionTemplateResources"] Link="@Routes.Resources" />
     @if (query.HasData)
     {
       <Breadcrumb Label="@query.Data.Name" />
@@ -71,6 +71,6 @@
   {
     await WebApi.DeleteResource(item.Id);
     PrintSettingsEndpoints.DeleteResource(item.Id);
-    await PageHelper.OpenLink(Urls.Resources);
+    await PageHelper.OpenLink(Routes.Resources);
   }
 }

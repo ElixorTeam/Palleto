@@ -5,7 +5,7 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References.TemplateResources.Queries
 
-@attribute [Route(Urls.Resources)]
+@attribute [Route(Routes.Resources)]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
 @rendermode InteractiveServer
 
@@ -17,7 +17,7 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label=@Localizer["SectionTemplateResources"] Link="@Urls.Resources" />
+    <Breadcrumb Label=@Localizer["SectionTemplateResources"] Link="@Routes.Resources" />
   </Breadcrumbs>
 
   <DataGridHeader>

@@ -3,7 +3,7 @@
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Models.Features.References1C.Brands
 
-@attribute [Route(Urls.Brands)]
+@attribute [Route(Routes.Brands)]
 @rendermode InteractiveServer
 
 <BrowserTitle Label="@Localizer["SectionBrands"]" />
@@ -14,7 +14,7 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label=@Localizer["SectionBrands"] Link="@Urls.Brands" />
+    <Breadcrumb Label=@Localizer["SectionBrands"] Link="@Routes.Brands" />
   </Breadcrumbs>
 
   <DataGridHeader>

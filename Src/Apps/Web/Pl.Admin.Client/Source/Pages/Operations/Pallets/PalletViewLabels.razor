@@ -16,7 +16,7 @@
   <DataGridContainer
     TItem="OrderedPalletLabel"
     Items="@(GetOrderedLabels(labelsQuery.Data ?? []))"
-    OnItemSelect="@(item => NavigationManager.NavigateTo($"{Urls.Labels}/{item.Id}"))"
+    OnItemSelect="@(item => NavigationManager.NavigateTo($"{Routes.Labels}/{item.Id}"))"
   >
     <ColumnsContent>
       <DataGridColumn

@@ -1,7 +1,7 @@
 using FluentValidation;
 using Pl.Tablet.Client.Source.Shared.Utils;
 
-namespace Pl.Tablet.Client.Source.Features.CreatePalletDialog;
+namespace Pl.Tablet.Client.Source.Pages.Create.CreatePalletDialog;
 
 public class BatchValidator : AbstractValidator<BatchCreateModel>
 {

@@ -1,7 +1,7 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 
-@attribute [Route(Urls.Bundles + "/{Id:guid}")]
+@attribute [Route(Routes.Bundles + "/{Id:guid}")]
 
 <UseEndpoint
   Endpoint="@References1CEndpoints.BundleEndpoint"
@@ -11,7 +11,7 @@
   <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionBundles"])" />
 
   <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label=@Localizer["SectionBundles"] Link="@Urls.Bundles" />
+    <Breadcrumb Label=@Localizer["SectionBundles"] Link="@Routes.Bundles" />
     @if (query.HasData)
     {
       <Breadcrumb Label="@query.Data.Name" />

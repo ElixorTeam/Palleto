@@ -68,7 +68,7 @@ file static class AuthBuilderExtensions
 
                 opt.Events.OnRedirectToAccessDenied = context =>
                 {
-                    context.Response.Redirect(Urls.Home);
+                    context.Response.Redirect(Routes.Home);
                     return Task.CompletedTask;
                 };
             });

@@ -5,7 +5,7 @@
 @using Pl.Admin.Client.Source.Pages.Admin.PalletMen.Update
 @using Pl.Admin.Client.Source.Features
 
-@attribute [Route(Urls.PalletMen + "/{Id:guid}")]
+@attribute [Route(Routes.PalletMen + "/{Id:guid}")]
 
 <UseEndpoint
   Endpoint="@AdminEndpoints.PalletManEndpoint"
@@ -15,7 +15,7 @@
   <BrowserTitle Label="@(query.Data?.Fio.DisplayShortName ?? Localizer["SectionPalletMen"])" />
 
   <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label="@Localizer["SectionPalletMen"]" Link="@Urls.PalletMen" />
+    <Breadcrumb Label="@Localizer["SectionPalletMen"]" Link="@Routes.PalletMen" />
     @if (query.HasData)
     {
       <Breadcrumb Label="@query.Data.Fio.DisplayShortName" />
@@ -75,6 +75,6 @@
   {
     await WebApi.DeletePalletMan(item.Id);
     AdminEndpoints.DeletePalletMan(item.ProductionSite.Id, item.Id);
-    await PageHelper.OpenLink(Urls.PalletMen);
+    await PageHelper.OpenLink(Routes.PalletMen);
   }
 }

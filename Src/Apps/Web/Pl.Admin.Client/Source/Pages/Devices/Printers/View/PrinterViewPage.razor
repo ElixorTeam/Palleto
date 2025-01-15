@@ -5,7 +5,7 @@
 @using Pl.Admin.Client.Source.Pages.Devices.Printers.Update
 @using Pl.Admin.Client.Source.Features
 
-@attribute [Route(Urls.Printers + "/{Id:guid}")]
+@attribute [Route(Routes.Printers + "/{Id:guid}")]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
 
 <UseEndpoint
@@ -16,7 +16,7 @@
   <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionPrinters"])" />
 
   <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label="@Localizer["SectionPrinters"]" Link="@Urls.Printers" />
+    <Breadcrumb Label="@Localizer["SectionPrinters"]" Link="@Routes.Printers" />
     @if (query.HasData)
     {
       <Breadcrumb Label="@query.Data.Name" />
@@ -86,6 +86,6 @@
   {
     await WebApi.DeletePrinter(item.Id);
     DevicesEndpoints.DeletePrinter(item.ProductionSite.Id, item.Id);
-    await PageHelper.OpenLink(Urls.Printers);
+    await PageHelper.OpenLink(Routes.Printers);
   }
 }

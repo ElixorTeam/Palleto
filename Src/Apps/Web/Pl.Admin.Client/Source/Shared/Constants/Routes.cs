@@ -1,6 +1,6 @@
 namespace Pl.Admin.Client.Source.Shared.Constants;
 
-public static class Urls
+public static class Routes
 {
     # region Devices
 

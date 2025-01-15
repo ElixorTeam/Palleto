@@ -6,7 +6,7 @@
 @using Pl.Admin.Client.Source.Shared.Services.Stores
 @using Pl.Admin.Models
 
-@attribute [Route($"{Urls.Users}")]
+@attribute [Route($"{Routes.Users}")]
 @attribute [Authorize(Policy = PolicyEnum.SeniorSupport)]
 @rendermode InteractiveServer
 
@@ -18,7 +18,7 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label=@Localizer["SectionUsers"] Link="@Urls.Users" />
+    <Breadcrumb Label=@Localizer["SectionUsers"] Link="@Routes.Users" />
   </Breadcrumbs>
 
   <DataGridHeader>

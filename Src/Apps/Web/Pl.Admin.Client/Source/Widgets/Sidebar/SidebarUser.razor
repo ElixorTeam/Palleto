@@ -13,7 +13,7 @@
             <span class="text-xs text-muted-foreground truncate">@($"@{User.Identity?.Name}")</span>
           </div>
         </div>
-        <form method="post" action="@($"{Urls.Authorization}/logout")" class="shrink-0">
+        <form method="post" action="@($"{Routes.Authorization}/logout")" class="shrink-0">
           <Button Variant="ButtonVariantType.Ghost" Size="ButtonSizeType.Icon" Type="@ButtonType.Submit">
             <span class="sr-only">Logout</span>
             <ArrowLeftOnRectangleIcon class="size-5"/>
@@ -24,7 +24,7 @@
     </Authorized>
     <NotAuthorized>
       <div class="flex w-full items-center justify-center">
-        <Button Link="@($"{Urls.Authorization}/login")" Variant="ButtonVariantType.Outline">
+        <Button Link="@($"{Routes.Authorization}/login")" Variant="ButtonVariantType.Outline">
           Log in
         </Button>
       </div>

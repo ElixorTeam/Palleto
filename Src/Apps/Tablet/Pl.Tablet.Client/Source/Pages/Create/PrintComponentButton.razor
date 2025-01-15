@@ -23,7 +23,7 @@
 </Button>
 
 @code {
-  [Inject] private IPrintService PrintService { get; set; } = default!;
+  [Inject] private IDocumentService DocumentService { get; set; } = default!;
   [Inject] private HtmlRenderer HtmlRenderer { get; set; } = default!;
   [Inject] private IToastService ToastService { get; set; } = default!;
 
@@ -49,7 +49,7 @@
       {
         ParameterView parameterView = ParameterView.FromDictionary(Parameters);
         HtmlRootComponent output = await HtmlRenderer.RenderComponentAsync<TComponent>(parameterView);
-        PrintService.Print(output.ToHtmlString());
+        DocumentService.Print(output.ToHtmlString());
       });
     }
     catch

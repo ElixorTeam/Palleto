@@ -5,7 +5,7 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Client.Source.Features
 
-@attribute [Route(Urls.Arms + "/{Id:guid}")]
+@attribute [Route(Routes.Arms + "/{Id:guid}")]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
 
 <UseEndpoint
@@ -16,7 +16,7 @@
   <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionArm"])" />
 
   <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label=@Localizer["SectionArm"] Link="@Urls.Arms" />
+    <Breadcrumb Label=@Localizer["SectionArm"] Link="@Routes.Arms" />
     @if (query.HasData)
     {
       <Breadcrumb Label="@query.Data.Name" />
@@ -115,6 +115,6 @@
   {
     await WebApi.DeleteArm(item.Id);
     DevicesEndpoints.DeleteArm(item.ProductionSite.Id, item.Id);
-    await PageHelper.OpenLink(Urls.Arms);
+    await PageHelper.OpenLink(Routes.Arms);
   }
 }

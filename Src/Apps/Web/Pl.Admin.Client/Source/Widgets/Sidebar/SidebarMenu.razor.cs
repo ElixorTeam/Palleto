@@ -30,36 +30,36 @@ public sealed partial class SidebarMenu : ComponentBase
     private IEnumerable<MenuSection> CreateNavMenus() =>
     [
         new(Localizer["MenuDevices"], HeroiconName.ComputerDesktop, [
-            new(Localizer["SectionArm"], Urls.Arms),
-            new(Localizer["SectionPrinters"], Urls.Printers)
+            new(Localizer["SectionArm"], Routes.Arms),
+            new(Localizer["SectionPrinters"], Routes.Printers)
         ], PolicyEnum.Support),
 
         new(Localizer["Menu1CReferences"], HeroiconName.CurrencyEuro, [
-            new(Localizer["SectionPlu"], Urls.Plus),
-            new(Localizer["SectionBoxes"], Urls.Boxes),
-            new(Localizer["SectionClips"], Urls.Clips),
-            new(Localizer["SectionBundles"], Urls.Bundles),
-            new(Localizer["SectionBrands"], Urls.Brands)
+            new(Localizer["SectionPlu"], Routes.Plus),
+            new(Localizer["SectionBoxes"], Routes.Boxes),
+            new(Localizer["SectionClips"], Routes.Clips),
+            new(Localizer["SectionBundles"], Routes.Bundles),
+            new(Localizer["SectionBrands"], Routes.Brands)
         ]),
 
         new(Localizer["MenuReferences"], HeroiconName.BookOpen, [
-            new(Localizer["SectionWarehouses"], Urls.Warehouses),
-            new(Localizer["SectionProductionSites"], Urls.ProductionSites)
+            new(Localizer["SectionWarehouses"], Routes.Warehouses),
+            new(Localizer["SectionProductionSites"], Routes.ProductionSites)
         ], PolicyEnum.Support),
 
         new(Localizer["MenuPrintSettings"], HeroiconName.Printer, [
-            new(Localizer["SectionTemplates"], Urls.Templates),
-            new(Localizer["SectionTemplateResources"], Urls.Resources),
+            new(Localizer["SectionTemplates"], Routes.Templates),
+            new(Localizer["SectionTemplateResources"], Routes.Resources),
         ], PolicyEnum.Support),
 
         new(Localizer["MenuAdministration"], HeroiconName.UserGroup, [
-            new(Localizer["SectionPalletMen"], Urls.PalletMen, PolicyEnum.Support),
-            new(Localizer["SectionUsers"], Urls.Users, PolicyEnum.SeniorSupport),
+            new(Localizer["SectionPalletMen"], Routes.PalletMen, PolicyEnum.Support),
+            new(Localizer["SectionUsers"], Routes.Users, PolicyEnum.SeniorSupport),
         ], PolicyEnum.Support),
 
         new(Localizer["MenuDiagnostics"], HeroiconName.Wrench, [
-            new(Localizer["SectionMigrations"], Urls.Migrations),
-            new(Localizer["SectionTables"], Urls.Tables),
+            new(Localizer["SectionMigrations"], Routes.Migrations),
+            new(Localizer["SectionTables"], Routes.Tables),
         ], PolicyEnum.Admin),
     ];
 }

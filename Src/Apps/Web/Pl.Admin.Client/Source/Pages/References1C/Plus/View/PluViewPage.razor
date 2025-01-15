@@ -2,7 +2,7 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 
-@attribute [Route(Urls.Plus + "/{Id:guid}")]
+@attribute [Route(Routes.Plus + "/{Id:guid}")]
 
 <UseEndpoint
   Endpoint="@References1CEndpoints.PluEndpoint"
@@ -12,7 +12,7 @@
   <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionPlu"])" />
 
   <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label="@Localizer["SectionPlu"]" Link="@Urls.Plus" />
+    <Breadcrumb Label="@Localizer["SectionPlu"]" Link="@Routes.Plus" />
     @if (query.HasData)
     {
       <Breadcrumb Label="@query.Data.Name" />

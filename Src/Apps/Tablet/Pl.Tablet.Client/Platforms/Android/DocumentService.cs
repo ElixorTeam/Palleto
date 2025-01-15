@@ -2,12 +2,13 @@ using Android.Content;
 using Android.Print;
 using Pl.Tablet.Client;
 using Pl.Tablet.Client.Source.Shared;
+using Pl.Tablet.Client.Source.Shared.Services;
 using WebView = Android.Webkit.WebView;
 
-[assembly: Dependency(typeof(PrintService))]
+[assembly: Dependency(typeof(DocumentService))]
 namespace Pl.Tablet.Client;
 
-public class PrintService : IPrintService
+public class DocumentService : IDocumentService
 {
     public void Print(string htmlContent)
     {

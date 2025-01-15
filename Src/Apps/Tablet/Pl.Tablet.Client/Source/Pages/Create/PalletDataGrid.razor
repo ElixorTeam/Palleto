@@ -1,5 +1,5 @@
 @using Blazor.Heroicons.Outline
-@using Pl.Tablet.Client.Source.Features.CreatePalletDialog
+@using Pl.Tablet.Client.Source.Pages.Create.CreatePalletDialog
 @using Pl.Tablet.Models.Features.Pallets.Output
 
 <div class="w-full flex justify-between items-center pb-5 mb-5 border-b">
@@ -70,7 +70,7 @@
   private Task ShowViewDialog(PalletDto pallet) => DialogService.ShowDialogAsync<ViewPalletDialog>(pallet, new());
 
   private Task ShowCreateDialog() =>
-    DialogService.ShowDialogAsync<CreatePalletDialog>(
+    DialogService.ShowDialogAsync<CreatePalletDialog.CreatePalletDialog>(
       new CreateDialogProps
       {
         DocumentNumber = DocumentNumber,

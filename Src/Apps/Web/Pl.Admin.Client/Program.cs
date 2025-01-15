@@ -12,6 +12,7 @@ using Pl.Admin.Models;
 using Pl.Shared.Constants;
 using Pl.Shared.Web.Extensions;
 using TailwindMerge.Extensions;
+using Routes = Pl.Admin.Client.Source.Shared.Constants.Routes;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -64,7 +65,7 @@ app.UseRequestLocalization(Cultures.Ru.Name);
 app.UseStatusCodePagesWithRedirects("/not-found");
 
 app
-    .MapGroup(Urls.Authorization)
+    .MapGroup(Routes.Authorization)
     .MapLoginAndLogout(oidcSettings.Scheme);
 
 app.MapRazorComponents<App>().AddInteractiveServerRenderMode();

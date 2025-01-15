@@ -63,7 +63,7 @@ public static class WindowsUtils
         }
         catch
         {
-            // pass;
+            // pass
         }
         return new(ip, mac, type);
     }

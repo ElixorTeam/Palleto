@@ -1,4 +1,4 @@
-namespace Pl.Mobile.Client.Source.Shared.Utils;
+namespace Pl.Mobile.Client.Source.Shared.Constants;
 
 public static class Routes
 {

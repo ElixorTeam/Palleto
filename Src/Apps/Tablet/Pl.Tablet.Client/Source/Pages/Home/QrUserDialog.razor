@@ -17,8 +17,11 @@
   <div class="w-full flex justify-center">
     <QRCode
       Value="@Settings.Secure.GetString(Android.App.Application.Context.ContentResolver, Settings.Secure.AndroidId)"
-      BlockSize="15"
-    />
+      BlockSize="15">
+      <LoadingContent>
+        <Spinner Class="size-6" />
+      </LoadingContent>
+    </QRCode>
   </div>
   <div class="flex w-full justify-end gap-2 pt-4">
     <Button OnClick="@CloseDialog">

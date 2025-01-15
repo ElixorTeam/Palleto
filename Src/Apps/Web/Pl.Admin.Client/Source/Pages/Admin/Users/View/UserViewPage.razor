@@ -4,7 +4,7 @@
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Models
 
-@attribute [Route(Urls.Users + "/{Id:guid}")]
+@attribute [Route(Routes.Users + "/{Id:guid}")]
 @attribute [Authorize(Policy = PolicyEnum.SeniorSupport)]
 
 <UseParameterlessEndpoint
@@ -16,7 +16,7 @@
   <BrowserTitle Label="@(user?.Fio.DisplayShortName ?? Localizer["SectionUsers"])" />
 
   <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label="@Localizer["SectionUsers"]" Link="@Urls.Users" />
+    <Breadcrumb Label="@Localizer["SectionUsers"]" Link="@Routes.Users" />
     @if (user != null)
     {
       <Breadcrumb Label="@user.Fio.DisplayShortName" />
@@ -70,6 +70,6 @@
   {
     await WebApi.DeleteUser(item.KcId);
     AdminEndpoints.DeleteUser(item.KcId);
-    await PageHelper.OpenLink(Urls.Users);
+    await PageHelper.OpenLink(Routes.Users);
   }
 }

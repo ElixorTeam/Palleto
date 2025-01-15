@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Pl.Tablet.Models.Features.Pallets.Output;
 
-namespace Pl.Tablet.Client.Source.Features.CreatePalletDialog;
+namespace Pl.Tablet.Client.Source.Pages.Create.CreatePalletDialog;
 
 public record CreateDialogProps
 {

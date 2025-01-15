@@ -9,7 +9,7 @@
 @using Pl.Admin.Models.Features.Devices.Printers.Queries
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
-@attribute [Route(Urls.Printers)]
+@attribute [Route(Routes.Printers)]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
 @rendermode InteractiveServer
 
@@ -23,7 +23,7 @@
     Context="query"
   >
     <Breadcrumbs Class="pb-5">
-      <Breadcrumb Label="@Localizer["SectionPrinters"]" Link="@Urls.Printers" />
+      <Breadcrumb Label="@Localizer["SectionPrinters"]" Link="@Routes.Printers" />
     </Breadcrumbs>
 
     <DataGridHeader>

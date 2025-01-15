@@ -1,7 +1,7 @@
 using Pl.Tablet.Client.Source.Shared.Utils;
 using Pl.Tablet.Models.Features.Pallets.Input;
 
-namespace Pl.Tablet.Client.Source.Features.CreatePalletDialog;
+namespace Pl.Tablet.Client.Source.Pages.Create.CreatePalletDialog;
 
 public static class BatchMapper
 {
