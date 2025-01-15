@@ -2,23 +2,27 @@
 @using Pl.Tablet.Client.Source.Pages.Create.CreatePalletDialog
 @using Pl.Tablet.Models.Features.Pallets.Output
 
-<div class="w-full flex justify-between items-center pb-5 mb-5 border-b">
-  <h2 class="font-medium text-xl">Список паллет</h2>
-  <Button
-    OnClick="@ShowCreateDialog"
-    Disabled="@string.IsNullOrWhiteSpace(DocumentNumber)"
-  >
-    <PlusIcon class="size-5 mr-2" />
-    <span>Добавить</span>
-  </Button>
+<div class="w-full flex flex-col gap-0.5 pb-3 border-b mb-5">
+  <div class="flex w-full gap-2 items-center justify-between">
+    <h2 class="font-semibold text-2xl">Сформированные паллеты</h2>
+    <Button
+      OnClick="@ShowCreateDialog"
+      Disabled="@string.IsNullOrWhiteSpace(DocumentNumber)">
+      <PlusIcon class="size-5 mr-2"/>
+      <span>Добавить</span>
+    </Button>
+  </div>
+  <h3 class="text-muted-foreground">
+    Добавляйте паллеты постепенно, сверяя их с данными документа и фактически привезённым сырьём.
+  </h3>
 </div>
 
 <div class="w-full max-h-full flex flex-col">
-  <div class="w-full h-9 shrink-0 grid grid-cols-[3rem,1fr,1fr,4rem] rounded-md bg-primary/5">
+  <div class="w-full h-12 shrink-0 grid grid-cols-[3rem,1fr,1fr,4rem] rounded-md bg-background border">
     <div class="size-full flex text-sm items-center justify-center">№</div>
-    <div class="size-full flex text-sm items-center px-3 uppercase">Штрихкод</div>
-    <div class="size-full flex text-sm items-center px-3 uppercase">Количество</div>
-    <div class="size-full flex text-sm items-center px-3 uppercase"></div>
+    <div class="size-full flex text-sm items-center px-3">Штрихкод</div>
+    <div class="size-full flex text-sm items-center px-3">Количество</div>
+    <div class="size-full flex text-sm items-center px-3"></div>
   </div>
   @if (!Value.Any())
   {
