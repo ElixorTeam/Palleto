@@ -5,8 +5,8 @@
 
     <ItemGroup Label="Packages">
         <PackageReference Include="Blazor.Heroicons" VersionOverride="2.2.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" VersionOverride="9.0.0" />
-        <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" VersionOverride="4.11.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" VersionOverride="9.0.1" />
+        <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" VersionOverride="4.11.3" />
         <PackageReference Include="TailwindMerge.NET" />
     </ItemGroup>
 

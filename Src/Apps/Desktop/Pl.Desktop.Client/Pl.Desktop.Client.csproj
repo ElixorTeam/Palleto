@@ -35,8 +35,8 @@
     </ItemGroup>
 
     <ItemGroup Label="Packages">
-        <PackageReference Include="Microsoft.Extensions.Options" VersionOverride="9.0.0" />
-        <PackageReference Include="Microsoft.WindowsAppSDK" VersionOverride="1.6.241114003" />
+        <PackageReference Include="Microsoft.Extensions.Options" VersionOverride="9.0.1" />
+        <PackageReference Include="Microsoft.WindowsAppSDK" VersionOverride="1.6.250108002" />
 
         <PackageReference Include="Velopack" VersionOverride="0.0.1053"/>
 

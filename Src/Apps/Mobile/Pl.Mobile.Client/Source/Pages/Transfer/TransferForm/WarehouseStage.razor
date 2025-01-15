@@ -5,36 +5,46 @@
   <div class="flex flex-col overflow-hidden w-full pt-1">
     <h2 class="text-2xl font-bold text-center tracking-tight">Конечный склад</h2>
     <h3 class="text-xs text-muted-foreground text-center tracking-tight pt-1">Выберите из списка склад,<br /> в который будет перенесена паллета</h3>
-    <ul class="size-full items-center flex flex-col gap-1.5 py-4 overflow-y-auto">
-    <UseParameterlessEndpoint Endpoint="@WarehousesEndpoints.WarehousesEndpoint" Context="query">
-      @if (query.HasData)
-      {
-        @foreach (WarehouseDto item in query.Data)
+    <div class="size-full overflow-hidden flex py-4">
+      <UseParameterlessEndpoint Endpoint="@WarehousesEndpoints.WarehousesEndpoint" Context="query">
+        <ul class="max-h-full w-full overflow-y-auto py-1 px-4 bg-background border divide-y rounded-lg">
+        @if (query.HasData)
         {
-          <li class="w-full">
-            <button
-              @onclick="@(() => SetWarehouseId(item))"
-              class="@Css.Class("h-12 w-full rounded-lg border flex items-center gap-2 bg-background px-3", Warehouse.Id.Equals(item.Id) ? "border-primary" : "border-border")">
-              <div class="w-8 shrink-0 flex items-center justify-center">
-                <div class="size-4 rounded-full border border-primary">
-                  @if (Warehouse.Id.Equals(item.Id))
-                  {
-                    <span data-state="checked" class="flex size-full items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-2.5 fill-primary"><circle cx="12" cy="12" r="10"></circle></svg>
-                    </span>
-                  }
+          @foreach (WarehouseDto item in query.Data)
+          {
+            <li class="w-full">
+              <button
+                @onclick="@(() => SetWarehouseId(item))"
+                class="h-12 px-1 w-full rounded-lg my-1 flex items-center gap-2"
+              >
+                <div class="flex flex-col w-full text-left">
+                  <div class="truncate text-sm font-semibold">@item.WarehouseName</div>
+                  <div class="text-muted-foreground text-xs truncate">@item.ProductionSiteName</div>
                 </div>
-              </div>
-              <div class="flex flex-col w-full text-left">
-                <div class="truncate text-sm font-semibold">@item.WarehouseName</div>
-                <div class="text-muted-foreground text-xs truncate">@item.ProductionSiteName</div>
-              </div>
-            </button>
-          </li>
+                <div class="w-8 shrink-0 flex items-center justify-center">
+                  <div class="size-4 rounded-full border flex items-center justify-center border-primary">
+                    @if (Warehouse.Id.Equals(item.Id))
+                    {
+                      <div class="rounded-full bg-primary size-2.5 overflow-hidden"><span> </span></div>
+                    }
+                  </div>
+                </div>
+              </button>
+            </li>
+          }
         }
-      }
-    </UseParameterlessEndpoint>
-    </ul>
+        else
+        {
+          @foreach (int _ in Enumerable.Range(1, 4))
+          {
+            <li class="w-full">
+              <Skeleton Class="h-12 w-full px-1 my-1" />
+            </li>
+          }
+        }
+        </ul>
+      </UseParameterlessEndpoint>
+    </div>
   </div>
   <div class="shrink-0 w-full flex flex-col gap-2">
     <Button OnClick="@OnCancelAction" Variant="ButtonVariantType.Outline">

@@ -7,21 +7,26 @@
   <div class="flex flex-col overflow-hidden w-full pt-1">
     <h2 class="text-2xl font-bold tracking-tight text-center">Сканирование паллет</h2>
     <h3 class="text-xs text-muted-foreground tracking-tight text-center pt-1">Используйте считыватель штрихкода <br /> и отсканируйте штрихкоды с паллет</h3>
-    <ul class="size-full flex flex-col gap-1.5 py-4 overflow-y-auto">
-      @foreach (string item in Pallets.ToArray().Reverse())
+    <div class="size-full flex py-4 overflow-hidden">
+      @if (Pallets.Any())
       {
-        <li class="w-full">
-          <button
-            type="button"
-            @onclick="@(() => DeletePalletItem(item))"
-            Class="w-full overflow-hidden items-center h-9 text-sm rounded-lg bg-background border px-2.5 flex gap-2"
-          >
-            <XMarkIcon class="size-4 shrink-0"/>
-            <span class="truncate">@item</span>
-          </button>
-        </li>
+        <ul class="max-h-full w-full overflow-y-auto py-0.5 px-3 bg-background border divide-y rounded-lg">
+          @foreach (string item in Pallets.ToArray().Reverse())
+          {
+            <li class="w-full" tabindex="-1">
+              <button
+                type="button"
+                @onclick="@(() => DeletePalletItem(item))"
+                Class="w-full overflow-hidden items-center h-9 text-sm rounded-lg px-1 my-0.5 flex gap-2"
+              >
+                <XMarkIcon class="size-4 shrink-0"/>
+                <span class="truncate">@item</span>
+              </button>
+            </li>
+          }
+        </ul>
       }
-    </ul>
+    </div>
   </div>
   <div class="shrink-0 w-full flex flex-col gap-2">
     <Button OnClick="@OnCancelAction" Variant="ButtonVariantType.Outline">
