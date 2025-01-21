@@ -40,8 +40,9 @@
 
   private async Task OpenCameraScanner()
   {
-  if (Application.Current?.MainPage == null) return;
-  await Application.Current.MainPage.Navigation.PushModalAsync(ScanPage.Value);
+    if (Application.Current?.Windows.FirstOrDefault()?.Page is not { } currentPage)
+      return;
+    await currentPage.Navigation.PushModalAsync(ScanPage.Value);
   }
 
   private async Task OpenCameraScannerWithCooldown()

@@ -7,7 +7,7 @@
 
     <PropertyGroup Label="Primary">
         <TargetFramework>net9.0-android</TargetFramework>
-
+        <AcceptAndroidSDKLicenses>true</AcceptAndroidSDKLicenses>
         <OutputType>Exe</OutputType>
         <UseMaui>true</UseMaui>
         <SingleProject>true</SingleProject>

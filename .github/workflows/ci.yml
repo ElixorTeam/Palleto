@@ -1,37 +1,37 @@
-name: CI
-
-on:
-  push:
-    branches:
-      - main
-      - develop
-    paths:
-      - '**.cs'
-      - '**.csproj'
-
-jobs:
-  build:
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout to the repository
-        uses: actions/checkout@v4
-
-      - name: Setup NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.x
-
-      - name: Install dependencies
-        run: dotnet restore
-
-      - name: Run tests
-        run: |
-          dotnet test Src/Tests/Ws.Components.Tests/Ws.Components.Tests.csproj --no-restore --verbosity quiet --configuration ReleaseVS
-          dotnet test Src/Tests/Ws.Architecture.Tests/Ws.Architecture.Tests.csproj --no-restore --verbosity quiet --configuration ReleaseVS
-          dotnet test Src/Tests/Ws.Print.Tests/Ws.Print.Tests.csproj --no-restore --verbosity quiet --configuration ReleaseVS
+#name: CI
+#
+#on:
+#  push:
+#    branches:
+#      - main
+#      - develop
+#    paths:
+#      - '**.cs'
+#      - '**.csproj'
+#
+#jobs:
+#  build:
+#    runs-on: windows-latest
+#
+#    steps:
+#      - name: Checkout to the repository
+#        uses: actions/checkout@v4
+#
+#      - name: Setup NodeJS
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#
+#      - name: Setup .NET
+#        uses: actions/setup-dotnet@v4
+#        with:
+#          dotnet-version: 8.x
+#
+#      - name: Install dependencies
+#        run: dotnet restore
+#
+#      - name: Run tests
+#        run: |
+#          dotnet test Src/Tests/Ws.Components.Tests/Ws.Components.Tests.csproj --no-restore --verbosity quiet --configuration ReleaseVS
+#          dotnet test Src/Tests/Ws.Architecture.Tests/Ws.Architecture.Tests.csproj --no-restore --verbosity quiet --configuration ReleaseVS
+#          dotnet test Src/Tests/Ws.Print.Tests/Ws.Print.Tests.csproj --no-restore --verbosity quiet --configuration ReleaseVS

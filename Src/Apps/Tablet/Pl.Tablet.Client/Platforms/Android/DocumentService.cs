@@ -1,7 +1,6 @@
 using Android.Content;
 using Android.Print;
 using Pl.Tablet.Client;
-using Pl.Tablet.Client.Source.Shared;
 using Pl.Tablet.Client.Source.Shared.Services;
 using WebView = Android.Webkit.WebView;
 
