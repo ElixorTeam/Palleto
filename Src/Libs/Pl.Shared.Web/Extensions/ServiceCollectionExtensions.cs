@@ -40,7 +40,7 @@ public static class ServiceCollectionExtensions
     {
         return services.Scan(scan => scan
             .FromAssembliesOf(typeof(T))
-            .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))
+            .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")), false)
             .AsSelf()
             .WithScopedLifetime()
         );
@@ -50,7 +50,7 @@ public static class ServiceCollectionExtensions
     {
         return services.Scan(scan => scan
             .FromAssembliesOf(typeof(T))
-            .AddClasses(i => i.Where(type => type.Name.EndsWith("Middleware")))
+            .AddClasses(i => i.Where(type => type.Name.EndsWith("Middleware")), false)
             .AsSelf()
             .WithTransientLifetime()
         );
@@ -60,7 +60,7 @@ public static class ServiceCollectionExtensions
     {
         return services.Scan(scan => scan
             .FromAssembliesOf(typeof(T))
-            .AddClasses(classes => classes.Where(type => type.Name.EndsWith("ApiService")))
+            .AddClasses(classes => classes.Where(type => type.Name.EndsWith("ApiService")), false)
             .AsImplementedInterfaces()
             .WithScopedLifetime()
         );
@@ -70,7 +70,7 @@ public static class ServiceCollectionExtensions
     {
         return services.Scan(scan => scan
             .FromAssembliesOf(typeof(T))
-            .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Endpoints")))
+            .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Endpoints")), false)
             .AsSelf()
             .WithScopedLifetime()
         );
@@ -80,7 +80,7 @@ public static class ServiceCollectionExtensions
     {
         return services.Scan(scan => scan
             .FromAssembliesOf(typeof(T))
-            .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Helper")))
+            .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Helper")), false)
             .AsSelf()
             .WithTransientLifetime()
         );
@@ -90,7 +90,7 @@ public static class ServiceCollectionExtensions
     {
         return services.Scan(scan => scan
             .FromAssembliesOf(typeof(T))
-            .AddClasses(classes => classes.AssignableTo<DelegatingHandler>())
+            .AddClasses(classes => classes.AssignableTo<DelegatingHandler>(), false)
             .AsSelf()
             .WithTransientLifetime()
         );

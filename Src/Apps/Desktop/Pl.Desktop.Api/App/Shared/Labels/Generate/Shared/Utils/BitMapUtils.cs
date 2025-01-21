@@ -2,7 +2,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using Svg;
 
-namespace Pl.Desktop.Api.App.Shared.Labels.Generate.Utils;
+namespace Pl.Desktop.Api.App.Shared.Labels.Generate.Shared.Utils;
 
 public static class BitMapUtils
 {

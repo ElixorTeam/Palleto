@@ -3,7 +3,6 @@ using Pl.Admin.Models.Features.References1C.Brands;
 
 namespace Pl.Admin.Api.App.Features.References1C.Brands;
 
-
 [ApiController]
 [Route(ApiEndpoints.Brands)]
 public sealed class BrandController(IBrandService brandService)

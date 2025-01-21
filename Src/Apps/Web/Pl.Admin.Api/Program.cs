@@ -13,10 +13,10 @@ builder.Services
 builder.Services
     .BaseSetup()
     .AddUserClaims()
-    .AddHelpers<IDeviceControlApiAssembly>()
-    .AddValidators<IDeviceControlApiAssembly>()
-    .AddApiServices<IDeviceControlApiAssembly>()
-    .AddMiddlewares<IDeviceControlApiAssembly>()
+    .AddHelpers<IAdminApiAssembly>()
+    .AddValidators<IAdminApiAssembly>()
+    .AddApiServices<IAdminApiAssembly>()
+    .AddMiddlewares<IAdminApiAssembly>()
     .AddAuth(builder.Configuration);
 
 WebApplication app = builder.Build();

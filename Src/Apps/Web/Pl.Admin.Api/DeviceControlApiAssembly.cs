@@ -1,3 +1,3 @@
 namespace Pl.Admin.Api;
 
-internal interface IDeviceControlApiAssembly;
+internal interface IAdminApiAssembly;

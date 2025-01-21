@@ -7,7 +7,7 @@
         <Deterministic>true</Deterministic>
         <WarningLevel>9999</WarningLevel>
         <Prefer32Bit>false</Prefer32Bit>
-        <LangVersion>12</LangVersion>
+        <LangVersion>13</LangVersion>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
@@ -66,7 +66,7 @@
             Include="$(MSBuildThisFileDirectory)\Libs\Pl.Shared\Pl.Shared.csproj"
             Condition="'$(MSBuildProjectName)' != 'Pl.Shared'"
             PrivateAssets="All"
-            />
+        />
     </ItemGroup>
 
     <ItemGroup Label="BF">

@@ -3,7 +3,7 @@ using BinaryKits.Zpl.Label.Elements;
 using Microsoft.Extensions.Localization;
 using Pl.Database;
 using Pl.Database.Entities.Zpl.Templates;
-using Pl.Desktop.Api.App.Shared.Labels.Generate.Utils;
+using Pl.Desktop.Api.App.Shared.Labels.Generate.Shared.Utils;
 using Pl.Desktop.Api.App.Shared.Labels.Localization;
 using Pl.Print.Features.Barcodes.Models;
 using Pl.Print.Features.Templates.Models;
