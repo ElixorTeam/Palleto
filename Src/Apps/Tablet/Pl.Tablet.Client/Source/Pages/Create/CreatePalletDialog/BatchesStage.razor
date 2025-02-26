@@ -10,7 +10,7 @@
     </Button>
   </div>
   <div class="w-full max-h-full bg-background rounded-md border divide-y">
-    <div class="w-full h-12 grid grid-cols-[3rem,1fr,1.5fr,1fr,5rem] divide-x">
+    <div class="w-full h-12 grid grid-cols-[3rem_1fr_1.5fr_1fr_5rem] divide-x">
       <div class="size-full text-sm font-medium flex items-center justify-center">№</div>
       <div class="size-full text-sm font-medium flex items-center px-3">ПЛУ</div>
       <div class="size-full text-sm font-medium flex items-center px-3">Дата</div>
@@ -25,7 +25,7 @@
     }
     @foreach ((BatchCreateModel item, int index) in Model.Batches.Select((value, index) => (value, index)))
     {
-      <div class="w-full h-12 grid grid-cols-[3rem,1fr,1.5fr,1fr,5rem] divide-x">
+      <div class="w-full h-12 grid grid-cols-[3rem_1fr_1.5fr_1fr_5rem] divide-x">
         <div class="size-full text-sm font-medium flex items-center justify-center">
           @(index + 1)
         </div>

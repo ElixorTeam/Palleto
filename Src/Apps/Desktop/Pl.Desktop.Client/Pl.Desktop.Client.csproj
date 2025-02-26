@@ -19,6 +19,9 @@
         <IncludeSymbols>false</IncludeSymbols>
         <GenerateTestArtifacts>false</GenerateTestArtifacts>
         <EnableDefaultCssItems>false</EnableDefaultCssItems>
+
+        <TailwindCssInput>wwwroot\app.css</TailwindCssInput>
+        <TailwindCssOutput>wwwroot\app.min.css</TailwindCssOutput>
     </PropertyGroup>
 
     <ItemGroup Label="Directory.Packages.props">
@@ -35,8 +38,8 @@
     </ItemGroup>
 
     <ItemGroup Label="Packages">
-        <PackageReference Include="Microsoft.Extensions.Options" VersionOverride="9.0.1" />
-        <PackageReference Include="Microsoft.WindowsAppSDK" VersionOverride="1.6.250108002" />
+        <PackageReference Include="Microsoft.Extensions.Options" VersionOverride="9.0.2" />
+        <PackageReference Include="Microsoft.WindowsAppSDK" VersionOverride="1.6.250205002" />
 
         <PackageReference Include="Velopack" VersionOverride="0.0.1053"/>
 
@@ -84,10 +87,7 @@
         <Content Include="..\..\..\Libs\Pl.Components\Shared\_Imports.razor" Link="_Imports.razor" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
-    <Import Project="..\..\..\.targets\NodePackages.targets" />
+    <Import Project="..\..\..\.targets\TailwindIntegration.targets" />
     <Import Project="..\..\..\.targets\AppSettingsForMaui.targets" />
 
-    <Target Name="StaticsBuild" BeforeTargets="PreBuildEvent">
-      <Exec Command="npm run build" />
-    </Target>
 </Project>

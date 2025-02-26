@@ -14,6 +14,8 @@
         <ApplicationId>ru.vladstandart.scalesmobile</ApplicationId>
         <ApplicationIdGuid>C663D42A-C3A4-4848-AD9A-D10C23EE4ED1</ApplicationIdGuid>
 
+        <TailwindCssInput>wwwroot\app.css</TailwindCssInput>
+        <TailwindCssOutput>wwwroot\app.min.css</TailwindCssOutput>
         <NoWarn>XA4301</NoWarn>
     </PropertyGroup>
 
@@ -58,12 +60,8 @@
         <Content Include="..\..\..\Libs\Pl.Components\Shared\_Imports.razor" Link="_Imports.razor" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
-    <Import Project="..\..\..\.targets\NodePackages.targets" />
+    <Import Project="..\..\..\.targets\TailwindIntegration.targets" />
     <Import Project="..\..\..\.targets\AppSettingsForMaui.targets" />
     <Import Project="..\..\..\.targets\BlazorDebugFiles.targets" />
-
-    <Target Name="StaticsBuild" BeforeTargets="PreBuildEvent">
-        <Exec Command="npm run build" />
-    </Target>
 
 </Project>

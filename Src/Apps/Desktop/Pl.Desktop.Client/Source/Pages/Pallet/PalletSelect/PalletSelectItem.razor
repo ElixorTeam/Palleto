@@ -6,7 +6,7 @@
   type="button"
   disabled="@IsSelected"
   @onclick="@(() => Dispatcher.Dispatch(new ChangePalletAction(Pallet)))"
-  class="@Css.Class("w-full h-18 shrink-0 px-4 pb-2.5 pt-2 items-center flex shadow-sm transition-colors rounded-md border hover:bg-secondary/[.6]",
+  class="@Css.Class("w-full h-18 shrink-0 px-4 pb-2.5 pt-2 items-center flex shadow-xs transition-colors rounded-md border hover:bg-secondary/[.6]",
            IsSelected ? "bg-secondary hover:bg-secondary" : string.Empty)"
 >
   <div class="size-full overflow-hidden grow flex gap-0.5 flex-col">

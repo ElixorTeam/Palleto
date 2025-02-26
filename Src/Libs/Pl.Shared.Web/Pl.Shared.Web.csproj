@@ -11,17 +11,17 @@
     </ItemGroup>
 
     <ItemGroup Label="Packages">
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" VersionOverride="9.0.1" PrivateAssets="All" />
-        <PackageReference Include="Microsoft.Extensions.Configuration" VersionOverride="9.0.1" PrivateAssets="All" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" VersionOverride="9.0.1" PrivateAssets="All" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" VersionOverride="9.0.1" PrivateAssets="All" />
-        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" VersionOverride="9.0.1" PrivateAssets="All" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" VersionOverride="9.0.1" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" VersionOverride="9.0.2" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" VersionOverride="9.0.2" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" VersionOverride="9.0.2" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" VersionOverride="9.0.2" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" VersionOverride="9.0.2" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" VersionOverride="9.0.2" PrivateAssets="All" />
         <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" VersionOverride="2.3.0" PrivateAssets="All" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride="9.0.1" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride="9.0.2" PrivateAssets="All" />
         <PackageReference Include="Microsoft.AspNetCore.Localization" VersionOverride="2.3.0" PrivateAssets="All" />
 
-        <PackageReference Include="Microsoft.Extensions.Localization" VersionOverride="9.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Localization" VersionOverride="9.0.2" />
     </ItemGroup>
 
 </Project>

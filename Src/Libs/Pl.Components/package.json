@@ -6,16 +6,11 @@
   "license": "ISC",
   "scripts": {
     "format": "prettier wwwroot/libs --write",
-    "build": "esbuild ./wwwroot/libs/index.js --bundle --minify --target=es6 --outfile=wwwroot/index.js && tailwindcss -i wwwroot/app.css -o wwwroot/app.min.css --minify",
+    "build": "esbuild ./wwwroot/libs/index.js --bundle --minify --target=es6 --outfile=wwwroot/index.js",
     "lint": "eslint wwwroot/libs"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.20",
     "esbuild": "^0.23.1",
-    "postcss": "^8.4.41",
-    "postcss-cli": "^11.0.0",
-    "tailwindcss": "^3.4.10",
-    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.5.4"
   },
   "optionalDependencies": {

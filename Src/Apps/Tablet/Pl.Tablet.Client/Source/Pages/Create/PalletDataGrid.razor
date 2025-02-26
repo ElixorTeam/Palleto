@@ -18,7 +18,7 @@
 </div>
 
 <div class="w-full max-h-full flex flex-col">
-  <div class="w-full h-12 shrink-0 grid grid-cols-[3rem,1fr,1fr,4rem] rounded-md bg-background border">
+  <div class="w-full h-12 shrink-0 grid grid-cols-[3rem_1fr_1fr_4rem] rounded-md bg-background border">
     <div class="size-full flex text-sm items-center justify-center">№</div>
     <div class="size-full flex text-sm items-center px-3">Штрихкод</div>
     <div class="size-full flex text-sm items-center px-3">Количество</div>
@@ -33,7 +33,7 @@
   <div class="w-full max-h-full overflow-y-auto divide-y">
     @foreach ((PalletDto item, int index) in Value.Select((value, index) => (value, index)))
     {
-    <div class="w-full h-12 shrink-0 grid grid-cols-[3rem,1fr,1fr,4rem]">
+    <div class="w-full h-12 shrink-0 grid grid-cols-[3rem_1fr_1fr_4rem]">
       <div class="size-full flex items-center justify-center">
         @(index + 1)
       </div>

@@ -6,7 +6,7 @@
     </ItemGroup>
 
     <ItemGroup Label="Packages">
-        <PackageReference Include="LINQKit.Microsoft.EntityFrameworkCore" VersionOverride="9.0.7" />
+        <PackageReference Include="LINQKit.Microsoft.EntityFrameworkCore" VersionOverride="9.0.8" />
         <PackageReference Include="Keycloak.AuthServices.Authentication" VersionOverride="2.6.0" />
         <PackageReference Include="Keycloak.AuthServices.Authorization" VersionOverride="2.6.0" />
         <PackageReference Include="Keycloak.AuthServices.Common" VersionOverride="2.6.0" />

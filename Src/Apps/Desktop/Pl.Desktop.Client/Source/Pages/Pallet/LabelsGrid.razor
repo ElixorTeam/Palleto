@@ -25,7 +25,7 @@
     </div>
     <div class="flex w-full pb-2 justify-between items-end">
       <div class="w-1/2 pb-2">
-        <div class="w-full border bg-background rounded-md pb-0.5 px-2 h-9 flex items-center shadow-sm gap-2 justify-between overflow-hidden">
+        <div class="w-full border bg-background rounded-md pb-0.5 px-2 h-9 flex items-center shadow-xs gap-2 justify-between overflow-hidden">
           <Heroicon
             Name="@HeroiconName.MagnifyingGlass"
             Type="HeroiconType.Outline"
@@ -36,7 +36,7 @@
             @bind="SearchingNumber"
             @bind:event="oninput"
             placeholder="@Localizer["SearchByNumberPlaceholder"]"
-            class="bg-transparent size-full text-sm focus:outline-none focus:border-0 focus:ring-0"
+            class="bg-transparent size-full text-sm focus:outline-hidden focus:border-0 focus:ring-0"
           />
         </div>
       </div>
@@ -48,7 +48,7 @@
     </div>
   </div>
   <div class="size-full grow overflow-hidden px-6 pb-6 pt-0">
-    <div class="rounded-md border size-full bg-background shadow-sm overflow-hidden">
+    <div class="rounded-md border size-full bg-background shadow-xs overflow-hidden">
       <div class="size-full overflow-y-auto">
         <UseEndpoint Endpoint="@PalletEndpoints.PalletLabelsEndpoint" Arg="@new(Pallet.Id)" Context="labelsQuery">
           <FluentDataGrid

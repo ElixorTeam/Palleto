@@ -13,7 +13,7 @@
       @attributes="AdditionalAttributes"
       @onclick="@(_ => Parent.SetValue(Item))"
       @onkeydown="HandleKeyDown"
-      class="@Css.Class("relative w-full flex items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors truncate hover:bg-accent focus:bg-accent/[.5] disabled:pointer-events-none disabled:opacity-50", Class)"
+      class="@Css.Class("relative w-full flex items-center rounded-xs px-2 py-1.5 text-sm outline-hidden transition-colors truncate hover:bg-accent focus:bg-accent/[.5] disabled:pointer-events-none disabled:opacity-50", Class)"
     >
       <CheckIcon class="@Css.Class("mr-2 size-4 shrink-0", IsActive ? "visible" : "invisible")"/>
       <span class="truncate">@Parent.ItemDisplayName(Item)</span>
