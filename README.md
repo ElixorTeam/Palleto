@@ -4,6 +4,9 @@
 
 Palleto is an auxiliary service for pallet management and product labeling for food production.
 
+[![Watch the video](https://github.com/user-attachments/assets/7d8060c4-122d-4305-be4e-24f9089fa860)](https://github.com/user-attachments/assets/7c62a191-4a48-4846-b9a5-4bfca63c105d)
+
+
 ## Structure
 There are several clients to work with the system, divided into different devices with different functionality:
 - [Admin](Src/Apps/Web/Pl.Admin.Client) - Web application for administration (device registration, entity browsing)
