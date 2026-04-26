@@ -1,7 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-    <ItemGroup Label="Directory.Packages.props">
-        <PackageReference Include="Refit" />
-    </ItemGroup>
-
-</Project>
