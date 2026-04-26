@@ -6,9 +6,9 @@ Palleto is an auxiliary service for pallet management and product labeling for f
 
 ## Structure
 There are several clients to work with the system, divided into different devices with different functionality:
-- [Admin](Src/Apps/Web/Pl.Admin.Client) - Web application for administration (device registration, entity browsing)
-- [Desktop](Src/Apps/Desktop/Pl.Desktop.Client) - Windows application for product labeling and pallet management
--
+- [Admin](src/Apps/Web/Pl.Admin.Client/README.md) - Web application for administration (device registration, entity browsing)
+- [Desktop](src/Apps/Desktop/Pl.Desktop.Client) - Windows application for product labeling and pallet management
+
 ## Features
 - Working with Zpl and Tsc printers via TCP connection
 - Managing print templates using Redis
