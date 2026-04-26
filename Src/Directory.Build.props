@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
     <PropertyGroup Label="Default settings">
-        <Configurations>DevelopVS;ReleaseVS</Configurations>
+        <Configurations>Develop;Release</Configurations>
         <Platforms>x64</Platforms>
         <TargetFramework>net9.0</TargetFramework>
         <Deterministic>true</Deterministic>
@@ -12,10 +12,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)' == 'DevelopVS'">
+    <PropertyGroup Condition="'$(Configuration)' == 'Develop'">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
-        <DefineConstants>DEBUG;TRACE;DEVELOP_VS</DefineConstants>
+        <DefineConstants>DEBUG;TRACE;DEVELOP</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <Optimize>false</Optimize>
         <OutputPath>bin\Develop_$(Platform)\</OutputPath>
@@ -23,7 +23,7 @@
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)' == 'ReleaseVS'">
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
         <DebugSymbols>false</DebugSymbols>
         <Optimize>true</Optimize>
         <DebugType>none</DebugType>
@@ -32,7 +32,7 @@
         <PlatformTarget>x64</PlatformTarget>
     </PropertyGroup>
 
-    <ItemGroup Condition="'$(Configuration)' == 'DevelopVS'">
+    <ItemGroup Condition="'$(Configuration)' == 'Develop'">
       <PackageReference Include="Roslynator.Analyzers" VersionOverride="4.13.1">
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
