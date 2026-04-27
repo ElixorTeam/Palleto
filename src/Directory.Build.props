@@ -15,7 +15,7 @@
     <PropertyGroup Condition="'$(Configuration)' == 'Develop'">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
-        <DefineConstants>DEBUG;TRACE;DEVELOP</DefineConstants>
+        <DefineConstants>DEBUG;TRACE;</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <Optimize>false</Optimize>
         <OutputPath>bin\Develop_$(Platform)\</OutputPath>

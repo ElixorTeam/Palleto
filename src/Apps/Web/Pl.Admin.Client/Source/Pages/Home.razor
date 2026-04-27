@@ -1,13 +1,14 @@
 @using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Components.Components
 @using Blazor.Heroicons.Outline
 
 @attribute [Route(Routes.Home)]
 @attribute [Authorize]
 
 <div class="divide-x justify-center flex">
-  <Button Link="#welcome" Variant="ButtonVariantType.Link" Class="rounded-none h-7">Palleto</Button>
-  <Button Link="#func" Variant="ButtonVariantType.Link" Class="rounded-none h-7">Функционал</Button>
-  <Button Link="#guides" Variant="ButtonVariantType.Link" Class="rounded-none h-7">Статьи</Button>
+  <PlButton Href="#welcome" Variant="ButtonVariant.Link" Class="rounded-none h-7">Palleto</PlButton>
+  <PlButton Href="#func" Variant="ButtonVariant.Link" Class="rounded-none h-7">Функционал</PlButton>
+  <PlButton Href="#guides" Variant="ButtonVariant.Link" Class="rounded-none h-7">Статьи</PlButton>
 </div>
 
 <div id="welcome" class="h-[70vh] flex items-center justify-center">
@@ -22,16 +23,16 @@
       @Localizer["WelcomeTitle"]
     </h2>
     <div class="flex flex-col gap-3 w-fit mt-9 md:flex-row">
-      <Button Link="#func" Variant="ButtonVariantType.Secondary" class="rounded-full">
-        <ArrowLeftIcon class="mr-2 size-[1.1rem]" />
-        @Localizer["WelcomeLearnMore"]
-      </Button>
+      <PlButton Href="#func" Variant="ButtonVariant.Secondary" Class="rounded-full">
+        <Icon><ArrowLeftIcon class="size-[1.1rem]"/></Icon>
+        <ChildContent>@Localizer["WelcomeLearnMore"]</ChildContent>
+      </PlButton>
       @if (!IsProduction)
       {
-        <Button Link="https://github.com/ElixorTeam/Palleto" Variant="ButtonVariantType.Outline" class="rounded-full">
-          <CodeBracketIcon class="mr-2 size-[1.1rem]" />
-          Github
-        </Button>
+        <PlButton Href="https://github.com/ElixorTeam/Palleto" Variant="ButtonVariant.Outline" Class="rounded-full">
+          <Icon><CodeBracketIcon class="size-[1.1rem]"/></Icon>
+          <ChildContent>Github</ChildContent>
+        </PlButton>
       }
     </div>
   </div>

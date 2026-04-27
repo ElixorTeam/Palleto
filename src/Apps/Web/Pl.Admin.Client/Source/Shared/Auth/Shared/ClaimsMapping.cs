@@ -14,8 +14,10 @@ public static class ClaimsMapping
     public static void MapJwtClaims(Dictionary<string, string> claimsDict, ClaimsIdentity claimsIdentity, string clientId)
     {
         foreach (KeyValuePair<string, string> claim in ClaimsTypeMap)
+        {
             if (claimsDict.TryGetValue(claim.Value, out string? value))
                 claimsIdentity.AddClaim(new(claim.Key, value));
+        }
 
         if (!claimsDict.TryGetValue("resource_access", out string? resourceAccess)) return;
 

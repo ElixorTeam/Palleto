@@ -1,0 +1,2 @@
+﻿[Components/**/*.cs]
+resharper_check_namespace_highlighting = none

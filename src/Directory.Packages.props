@@ -4,13 +4,13 @@
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup>
-    <!--Microsoft.Extensions.Localization -->
     <PackageVersion Include="Fluxor" Version="6.6.0" />
     <PackageVersion Include="Microsoft.Extensions.Localization" Version="9.0.2" />
     <PackageVersion Include="Microsoft.Extensions.Localization.Abstractions" Version="9.0.2" />
     <!--Microsoft.Extensions-->
     <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="9.0.2" />
     <!--Blazor-->
+    <PackageVersion Include="BlazorBlueprint.Primitives" Version="3.9.3" />
     <PackageVersion Include="QRCoder" Version="1.6.0" />
     <PackageVersion Include="Phetch.Blazor" Version="1.0.0" />
     <PackageVersion Include="Fluxor.Blazor.Web" Version="6.6.0" />
