@@ -14,10 +14,10 @@
 <div id="welcome" class="h-[70vh] flex items-center justify-center">
   <div class="flex flex-col items-center max-sm md:max-w-md lg:max-w-2xl">
     <div>
-      <Badge Variant="@BadgeVariants.Outline" Class="mb-3">
+      <PlBadge Variant="@BadgeVariant.Outline" Class="mb-3">
         <BoltIcon class="size-3.5 mr-1.5" />
         @Localizer["WelcomeBadge"]
-      </Badge>
+      </PlBadge>
     </div>
     <h2 class="text-center text-2xl font-medium tracking-tighter md:text-4xl lg:text-6xl">
       @Localizer["WelcomeTitle"]
@@ -153,14 +153,14 @@
       <a href="@Routes.PrinterControlGuide" class="w-full rounded-lg border shadow-xs flex gap-1 items-center h-12 px-4 overflow-hidden transition-colors hover:bg-secondary">
         <BookOpenIcon class="size-5 mr-2 pb-px" />
         <span class="font-medium">Работа с принтерами на сайте</span>
-        <Badge Variant="@BadgeVariants.Secondary">2 мин</Badge>
+        <PlBadge Variant="@BadgeVariant.Secondary">2 мин</PlBadge>
       </a>
     </li>
     <li class="w-full">
       <a href="@Routes.ErrorReportGuide" class="w-full rounded-lg border shadow-xs flex gap-1 items-center h-12 px-4 overflow-hidden transition-colors hover:bg-secondary">
         <BookOpenIcon class="size-5 mr-2 pb-px" />
         <span class="font-medium">Репорт ошибок приложений</span>
-        <Badge Variant="@BadgeVariants.Secondary">3 мин</Badge>
+        <PlBadge Variant="@BadgeVariant.Secondary">3 мин</PlBadge>
       </a>
     </li>
   </ul>

@@ -19,7 +19,7 @@ public enum ButtonVariant
 
     /// <summary>
     /// For secondary actions or form controls
-    /// CSS vars  --border | --input
+    /// CSS vars --border | --input
     /// </summary>
     Outline,
 
