@@ -1,3 +1,4 @@
+@using Pl.Components.Components
 @using Blazor.Heroicons.Outline
 @typeparam TItem
 @attribute [CascadingTypeParameter(nameof(TItem))]
@@ -37,53 +38,53 @@
       <div class="h-11"></div>
     </EmptyTemplate>
     <PageButtonTemplate>
-      <Button
-        Variant="@(context.Active ? ButtonVariantType.Ghost : ButtonVariantType.Outline)"
-        Size="ButtonSizeType.Icon"
+      <PlButton
+        Variant="@(context.Active ? ButtonVariant.Ghost : ButtonVariant.Outline)"
+        Size="ButtonSize.Icon"
         Class="size-[2.1rem]"
       >
         <span class="text-muted-foreground">@context.PageNumber</span>
-      </Button>
+      </PlButton>
     </PageButtonTemplate>
     <NextPageButtonTemplate>
-      <Button
-        Variant="ButtonVariantType.Outline"
-        Size="ButtonSizeType.Icon"
+      <PlButton
+        Variant="ButtonVariant.Outline"
+        Size="ButtonSize.Icon"
         Class="size-[2.1rem]"
       >
         <ChevronRightIcon class="size-4 text-muted-foreground" />
         <span class="sr-only">Next page</span>
-      </Button>
+      </PlButton>
     </NextPageButtonTemplate>
     <PreviousPageButtonTemplate>
-      <Button
-        Variant="ButtonVariantType.Outline"
-        Size="ButtonSizeType.Icon"
+      <PlButton
+        Variant="ButtonVariant.Outline"
+        Size="ButtonSize.Icon"
         Class="size-[2.1rem]"
       >
         <ChevronLeftIcon class="size-4 text-muted-foreground" />
         <span class="sr-only">Previous page</span>
-      </Button>
+      </PlButton>
     </PreviousPageButtonTemplate>
     <LastPageButtonTemplate>
-      <Button
-        Variant="ButtonVariantType.Outline"
-        Size="ButtonSizeType.Icon"
+      <PlButton
+        Variant="ButtonVariant.Outline"
+        Size="ButtonSize.Icon"
         Class="size-[2.1rem]"
       >
         <ChevronDoubleRightIcon class="size-4 text-muted-foreground" />
         <span class="sr-only">Last page</span>
-      </Button>
+      </PlButton>
     </LastPageButtonTemplate>
     <FirstPageButtonTemplate>
-      <Button
-        Variant="ButtonVariantType.Outline"
-        Size="ButtonSizeType.Icon"
+      <PlButton
+        Variant="ButtonVariant.Outline"
+        Size="ButtonSize.Icon"
         Class="size-[2.1rem]"
       >
         <ChevronDoubleLeftIcon class="size-4 text-muted-foreground" />
         <span class="sr-only">First page</span>
-      </Button>
+      </PlButton>
     </FirstPageButtonTemplate>
     <TotalItemsTemplate>
       <div class="hidden"></div>

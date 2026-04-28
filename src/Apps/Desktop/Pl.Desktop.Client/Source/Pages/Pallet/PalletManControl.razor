@@ -1,3 +1,4 @@
+@using Pl.Components.Components
 @using Blazor.Heroicons.Outline
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
@@ -18,14 +19,14 @@
       }
     </UseParameterlessEndpoint>
   </div>
-  <Button
+  <PlButton
     Class="shrink-0 border"
     OnClick="@LogoutPalletMan"
-    Variant="ButtonVariantType.Secondary"
+    Variant="ButtonVariant.Secondary"
   >
     <ArrowLeftOnRectangleIcon class="size-4 mr-2" />
     @Localizer["BtnExit"]
-  </Button>
+  </PlButton>
 </div>
 
 @code {

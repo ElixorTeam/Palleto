@@ -32,9 +32,4 @@
       <TypeScriptCompile Include="wwwroot\libs\types\global.d.ts" />
       <TypeScriptCompile Include="wwwroot\libs\types\resizable-element-type.ts" />
     </ItemGroup>
-
-    <ItemGroup>
-      <UpToDateCheckInput Remove="SharedImports\_Imports.razor" />
-    </ItemGroup>
-
 </Project>

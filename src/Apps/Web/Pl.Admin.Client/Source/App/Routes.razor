@@ -1,4 +1,4 @@
-@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Components.Components
 
 <Router AppAssembly="typeof(Program).Assembly">
   <Found Context="routeData">
@@ -9,9 +9,9 @@
           {
           <h3 class="text-lg">You are not authorized</h3>
           <form method="get" action="@($"{Shared.Constants.Routes.Authorization}/login")">
-            <Button class="w-64 mt-4" Type="@ButtonType.Submit">
+            <PlButton class="w-64 mt-4" Type="Pl.Components.Components.ButtonType.Submit">
               Log in
-            </Button>
+            </PlButton>
             <AntiforgeryToken />
           </form>
           }

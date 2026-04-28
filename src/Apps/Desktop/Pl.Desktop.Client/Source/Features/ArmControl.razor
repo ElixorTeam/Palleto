@@ -1,4 +1,5 @@
 @using Blazor.Heroicons.Outline
+@using Pl.Components.Components
 @using Pl.Desktop.Client.Source.Shared.Services.Devices.Printer
 @using Pl.Desktop.Models.Features.Arms.Output
 
@@ -52,16 +53,16 @@
         <span class="@Css.Class("truncate text-muted-foreground", Small ? "text-sm" : "")">@query.Data.Warehouse.Name</span>
       }
     </div>
-    <Button
+    <PlButton
       Class="shrink-0 border"
       OnClick="@(async () => await RefetchArm(query))"
-      Variant="@(Small ? ButtonVariantType.Outline : ButtonVariantType.Secondary)"
-      Size="@(Small ? ButtonSizeType.Small : ButtonSizeType.Default)"
+      Variant="@(Small ? ButtonVariant.Outline : ButtonVariant.Secondary)"
+      Size="@(Small ? ButtonSize.Sm : ButtonSize.Default)"
       Disabled="@query.IsFetching"
     >
       <ArrowPathIcon class="size-4 mr-2"/>
       @Localizer["BtnUpdate"]
-    </Button>
+    </PlButton>
   </UseParameterlessEndpoint>
 
 </div>

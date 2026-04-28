@@ -1,3 +1,4 @@
+@using Pl.Components.Components
 @using Blazor.Heroicons.Outline
 
 @implements IDialogContentComponent<string>
@@ -5,13 +6,13 @@
 <Dialog Class="max-w-lg p-6">
   <div class="shrink-0 w-full flex items-center justify-between bg-background">
     <h3 class="font-semibold">@Localizer["ShareDialogTitle"]</h3>
-    <Button
-      Variant="ButtonVariantType.Ghost"
-      Size="ButtonSizeType.Icon"
+    <PlButton
+      Variant="ButtonVariant.Ghost"
+      Size="ButtonSize.Icon"
       OnClick="@(OnCancelAction)"
     >
       <XMarkIcon class="size-5"/>
-    </Button>
+    </PlButton>
   </div>
   <p class="text-sm text-muted-foreground pt-1">
     @Localizer["ShareDialogDescription"]
@@ -23,14 +24,14 @@
         class="border-none w-full pr-0 pl-1.5 text-sm bg-transparent focus:outline-hidden focus:border-none focus:ring-0"
         readonly
       />
-      <Button
+      <PlButton
         OnClick="@CopyToClipboard"
-        Size="ButtonSizeType.Icon"
-        Variant="ButtonVariantType.Ghost"
+        Size="ButtonSize.Icon"
+        Variant="ButtonVariant.Ghost"
         Class="h-[1.6rem] w-7 shrink-0"
       >
         <ClipboardIcon class="size-4" />
-      </Button>
+      </PlButton>
     </div>
     <Button
       Link="@TelegramUrl"

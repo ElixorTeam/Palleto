@@ -1,4 +1,5 @@
 @using Blazor.Heroicons.Outline
+@using Pl.Components.Components
 @using Pl.Desktop.Client.Source.Shared.Services.Devices.Printer
 @using Pl.Desktop.Models.Features.Plus.Weight.Output
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
@@ -14,9 +15,9 @@
       <UseParameterlessEndpoint Endpoint="@PluEndpoints.WeightPlusEndpoint" Context="pluQuery">
         @if (pluQuery.HasData)
         {
-        <Button
-          Size="ButtonSizeType.Full"
-          Variant="ButtonVariantType.Outline"
+        <PlButton
+          Size="ButtonSize.Full"
+          Variant="ButtonVariant.Outline"
           OnClick="@(() => ShowPluSelectDialog(pluQuery.Data))"
         >
           <div class="size-full font-normal px-5 flex items-center justify-between lg:text-lg">
@@ -25,7 +26,7 @@
             </span>
             <ChevronDownIcon class="size-5" />
           </div>
-        </Button>
+        </PlButton>
         }
         else
         {

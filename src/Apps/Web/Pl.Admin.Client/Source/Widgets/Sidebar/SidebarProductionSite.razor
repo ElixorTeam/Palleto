@@ -1,5 +1,6 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Services.Stores
+@using Pl.Components.Components
 @using Blazor.Heroicons.Outline
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
@@ -23,10 +24,10 @@
         Position="VerticalPosition.Top"
       >
         <TriggerContent Context="select">
-          <Button
+          <PlButton
             Id="@select.HtmlId"
-            Variant="ButtonVariantType.Ghost"
-            Size="ButtonSizeType.Small"
+            Variant="ButtonVariant.Ghost"
+            Size="ButtonSize.Sm"
             Class="shrink-0 h-8 w-full items-center disabled:opacity-100"
             OnClick="@(() => select.ToggleDropdown())"
             Disabled="@(productionSiteQuery.Data.Length <= 1)"
@@ -38,7 +39,7 @@
             <HomeIcon class="size-4 mr-2" />
             <span class="truncate pt-px">@(select.Value?.Name ?? "Склад не выбран")</span>
             <ChevronUpDownIcon class="size-4 ml-auto" />
-          </Button>
+          </PlButton>
         </TriggerContent>
       </SelectSingle>
     }

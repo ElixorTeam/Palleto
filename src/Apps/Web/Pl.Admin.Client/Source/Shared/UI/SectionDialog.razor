@@ -1,3 +1,4 @@
+@using Pl.Components.Components
 <Dialog Class="max-w-screen-lg min-h-52 p-0">
   <Tabs DefaultTab="@DefaultTab" @ref="TabComponent">
     <DialogHeader>
@@ -5,12 +6,12 @@
         @foreach (Tab tab in TabComponent.TabsList)
         {
           <li>
-            <Button
-              Variant="@(TabComponent.ActiveTabId == tab.Id ? ButtonVariantType.Secondary : ButtonVariantType.Outline)"
+            <PlButton
+              Variant="@(TabComponent.ActiveTabId == tab.Id ? ButtonVariant.Secondary : ButtonVariant.Outline)"
               OnClick="@(() => TabComponent.ChangeTab(tab.Id))"
             >
               @tab.Label
-            </Button>
+            </PlButton>
           </li>
         }
       </ul>

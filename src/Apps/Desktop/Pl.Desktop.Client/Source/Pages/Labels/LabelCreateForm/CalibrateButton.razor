@@ -1,10 +1,11 @@
 @using MassaK.Plugin.Abstractions.Enums
+@using Pl.Components.Components
 @using Pl.Desktop.Client.Source.Shared.Services.Devices.Scales
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<Button
-  Variant="ButtonVariantType.Secondary"
-  Size="ButtonSizeType.Full"
+<PlButton
+  Variant="ButtonVariant.Secondary"
+  Size="ButtonSize.Full"
   OnClick="@HandleButtonOpenScalesTerminal"
   Disabled="@(!(ScalesState.Value.Status == MassaKStatus.Ready && !IsOnceClicked))"
   Class="border disabled:opacity-70"
@@ -16,7 +17,7 @@
         <span class="xl:text-lg">@GetCooldownString()</span>
       }
   </div>
-</Button>
+</PlButton>
 
 @code {
   #region Injects

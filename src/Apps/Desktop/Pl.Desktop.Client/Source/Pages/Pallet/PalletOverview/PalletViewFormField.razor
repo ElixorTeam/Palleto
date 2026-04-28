@@ -1,3 +1,4 @@
+@using Pl.Components.Components
 @using Blazor.Heroicons.Outline
 
 <div class="space-y-2 relative">
@@ -9,14 +10,14 @@
   />
   @if (IsCopyable && !string.IsNullOrWhiteSpace(Value))
   {
-    <Button
-      Variant="ButtonVariantType.Ghost"
-      Size="ButtonSizeType.Icon"
+    <PlButton
+      Variant="ButtonVariant.Ghost"
+      Size="ButtonSize.Icon"
       OnClick="@(() => SaveToClipboard(Value))"
       class="text-muted-foreground absolute size-7 top-7 right-1.5"
     >
       <ClipboardIcon class="size-[1.1rem]" />
-    </Button>
+    </PlButton>
   }
 </div>
 

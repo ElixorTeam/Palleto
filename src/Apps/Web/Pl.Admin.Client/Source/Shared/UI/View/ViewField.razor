@@ -1,3 +1,4 @@
+@using Pl.Components.Components
 @using Blazor.Heroicons.Outline
 
 <div class="w-full overflow-hidden flex flex-col">
@@ -15,25 +16,25 @@
     }
     @if (Copyable)
     {
-      <Button
-        Variant="ButtonVariantType.Ghost"
-        Size="ButtonSizeType.Icon"
+      <PlButton
+        Variant="ButtonVariant.Ghost"
+        Size="ButtonSize.Icon"
         Class="size-6 shrink-0"
-        OnClick="SaveToClipboard"
+        OnClick="@SaveToClipboard"
       >
         <ClipboardIcon class="size-4" />
-      </Button>
+      </PlButton>
     }
     @if (!string.IsNullOrWhiteSpace(Link))
     {
-      <Button
+      <PlButton
         Link="@Link"
-        Variant="ButtonVariantType.Ghost"
-        Size="ButtonSizeType.Icon"
+        Variant="ButtonVariant.Ghost"
+        Size="ButtonSize.Icon"
         Class="size-6 shrink-0"
       >
         <ArrowTopRightOnSquareIcon class="size-4" />
-      </Button>
+      </PlButton>
     }
   </div>
 </div>

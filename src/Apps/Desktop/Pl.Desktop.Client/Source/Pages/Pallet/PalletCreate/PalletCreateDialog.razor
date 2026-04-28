@@ -1,14 +1,15 @@
+@using Pl.Components.Components
 @implements IDialogContentComponent
 
 <Dialog class="max-w-screen-md">
   <DialogHeader IsDisabled="@IsHeaderBlocked">
-    <Button
-      Variant="ButtonVariantType.Secondary"
+    <PlButton
+      Variant="ButtonVariant.Secondary"
       Class="disabled:opacity-100"
       Disabled
     >
       @Localizer["CreatePalletFormHeader"]
-    </Button>
+    </PlButton>
   </DialogHeader>
   <div class="max-h-full bg-secondary/30 w-full overflow-y-auto py-4">
     <Stepper @bind-CurrentIndex="CurrentStepIndex" Class="mb-4 mt-2">

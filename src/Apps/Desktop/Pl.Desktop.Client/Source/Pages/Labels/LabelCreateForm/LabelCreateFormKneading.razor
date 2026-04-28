@@ -1,3 +1,4 @@
+@using Pl.Components.Components
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
 <LabelCreateFormFieldItem Label="@WsDataLocalizer["ColKneading"]">
@@ -9,15 +10,15 @@
       </span>
     </div>
     <div class="col-span-2 size-full overflow-hidden">
-      <Button
-        Size="ButtonSizeType.Full"
-        Variant="ButtonVariantType.Outline"
+      <PlButton
+        Size="ButtonSize.Full"
+        Variant="ButtonVariant.Outline"
         OnClick="@ShowNumericKeyboard"
       >
         <span class="text-lg xl:text-2xl">
           @Localizer["BtnEnter"]
         </span>
-      </Button>
+      </PlButton>
     </div>
   </div>
 </LabelCreateFormFieldItem>

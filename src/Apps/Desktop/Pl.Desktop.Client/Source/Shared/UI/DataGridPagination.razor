@@ -1,41 +1,42 @@
+@using Pl.Components.Components
 @using Blazor.Heroicons.Outline
 
 <div class="h-14 w-full flex items-center justify-center gap-2">
-  <Button
-    Variant="ButtonVariantType.Outline"
-    Size="ButtonSizeType.Icon"
+  <PlButton
+    Variant="ButtonVariant.Outline"
+    Size="ButtonSize.Icon"
     OnClick="@(() => GoToPageAsync(0))"
     Disabled="@(Pagination.CurrentPageIndex == 0)"
   >
     <ChevronDoubleLeftIcon class="size-5" />
-  </Button>
-  <Button
-    Variant="ButtonVariantType.Outline"
-    Size="ButtonSizeType.Icon"
+  </PlButton>
+  <PlButton
+    Variant="ButtonVariant.Outline"
+    Size="ButtonSize.Icon"
     OnClick="@(() => GoToPageAsync(Pagination.CurrentPageIndex - 1))"
     Disabled="@(Pagination.CurrentPageIndex == 0)"
   >
     <ChevronLeftIcon class="size-5" />
-  </Button>
+  </PlButton>
   <div class="h-9 px-3 flex border items-center justify-center text-sm rounded-md overflow-hidden">
     @(Pagination.CurrentPageIndex + 1) / @(Pagination.LastPageIndex + 1)
   </div>
-  <Button
-    Variant="ButtonVariantType.Outline"
-    Size="ButtonSizeType.Icon"
+  <PlButton
+    Variant="ButtonVariant.Outline"
+    Size="ButtonSize.Icon"
     OnClick="@(() => GoToPageAsync(Pagination.CurrentPageIndex + 1))"
     Disabled="@(Pagination.CurrentPageIndex == Pagination.LastPageIndex)"
   >
     <ChevronRightIcon class="size-5" />
-  </Button>
-  <Button
-    Variant="ButtonVariantType.Outline"
-    Size="ButtonSizeType.Icon"
+  </PlButton>
+  <PlButton
+    Variant="ButtonVariant.Outline"
+    Size="ButtonSize.Icon"
     OnClick="@(() => GoToPageAsync(Pagination.LastPageIndex ?? Pagination.CurrentPageIndex))"
     Disabled="@(Pagination.CurrentPageIndex == Pagination.LastPageIndex)"
   >
     <ChevronDoubleRightIcon class="size-5" />
-  </Button>
+  </PlButton>
 </div>
 
 @code {

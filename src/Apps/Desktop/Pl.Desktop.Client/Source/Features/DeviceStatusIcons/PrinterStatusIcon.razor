@@ -1,18 +1,19 @@
 @using Blazor.Heroicons.Outline
+@using Pl.Components.Components
 @using Pl.Desktop.Client.Source.Shared.Services.Devices.Printer
 @using TscZebra.Plugin.Abstractions.Enums
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<Button
-  Size="ButtonSizeType.Icon"
-  Variant="ButtonVariantType.Outline"
+<PlButton
+  Size="ButtonSize.Icon"
+  Variant="ButtonVariant.Outline"
   Class="relative"
   OnClick="@PrintStatusMessage"
 >
   <div class="@Css.Class("size-3 rounded-full shadow-xs overflow-hidden absolute -top-1 -right-1", GetIndicatorStyle)"></div>
   <PrinterIcon class="@Css.Class("size-5", GetIconStyle)"/>
-</Button>
+</PlButton>
 
 @code {
   # region Injects

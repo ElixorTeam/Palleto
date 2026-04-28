@@ -1,4 +1,5 @@
 @using Blazor.Heroicons.Outline
+@using Pl.Components.Components
 @using Pl.Desktop.Client.Source.Shared.Extensions
 
 @implements IDialogContentComponent
@@ -6,13 +7,13 @@
 <Dialog Class="max-w-md p-6">
   <div class="shrink-0 w-full flex items-center justify-between bg-background">
     <h3 class="font-semibold">Информация устройства</h3>
-    <Button
-      Variant="ButtonVariantType.Ghost"
-      Size="ButtonSizeType.Icon"
+    <PlButton
+      Variant="ButtonVariant.Ghost"
+      Size="ButtonSize.Icon"
       OnClick="@CloseDialog"
     >
       <XMarkIcon class="size-5"/>
-    </Button>
+    </PlButton>
   </div>
   <div class="w-full flex justify-center">
     <QRCode Value="@DeviceInfo()">

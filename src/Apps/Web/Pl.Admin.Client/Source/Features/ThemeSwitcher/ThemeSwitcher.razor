@@ -1,17 +1,18 @@
+@using Pl.Components.Components
 @using Blazor.Heroicons.Outline
 @rendermode InteractiveServer
 
-<Button
+<PlButton
   id="theme-button"
-  Variant="ButtonVariantType.Ghost"
-  Size="ButtonSizeType.Icon"
+  Variant="ButtonVariant.Ghost"
+  Size="ButtonSize.Icon"
   OnClick="@(() => IsOpen = !IsOpen)"
   Class="shrink-0"
 >
    <SunIcon class="size-5 dark:hidden" />
    <MoonIcon class="size-5 hidden dark:block" />
    <span class="sr-only">Toggle theme</span>
-</Button>
+</PlButton>
 
 <Dropdown
   Anchor="theme-button"

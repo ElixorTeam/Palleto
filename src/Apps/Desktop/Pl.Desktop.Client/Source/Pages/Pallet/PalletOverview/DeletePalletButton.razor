@@ -1,4 +1,5 @@
 @using Blazor.Heroicons.Outline
+@using Pl.Components.Components
 @using Pl.Desktop.Models.Features.Arms.Output
 @using Pl.Desktop.Models.Features.Pallets.Output
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
@@ -8,11 +9,11 @@
   <UseParameterlessEndpoint Endpoint="@ArmEndpoints.ArmEndpoint" Context="query">
     @if (query.HasData && GetCanDelete(query.Data))
     {
-    <Button
-      Variant="@(PalletState.Value.Pallet.IsDelete == false ? ButtonVariantType.Destructive : ButtonVariantType.Default)"
+    <PlButton
+      Variant="@(!PalletState.Value.Pallet.IsDelete ? ButtonVariant.Destructive : ButtonVariant.Default)"
       OnClick="@(() => DeletePallet(PalletState.Value.Pallet))"
     >
-      @if (PalletState.Value.Pallet.IsDelete == false)
+      @if (!PalletState.Value.Pallet.IsDelete)
       {
       <TrashIcon class="size-4 mr-2" />
         @Localizer["BtnDelete"]
@@ -22,7 +23,7 @@
       <ArrowUturnRightIcon class="size-4 mr-2" />
         @Localizer["BtnRestore"]
       }
-    </Button>
+    </PlButton>
     }
   </UseParameterlessEndpoint>
 }

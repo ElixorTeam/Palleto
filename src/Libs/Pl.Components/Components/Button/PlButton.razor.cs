@@ -2,7 +2,7 @@
 
 namespace Pl.Components.Components;
 
-public partial class PlButton : LmsComponentBase
+public partial class PlButton : PlComponentBase
 {
     #region Fields
 
@@ -184,10 +184,7 @@ public partial class PlButton : LmsComponentBase
         _ => "button"
     };
 
-    /// <summary>
-    /// Gets the computed CSS classes for the button element.
-    /// </summary>
-    private string CssClass => ClassNames.Cn(
+    protected override string CssClass => ClassNames.Cn(
         "inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium",
         "transition-colors focus-visible:outline-none focus-visible:ring-2",
         "focus-visible:ring-ring focus-visible:ring-offset-2",
@@ -200,17 +197,17 @@ public partial class PlButton : LmsComponentBase
             ButtonVariant.Secondary => "bg-secondary text-secondary-foreground hover:bg-secondary/80",
             ButtonVariant.Ghost => "hover:bg-accent hover:text-accent-foreground",
             ButtonVariant.Link => "text-primary underline-offset-4 hover:underline",
-            _ => "bg-primary text-primary-foreground hover:bg-primary/90"
+            _ => string.Empty
         },
         Size switch
         {
-            ButtonSize.Small => "h-9 rounded-md px-3 text-xs",
-            ButtonSize.Default => "h-10 px-4 py-2",
-            ButtonSize.Large => "h-11 rounded-md px-8",
-            ButtonSize.Icon => "h-10 w-10",
-            ButtonSize.IconSmall => "h-9 w-9",
-            ButtonSize.IconLarge => "h-11 w-11",
-            _ => "h-10 px-4 py-2"
+            // Old palleto style (not shadcn)
+            ButtonSize.Sm => "h-8 rounded-md px-3 text-xs",
+            ButtonSize.Lg => "h-10 rounded-md px-8",
+            ButtonSize.Icon => "size-9",
+            ButtonSize.Full => "size-full",
+            ButtonSize.Default => "h-9 px-4 py-2",
+            _ => string.Empty
         },
         ClassNames.When(HasHref && IsDisabled, "pointer-events-none cursor-not-allowed opacity-50"),
         Class

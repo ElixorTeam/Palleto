@@ -1,4 +1,5 @@
 @using Blazor.Heroicons.Outline
+@using Pl.Components.Components
 @using Pl.Desktop.Client.Source.Pages.Pallet.PalletCreate
 @using Pl.Desktop.Models.Features.Pallets.Output
 @using Pl.Shared.ValueTypes
@@ -23,18 +24,18 @@
       </div>
       <div class="flex items-center gap-2">
         <UseEndpoint Endpoint="@PalletEndpoints.PiecePalletsEndpoint" Arg="@new(StartDate, EndDate)" Context="palletQuery">
-          <Button
-            Variant="ButtonVariantType.Outline"
-            Size="ButtonSizeType.Icon"
+          <PlButton
+            Variant="ButtonVariant.Outline"
+            Size="ButtonSize.Icon"
             OnClick="@(() => { if (string.IsNullOrWhiteSpace(InputSearchCounter)) palletQuery.Refetch(); ResetSortsAndFilters(); PluEndpoints.PiecePlusEndpoint.InvalidateAll(); })"
             Disabled="@palletQuery.IsFetching"
           >
             <ArrowPathIcon class="size-5 mx-2"/>
-          </Button>
+          </PlButton>
         </UseEndpoint>
-        <Button Size="ButtonSizeType.Icon" OnClick="@(ShowCreateFormDialog)">
+        <PlButton Size="ButtonSize.Icon" OnClick="@ShowCreateFormDialog">
           <PlusIcon class="size-5 mx-2"/>
-        </Button>
+        </PlButton>
       </div>
     </div>
       <PalletSelectSearching
