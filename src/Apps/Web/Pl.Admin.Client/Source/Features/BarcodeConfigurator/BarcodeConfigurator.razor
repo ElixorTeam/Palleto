@@ -1,6 +1,7 @@
 @using Blazor.Heroicons.Outline
 @using Force.DeepCloner
 @using Pl.Admin.Models.Features.References.Template.Universal
+@using Pl.Components.Components
 @using Pl.Print.Features.Barcodes.Models
 @using Pl.Print.Features.Barcodes.Utils
 
@@ -27,18 +28,18 @@
 </CascadingValue>
 
 <div class="flex w-full py-4 gap-2 justify-between items-center overflow-hidden flex-wrap gap-y-8">
-  <Badge Variant="@BadgeVariants.Outline">
+  <PlBadge Variant="BadgeVariant.Outline">
     @WsDataLocalizer["ColLength"]: @ExtendedBarcodeDictionary.Sum(x => x.Example.Count(char.IsDigit))
-  </Badge>
+  </PlBadge>
   <div class="gap-2 flex">
-    <Button Variant="ButtonVariantType.Outline" OnClick="@ResetBarcode">
+    <PlButton Variant="ButtonVariant.Outline" OnClick="@ResetBarcode">
       <ArrowUturnLeftIcon class="size-[1.1rem] md:mr-2"/>
       <span class="hidden md:block">@Localizer["BtnReset"]</span>
-    </Button>
-    <Button OnClick="@AddBarcodeItem">
+    </PlButton>
+    <PlButton OnClick="@AddBarcodeItem">
       <PlusIcon class="size-5 md:mr-2"/>
       <span class="hidden md:block">@Localizer["BtnAdd"]</span>
-    </Button>
+    </PlButton>
   </div>
 </div>
 

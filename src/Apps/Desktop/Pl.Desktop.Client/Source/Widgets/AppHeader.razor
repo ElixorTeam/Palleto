@@ -1,7 +1,8 @@
 @using Pl.Desktop.Client.Source.Shared.Services.System
 @using Pl.Desktop.Client.Source.Shared.Constants
+@using Pl.Components.Components
 @using Blazor.Heroicons.Outline
-@inherits PlComponentBase
+@inherits Pl.Components.Source.UI.PlComponentBase
 
 <div
   @attributes="@AdditionalAttributes"
@@ -12,7 +13,7 @@
     <div class="w-2/5 flex items-center justify-start">
       @if (ConfigurationUtils.IsDevelop)
       {
-        <Badge Variant="@BadgeVariants.Outline" Class="mr-3">DEV</Badge>
+        <PlBadge Variant="@BadgeVariant.Outline" Class="mr-3">DEV</PlBadge>
       }
       <DesktopLogo Small />
       <span class="pb-1 pl-1 text-sm">@App.Version</span>

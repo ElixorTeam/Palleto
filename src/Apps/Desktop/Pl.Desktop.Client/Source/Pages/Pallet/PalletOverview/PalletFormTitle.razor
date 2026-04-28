@@ -1,3 +1,4 @@
+@using Pl.Components.Components
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
 @if (PalletState.Value.Pallet != null)
@@ -8,15 +9,15 @@
     </h2>
     @if (PalletState.Value.Pallet.IsShipped)
     {
-      <Badge Class="pb-1">@Localizer["PalletFlagShipped"]</Badge>
+      <PlBadge Class="pb-1">@Localizer["PalletFlagShipped"]</PlBadge>
     }
     else
     {
-      <Badge Variant="@BadgeVariants.Secondary" Class="pb-1">@Localizer["PalletFlagNotShipped"]</Badge>
+      <PlBadge Variant="@BadgeVariant.Secondary" Class="pb-1">@Localizer["PalletFlagNotShipped"]</PlBadge>
     }
     @if (PalletState.Value.Pallet.IsDelete)
     {
-      <Badge Variant="@BadgeVariants.Destructive" Class="pb-1" id="badge-deleted-pallet">Удалено</Badge>
+      <PlBadge Variant="@BadgeVariant.Destructive" Class="pb-1" id="badge-deleted-pallet">Удалено</PlBadge>
       <Tooltip Anchor="badge-deleted-pallet">
         @PalletState.Value.Pallet.DeletedAt
       </Tooltip>

@@ -1,3 +1,4 @@
+@using Pl.Components.Components
 @using Pl.Admin.Client.Source.Shared.Constants
 
 <div data-sidebar="header" class="flex flex-col gap-2 px-2 pt-2">
@@ -10,9 +11,9 @@
         <span class="truncate font-medium leading-4">Admin Web</span>
         @if (!IsProduction)
         {
-        <Badge Class="py-0 px-1.5" Variant="@BadgeVariants.Secondary">
+        <PlBadge Class="py-0 px-1.5" Variant="@BadgeVariant.Secondary">
           dev
-        </Badge>
+        </PlBadge>
         }
       </div>
       <span class="truncate font-light text-sm">Palleto</span>

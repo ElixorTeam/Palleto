@@ -1,4 +1,4 @@
-@using Pl.Components.Source.UI.Badge
+@using Pl.Components.Components
 @typeparam TItem
 
 <SelectMultipleWrapper
@@ -16,7 +16,7 @@
       <div class="flex w-full gap-1 overflow-hidden">
         @foreach (TItem? item in Value)
         {
-          <Badge>@(item != null ? ItemDisplayName(item) : "default")</Badge>
+          <PlBadge>@(item != null ? ItemDisplayName(item) : "default")</PlBadge>
         }
       </div>
     </SelectTrigger>
