@@ -1,0 +1,22 @@
+﻿@namespace Pl.Components.Components
+@inherits PlComponentBase
+
+<BlazorBlueprint.Primitives.Switch.BbSwitch
+  Id="@Id"
+  aria-label="@AriaLabel"
+  aria-required="@(CheckedExpression != null ? "true" : null)"
+  aria-invalid="@(IsInvalid ? "true" : null)"
+  aria-describedby="@AriaDescribedBy"
+  class="@CssClass"
+  Checked="@Checked"
+  CheckedChanged="@HandleCheckedChanged"
+  Disabled="@Disabled">
+
+  <BlazorBlueprint.Primitives.Switch.BbSwitchThumb class="@ThumbCssClass">
+    @if (ThumbContent is not null)
+    {
+      @ThumbContent(Checked)
+    }
+  </BlazorBlueprint.Primitives.Switch.BbSwitchThumb>
+
+</BlazorBlueprint.Primitives.Switch.BbSwitch>

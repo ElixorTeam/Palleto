@@ -1,0 +1,13 @@
+﻿@namespace Pl.Components.Components
+@inherits PlComponentBase
+
+<span role="link" aria-disabled="true" aria-current="page" class="@CssClass">
+  @ChildContent
+</span>
+
+@code {
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
+
+  protected override string CssClass => ClassNames.Cn("font-normal text-foreground", Class);
+}
