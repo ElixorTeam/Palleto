@@ -1,4 +1,5 @@
-﻿@using Pl.Admin.Client.Source.Features
+﻿@using BlazorBlueprint.Primitives.Services
+@using Pl.Admin.Client.Source.Features
 @using Pl.Admin.Client.Source.Widgets.Sidebar
 @inherits LayoutComponentBase
 
@@ -12,6 +13,9 @@
     </div>
   </div>
 </UserProductionSiteLoader>
+
+<BbPortalHost />
+
 
 <FluentDialogProvider @rendermode="InteractiveServer" />
 <FluentToastProvider @rendermode="InteractiveServer" />

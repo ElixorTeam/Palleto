@@ -1,14 +1,15 @@
+@using Pl.Components.Components
 @using Blazor.Heroicons.Outline
 
-<Button
+<PlButton
   OnClick="@OnClick"
-  Variant="ButtonVariantType.Outline"
+  Variant="ButtonVariant.Outline"
   Class="@Css.Class("w-full justify-start", Class)"
   Disabled="Disabled"
 >
   <ArrowRightOnRectangleIcon class="size-4 mr-2" />
   @Localizer["FormActionReset"]
-</Button>
+</PlButton>
 
 @code {
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;

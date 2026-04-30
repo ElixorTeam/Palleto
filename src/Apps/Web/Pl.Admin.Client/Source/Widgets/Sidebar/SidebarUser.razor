@@ -25,13 +25,13 @@
     </Authorized>
     <NotAuthorized>
       <div class="flex w-full items-center justify-center">
-        <Button Link="@($"{Routes.Authorization}/login")" Variant="ButtonVariantType.Outline">
+        <PlButton Link="@($"{Routes.Authorization}/login")" Variant="ButtonVariant.Outline">
           Log in
-        </Button>
+        </PlButton>
       </div>
     </NotAuthorized>
   </AuthorizeView>
-  <ThemeSwitcher Position="VerticalPosition.Top" />
+  <ThemeSwitcher  />
 </div>
 
 @code {

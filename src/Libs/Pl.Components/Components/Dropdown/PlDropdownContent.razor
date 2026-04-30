@@ -1,0 +1,115 @@
+﻿@using BlazorBlueprint.Primitives.DropdownMenu
+@namespace Pl.Components.Components
+@inherits PlComponentBase
+
+<BbDropdownMenuContent
+  class="@CssClass"
+  style="@Style"
+  ForceMount="false"
+  CloseOnEscape="@CloseOnEscape"
+  CloseOnClickOutside="@CloseOnClickOutside"
+  Side="@Side"
+  Align="@Align"
+  Offset="@Offset"
+  OnEscapeKeyDown="@OnEscapeKeyDown"
+  OnClickOutside="@OnClickOutside"
+  Loop="@Loop"
+  Strategy="@Strategy"
+  MatchTriggerWidth="@MatchTriggerWidth"
+  ZIndex="@ZIndex">
+    <div class="p-1">
+        @ChildContent
+    </div>
+</BbDropdownMenuContent>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Whether pressing Escape should close the dropdown menu.
+    /// </summary>
+    [Parameter]
+    public bool CloseOnEscape { get; set; } = true;
+
+    /// <summary>
+    /// Whether clicking outside should close the dropdown menu.
+    /// </summary>
+    [Parameter]
+    public bool CloseOnClickOutside { get; set; } = true;
+
+    /// <summary>
+    /// Preferred side for positioning.
+    /// </summary>
+    [Parameter]
+    public PopoverSide Side { get; set; } = PopoverSide.Bottom;
+
+    /// <summary>
+    /// Alignment relative to trigger.
+    /// </summary>
+    [Parameter]
+    public PopoverAlign Align { get; set; } = PopoverAlign.Start;
+
+    /// <summary>
+    /// Offset distance from the trigger in pixels.
+    /// </summary>
+    [Parameter]
+    public int Offset { get; set; } = 4;
+
+    /// <summary>
+    /// Event callback invoked when Escape key is pressed.
+    /// </summary>
+    [Parameter]
+    public EventCallback<KeyboardEventArgs> OnEscapeKeyDown { get; set; }
+
+    /// <summary>
+    /// Event callback invoked when clicking outside.
+    /// </summary>
+    [Parameter]
+    public EventCallback OnClickOutside { get; set; }
+
+    /// <summary>
+    /// Whether to enable keyboard loop navigation.
+    /// </summary>
+    [Parameter]
+    public bool Loop { get; set; } = true;
+
+    /// <summary>
+    /// Positioning strategy: "absolute" or "fixed".
+    /// Use "fixed" when dropdown needs to escape stacking contexts (e.g., in sidebars).
+    /// Default is "absolute".
+    /// </summary>
+    [Parameter]
+    public PositioningStrategy Strategy { get; set; } = PositioningStrategy.Absolute;
+
+    /// <summary>
+    /// Whether to match the trigger element's width.
+    /// Default is false.
+    /// </summary>
+    [Parameter]
+    public bool MatchTriggerWidth { get; set; } = false;
+
+    /// <summary>
+    /// Z-index for the dropdown content.
+    /// Default is 50.
+    /// </summary>
+    [Parameter]
+    public int ZIndex { get; set; } = 50;
+
+    /// <summary>
+    /// Inline styles to apply to the dropdown content.
+    /// </summary>
+    [Parameter]
+    public string? Style { get; set; }
+
+    protected override string CssClass => ClassNames.Cn(
+        "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover outline-none",
+        "text-popover-foreground shadow-md",
+        "data-[state=open]:animate-in data-[state=closed]:animate-out",
+        "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+        "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+        "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2",
+        "data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        Class
+    );
+}

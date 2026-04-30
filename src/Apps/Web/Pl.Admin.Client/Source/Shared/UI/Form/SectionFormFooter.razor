@@ -1,3 +1,5 @@
+@using ButtonType=Pl.Components.Components.ButtonType
+@using Pl.Components.Components
 <div class="w-full mt-0 bg-background border-t gap-3 py-4 flex flex-col">
   @if (CreateDate != null || ChangeDate != null)
   {
@@ -21,20 +23,20 @@
   <div class="flex px-6 w-full gap-2 justify-end">
     @if (OnCancelAction.HasDelegate)
     {
-      <Button
-        Variant="ButtonVariantType.Outline"
+      <PlButton
+        Variant="ButtonVariant.Outline"
         OnClick="@OnCancelAction"
       >
         @Localizer["BtnCancel"]
-      </Button>
+      </PlButton>
     }
     @if (OnSubmitAction.HasDelegate)
     {
-      <Button
+      <PlButton
         Type="@ButtonType.Submit"
       >
         @Localizer["BtnSubmit"]
-      </Button>
+      </PlButton>
     }
   </div>
 </div>

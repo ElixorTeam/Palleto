@@ -1,0 +1,8 @@
+﻿@namespace Pl.Components.Components
+@inherits PlComponentBase
+
+<div class="@CssClass" role="separator" aria-orientation="horizontal"></div>
+
+@code {
+  protected override string CssClass => ClassNames.Cn("-mx-1 my-1 h-px bg-muted", Class);
+}

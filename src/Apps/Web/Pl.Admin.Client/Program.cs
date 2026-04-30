@@ -1,4 +1,5 @@
 using BF.Utilities.Handlers;
+using BlazorBlueprint.Primitives.Extensions;
 using Blazorise;
 using Blazorise.Icons.FontAwesome;
 using Fluxor;
@@ -7,7 +8,6 @@ using Pl.Admin.Client.Source.App;
 using Pl.Admin.Client.Source.Shared.Api;
 using Pl.Admin.Client.Source.Shared.Auth;
 using Pl.Admin.Client.Source.Shared.Auth.Settings;
-using Pl.Admin.Client.Source.Shared.Constants;
 using Pl.Admin.Models;
 using Pl.Shared.Constants;
 using Pl.Shared.Web.Extensions;
@@ -20,6 +20,8 @@ OidcSettings oidcSettings = builder.Configuration
     .GetSection("Oidc").Get<OidcSettings>() ?? throw new NullReferenceException();
 
 builder.RegisterRefitClients();
+
+builder.Services.AddBlazorBlueprintPrimitives();
 
 builder.Services
     .AddUserClaims()

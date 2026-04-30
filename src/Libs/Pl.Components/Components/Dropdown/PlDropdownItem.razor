@@ -1,0 +1,67 @@
+﻿@namespace Pl.Components.Components
+@using BlazorBlueprint.Primitives.DropdownMenu
+@inherits PlComponentBase
+
+<BbDropdownMenuItem
+  class="@CssClass"
+  Disabled="@Disabled"
+  OnClick="@OnClick"
+  CloseOnSelect="@CloseOnSelect"
+  Href="@Href"
+  Target="@Target">
+  @if (Icon != null)
+  {
+    <span class="mr-2 h-4 w-4 shrink-0 [&>svg]:h-4 [&>svg]:w-4">@Icon</span>
+  }
+  @ChildContent
+</BbDropdownMenuItem>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Optional icon to display before the menu item content.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? Icon { get; set; }
+
+    /// <summary>
+    /// Whether the menu item is disabled.
+    /// </summary>
+    [Parameter]
+    public bool Disabled { get; set; } = false;
+
+    /// <summary>
+    /// Custom click handler.
+    /// </summary>
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    /// <summary>
+    /// URL to navigate to. When set, the item renders as an anchor element instead of a div.
+    /// </summary>
+    [Parameter]
+    public string? Href { get; set; }
+
+    /// <summary>
+    /// The anchor target attribute (e.g., "_blank"). Only applies when Href is set.
+    /// </summary>
+    [Parameter]
+    public string? Target { get; set; }
+
+    /// <summary>
+    /// Whether to close the dropdown menu when this item is selected.
+    /// </summary>
+    [Parameter]
+    public bool CloseOnSelect { get; set; } = true;
+
+    protected override string CssClass => ClassNames.Cn(
+        "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5",
+        "text-sm outline-none transition-colors",
+        "focus:bg-accent focus:text-accent-foreground",
+        "data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
+        ClassNames.When(!Disabled, "hover:bg-accent hover:text-accent-foreground"),
+        Class
+    );
+}

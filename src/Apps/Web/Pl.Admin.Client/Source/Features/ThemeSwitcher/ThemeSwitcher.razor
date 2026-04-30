@@ -2,53 +2,38 @@
 @using Blazor.Heroicons.Outline
 @rendermode InteractiveServer
 
-<PlButton
-  id="theme-button"
-  Variant="ButtonVariant.Ghost"
-  Size="ButtonSize.Icon"
-  OnClick="@(() => IsOpen = !IsOpen)"
-  Class="shrink-0"
->
-   <SunIcon class="size-5 dark:hidden" />
-   <MoonIcon class="size-5 hidden dark:block" />
-   <span class="sr-only">Toggle theme</span>
-</PlButton>
-
-<Dropdown
-  Anchor="theme-button"
-  @bind-Visible="@IsOpen"
-  VerticalThreshold="300"
-  Position="@Position"
->
-  <ul class="flex flex-col p-1">
-    <li>
-      <DropdownItem OnClick="@(() => SetTheme("light"))">
-        <SunIcon class="size-4 mr-2" />
-        <span>@Localizer[ThemeType.Light.GetDescription()]</span>
-      </DropdownItem>
-    </li>
-    <li>
-      <DropdownItem OnClick="@(() => SetTheme("dark"))">
-        <MoonIcon class="size-4 mr-2" />
-        <span>@Localizer[ThemeType.Dark.GetDescription()]</span>
-      </DropdownItem>
-    </li>
-    <li>
-      <DropdownItem OnClick="@(() => SetTheme("system"))">
-        <ComputerDesktopIcon class="size-4 mr-2" />
-        <span>@Localizer[ThemeType.System.GetDescription()]</span>
-      </DropdownItem>
-    </li>
-  </ul>
-</Dropdown>
+<PlDropdown>
+  <PlDropdownTrigger>
+    <PlButton
+      Variant="ButtonVariant.Ghost"
+      Size="ButtonSize.Icon"
+      Class="shrink-0">
+      <SunIcon class="size-5 dark:hidden"/>
+      <MoonIcon class="size-5 hidden dark:block"/>
+      <span class="sr-only">Toggle theme</span>
+    </PlButton>
+  </PlDropdownTrigger>
+  <PlDropdownContent>
+    <PlDropdownLabel>Theme</PlDropdownLabel>
+    <PlDropdownSeparator/>
+    <PlDropdownItem OnClick="@(() => SetTheme("light"))">
+      <Icon><SunIcon/></Icon>
+      <ChildContent>@Localizer[ThemeType.Light.GetDescription()]</ChildContent>
+    </PlDropdownItem>
+    <PlDropdownItem OnClick="@(() => SetTheme("dark"))">
+      <Icon><MoonIcon/></Icon>
+      <ChildContent>@Localizer[ThemeType.Dark.GetDescription()]</ChildContent>
+    </PlDropdownItem>
+    <PlDropdownItem OnClick="@(() => SetTheme("system"))">
+      <Icon><ComputerDesktopIcon/></Icon>
+      <ChildContent>@Localizer[ThemeType.System.GetDescription()]</ChildContent>
+    </PlDropdownItem>
+  </PlDropdownContent>
+</PlDropdown>
 
 @code {
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
-
-  [Parameter] public VerticalPosition? Position { get; set; }
-
-  private bool IsOpen { get; set; }
 
   private async Task SetTheme(string theme) => await JsRuntime.InvokeVoidAsync("switchTheme", theme);
 }

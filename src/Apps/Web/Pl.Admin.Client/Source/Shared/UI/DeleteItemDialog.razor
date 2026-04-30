@@ -18,18 +18,18 @@
     @Localizer["DeleteDialogDescription"]
   </p>
   <div class="flex w-full justify-end gap-2 pt-4">
-    <Button
-      Variant="ButtonVariantType.Outline"
+    <PlButton
+      Variant="ButtonVariant.Outline"
       OnClick="@(OnCancelAction)"
     >
       @Localizer["BtnCancel"]
-    </Button>
-    <Button
+    </PlButton>
+    <PlButton
       OnClick="@(OnSubmitAction)"
       Disabled="@IsLoading"
     >
       @Localizer["BtnSubmit"]
-    </Button>
+    </PlButton>
   </div>
 </Dialog>
 

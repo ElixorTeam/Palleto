@@ -4,6 +4,7 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References.Template.Queries
 @using Pl.Admin.Models.Features.References.Template.Universal
+@using Pl.Components.Components
 @using Pl.Print.Features.Barcodes.Models
 @using Pl.Print.Features.Barcodes.Utils
 
@@ -28,9 +29,9 @@
   </Accordion>
   <div class="pt-4 flex justify-end gap-3">
     <SectionCaptcha @bind-Valid="CaptchaValid" Class="!w-48" />
-    <Button OnClick="@UpdateBarcode">
+    <PlButton OnClick="@UpdateBarcode">
       @Localizer["BtnSubmit"]
-    </Button>
+    </PlButton>
   </div>
 </div>
 
