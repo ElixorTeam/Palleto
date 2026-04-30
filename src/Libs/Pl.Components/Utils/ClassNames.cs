@@ -31,7 +31,6 @@ public static partial class ClassNames
 
     /// <summary>
     /// Returns the class string if the condition is true
-    /// Useful for conditional classes in cn().
     /// </summary>
     /// <code>
     /// cn("btn", when(isActive, "btn-active"), "px-4")
@@ -40,6 +39,17 @@ public static partial class ClassNames
     /// </code>
     public static string? When(bool condition, string className) =>
         condition ? className : null;
+
+    /// <summary>
+    /// Returns the class string if / else condition
+    /// </summary>
+    /// <code>
+    /// cn("btn", WhenElse(isActive, "btn-active", "btn-disabled"), "px-4")
+    /// // Instead of:
+    /// cn("btn", isActive ? "btn-active" : "btn-disabled", "px-4")
+    /// </code>
+    public static string WhenElse(bool condition, string ifClass, string elseClass) =>
+        condition ? ifClass : elseClass;
 
     /// <summary>
     /// Recursively processes input values and extracts class names.

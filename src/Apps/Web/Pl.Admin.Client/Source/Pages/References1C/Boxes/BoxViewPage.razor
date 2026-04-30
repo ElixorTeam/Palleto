@@ -1,4 +1,5 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Components.Components
 @using Pl.Admin.Client.Source.Shared.Constants
 
 @attribute [Route(Routes.Boxes + "/{Id:guid}")]
@@ -11,10 +12,14 @@
   <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionBoxes"])" />
 
   <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label=@Localizer["SectionBoxes"] Link="@Routes.Boxes" />
+    <PlBreadcrumbItem>
+      <PlBreadcrumbLink Href="@Routes.Boxes">@Localizer["SectionBoxes"]</PlBreadcrumbLink>
+    </PlBreadcrumbItem>
     @if (query.HasData)
     {
-      <Breadcrumb Label="@query.Data.Name" />
+      <PlBreadcrumbItem>
+        <PlBreadcrumbPage>@query.Data.Name</PlBreadcrumbPage>
+      </PlBreadcrumbItem>
     }
   </Breadcrumbs>
 

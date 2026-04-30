@@ -1,4 +1,5 @@
 ﻿@namespace Pl.Components.Components
+@using BlazorBlueprint.Primitives.Separator
 @inherits PlComponentBase
 
 <BlazorBlueprint.Primitives.Separator.BbSeparator
@@ -8,10 +9,10 @@
 
 @code {
     /// <summary>
-    /// Default value is <see cref="SeparatorOrientation.Horizontal"/>
+    /// Default value is False
     /// </summary>
     [Parameter]
-    public SeparatorOrientation Orientation { get; set; } = SeparatorOrientation.Horizontal;
+    public bool Vertical { get; set; }
 
     /// <summary>
     /// Gets or sets whether the separator is purely decorative.
@@ -41,14 +42,10 @@
     /// </remarks>
     protected override string CssClass => ClassNames.Cn(
         "shrink-0 bg-border",
-        Orientation == SeparatorOrientation.Horizontal
-            ? "h-[1px] w-full"
-            : "h-full w-[1px]",
+        ClassNames.WhenElse(Vertical, "h-full w-[1px]", "h-[1px] w-full"),
         Class
     );
 
-    private BlazorBlueprint.Primitives.Separator.SeparatorOrientation MappedOrientation =>
-        Orientation == SeparatorOrientation.Vertical
-            ? BlazorBlueprint.Primitives.Separator.SeparatorOrientation.Vertical
-            : BlazorBlueprint.Primitives.Separator.SeparatorOrientation.Horizontal;
+    private SeparatorOrientation MappedOrientation =>
+      Vertical ? SeparatorOrientation.Vertical : SeparatorOrientation.Horizontal;
 }

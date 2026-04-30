@@ -1,5 +1,6 @@
 @using Pl.Admin.Client.Source.Pages.References1C.Plus.Update
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Components.Components
 @using Pl.Admin.Client.Source.Shared.Constants
 
 @attribute [Route(Routes.Plus + "/{Id:guid}")]
@@ -12,10 +13,14 @@
   <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionPlu"])" />
 
   <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label="@Localizer["SectionPlu"]" Link="@Routes.Plus" />
+    <PlBreadcrumbItem>
+      <PlBreadcrumbLink Href="@Routes.Plus">@Localizer["SectionPlu"]</PlBreadcrumbLink>
+    </PlBreadcrumbItem>
     @if (query.HasData)
     {
-      <Breadcrumb Label="@query.Data.Name" />
+      <PlBreadcrumbItem>
+        <PlBreadcrumbPage>@query.Data.Name</PlBreadcrumbPage>
+      </PlBreadcrumbItem>
     }
   </Breadcrumbs>
 

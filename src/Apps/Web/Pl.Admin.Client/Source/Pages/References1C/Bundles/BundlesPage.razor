@@ -1,5 +1,6 @@
 @using Blazor.Heroicons.Outline
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Components.Components
 @using Pl.Admin.Client.Source.Shared.Constants
 
 @attribute [Route(Routes.Bundles)]
@@ -14,7 +15,9 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label="@Localizer["SectionBundles"]" Link="@Routes.Bundles" />
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["SectionBundles"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
   </Breadcrumbs>
 
   <DataGridHeader>

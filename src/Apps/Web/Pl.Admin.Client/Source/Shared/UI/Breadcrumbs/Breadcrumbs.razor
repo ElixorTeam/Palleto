@@ -1,20 +1,41 @@
-<div class="@TwMerge.Merge("pb-2 flex gap-2 text-sm text-muted-foreground items-center", Class)">
-  @if (Start == BreadcrumbStart.Home)
-  {
-    <BreadcrumbHome />
-  }
-  else if (Start == BreadcrumbStart.Back)
-  {
-    <BreadcrumbBack />
-  }
+@using Blazor.Heroicons.Outline
+@using Pl.Admin.Client.Source.Shared.Constants
+@using Pl.Components.Components
 
-  @ChildContent
-
-</div>
+<PlBreadcrumb Class="@TwMerge.Merge(Class)">
+  <PlBreadcrumbList AutoSeparator>
+    <SeparatorContent>
+      <ChevronRightIcon class="size-3" />
+    </SeparatorContent>
+    <ChildContent>
+      <PlBreadcrumbItem Class="home">
+      @if (Start == BreadcrumbStart.Home)
+      {
+          <PlBreadcrumbLink Href="@Routes.Home" Class="flex items-center gap-1.5">
+            <HomeIcon class="size-4"/>
+            Домой
+          </PlBreadcrumbLink>
+      }
+      else if (Start == BreadcrumbStart.Back)
+      {
+        <button type="button" @onclick="GoBack" class="flex items-center gap-1.5">
+          <ArrowLeftIcon class="size-4"/>
+          <span>Назад</span>
+        </button>
+      }
+      </PlBreadcrumbItem>
+      @ChildContent
+    </ChildContent>
+  </PlBreadcrumbList>
+</PlBreadcrumb>
 
 @code {
   [Inject] private TwMerge TwMerge { get; set; } = default!;
+  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
+
   [Parameter] public string Class { get; set; } = string.Empty;
   [Parameter] public RenderFragment? ChildContent { get; set; }
   [Parameter] public BreadcrumbStart Start { get; set; } = BreadcrumbStart.Home;
+
+  private async Task GoBack() => await JsRuntime.InvokeVoidAsync("history.back");
 }

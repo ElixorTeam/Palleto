@@ -26,7 +26,8 @@
 
   internal int RegisterItem()
   {
-    return _itemCount++;
+    _itemCount += 1;
+    return _itemCount;
   }
 
   protected override void OnParametersSet()

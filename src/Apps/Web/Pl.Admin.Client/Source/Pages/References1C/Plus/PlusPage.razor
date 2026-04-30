@@ -4,6 +4,7 @@
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Models.Features.References1C.Brands
 @using Pl.Admin.Models.Features.References1C.Plus.Queries
+@using Pl.Components.Components
 
 @attribute [Route(Routes.Plus)]
 @rendermode InteractiveServer
@@ -16,7 +17,9 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label="@Localizer["SectionPlu"]" Link="@Routes.Plus" />
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["SectionPlu"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
   </Breadcrumbs>
 
   <DataGridHeader>
