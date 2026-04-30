@@ -1,0 +1,12 @@
+﻿PlSelect
+├── PlSelectTrigger
+│   └── PlSelectValue
+└── PlSelectContent
+    ├── PlSelectGroup
+    │   ├── PlSelectLabel
+    │   ├── PlSelectItem
+    │   └── PlSelectItem
+    └── PlSelectGroup
+        ├── PlSelectLabel
+        ├── PlSelectItem
+        └── PlSelectItem

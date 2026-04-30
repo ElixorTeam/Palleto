@@ -1,0 +1,123 @@
+﻿@typeparam TValue
+@namespace Pl.Components.Components
+@using BlazorBlueprint.Primitives.Select
+@inherits PlComponentBase
+@implements IDisposable
+
+<BbSelectItem
+  class="@CssClass"
+  TValue="TValue"
+  Value="Value"
+  Text="@DisplayText"
+  Disabled="Disabled">
+  <span class="truncate">
+    @if (ChildContent is not null)
+    {
+      @ChildContent
+    }
+    else
+    {
+      @DisplayText
+    }
+  </span>
+  @if (IsSelected)
+  {
+    <svg class="ml-auto h-4 w-4 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+  }
+</BbSelectItem>
+
+@code {
+    [CascadingParameter]
+    private SelectContext<TValue>? Context { get; set; }
+
+    private bool _lastIsSelected;
+    private bool _lastDisabled;
+
+    /// <summary>
+    /// Gets or sets the value of this item.
+    /// </summary>
+    [Parameter, EditorRequired]
+    public TValue Value { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets the display text for this item.
+    /// If not provided, will use ChildContent text or Value.ToString().
+    /// </summary>
+    [Parameter]
+    public string Text { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the content to be rendered as the item's display text.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether this item is disabled.
+    /// </summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>
+    /// Gets whether this item is currently selected.
+    /// </summary>
+    private bool IsSelected => Context != null && EqualityComparer<TValue?>.Default.Equals(Context.Value, Value);
+
+    /// <summary>
+    /// Gets the display text for this item.
+    /// Uses Text parameter if provided, otherwise falls back to Value.ToString().
+    /// </summary>
+    private string? DisplayText =>
+      string.IsNullOrEmpty(Text) ? Text : Value?.ToString();
+
+    /// <summary>
+    /// Gets the computed CSS classes for the item.
+    /// </summary>
+    protected override string CssClass => ClassNames.Cn(
+      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 px-2 text-sm",
+      "outline-none transition-colors",
+      "data-[focused=true]:bg-accent data-[focused=true]:text-accent-foreground",
+      "data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
+      ClassNames.When(IsSelected, "bg-accent/50 text-accent-foreground"),
+      Class
+    );
+
+    protected override void OnInitialized()
+    {
+        if (Context != null)
+        {
+            Context.OnStateChanged += HandleStateChanged;
+        }
+
+        _lastIsSelected = IsSelected;
+        _lastDisabled = Disabled;
+    }
+
+    protected override bool ShouldRender()
+    {
+        bool currentIsSelected = IsSelected;
+
+        if (currentIsSelected == _lastIsSelected &&
+            Disabled == _lastDisabled)
+          return false;
+        _lastIsSelected = currentIsSelected;
+        _lastDisabled = Disabled;
+        return true;
+
+    }
+
+    private void HandleStateChanged()
+    {
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        if (Context != null)
+        {
+            Context.OnStateChanged -= HandleStateChanged;
+        }
+    }
+}

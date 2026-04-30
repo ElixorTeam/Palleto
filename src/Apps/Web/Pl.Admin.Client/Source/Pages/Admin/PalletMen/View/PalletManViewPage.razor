@@ -15,10 +15,11 @@
   <BrowserTitle Label="@(query.Data?.Fio.DisplayShortName ?? Localizer["SectionPalletMen"])" />
 
   <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label="@Localizer["SectionPalletMen"]" Link="@Routes.PalletMen" />
+
+    <Breadcrumb Label="@Localizer["SectionPalletMen"]" Link="@Routes.PalletMen"/>
     @if (query.HasData)
     {
-      <Breadcrumb Label="@query.Data.Fio.DisplayShortName" />
+      <Breadcrumb Label="@query.Data.Fio.DisplayShortName"/>
     }
   </Breadcrumbs>
 

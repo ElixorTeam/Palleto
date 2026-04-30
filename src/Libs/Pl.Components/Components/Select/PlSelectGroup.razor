@@ -1,0 +1,16 @@
+﻿@namespace Pl.Components.Components
+@inherits PlComponentBase
+
+<div class="@CssClass" role="group">
+  @ChildContent
+</div>
+
+@code {
+  /// <summary>
+  /// Gets or sets the content to be rendered inside the group.
+  /// </summary>
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
+
+  protected override string CssClass => ClassNames.Cn("p-1 w-full", Class);
+}

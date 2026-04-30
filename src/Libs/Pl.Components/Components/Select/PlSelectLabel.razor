@@ -1,0 +1,16 @@
+﻿@namespace Pl.Components.Components
+@inherits PlComponentBase
+
+<div class="@CssClass">
+  @ChildContent
+</div>
+
+@code {
+  /// <summary>
+  /// Gets or sets the content to be rendered inside the label.
+  /// </summary>
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
+
+  protected override string CssClass => ClassNames.Cn("py-1.5 px-2 text-sm font-semibold text-foreground", Class);
+}
