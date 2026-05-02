@@ -1,12 +1,12 @@
 namespace Pl.Database.Entities.Ref.Arms;
 
-internal sealed class ArmMapConfig : IEntityTypeConfiguration<ArmEntity>
+internal sealed class ArmConfiguration : IEntityTypeConfiguration<ArmEntity>
 {
     public void Configure(EntityTypeBuilder<ArmEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.Arms, SqlSchemas.Ref);
+        builder.ToTable(SqlTables.Arms, DbSchemas.Ref);
 
         builder.HasIndex(e => e.Name)
             .HasDatabaseName($"UQ_{SqlTables.Arms}__NAME")

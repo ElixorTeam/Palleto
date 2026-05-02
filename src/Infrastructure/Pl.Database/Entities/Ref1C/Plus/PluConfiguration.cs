@@ -1,12 +1,12 @@
 namespace Pl.Database.Entities.Ref1C.Plus;
 
-internal sealed class PluMapConfig : IEntityTypeConfiguration<PluEntity>
+internal sealed class PluConfiguration : IEntityTypeConfiguration<PluEntity>
 {
     public void Configure(EntityTypeBuilder<PluEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.Plus, SqlSchemas.Ref1C);
+        builder.ToTable(SqlTables.Plus, DbSchemas.Ref1C);
 
         builder.HasIndex(e => e.Number)
             .HasDatabaseName($"UQ_{SqlTables.Plus}__NUMBER")

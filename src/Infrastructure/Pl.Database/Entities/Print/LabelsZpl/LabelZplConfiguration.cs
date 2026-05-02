@@ -1,12 +1,12 @@
 namespace Pl.Database.Entities.Print.LabelsZpl;
 
-internal sealed class LabelZplMapConfig : IEntityTypeConfiguration<LabelZplEntity>
+internal sealed class LabelZplConfiguration : IEntityTypeConfiguration<LabelZplEntity>
 {
     public void Configure(EntityTypeBuilder<LabelZplEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.LabelsZpl, SqlSchemas.Print);
+        builder.ToTable(SqlTables.LabelsZpl, DbSchemas.Print);
 
         builder.HasKey(e => e.Id);
         builder

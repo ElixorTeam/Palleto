@@ -2,13 +2,13 @@ using Pl.Database.Shared.Converters;
 
 namespace Pl.Database.Entities.Zpl.Templates;
 
-internal sealed class TemplateMapConfig : IEntityTypeConfiguration<TemplateEntity>
+internal sealed class TemplateConfiguration : IEntityTypeConfiguration<TemplateEntity>
 {
     public void Configure(EntityTypeBuilder<TemplateEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.Templates, SqlSchemas.Zpl);
+        builder.ToTable(SqlTables.Templates, DbSchemas.Zpl);
 
         builder.HasIndex(e => new { e.Name, e.IsWeight })
             .HasDatabaseName($"UQ_{SqlTables.Templates}__NAME__IS_WEIGHT")

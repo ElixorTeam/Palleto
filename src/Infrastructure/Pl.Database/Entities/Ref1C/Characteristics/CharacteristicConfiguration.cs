@@ -1,12 +1,12 @@
 namespace Pl.Database.Entities.Ref1C.Characteristics;
 
-internal sealed class CharacteristicMapConfig : IEntityTypeConfiguration<CharacteristicEntity>
+internal sealed class CharacteristicConfiguration : IEntityTypeConfiguration<CharacteristicEntity>
 {
     public void Configure(EntityTypeBuilder<CharacteristicEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.Characteristics, SqlSchemas.Ref1C);
+        builder.ToTable(SqlTables.Characteristics, DbSchemas.Ref1C);
 
         builder.HasIndex(e => new { e.PluId, e.BoxId, e.BundleCount })
             .HasDatabaseName($"UQ_{SqlTables.Characteristics}__UNIQ")

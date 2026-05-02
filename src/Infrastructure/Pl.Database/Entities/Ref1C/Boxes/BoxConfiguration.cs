@@ -1,12 +1,12 @@
 namespace Pl.Database.Entities.Ref1C.Boxes;
 
-internal sealed class BoxMapConfig : IEntityTypeConfiguration<BoxEntity>
+internal sealed class BoxConfiguration : IEntityTypeConfiguration<BoxEntity>
 {
     public void Configure(EntityTypeBuilder<BoxEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.Boxes, SqlSchemas.Ref1C);
+        builder.ToTable(SqlTables.Boxes, DbSchemas.Ref1C);
 
         #endregion
 

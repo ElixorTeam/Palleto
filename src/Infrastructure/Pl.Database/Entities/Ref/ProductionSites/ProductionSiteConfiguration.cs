@@ -1,12 +1,12 @@
 namespace Pl.Database.Entities.Ref.ProductionSites;
 
-internal sealed class ProductionSiteMapConfig : IEntityTypeConfiguration<ProductionSiteEntity>
+internal sealed class ProductionSiteConfiguration : IEntityTypeConfiguration<ProductionSiteEntity>
 {
     public void Configure(EntityTypeBuilder<ProductionSiteEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.ProductionSites, SqlSchemas.Ref);
+        builder.ToTable(SqlTables.ProductionSites, DbSchemas.Ref);
 
         builder.HasIndex(e => e.Name)
             .HasDatabaseName($"UQ_{SqlTables.ProductionSites}__NAME")

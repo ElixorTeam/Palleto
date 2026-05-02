@@ -22,14 +22,6 @@ namespace Pl.Database.Migrations
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
-
-            migrationBuilder.Sql(@"
-               UPDATE label
-                    SET label.IS_WEIGHT = plu.IS_WEIGHT
-                FROM [WEIGHT].[PRINT].[LABELS] label
-                INNER JOIN [WEIGHT].[REF_1C].[PLUS] plu
-                    ON label.PLU_UID = plu.UID"
-            );
         }
 
         /// <inheritdoc />

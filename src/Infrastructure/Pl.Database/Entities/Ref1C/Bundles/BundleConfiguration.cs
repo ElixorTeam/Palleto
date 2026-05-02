@@ -1,12 +1,12 @@
-namespace Pl.Database.Entities.Ref1C.Clips;
+namespace Pl.Database.Entities.Ref1C.Bundles;
 
-internal sealed class ClipMapConfig : IEntityTypeConfiguration<ClipEntity>
+internal sealed class BundleConfiguration : IEntityTypeConfiguration<BundleEntity>
 {
-    public void Configure(EntityTypeBuilder<ClipEntity> builder)
+    public void Configure(EntityTypeBuilder<BundleEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.Clips, SqlSchemas.Ref1C);
+        builder.ToTable(SqlTables.Bundles, DbSchemas.Ref1C);
 
         #endregion
 

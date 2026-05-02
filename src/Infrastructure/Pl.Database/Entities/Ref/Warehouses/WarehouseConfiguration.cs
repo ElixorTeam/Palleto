@@ -1,12 +1,12 @@
 namespace Pl.Database.Entities.Ref.Warehouses;
 
-internal sealed class WarehouseMapConfig : IEntityTypeConfiguration<WarehouseEntity>
+internal sealed class WarehouseConfiguration : IEntityTypeConfiguration<WarehouseEntity>
 {
     public void Configure(EntityTypeBuilder<WarehouseEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.Warehouses, SqlSchemas.Ref);
+        builder.ToTable(SqlTables.Warehouses, DbSchemas.Ref);
 
         builder.HasIndex(e => e.Name)
             .HasDatabaseName($"UQ_{SqlTables.Warehouses}__NAME")

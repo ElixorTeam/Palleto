@@ -1,12 +1,12 @@
 namespace Pl.Database.Entities.Print.Pallets;
 
-internal sealed class PalletMapConfig : IEntityTypeConfiguration<PalletEntity>
+internal sealed class PalletConfiguration : IEntityTypeConfiguration<PalletEntity>
 {
     public void Configure(EntityTypeBuilder<PalletEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.Pallets, SqlSchemas.Print);
+        builder.ToTable(SqlTables.Pallets, DbSchemas.Print);
 
         builder.Property(e => e.Id)
             .HasColumnName("UID")

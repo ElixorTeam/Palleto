@@ -6,7 +6,7 @@
 </CascadingValue>
 
 @code {
-  private int _itemCount;
+  private int _itemCount = 0;
 
   [Parameter]
   public RenderFragment? ChildContent { get; set; }
@@ -28,10 +28,5 @@
   {
     _itemCount += 1;
     return _itemCount;
-  }
-
-  protected override void OnParametersSet()
-  {
-    _itemCount = 0;
   }
 }

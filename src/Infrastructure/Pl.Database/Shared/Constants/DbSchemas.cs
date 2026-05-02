@@ -1,6 +1,6 @@
 namespace Pl.Database.Shared.Constants;
 
-internal static class SqlSchemas
+internal static class DbSchemas
 {
     public const string Diag = "DIAG";
     public const string Print = "PRINT";

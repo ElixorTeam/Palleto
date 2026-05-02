@@ -33,20 +33,21 @@ public class WsDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        SqlSettingsModel sqlCfg = LoadJsonConfig();
+        SqlSettings sqlCfg = LoadJsonConfig();
 
-        optionsBuilder.UseSqlServer(sqlCfg.GetConnectionString());
+        optionsBuilder.UseSqlServer(sqlCfg.Connection);
         optionsBuilder.AddInterceptors(new ChangeDtInterceptor());
 
         if (ConfigurationUtils.IsDevelop && sqlCfg.IsShowSql)
+        {
             optionsBuilder.UseLoggerFactory(
                 LoggerFactory.Create(builder => builder.AddConsole())
             );
+        }
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.SetDefaultTypeForString();
         modelBuilder.SetAutoCreateOrChangeDt();
 
         modelBuilder.UseIpAddressConversion();
@@ -56,14 +57,14 @@ public class WsDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
-    private static SqlSettingsModel LoadJsonConfig()
+    private static SqlSettings LoadJsonConfig()
     {
         IConfigurationRoot sqlConfiguration = new ConfigurationBuilder()
             .AddJsonFile("sql_config.json", optional: false, reloadOnChange: false)
             .Build();
 
-        SqlSettingsModel sqlSettingsModel = new();
-        sqlConfiguration.GetSection("SqlSettings").Bind(sqlSettingsModel);
-        return sqlSettingsModel;
+        SqlSettings sqlSettings = new();
+        sqlConfiguration.GetSection("SqlSettings").Bind(sqlSettings);
+        return sqlSettings;
     }
 }

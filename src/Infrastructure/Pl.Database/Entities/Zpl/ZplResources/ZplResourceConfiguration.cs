@@ -1,12 +1,12 @@
 namespace Pl.Database.Entities.Zpl.ZplResources;
 
-internal sealed class ZplResourceMapConfig : IEntityTypeConfiguration<ZplResourceEntity>
+internal sealed class ZplResourceConfiguration : IEntityTypeConfiguration<ZplResourceEntity>
 {
     public void Configure(EntityTypeBuilder<ZplResourceEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.ZplResources, SqlSchemas.Zpl);
+        builder.ToTable(SqlTables.ZplResources, DbSchemas.Zpl);
 
         builder.HasIndex(e => e.Name)
             .HasDatabaseName($"UQ_{SqlTables.ZplResources}__NAME")

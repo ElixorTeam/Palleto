@@ -1,12 +1,12 @@
 namespace Pl.Database.Entities.Ref1C.Nestings;
 
-internal sealed class NestingMapConfig : IEntityTypeConfiguration<NestingEntity>
+internal sealed class NestingConfiguration : IEntityTypeConfiguration<NestingEntity>
 {
     public void Configure(EntityTypeBuilder<NestingEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.Nestings, SqlSchemas.Ref1C);
+        builder.ToTable(SqlTables.Nestings, DbSchemas.Ref1C);
 
         #endregion
 

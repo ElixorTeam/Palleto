@@ -1,12 +1,12 @@
 namespace Pl.Database.Entities.Ref.Printers;
 
-internal sealed class PrinterMapConfig : IEntityTypeConfiguration<PrinterEntity>
+internal sealed class PrinterConfiguration : IEntityTypeConfiguration<PrinterEntity>
 {
     public void Configure(EntityTypeBuilder<PrinterEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.Printers, SqlSchemas.Ref);
+        builder.ToTable(SqlTables.Printers, DbSchemas.Ref);
 
         builder.HasIndex(e => e.Name)
             .HasDatabaseName($"UQ_{SqlTables.Printers}__NAME")

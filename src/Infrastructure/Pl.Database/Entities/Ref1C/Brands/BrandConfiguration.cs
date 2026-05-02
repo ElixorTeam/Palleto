@@ -1,12 +1,12 @@
 namespace Pl.Database.Entities.Ref1C.Brands;
 
-internal sealed class BrandMapConfig : IEntityTypeConfiguration<BrandEntity>
+internal sealed class BrandConfiguration : IEntityTypeConfiguration<BrandEntity>
 {
     public void Configure(EntityTypeBuilder<BrandEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.Brands, SqlSchemas.Ref1C);
+        builder.ToTable(SqlTables.Brands, DbSchemas.Ref1C);
 
         builder.HasIndex(e => e.Name)
             .HasDatabaseName($"UQ_{SqlTables.Brands}__NAME")

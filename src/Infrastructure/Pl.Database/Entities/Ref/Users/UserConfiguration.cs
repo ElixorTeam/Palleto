@@ -1,10 +1,10 @@
 namespace Pl.Database.Entities.Ref.Users;
 
-internal sealed class UserMapConfig : IEntityTypeConfiguration<UserEntity>
+internal sealed class UserConfiguration : IEntityTypeConfiguration<UserEntity>
 {
     public void Configure(EntityTypeBuilder<UserEntity> builder)
     {
-        builder.ToTable(SqlTables.Users, SqlSchemas.Ref);
+        builder.ToTable(SqlTables.Users, DbSchemas.Ref);
 
         builder.HasKey(e => e.Id);
         builder

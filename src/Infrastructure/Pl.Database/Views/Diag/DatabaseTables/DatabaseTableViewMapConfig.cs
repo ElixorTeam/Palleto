@@ -6,7 +6,7 @@ internal sealed class DatabaseTableViewMapConfig : IEntityTypeConfiguration<Data
     {
         builder.HasNoKey();
 
-        builder.ToView(SqlViews.DatabaseTables, SqlSchemas.Diag);
+        builder.ToView(SqlViews.DatabaseTables, DbSchemas.Diag);
 
         builder.Property(e => e.Schema)
             .HasColumnName("SCHEMA");

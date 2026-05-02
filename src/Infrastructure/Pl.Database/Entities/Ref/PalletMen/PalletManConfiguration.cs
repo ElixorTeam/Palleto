@@ -1,12 +1,12 @@
 namespace Pl.Database.Entities.Ref.PalletMen;
 
-internal sealed class PalletManMapConfig : IEntityTypeConfiguration<PalletManEntity>
+internal sealed class PalletManConfiguration : IEntityTypeConfiguration<PalletManEntity>
 {
     public void Configure(EntityTypeBuilder<PalletManEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.PalletMen, SqlSchemas.Ref);
+        builder.ToTable(SqlTables.PalletMen, DbSchemas.Ref);
 
         builder.HasIndex(e => new { e.Name, e.Surname, e.Patronymic })
             .HasDatabaseName($"UQ_{SqlTables.PalletMen}__FIO")

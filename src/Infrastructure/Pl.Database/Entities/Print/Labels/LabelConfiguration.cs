@@ -1,12 +1,12 @@
 namespace Pl.Database.Entities.Print.Labels;
 
-internal sealed class LabelMapConfig : IEntityTypeConfiguration<LabelEntity>
+internal sealed class LabelConfiguration : IEntityTypeConfiguration<LabelEntity>
 {
     public void Configure(EntityTypeBuilder<LabelEntity> builder)
     {
         #region Base
 
-        builder.ToTable(SqlTables.Labels, SqlSchemas.Print);
+        builder.ToTable(SqlTables.Labels, DbSchemas.Print);
 
         builder.HasIndex(e => e.BarcodeTop)
             .HasDatabaseName($"UQ_{SqlTables.Labels}__BARCODE_TOP")
