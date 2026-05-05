@@ -6,10 +6,9 @@ using Pl.Database.Common;
 namespace Pl.Exchange.Api.App.Common;
 
 // ReSharper disable once SuggestBaseTypeForParameterInConstructor
-internal abstract class BaseService<TDto>(IValidator<TDto> validator) where TDto : BaseDto
+internal abstract class BaseService<TDto>(IValidator<TDto> validator, WsDbContext dbContext) where TDto : BaseDto
 {
     private readonly IValidator _validator = validator;
-    protected readonly WsDbContext DbContext = new();
     protected readonly ResponseDto OutputDto = new();
 
     # region ResolveLocal
@@ -59,7 +58,7 @@ internal abstract class BaseService<TDto>(IValidator<TDto> validator) where TDto
     # endregion
 
     protected void ResolveNotExistsFkDb<TEntity>(HashSet<TDto> dtos, DbSet<TEntity> dbSet, Func<TDto, Guid> select, string msg)
-        where TEntity : EfEntityBase
+        where TEntity : EntityBase
     {
         HashSet<Guid> uidsFkList = dtos.Select(select).ToHashSet();
 

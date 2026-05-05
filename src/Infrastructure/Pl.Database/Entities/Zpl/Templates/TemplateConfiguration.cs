@@ -8,16 +8,16 @@ internal sealed class TemplateConfiguration : IEntityTypeConfiguration<TemplateE
     {
         #region Base
 
-        builder.ToTable(SqlTables.Templates, DbSchemas.Zpl);
+        builder.ToTable(DbTables.Templates, DbSchemas.Zpl);
 
         builder.HasIndex(e => new { e.Name, e.IsWeight })
-            .HasDatabaseName($"UQ_{SqlTables.Templates}__NAME__IS_WEIGHT")
+            .HasDatabaseName($"UQ_{DbTables.Templates}__NAME__IS_WEIGHT")
             .IsUnique();
 
         #endregion
 
         builder.Property(e => e.Name)
-            .HasColumnName(SqlColumns.Name)
+            .HasColumnName(DbColumns.Name)
             .HasColumnType("varchar(64)")
             .IsRequired();
 

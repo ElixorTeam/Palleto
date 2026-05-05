@@ -1,6 +1,6 @@
 namespace Pl.Database.Entities.Ref1C.Characteristics;
 
-public sealed class CharacteristicEntity : EfEntityBase
+public sealed class CharacteristicEntity : EntityBase
 {
     public string Name { get; set; } = string.Empty;
     public short BundleCount { get; set; }

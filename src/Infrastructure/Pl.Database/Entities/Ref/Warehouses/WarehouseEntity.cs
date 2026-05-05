@@ -1,6 +1,6 @@
 namespace Pl.Database.Entities.Ref.Warehouses;
 
-public sealed class WarehouseEntity : EfEntityBase
+public sealed class WarehouseEntity : EntityBase
 {
     public Guid Uid1C { get; set; }
     public string Name { get; set; } = string.Empty;

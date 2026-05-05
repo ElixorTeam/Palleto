@@ -6,14 +6,14 @@ internal sealed class PalletManConfiguration : IEntityTypeConfiguration<PalletMa
     {
         #region Base
 
-        builder.ToTable(SqlTables.PalletMen, DbSchemas.Ref);
+        builder.ToTable(DbTables.PalletMen, DbSchemas.Ref);
 
         builder.HasIndex(e => new { e.Name, e.Surname, e.Patronymic })
-            .HasDatabaseName($"UQ_{SqlTables.PalletMen}__FIO")
+            .HasDatabaseName($"UQ_{DbTables.PalletMen}__FIO")
             .IsUnique();
 
         builder.HasIndex(e => e.Uid1C)
-            .HasDatabaseName($"UQ_{SqlTables.PalletMen}__UID_1C")
+            .HasDatabaseName($"UQ_{DbTables.PalletMen}__UID_1C")
             .IsUnique();
 
         #endregion
@@ -23,18 +23,18 @@ internal sealed class PalletManConfiguration : IEntityTypeConfiguration<PalletMa
         builder.HasOne(e => e.Warehouse)
             .WithMany()
             .HasForeignKey("WAREHOUSE_UID")
-            .HasConstraintName($"FK_{SqlTables.PalletMen}__WAREHOUSE")
+            .HasConstraintName($"FK_{DbTables.PalletMen}__WAREHOUSE")
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
         #endregion
 
         builder.Property(e => e.Uid1C)
-            .HasColumnName(SqlColumns.Uid1C)
+            .HasColumnName(DbColumns.Uid1C)
             .IsRequired();
 
         builder.Property(e => e.Name)
-            .HasColumnName(SqlColumns.Name)
+            .HasColumnName(DbColumns.Name)
             .HasColumnType("varchar(32)")
             .IsRequired();
 

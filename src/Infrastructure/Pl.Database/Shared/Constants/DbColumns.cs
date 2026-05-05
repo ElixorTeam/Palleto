@@ -1,6 +1,6 @@
 namespace Pl.Database.Shared.Constants;
 
-internal static class SqlColumns
+internal static class DbColumns
 {
     public const string Uid = "UID";
     public const string Uid1C = "UID_1C";

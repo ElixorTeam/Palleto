@@ -6,10 +6,10 @@ internal sealed class CharacteristicConfiguration : IEntityTypeConfiguration<Cha
     {
         #region Base
 
-        builder.ToTable(SqlTables.Characteristics, DbSchemas.Ref1C);
+        builder.ToTable(DbTables.Characteristics, DbSchemas.Ref1C);
 
         builder.HasIndex(e => new { e.PluId, e.BoxId, e.BundleCount })
-            .HasDatabaseName($"UQ_{SqlTables.Characteristics}__UNIQ")
+            .HasDatabaseName($"UQ_{DbTables.Characteristics}__UNIQ")
             .IsUnique();
 
         #endregion
@@ -22,7 +22,7 @@ internal sealed class CharacteristicConfiguration : IEntityTypeConfiguration<Cha
         builder.HasOne<PluEntity>()
             .WithMany()
             .HasForeignKey(characteristic => characteristic.PluId)
-            .HasConstraintName($"FK_{SqlTables.Characteristics}__PLU")
+            .HasConstraintName($"FK_{DbTables.Characteristics}__PLU")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
@@ -32,14 +32,14 @@ internal sealed class CharacteristicConfiguration : IEntityTypeConfiguration<Cha
         builder.HasOne(e => e.Box)
             .WithMany()
             .HasForeignKey(characteristic => characteristic.BoxId)
-            .HasConstraintName($"FK_{SqlTables.Characteristics}__BOX")
+            .HasConstraintName($"FK_{DbTables.Characteristics}__BOX")
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
         #endregion
 
         builder.Property(e => e.Name)
-            .HasColumnName(SqlColumns.Name)
+            .HasColumnName(DbColumns.Name)
             .HasColumnType("varchar(64)")
             .IsRequired();
 

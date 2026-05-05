@@ -1,6 +1,6 @@
 namespace Pl.Database.Entities.Ref1C.Brands;
 
-public sealed class BrandEntity : EfEntityBase
+public sealed class BrandEntity : EntityBase
 {
     public string Name { get; set; } = string.Empty;
 

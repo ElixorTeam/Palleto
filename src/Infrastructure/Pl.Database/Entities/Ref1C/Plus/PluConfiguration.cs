@@ -6,10 +6,10 @@ internal sealed class PluConfiguration : IEntityTypeConfiguration<PluEntity>
     {
         #region Base
 
-        builder.ToTable(SqlTables.Plus, DbSchemas.Ref1C);
+        builder.ToTable(DbTables.Plus, DbSchemas.Ref1C);
 
         builder.HasIndex(e => e.Number)
-            .HasDatabaseName($"UQ_{SqlTables.Plus}__NUMBER")
+            .HasDatabaseName($"UQ_{DbTables.Plus}__NUMBER")
             .IsUnique();
 
         #endregion
@@ -22,7 +22,7 @@ internal sealed class PluConfiguration : IEntityTypeConfiguration<PluEntity>
         builder.HasOne(e => e.Bundle)
             .WithMany()
             .HasForeignKey(plu => plu.BundleId)
-            .HasConstraintName($"FK_{SqlTables.Plus}__BUNDLE")
+            .HasConstraintName($"FK_{DbTables.Plus}__BUNDLE")
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
@@ -34,7 +34,7 @@ internal sealed class PluConfiguration : IEntityTypeConfiguration<PluEntity>
         builder.HasOne(e => e.Clip)
             .WithMany()
             .HasForeignKey(plu => plu.ClipId)
-            .HasConstraintName($"FK_{SqlTables.Plus}__CLIP")
+            .HasConstraintName($"FK_{DbTables.Plus}__CLIP")
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
@@ -46,7 +46,7 @@ internal sealed class PluConfiguration : IEntityTypeConfiguration<PluEntity>
         builder.HasOne(e => e.Brand)
             .WithMany()
             .HasForeignKey(plu => plu.BrandId)
-            .HasConstraintName($"FK_{SqlTables.Plus}__BRAND")
+            .HasConstraintName($"FK_{DbTables.Plus}__BRAND")
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
@@ -58,14 +58,14 @@ internal sealed class PluConfiguration : IEntityTypeConfiguration<PluEntity>
         builder.HasOne(e => e.Template)
             .WithMany()
             .HasForeignKey(e => e.TemplateId)
-            .HasConstraintName($"FK_{SqlTables.Plus}__TEMPLATE")
+            .HasConstraintName($"FK_{DbTables.Plus}__TEMPLATE")
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired(false);
 
         #endregion
 
         builder.Property(e => e.Name)
-            .HasColumnName(SqlColumns.Name)
+            .HasColumnName(DbColumns.Name)
             .HasColumnType("varchar(100)")
             .IsRequired();
 

@@ -2,7 +2,7 @@ using Pl.Database.Entities.Ref.Arms;
 
 namespace Pl.Database.Entities.Print.Labels;
 
-public sealed class LabelEntity : EfEntityBase
+public sealed class LabelEntity : EntityBase
 {
     #region FK
 

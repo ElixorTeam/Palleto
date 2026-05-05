@@ -6,12 +6,12 @@ internal sealed class BoxConfiguration : IEntityTypeConfiguration<BoxEntity>
     {
         #region Base
 
-        builder.ToTable(SqlTables.Boxes, DbSchemas.Ref1C);
+        builder.ToTable(DbTables.Boxes, DbSchemas.Ref1C);
 
         #endregion
 
         builder.Property(e => e.Name)
-            .HasColumnName(SqlColumns.Name)
+            .HasColumnName(DbColumns.Name)
             .HasColumnType("varchar(64)")
             .IsRequired();
 

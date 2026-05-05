@@ -4,7 +4,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<UserEntity>
 {
     public void Configure(EntityTypeBuilder<UserEntity> builder)
     {
-        builder.ToTable(SqlTables.Users, DbSchemas.Ref);
+        builder.ToTable(DbTables.Users, DbSchemas.Ref);
 
         builder.HasKey(e => e.Id);
         builder
@@ -15,7 +15,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<UserEntity>
         builder.HasOne(l => l.ProductionSite)
             .WithMany()
             .HasForeignKey("PRODUCTION_SITE_UID")
-            .HasConstraintName($"FK_{SqlTables.Users}__PRODUCTION_SITE")
+            .HasConstraintName($"FK_{DbTables.Users}__PRODUCTION_SITE")
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
     }

@@ -46,6 +46,7 @@ internal sealed class PluApiService(WsDbContext dbContext) : IPluService
         CharacteristicPackageDto clip = new(plu.Clip.Id, plu.Clip.Weight);
 
         if (nesting != null)
+        {
             characteristics.Add(new()
             {
                 Name = "По умолчанию",
@@ -55,6 +56,7 @@ internal sealed class PluApiService(WsDbContext dbContext) : IPluService
                 Clip = clip,
                 Box = new(nesting.Box.Id, nesting.Box.Weight)
             });
+        }
 
         if (plu.IsWeight)
             return characteristics.ToArray();

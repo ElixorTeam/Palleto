@@ -1,6 +1,6 @@
 namespace Pl.Database.Entities.Ref.PalletMen;
 
-public sealed class PalletManEntity : EfEntityBase
+public sealed class PalletManEntity : EntityBase
 {
     public Guid Uid1C { get; set; }
     public string Name { get; set; } = string.Empty;

@@ -1,6 +1,6 @@
 namespace Pl.Database.Shared.Constants;
 
-internal static class SqlTables
+internal static class DbTables
 {
     public const string Nestings = "NESTINGS";
     public const string Characteristics = "CHARACTERISTICS";

@@ -6,7 +6,7 @@ internal sealed class PalletConfiguration : IEntityTypeConfiguration<PalletEntit
     {
         #region Base
 
-        builder.ToTable(SqlTables.Pallets, DbSchemas.Print);
+        builder.ToTable(DbTables.Pallets, DbSchemas.Print);
 
         builder.Property(e => e.Id)
             .HasColumnName("UID")
@@ -14,18 +14,18 @@ internal sealed class PalletConfiguration : IEntityTypeConfiguration<PalletEntit
 
         builder
             .HasKey(e => e.Id)
-            .HasName($"PK_{SqlTables.Pallets}");
+            .HasName($"PK_{DbTables.Pallets}");
 
         builder.HasIndex(e => e.Barcode)
-            .HasDatabaseName($"UQ_{SqlTables.Pallets}__BARCODE")
+            .HasDatabaseName($"UQ_{DbTables.Pallets}__BARCODE")
             .IsUnique();
 
         builder.HasIndex(e => e.Number)
-            .HasDatabaseName($"UQ_{SqlTables.Pallets}__NUMBER")
+            .HasDatabaseName($"UQ_{DbTables.Pallets}__NUMBER")
             .IsUnique();
 
         builder.HasIndex(e => e.Counter)
-            .HasDatabaseName($"UQ_{SqlTables.Pallets}__COUNTER")
+            .HasDatabaseName($"UQ_{DbTables.Pallets}__COUNTER")
             .IsUnique();
 
         #endregion
@@ -35,21 +35,21 @@ internal sealed class PalletConfiguration : IEntityTypeConfiguration<PalletEntit
         builder.HasOne(e => e.Arm)
             .WithMany()
             .HasForeignKey("ARM_UID")
-            .HasConstraintName($"FK_{SqlTables.Pallets}__ARM")
+            .HasConstraintName($"FK_{DbTables.Pallets}__ARM")
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
         builder.HasOne(e => e.PalletMan)
             .WithMany()
             .HasForeignKey("PALLET_MAN_UID")
-            .HasConstraintName($"FK_{SqlTables.Pallets}__PALLET_MAN")
+            .HasConstraintName($"FK_{DbTables.Pallets}__PALLET_MAN")
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
         builder.HasOne(e => e.Warehouse)
             .WithMany()
             .HasForeignKey("WAREHOUSE_UID")
-            .HasConstraintName($"FK_{SqlTables.Pallets}__WAREHOUSE")
+            .HasConstraintName($"FK_{DbTables.Pallets}__WAREHOUSE")
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 

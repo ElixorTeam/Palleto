@@ -6,10 +6,10 @@ internal sealed class LabelConfiguration : IEntityTypeConfiguration<LabelEntity>
     {
         #region Base
 
-        builder.ToTable(SqlTables.Labels, DbSchemas.Print);
+        builder.ToTable(DbTables.Labels, DbSchemas.Print);
 
         builder.HasIndex(e => e.BarcodeTop)
-            .HasDatabaseName($"UQ_{SqlTables.Labels}__BARCODE_TOP")
+            .HasDatabaseName($"UQ_{DbTables.Labels}__BARCODE_TOP")
             .IsUnique();
 
         #endregion
@@ -23,7 +23,7 @@ internal sealed class LabelConfiguration : IEntityTypeConfiguration<LabelEntity>
             .WithMany()
             .HasForeignKey(e => e.PalletId)
             .OnDelete(DeleteBehavior.Cascade)
-            .HasConstraintName($"FK_{SqlTables.Labels}__PALLET")
+            .HasConstraintName($"FK_{DbTables.Labels}__PALLET")
             .IsRequired(false);
 
         //
@@ -35,7 +35,7 @@ internal sealed class LabelConfiguration : IEntityTypeConfiguration<LabelEntity>
             .WithMany()
             .HasForeignKey(e => e.PluId)
             .OnDelete(DeleteBehavior.SetNull)
-            .HasConstraintName($"FK_{SqlTables.Labels}__PLU");
+            .HasConstraintName($"FK_{DbTables.Labels}__PLU");
 
         //
 
@@ -45,7 +45,7 @@ internal sealed class LabelConfiguration : IEntityTypeConfiguration<LabelEntity>
         builder.HasOne(e => e.Arm)
             .WithMany()
             .HasForeignKey(e => e.ArmId)
-            .HasConstraintName($"FK_{SqlTables.Labels}__ARM")
+            .HasConstraintName($"FK_{DbTables.Labels}__ARM")
             .OnDelete(DeleteBehavior.Restrict);
 
         #endregion

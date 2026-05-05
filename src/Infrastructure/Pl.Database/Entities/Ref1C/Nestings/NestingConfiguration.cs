@@ -6,7 +6,7 @@ internal sealed class NestingConfiguration : IEntityTypeConfiguration<NestingEnt
     {
         #region Base
 
-        builder.ToTable(SqlTables.Nestings, DbSchemas.Ref1C);
+        builder.ToTable(DbTables.Nestings, DbSchemas.Ref1C);
 
         #endregion
 
@@ -18,7 +18,7 @@ internal sealed class NestingConfiguration : IEntityTypeConfiguration<NestingEnt
         builder.HasOne(e => e.Box)
             .WithMany()
             .HasForeignKey(nesting => nesting.BoxId)
-            .HasConstraintName($"FK_{SqlTables.Nestings}__BOX")
+            .HasConstraintName($"FK_{DbTables.Nestings}__BOX")
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
@@ -28,7 +28,7 @@ internal sealed class NestingConfiguration : IEntityTypeConfiguration<NestingEnt
             .WithOne()
             .HasForeignKey<NestingEntity>(n => n.Id)
             .HasPrincipalKey<PluEntity>(p => p.Id)
-            .HasConstraintName($"FK_{SqlTables.Nestings}__PLU")
+            .HasConstraintName($"FK_{DbTables.Nestings}__PLU")
             .OnDelete(DeleteBehavior.Cascade);
 
         #endregion

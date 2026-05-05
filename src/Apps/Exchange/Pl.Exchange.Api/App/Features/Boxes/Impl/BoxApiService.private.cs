@@ -11,10 +11,10 @@ internal partial class BoxApiService
     {
         List<BoxEntity> boxes = validDtos.Select(dto => dto.ToEntity(DateTime.Now)).ToList();
 
-        using IDbContextTransaction transaction = DbContext.Database.BeginTransaction();
+        using IDbContextTransaction transaction = dbContext.Database.BeginTransaction();
         try
         {
-            DbContext.BulkInsertOrUpdate(boxes, options =>
+            dbContext.BulkInsertOrUpdate(boxes, options =>
             {
                 options.UseTempDB = true;
                 options.UpdateByProperties = [nameof(BoxEntity.Id)];

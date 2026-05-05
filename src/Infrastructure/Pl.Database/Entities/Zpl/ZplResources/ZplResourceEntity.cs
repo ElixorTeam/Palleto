@@ -2,7 +2,7 @@ using Pl.Shared.Enums;
 
 namespace Pl.Database.Entities.Zpl.ZplResources;
 
-public sealed class ZplResourceEntity : EfEntityBase
+public sealed class ZplResourceEntity : EntityBase
 {
     public string Name { get; set; } = string.Empty;
     public string Zpl { get; set; } = string.Empty;

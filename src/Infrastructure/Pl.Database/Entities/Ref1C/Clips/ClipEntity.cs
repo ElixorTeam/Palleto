@@ -1,6 +1,6 @@
 namespace Pl.Database.Entities.Ref1C.Clips;
 
-public sealed class ClipEntity : EfEntityBase
+public sealed class ClipEntity : EntityBase
 {
     public string Name { get; set; } = string.Empty;
     public decimal Weight { get; set; }

@@ -2,7 +2,7 @@ using Pl.Shared.Enums;
 
 namespace Pl.Database.Entities.Ref.Arms;
 
-public sealed class ArmEntity : EfEntityBase
+public sealed class ArmEntity : EntityBase
 {
     public Guid SystemKey { get; set; }
     public int Number { get; set; }

@@ -6,16 +6,16 @@ internal sealed class ZplResourceConfiguration : IEntityTypeConfiguration<ZplRes
     {
         #region Base
 
-        builder.ToTable(SqlTables.ZplResources, DbSchemas.Zpl);
+        builder.ToTable(DbTables.ZplResources, DbSchemas.Zpl);
 
         builder.HasIndex(e => e.Name)
-            .HasDatabaseName($"UQ_{SqlTables.ZplResources}__NAME")
+            .HasDatabaseName($"UQ_{DbTables.ZplResources}__NAME")
             .IsUnique();
 
         #endregion
 
         builder.Property(e => e.Name)
-            .HasColumnName(SqlColumns.Name)
+            .HasColumnName(DbColumns.Name)
             .HasColumnType("varchar(64)")
             .IsRequired();
 

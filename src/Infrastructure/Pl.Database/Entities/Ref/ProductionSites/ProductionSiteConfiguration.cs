@@ -6,16 +6,16 @@ internal sealed class ProductionSiteConfiguration : IEntityTypeConfiguration<Pro
     {
         #region Base
 
-        builder.ToTable(SqlTables.ProductionSites, DbSchemas.Ref);
+        builder.ToTable(DbTables.ProductionSites, DbSchemas.Ref);
 
         builder.HasIndex(e => e.Name)
-            .HasDatabaseName($"UQ_{SqlTables.ProductionSites}__NAME")
+            .HasDatabaseName($"UQ_{DbTables.ProductionSites}__NAME")
             .IsUnique();
 
         #endregion
 
         builder.Property(e => e.Name)
-            .HasColumnName(SqlColumns.Name)
+            .HasColumnName(DbColumns.Name)
             .HasColumnType("varchar(64)")
             .IsRequired();
 

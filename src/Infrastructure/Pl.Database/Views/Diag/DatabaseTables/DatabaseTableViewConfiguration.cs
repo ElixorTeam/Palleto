@@ -1,12 +1,12 @@
 namespace Pl.Database.Views.Diag.DatabaseTables;
 
-internal sealed class DatabaseTableViewMapConfig : IEntityTypeConfiguration<DatabaseTableView>
+internal sealed class DatabaseTableViewConfiguration : IEntityTypeConfiguration<DatabaseTableView>
 {
     public void Configure(EntityTypeBuilder<DatabaseTableView> builder)
     {
         builder.HasNoKey();
 
-        builder.ToView(SqlViews.DatabaseTables, DbSchemas.Diag);
+        builder.ToView(DbViews.DatabaseTables, DbSchemas.Diag);
 
         builder.Property(e => e.Schema)
             .HasColumnName("SCHEMA");

@@ -1,11 +1,10 @@
 using Pl.Database.Entities.Ref.Arms;
 using Pl.Database.Shared.Interceptors;
-using Pl.Database.Shared.Models;
 using Pl.Database.Shared.Extensions;
 
 namespace Pl.Database;
 
-public class WsDbContext : DbContext
+public class WsDbContext(DbContextOptions<WsDbContext> options) : DbContext(options)
 {
     #region DbSet
 
@@ -33,17 +32,7 @@ public class WsDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        SqlSettings sqlCfg = LoadJsonConfig();
-
-        optionsBuilder.UseSqlServer(sqlCfg.Connection);
         optionsBuilder.AddInterceptors(new ChangeDtInterceptor());
-
-        if (ConfigurationUtils.IsDevelop && sqlCfg.IsShowSql)
-        {
-            optionsBuilder.UseLoggerFactory(
-                LoggerFactory.Create(builder => builder.AddConsole())
-            );
-        }
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -55,16 +44,5 @@ public class WsDbContext : DbContext
         modelBuilder.UseEnumStringConversion();
 
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-    }
-
-    private static SqlSettings LoadJsonConfig()
-    {
-        IConfigurationRoot sqlConfiguration = new ConfigurationBuilder()
-            .AddJsonFile("sql_config.json", optional: false, reloadOnChange: false)
-            .Build();
-
-        SqlSettings sqlSettings = new();
-        sqlConfiguration.GetSection("SqlSettings").Bind(sqlSettings);
-        return sqlSettings;
     }
 }

@@ -2,7 +2,7 @@ using TscZebra.Plugin.Abstractions.Enums;
 
 namespace Pl.Database.Entities.Ref.Printers;
 
-public sealed class PrinterEntity : EfEntityBase
+public sealed class PrinterEntity : EntityBase
 {
     public string Name { get; set; } = string.Empty;
     public PrinterTypes Type { get; set; } = PrinterTypes.Tsc;

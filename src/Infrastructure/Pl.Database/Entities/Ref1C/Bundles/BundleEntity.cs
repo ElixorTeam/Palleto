@@ -1,6 +1,6 @@
 namespace Pl.Database.Entities.Ref1C.Bundles;
 
-public sealed class BundleEntity : EfEntityBase
+public sealed class BundleEntity : EntityBase
 {
     public string Name { get; set; } = string.Empty;
     public decimal Weight { get; set; }

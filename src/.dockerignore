@@ -1,0 +1,10 @@
+﻿**/bin/
+**/obj/
+**/Dockerfile
+**/appsettings.*.json
+
+.dockerignore
+.targets
+.configs
+
+Tests

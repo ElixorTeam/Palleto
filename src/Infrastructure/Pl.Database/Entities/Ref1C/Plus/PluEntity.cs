@@ -1,6 +1,6 @@
 namespace Pl.Database.Entities.Ref1C.Plus;
 
-public sealed class PluEntity : EfEntityBase
+public sealed class PluEntity : EntityBase
 {
     public string Name { get; set; } = string.Empty;
     public string FullName { get; set; } = string.Empty;

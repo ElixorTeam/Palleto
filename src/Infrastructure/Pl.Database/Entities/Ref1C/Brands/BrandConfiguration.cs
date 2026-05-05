@@ -6,16 +6,16 @@ internal sealed class BrandConfiguration : IEntityTypeConfiguration<BrandEntity>
     {
         #region Base
 
-        builder.ToTable(SqlTables.Brands, DbSchemas.Ref1C);
+        builder.ToTable(DbTables.Brands, DbSchemas.Ref1C);
 
         builder.HasIndex(e => e.Name)
-            .HasDatabaseName($"UQ_{SqlTables.Brands}__NAME")
+            .HasDatabaseName($"UQ_{DbTables.Brands}__NAME")
             .IsUnique();
 
         #endregion
 
         builder.Property(e => e.Name)
-            .HasColumnName(SqlColumns.Name)
+            .HasColumnName(DbColumns.Name)
             .HasColumnType("varchar(32)")
             .IsRequired();
     }

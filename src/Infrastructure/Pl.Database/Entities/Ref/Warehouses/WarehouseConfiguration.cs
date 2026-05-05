@@ -6,14 +6,14 @@ internal sealed class WarehouseConfiguration : IEntityTypeConfiguration<Warehous
     {
         #region Base
 
-        builder.ToTable(SqlTables.Warehouses, DbSchemas.Ref);
+        builder.ToTable(DbTables.Warehouses, DbSchemas.Ref);
 
         builder.HasIndex(e => e.Name)
-            .HasDatabaseName($"UQ_{SqlTables.Warehouses}__NAME")
+            .HasDatabaseName($"UQ_{DbTables.Warehouses}__NAME")
             .IsUnique();
 
         builder.HasIndex(e => e.Uid1C)
-            .HasDatabaseName($"UQ_{SqlTables.Warehouses}__{SqlColumns.Uid1C}")
+            .HasDatabaseName($"UQ_{DbTables.Warehouses}__{DbColumns.Uid1C}")
             .IsUnique();
 
         #endregion
@@ -27,18 +27,18 @@ internal sealed class WarehouseConfiguration : IEntityTypeConfiguration<Warehous
         builder.HasOne(e => e.ProductionSite)
             .WithMany()
             .HasForeignKey(e => e.ProductionSiteId)
-            .HasConstraintName($"FK_{SqlTables.Warehouses}__PRODUCTION_SITE")
+            .HasConstraintName($"FK_{DbTables.Warehouses}__PRODUCTION_SITE")
             .OnDelete(DeleteBehavior.Restrict);
 
         #endregion
 
         builder.Property(e => e.Name)
-            .HasColumnName(SqlColumns.Name)
+            .HasColumnName(DbColumns.Name)
             .HasColumnType("varchar(32)")
             .IsRequired();
 
         builder.Property(e => e.Uid1C)
-            .HasColumnName(SqlColumns.Uid1C)
+            .HasColumnName(DbColumns.Uid1C)
             .IsRequired();
     }
 }

@@ -1,4 +1,5 @@
 ﻿@namespace Pl.Components.Components
+@inherits PlComponentBase
 
 @if (List is { AutoSeparator: true } && _itemIndex > 1)
 {
@@ -17,9 +18,6 @@
   public PlBreadcrumbList? List { get; set; }
 
   [Parameter]
-  public string Class { get; set; } = string.Empty;
-
-  [Parameter]
   public RenderFragment? ChildContent { get; set; }
 
   protected override void OnInitialized()
@@ -30,5 +28,5 @@
     }
   }
 
-  private string CssClass => ClassNames.Cn("inline-flex items-center gap-1.5", Class);
+  protected override string CssClass => ClassNames.Cn("inline-flex items-center gap-1.5", Class);
 }

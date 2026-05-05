@@ -6,7 +6,7 @@ internal sealed class LabelZplConfiguration : IEntityTypeConfiguration<LabelZplE
     {
         #region Base
 
-        builder.ToTable(SqlTables.LabelsZpl, DbSchemas.Print);
+        builder.ToTable(DbTables.LabelsZpl, DbSchemas.Print);
 
         builder.HasKey(e => e.Id);
         builder
@@ -22,7 +22,7 @@ internal sealed class LabelZplConfiguration : IEntityTypeConfiguration<LabelZplE
             .WithOne(l => l.Zpl)
             .HasForeignKey<LabelZplEntity>(n => n.Id)
             .HasPrincipalKey<LabelEntity>(p => p.Id)
-            .HasConstraintName($"FK_{SqlTables.LabelsZpl}__LABEL")
+            .HasConstraintName($"FK_{DbTables.LabelsZpl}__LABEL")
             .OnDelete(DeleteBehavior.Cascade);
 
         #endregion

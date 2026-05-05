@@ -29,7 +29,7 @@ internal class ChangeDtInterceptor : SaveChangesInterceptor
         {
             Type entityType = entityEntry.Entity.GetType();
 
-            PropertyInfo? changeDtProperty = entityType.GetProperty(nameof(SqlColumns.ChangeDt));
+            PropertyInfo? changeDtProperty = entityType.GetProperty(nameof(DbColumns.ChangeDt));
             if (changeDtProperty?.CanWrite == true)
                 changeDtProperty.SetValue(entityEntry.Entity, DateTime.Now);
         }

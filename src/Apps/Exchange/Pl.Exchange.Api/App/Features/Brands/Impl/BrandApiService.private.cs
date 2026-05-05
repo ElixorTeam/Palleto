@@ -36,7 +36,7 @@ internal partial class BrandApiService
     {
         List<BrandEntity> brands = validDtos.Select(dto => dto.ToEntity(DateTime.Now)).ToList();
 
-        using IDbContextTransaction transaction = DbContext.Database.BeginTransaction();
+        using IDbContextTransaction transaction = dbContext.Database.BeginTransaction();
         try
         {
             DbContext.BulkInsertOrUpdate(brands, options =>

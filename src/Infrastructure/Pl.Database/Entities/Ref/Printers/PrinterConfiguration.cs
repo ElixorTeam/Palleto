@@ -6,14 +6,14 @@ internal sealed class PrinterConfiguration : IEntityTypeConfiguration<PrinterEnt
     {
         #region Base
 
-        builder.ToTable(SqlTables.Printers, DbSchemas.Ref);
+        builder.ToTable(DbTables.Printers, DbSchemas.Ref);
 
         builder.HasIndex(e => e.Name)
-            .HasDatabaseName($"UQ_{SqlTables.Printers}__NAME")
+            .HasDatabaseName($"UQ_{DbTables.Printers}__NAME")
             .IsUnique();
 
         builder.HasIndex(e => e.Ip)
-            .HasDatabaseName($"UQ_{SqlTables.Printers}__IP")
+            .HasDatabaseName($"UQ_{DbTables.Printers}__IP")
             .IsUnique();
 
         #endregion
@@ -26,13 +26,13 @@ internal sealed class PrinterConfiguration : IEntityTypeConfiguration<PrinterEnt
         builder.HasOne(e => e.ProductionSite)
             .WithMany()
             .HasForeignKey(plu => plu.ProductionSiteId)
-            .HasConstraintName($"FK_{SqlTables.Printers}__PRODUCTION_SITE")
+            .HasConstraintName($"FK_{DbTables.Printers}__PRODUCTION_SITE")
             .OnDelete(DeleteBehavior.Restrict);
 
         #endregion
 
         builder.Property(e => e.Name)
-            .HasColumnName(SqlColumns.Name)
+            .HasColumnName(DbColumns.Name)
             .HasColumnType("varchar(16)")
             .IsRequired();
 

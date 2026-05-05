@@ -1,6 +1,6 @@
 namespace Pl.Database.Entities.Ref1C.Nestings;
 
-public sealed class NestingEntity : EfEntityBase
+public sealed class NestingEntity : EntityBase
 {
     public short BundleCount { get; set; }
 

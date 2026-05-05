@@ -6,18 +6,18 @@ internal sealed class ArmConfiguration : IEntityTypeConfiguration<ArmEntity>
     {
         #region Base
 
-        builder.ToTable(SqlTables.Arms, DbSchemas.Ref);
+        builder.ToTable(DbTables.Arms, DbSchemas.Ref);
 
         builder.HasIndex(e => e.Name)
-            .HasDatabaseName($"UQ_{SqlTables.Arms}__NAME")
+            .HasDatabaseName($"UQ_{DbTables.Arms}__NAME")
             .IsUnique();
 
         builder.HasIndex(e => e.SystemKey)
-            .HasDatabaseName($"UQ_{SqlTables.Arms}__SYSTEM_KEY")
+            .HasDatabaseName($"UQ_{DbTables.Arms}__SYSTEM_KEY")
             .IsUnique();
 
         builder.HasIndex(e => e.Number)
-            .HasDatabaseName($"UQ_{SqlTables.Arms}__NUMBER")
+            .HasDatabaseName($"UQ_{DbTables.Arms}__NUMBER")
             .IsUnique();
 
         #endregion
@@ -27,14 +27,14 @@ internal sealed class ArmConfiguration : IEntityTypeConfiguration<ArmEntity>
         builder.HasOne(l => l.Warehouse)
             .WithMany()
             .HasForeignKey("WAREHOUSE_UID")
-            .HasConstraintName($"FK_{SqlTables.Arms}__WAREHOUSE")
+            .HasConstraintName($"FK_{DbTables.Arms}__WAREHOUSE")
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(l => l.Printer)
             .WithMany()
             .HasForeignKey("PRINTER_UID")
-            .HasConstraintName($"FK_{SqlTables.Arms}__PRINTER")
+            .HasConstraintName($"FK_{DbTables.Arms}__PRINTER")
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 

@@ -12,20 +12,20 @@ internal static class ModelBuilderExtensions
         {
             const string getDateCmd = "GETUTCDATE()";
             ForEachEntity(modelBuilder, entity => {
-                IMutableProperty? createDtProperty = entity.FindProperty(nameof(SqlColumns.CreateDt)) ?? null;
-                IMutableProperty? changeDtProperty = entity.FindProperty(nameof(SqlColumns.ChangeDt)) ?? null;
+                IMutableProperty? createDtProperty = entity.FindProperty(nameof(DbColumns.CreateDt)) ?? null;
+                IMutableProperty? changeDtProperty = entity.FindProperty(nameof(DbColumns.ChangeDt)) ?? null;
 
                 if (createDtProperty != null)
                 {
                     createDtProperty.ValueGenerated = ValueGenerated.OnAdd;
-                    createDtProperty.SetColumnName(SqlColumns.CreateDt);
+                    createDtProperty.SetColumnName(DbColumns.CreateDt);
                     createDtProperty.SetBeforeSaveBehavior(PropertySaveBehavior.Ignore);
                     createDtProperty.SetDefaultValueSql(getDateCmd);
                 }
 
                 if (changeDtProperty != null)
                 {
-                    changeDtProperty.SetColumnName(SqlColumns.ChangeDt);
+                    changeDtProperty.SetColumnName(DbColumns.ChangeDt);
                     changeDtProperty.SetDefaultValueSql(getDateCmd);
                 }
             });
