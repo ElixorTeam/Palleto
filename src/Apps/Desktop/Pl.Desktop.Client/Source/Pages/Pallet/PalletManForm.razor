@@ -1,3 +1,5 @@
+@using Pl.Components.Components
+@using ButtonType=Pl.Components.Components.ButtonType
 @using vNext.BlazorComponents.FluentValidation
 
 <div class="rounded-lg overflow-hidden max-w-sm p-6 border shadow-xs bg-background w-full">
@@ -22,9 +24,9 @@
       <FieldValidation For="@(() => Model.Password)" />
     </FormFieldWrapper>
     <div class="w-full flex justify-end">
-      <Button Type="@ButtonType.Submit" Class="!mt-4" Disabled="@IsLoading">
+      <PlButton Type="@ButtonType.Submit" Class="!mt-4" Disabled="@IsLoading">
         @Localizer["BtnLogIn"]
-      </Button>
+      </PlButton>
     </div>
   </EditForm>
 </div>

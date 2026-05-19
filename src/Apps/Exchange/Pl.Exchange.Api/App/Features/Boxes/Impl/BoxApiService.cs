@@ -4,8 +4,8 @@ using Pl.Exchange.Api.App.Features.Boxes.Dto;
 
 namespace Pl.Exchange.Api.App.Features.Boxes.Impl;
 
-internal sealed partial class BoxApiService(BoxDtoValidator validator, ILogger<BoxApiService> logger, WsDbContext context) :
-    BaseService<BoxDto>(validator, context), IBoxService
+internal sealed partial class BoxApiService(BoxDtoValidator validator, ILogger<BoxApiService> logger, WsDbContext dbContext) :
+    BaseService<BoxDto>(validator), IBoxService
 {
     public ResponseDto Load(HashSet<BoxDto> dtos)
     {

@@ -6,7 +6,7 @@ using Pl.Database.Common;
 namespace Pl.Exchange.Api.App.Common;
 
 // ReSharper disable once SuggestBaseTypeForParameterInConstructor
-internal abstract class BaseService<TDto>(IValidator<TDto> validator, WsDbContext dbContext) where TDto : BaseDto
+internal abstract class BaseService<TDto>(IValidator<TDto> validator) where TDto : BaseDto
 {
     private readonly IValidator _validator = validator;
     protected readonly ResponseDto OutputDto = new();

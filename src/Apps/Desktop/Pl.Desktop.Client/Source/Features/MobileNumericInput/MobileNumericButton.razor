@@ -1,6 +1,7 @@
-<Button Variant="ButtonVariantType.Secondary" OnClick="@OnClick" Class="h-16 text-xl border">
+@using Pl.Components.Components
+<PlButton Variant="ButtonVariant.Secondary" OnClick="@OnClick" Class="h-16 text-xl border">
   @Label
-</Button>
+</PlButton>
 
 @code {
   [Parameter] public string Label { get; set; } = string.Empty;

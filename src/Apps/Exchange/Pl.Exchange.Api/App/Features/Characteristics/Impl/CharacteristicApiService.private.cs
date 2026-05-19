@@ -16,7 +16,7 @@ internal partial class CharacteristicApiService
         HashSet<Guid> characteristicUids = dtos.Select(x => x.Uid).ToHashSet();
         HashSet<short> bundleCounts = dtos.Select(x => x.BundleCount).ToHashSet();
 
-        List<GroupedCharacteristic> existingPairs = DbContext.Characteristics
+        List<GroupedCharacteristic> existingPairs = dbContext.Characteristics
             .Where(i =>
                 !characteristicUids.Contains(i.Id) &&
                 boxUids.Contains(i.BoxId) &&
@@ -51,9 +51,9 @@ internal partial class CharacteristicApiService
     {
         HashSet<Guid> charUids = dtos.Select(x => x.Uid).ToHashSet();
 
-        List<Guid> weightPlu = DbContext.Characteristics
+        List<Guid> weightPlu = dbContext.Characteristics
             .Join(
-                DbContext.Plus, characteristic => characteristic.PluId, plu => plu.Id,
+            dbContext.Plus, characteristic => characteristic.PluId, plu => plu.Id,
                 (characteristic, plu) => new { Characteristic = characteristic, Plu = plu }
             )
             .Where(pair => charUids.Contains(pair.Characteristic.Id) && pair.Plu.IsWeight)
@@ -74,10 +74,10 @@ internal partial class CharacteristicApiService
     {
         List<CharacteristicEntity> characteristics = dtos.Select(i => i.ToEntity(DateTime.Now)).ToList();
 
-        using IDbContextTransaction transaction = DbContext.Database.BeginTransaction();
+        using IDbContextTransaction transaction = dbContext.Database.BeginTransaction();
         try
         {
-            DbContext.BulkInsertOrUpdate(characteristics, options =>
+            dbContext.BulkInsertOrUpdate(characteristics, options =>
             {
                 options.UseTempDB = true;
                 options.UpdateByProperties = [nameof(CharacteristicEntity.Id)];
@@ -105,10 +105,10 @@ internal partial class CharacteristicApiService
 
         HashSet<Guid> deletedUid = characteristicToDelete.ConvertAll(i => i.Id).ToHashSet();
 
-        using IDbContextTransaction transaction = DbContext.Database.BeginTransaction();
+        using IDbContextTransaction transaction = dbContext.Database.BeginTransaction();
         try
         {
-            DbContext.BulkDelete(characteristicToDelete, config => config.UseTempDB = true);
+            dbContext.BulkDelete(characteristicToDelete, config => config.UseTempDB = true);
             transaction.Commit();
             OutputDto.AddSuccess(deletedUid);
         }

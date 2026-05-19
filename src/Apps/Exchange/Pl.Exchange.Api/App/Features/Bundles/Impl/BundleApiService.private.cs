@@ -11,10 +11,10 @@ internal partial class BundleApiService
     {
         List<BundleEntity> bundles = validDtos.Select(dto => dto.ToEntity(DateTime.Now)).ToList();
 
-        using IDbContextTransaction transaction = DbContext.Database.BeginTransaction();
+        using IDbContextTransaction transaction = dbContext.Database.BeginTransaction();
         try
         {
-            DbContext.BulkInsertOrUpdate(bundles, options =>
+            dbContext.BulkInsertOrUpdate(bundles, options =>
             {
                 options.UseTempDB = true;
                 options.UpdateByProperties = [nameof(BundleEntity.Id)];

@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Pl.Database;
 using Pl.Exchange.Api.App.Features.Characteristics.Common;
 using Pl.Exchange.Api.App.Features.Characteristics.Impl.Models;
 
@@ -5,7 +7,8 @@ namespace Pl.Exchange.Api.App.Features.Characteristics.Impl;
 
 using GroupedCharacteristicValidator=Models.GroupedCharacteristicValidator;
 
-internal sealed partial class CharacteristicApiService(GroupedCharacteristicValidator validator, ILogger<CharacteristicApiService> logger) :
+internal sealed partial class CharacteristicApiService(
+    GroupedCharacteristicValidator validator, ILogger<CharacteristicApiService> logger,  WsDbContext dbContext) :
     BaseService<GroupedCharacteristic>(validator), ICharacteristicService
 {
     public ResponseDto Load(HashSet<GroupedCharacteristic> dtos)
@@ -24,8 +27,8 @@ internal sealed partial class CharacteristicApiService(GroupedCharacteristicVali
         ResolveUniqueDb(dtos);
         ResolveIsWeightDb(dtos);
 
-        ResolveNotExistsFkDb(dtos, DbContext.Plus, dto => dto.PluUid, "Плу - не найдена");
-        ResolveNotExistsFkDb(dtos, DbContext.Boxes, dto => dto.BoxUid, "Коробка - не найдена");
+        ResolveNotExistsFkDb(dtos, dbContext.Plus, dto => dto.PluUid, "Плу - не найдена");
+        ResolveNotExistsFkDb(dtos, dbContext.Boxes, dto => dto.BoxUid, "Коробка - не найдена");
 
         SaveCharacteristics(dtos);
         return OutputDto;

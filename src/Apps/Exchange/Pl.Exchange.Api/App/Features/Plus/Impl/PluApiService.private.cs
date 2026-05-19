@@ -17,7 +17,7 @@ internal sealed partial class PluApiService
         HashSet<short> numbers = dtos.Select(dto => dto.Number).ToHashSet();
         HashSet<Guid> plusUid = dtos.Select(dto => dto.Uid).ToHashSet();
 
-        List<short> existingNumbers = DbContext.Plus
+        List<short> existingNumbers = dbContext.Plus
             .Where(i => !plusUid.Contains(i.Id) && numbers.Contains(i.Number))
             .Select(i => i.Number)
             .ToList();
@@ -45,10 +45,10 @@ internal sealed partial class PluApiService
     {
         List<PluEntity> plus = validDtos.Select(dto => dto.ToPluEntity(DateTime.Now)).ToList();
 
-        using IDbContextTransaction transaction = DbContext.Database.BeginTransaction();
+        using IDbContextTransaction transaction = dbContext.Database.BeginTransaction();
         try
         {
-            DbContext.BulkInsertOrUpdate(plus, options =>
+            dbContext.BulkInsertOrUpdate(plus, options =>
             {
                 options.UseTempDB = true;
                 options.UpdateByProperties = [nameof(PluEntity.Id)];
@@ -73,7 +73,7 @@ internal sealed partial class PluApiService
 
         if (uidToDelete.Count == 0) return;
 
-        IDbContextTransaction transaction = DbContext.Database.BeginTransaction();
+        IDbContextTransaction transaction = dbContext.Database.BeginTransaction();
 
         try
         {
@@ -85,7 +85,7 @@ internal sealed partial class PluApiService
                 UPDATE [PRINT].[LABELS] SET PLU_UID = NULL WHERE PLU_UID IN ({inClause});
                 DELETE FROM [REF_1C].[PLUS] WHERE UID IN ({inClause});
             ";
-            DbContext.Database.ExecuteSqlRaw(sql, parameters.ToArray());
+            dbContext.Database.ExecuteSqlRaw(sql, parameters.ToArray());
 
             transaction.Commit();
             OutputDto.AddSuccess(uidToDelete);
@@ -106,10 +106,10 @@ internal sealed partial class PluApiService
     {
         List<NestingEntity> nestings = validDtos.Select(dto => dto.ToNestingEntity(DateTime.Now)).ToList();
 
-        using IDbContextTransaction transaction = DbContext.Database.BeginTransaction();
+        using IDbContextTransaction transaction = dbContext.Database.BeginTransaction();
         try
         {
-            DbContext.BulkInsertOrUpdate(nestings, options =>
+            dbContext.BulkInsertOrUpdate(nestings, options =>
             {
                 options.UseTempDB = true;
                 options.UpdateByProperties = [nameof(NestingEntity.Id)];

@@ -11,10 +11,10 @@ internal partial class ClipApiService
     {
         List<ClipEntity> clips = validDtos.Select(dto => dto.ToEntity(DateTime.Now)).ToList();
 
-        using IDbContextTransaction transaction = DbContext.Database.BeginTransaction();
+        using IDbContextTransaction transaction = dbContext.Database.BeginTransaction();
         try
         {
-            DbContext.BulkInsertOrUpdate(clips, options =>
+            dbContext.BulkInsertOrUpdate(clips, options =>
             {
                 options.UseTempDB = true;
                 options.UpdateByProperties = [nameof(ClipEntity.Id)];

@@ -1,5 +1,7 @@
+@using Pl.Components.Components
 @using vNext.BlazorComponents.FluentValidation
 @using Pl.Desktop.Models.Features.Plus.Piece.Output
+@using ButtonType=Pl.Components.Components.ButtonType
 
 <EditForm
   Model="FormModel"
@@ -42,14 +44,14 @@
     <FieldValidation For="@(() => FormModel.Nesting)" />
   </FormFieldWrapper>
   <div class="w-full flex justify-end gap-2 py-2">
-    <Button
+    <PlButton
       OnClick="@OnCancelAction"
-      Variant="ButtonVariantType.Outline"
+      Variant="ButtonVariant.Outline"
     >
       @Localizer["BtnCancel"]
-    </Button>
-    <Button Type="@ButtonType.Submit">
+    </PlButton>
+    <PlButton Type="@ButtonType.Submit">
       @Localizer["BtnNext"]
-    </Button>
+    </PlButton>
   </div>
 </EditForm>

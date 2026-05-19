@@ -1,9 +1,10 @@
+using Pl.Database;
 using Pl.Exchange.Api.App.Features.Plus.Common;
 using Pl.Exchange.Api.App.Features.Plus.Dto;
 
 namespace Pl.Exchange.Api.App.Features.Plus.Impl;
 
-internal sealed partial class PluApiService(PluDtoValidator validator, ILogger<PluApiService> logger) : BaseService<PluDto>(validator), IPluService
+internal sealed partial class PluApiService(PluDtoValidator validator, ILogger<PluApiService> logger, WsDbContext dbContext) : BaseService<PluDto>(validator), IPluService
 {
     public ResponseDto Load(HashSet<PluDto> dtos)
     {
@@ -18,10 +19,10 @@ internal sealed partial class PluApiService(PluDtoValidator validator, ILogger<P
 
         SetDefaultFk(dtos);
 
-        ResolveNotExistsFkDb(dtos, DbContext.Boxes, dto => dto.BoxUid, "Коробка - не найдена");
-        ResolveNotExistsFkDb(dtos, DbContext.Clips, dto => dto.ClipUid, "Клипса - не найдена");
-        ResolveNotExistsFkDb(dtos, DbContext.Brands, dto => dto.BrandUid, "Бренд - не найден");
-        ResolveNotExistsFkDb(dtos, DbContext.Bundles, dto => dto.BundleUid, "Пакет - не найден");
+        ResolveNotExistsFkDb(dtos, dbContext.Boxes, dto => dto.BoxUid, "Коробка - не найдена");
+        ResolveNotExistsFkDb(dtos, dbContext.Clips, dto => dto.ClipUid, "Клипса - не найдена");
+        ResolveNotExistsFkDb(dtos, dbContext.Brands, dto => dto.BrandUid, "Бренд - не найден");
+        ResolveNotExistsFkDb(dtos, dbContext.Bundles, dto => dto.BundleUid, "Пакет - не найден");
 
         SavePlus(dtos);
         return OutputDto;

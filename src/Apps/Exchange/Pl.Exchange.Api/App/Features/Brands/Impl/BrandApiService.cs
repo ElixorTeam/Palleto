@@ -4,8 +4,8 @@ using Pl.Exchange.Api.App.Features.Brands.Dto;
 
 namespace Pl.Exchange.Api.App.Features.Brands.Impl;
 
-internal sealed partial class BrandApiService(BrandDtoValidator validator, ILogger<BrandApiService> logger, WsDbContext context)
-    : BaseService<BrandDto>(validator, context), IBrandService
+internal sealed partial class BrandApiService(BrandDtoValidator validator, ILogger<BrandApiService> logger, WsDbContext dbContext)
+    : BaseService<BrandDto>(validator), IBrandService
 {
     public ResponseDto Load(HashSet<BrandDto> dtos)
     {

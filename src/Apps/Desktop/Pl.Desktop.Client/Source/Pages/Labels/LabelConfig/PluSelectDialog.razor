@@ -1,12 +1,13 @@
+@using Pl.Components.Components
 <Dialog Class="max-w-screen-md select-none">
   <DialogHeader>
-    <Button
-      Variant="ButtonVariantType.Secondary"
+    <PlButton
+      Variant="ButtonVariant.Secondary"
       Class="disabled:!opacity-100"
       Disabled
     >
       @Localizer["PluSelectHeader"]
-    </Button>
+    </PlButton>
   </DialogHeader>
   <PluDataGrid
     Items="Content.Data"

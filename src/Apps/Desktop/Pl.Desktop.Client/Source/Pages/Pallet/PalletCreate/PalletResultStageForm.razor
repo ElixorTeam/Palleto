@@ -1,5 +1,6 @@
 @using Blazor.Heroicons.Outline
 @using Microsoft.FluentUI.AspNetCore.Components.Extensions
+@using Pl.Components.Components
 
 <div class="max-w-lg border bg-background mt-6 mb-2 rounded-md p-4 mx-auto w-full grid grid-cols-[auto_1fr] gap-2">
 
@@ -53,14 +54,14 @@
 </div>
 
 <div class="w-full flex max-w-sm mx-auto justify-end gap-2 pb-2 pt-4">
-  <Button
+  <PlButton
     OnClick="@OnCancelAction"
-    Variant="ButtonVariantType.Outline"
+    Variant="ButtonVariant.Outline"
     Disabled="@IsLoading"
   >
     @Localizer["BtnBack"]
-  </Button>
-  <Button OnClick="@(() => CreatePallet())" Disabled="@(IsLoading)">
+  </PlButton>
+  <PlButton OnClick="@(() => CreatePallet())" Disabled="@(IsLoading)">
     @Localizer["BtnCreate"]
-  </Button>
+  </PlButton>
 </div>

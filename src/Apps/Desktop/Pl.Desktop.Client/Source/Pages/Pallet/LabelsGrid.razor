@@ -1,5 +1,6 @@
 @using Blazor.Heroicons
 @using Blazor.Heroicons.Mini
+@using Pl.Components.Components
 @using Pl.Desktop.Client.Source.Features.ErrorBoundaries
 
 <PrinterErrorBoundary>
@@ -7,19 +8,19 @@
     <div class="w-full flex items-center justify-between">
       <h3 class="font-medium text-xl pb-1">@Localizer["ColPrint"]</h3>
       <div class="flex gap-2 items-center">
-        <Button
-          Variant="ButtonVariantType.Outline"
+        <PlButton
+          Variant="ButtonVariant.Outline"
           OnClick="@PrintLabelsAsync"
           Disabled="@(!SelectedItems.Any() || IsPrinting)"
         >
           <PrinterIcon class="size-4 mr-2" />
           @Localizer["BtnSelectedLabelsPrinting"]
-        </Button>
+        </PlButton>
         <UseEndpoint Endpoint="@PalletEndpoints.PalletLabelsEndpoint" Arg="@new(Pallet.Id)" Context="labelsQuery">
-          <Button OnClick="@PrintPalletCard">
+          <PlButton OnClick="@PrintPalletCard">
             <DocumentTextIcon class="size-4 mr-2" />
             @Localizer["BtnPrintPC"]
-          </Button>
+          </PlButton>
         </UseEndpoint>
       </div>
     </div>
