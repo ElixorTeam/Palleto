@@ -6,84 +6,81 @@ namespace Pl.Database.Shared.Extensions;
 
 internal static class ModelBuilderExtensions
 {
-    extension(ModelBuilder modelBuilder)
+    public static void SetAutoCreateOrChangeDt(this ModelBuilder modelBuilder)
     {
-        public void SetAutoCreateOrChangeDt()
-        {
-            const string getDateCmd = "GETUTCDATE()";
-            ForEachEntity(modelBuilder, entity => {
-                IMutableProperty? createDtProperty = entity.FindProperty(nameof(DbColumns.CreateDt)) ?? null;
-                IMutableProperty? changeDtProperty = entity.FindProperty(nameof(DbColumns.ChangeDt)) ?? null;
+        const string getDateCmd = "GETUTCDATE()";
+        ForEachEntity(modelBuilder, entity => {
+            IMutableProperty? createDtProperty = entity.FindProperty(nameof(DbColumns.CreateDt)) ?? null;
+            IMutableProperty? changeDtProperty = entity.FindProperty(nameof(DbColumns.ChangeDt)) ?? null;
 
-                if (createDtProperty != null)
-                {
-                    createDtProperty.ValueGenerated = ValueGenerated.OnAdd;
-                    createDtProperty.SetColumnName(DbColumns.CreateDt);
-                    createDtProperty.SetBeforeSaveBehavior(PropertySaveBehavior.Ignore);
-                    createDtProperty.SetDefaultValueSql(getDateCmd);
-                }
+            if (createDtProperty != null)
+            {
+                createDtProperty.ValueGenerated = ValueGenerated.OnAdd;
+                createDtProperty.SetColumnName(DbColumns.CreateDt);
+                createDtProperty.SetBeforeSaveBehavior(PropertySaveBehavior.Ignore);
+                createDtProperty.SetDefaultValueSql(getDateCmd);
+            }
 
-                if (changeDtProperty != null)
-                {
-                    changeDtProperty.SetColumnName(DbColumns.ChangeDt);
-                    changeDtProperty.SetDefaultValueSql(getDateCmd);
-                }
-            });
-        }
+            if (changeDtProperty != null)
+            {
+                changeDtProperty.SetColumnName(DbColumns.ChangeDt);
+                changeDtProperty.SetDefaultValueSql(getDateCmd);
+            }
+        });
+    }
 
-        public void UseIpAddressConversion()
-        {
-            ForEachEntity(modelBuilder, entity => {
-                IEnumerable<PropertyInfo> props = entity.ClrType.GetProperties()
-                    .Where(p => p.PropertyType == typeof(IPAddress));
+    public static void UseIpAddressConversion(this ModelBuilder modelBuilder)
+    {
+        ForEachEntity(modelBuilder, entity => {
+            IEnumerable<PropertyInfo> props = entity.ClrType.GetProperties()
+                .Where(p => p.PropertyType == typeof(IPAddress));
 
-                foreach (PropertyInfo property in props)
-                {
-                    modelBuilder.Entity(entity.Name)
-                        .Property(property.Name)
-                        .HasConversion(new IpAddressToIPv4StringConverter());
-                }
-            });
-        }
+            foreach (PropertyInfo property in props)
+            {
+                modelBuilder.Entity(entity.Name)
+                    .Property(property.Name)
+                    .HasConversion(new IpAddressToIPv4StringConverter());
+            }
+        });
+    }
 
-        public void UseDateTimeConversion()
-        {
-            ForEachEntity(modelBuilder, entity => {
-                IEnumerable<PropertyInfo> dateTimeProperties = entity.ClrType.GetProperties()
-                    .Where(p => p.PropertyType == typeof(DateTime) || p.PropertyType == typeof(DateTime?));
+    public static void UseDateTimeConversion(this ModelBuilder modelBuilder)
+    {
+        ForEachEntity(modelBuilder, entity => {
+            IEnumerable<PropertyInfo> dateTimeProperties = entity.ClrType.GetProperties()
+                .Where(p => p.PropertyType == typeof(DateTime) || p.PropertyType == typeof(DateTime?));
 
-                foreach (PropertyInfo property in dateTimeProperties)
-                {
-                    modelBuilder.Entity(entity.Name).Property(property.Name)
-                        .HasConversion(new UtcDateTimeConverter());
-                }
-            });
-        }
+            foreach (PropertyInfo property in dateTimeProperties)
+            {
+                modelBuilder.Entity(entity.Name).Property(property.Name)
+                    .HasConversion(new UtcDateTimeConverter());
+            }
+        });
+    }
 
-        public void UseEnumStringConversion()
-        {
-            ForEachEntity(modelBuilder, entity => {
-                IEnumerable<PropertyInfo> enumProps = entity.ClrType.GetProperties()
-                    .Where(p => p.PropertyType.IsEnum);
+    public static void UseEnumStringConversion(this ModelBuilder modelBuilder)
+    {
+        ForEachEntity(modelBuilder, entity => {
+            IEnumerable<PropertyInfo> enumProps = entity.ClrType.GetProperties()
+                .Where(p => p.PropertyType.IsEnum);
 
-                foreach (PropertyInfo property in enumProps)
-                {
-                    Type enumType = property.PropertyType;
+            foreach (PropertyInfo property in enumProps)
+            {
+                Type enumType = property.PropertyType;
 
-                    Type converterType = typeof(EnumToStringConverter<>)
-                        .MakeGenericType(enumType);
+                Type converterType = typeof(EnumToStringConverter<>)
+                    .MakeGenericType(enumType);
 
-                    ValueConverter converter = (ValueConverter)Activator.CreateInstance(converterType)!;
+                ValueConverter converter = (ValueConverter)Activator.CreateInstance(converterType)!;
 
-                    int maxLength = Enum.GetNames(enumType).Max(x => x.Length);
+                int maxLength = Enum.GetNames(enumType).Max(x => x.Length);
 
-                    modelBuilder.Entity(entity.Name)
-                        .Property(property.Name)
-                        .HasConversion(converter)
-                        .HasColumnType($"varchar({maxLength})");
-                }
-            });
-        }
+                modelBuilder.Entity(entity.Name)
+                    .Property(property.Name)
+                    .HasConversion(converter)
+                    .HasColumnType($"varchar({maxLength})");
+            }
+        });
     }
 
     private static void ForEachEntity(ModelBuilder modelBuilder, Action<IMutableEntityType> action)

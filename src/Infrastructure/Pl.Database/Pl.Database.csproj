@@ -23,6 +23,4 @@
     <ItemGroup Label="Need folders">
         <Folder Include="Migrations\" />
     </ItemGroup>
-
-    <Import Project="..\..\.targets\SqlSettings.targets" />
 </Project>

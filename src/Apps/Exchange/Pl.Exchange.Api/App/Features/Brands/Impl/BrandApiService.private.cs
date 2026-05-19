@@ -14,7 +14,7 @@ internal partial class BrandApiService
         HashSet<string> namesList = dtos.Select(dto => dto.Name).ToHashSet();
         HashSet<Guid> uidList = dtos.Select(dto => dto.Uid).ToHashSet();
 
-        HashSet<string> existingNames = DbContext.Brands
+        HashSet<string> existingNames = dbContext.Brands
             .Where(brand =>
                 namesList.Any(name => name.Equals(brand.Name)) &&
                 !uidList.Any(uid => uid.Equals(brand.Id))
@@ -39,7 +39,7 @@ internal partial class BrandApiService
         using IDbContextTransaction transaction = dbContext.Database.BeginTransaction();
         try
         {
-            DbContext.BulkInsertOrUpdate(brands, options =>
+            dbContext.BulkInsertOrUpdate(brands, options =>
             {
                 options.UseTempDB = true;
                 options.UpdateByProperties = [nameof(BrandEntity.Id)];

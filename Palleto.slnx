@@ -4,65 +4,63 @@
     <BuildType Name="Release" />
     <Platform Name="x64" />
   </Configurations>
-  <Folder Name="/Apps/" />
   <Folder Name="/Apps/1C/">
-    <Project Path="Src/Apps/Exchange/Pl.Exchange.Api/Pl.Exchange.Api.csproj">
+    <Project Path="src/Apps/Exchange/Pl.Exchange.Api/Pl.Exchange.Api.csproj">
       <Platform Project="x64" />
     </Project>
   </Folder>
-  <Folder Name="/Apps/Devices/" />
   <Folder Name="/Apps/Devices/Desktop/">
-    <Project Path="Src/Apps/Desktop/Pl.Desktop.Api/Pl.Desktop.Api.csproj">
+    <Project Path="src/Apps/Desktop/Pl.Desktop.Api/Pl.Desktop.Api.csproj">
       <Platform Project="x64" />
     </Project>
-    <Project Path="Src/Apps/Desktop/Pl.Desktop.Client/Pl.Desktop.Client.csproj">
+    <Project Path="src/Apps/Desktop/Pl.Desktop.Client/Pl.Desktop.Client.csproj">
       <Platform Project="x64" />
     </Project>
-    <Project Path="Src/Apps/Desktop/Pl.Desktop.Models/Pl.Desktop.Models.csproj">
+    <Project Path="src/Apps/Desktop/Pl.Desktop.Models/Pl.Desktop.Models.csproj">
       <Platform Project="x64" />
     </Project>
   </Folder>
   <Folder Name="/Apps/Devices/Web/">
-    <Project Path="Src/Apps/Web/Pl.Admin.Api/Pl.Admin.Api.csproj">
+    <Project Path="src/Apps/Web/Pl.Admin.Api/Pl.Admin.Api.csproj">
       <Platform Project="x64" />
     </Project>
-    <Project Path="Src/Apps/Web/Pl.Admin.Client/Pl.Admin.Client.csproj">
+    <Project Path="src/Apps/Web/Pl.Admin.Client/Pl.Admin.Client.csproj">
       <Platform Project="x64" />
     </Project>
-    <Project Path="Src/Apps/Web/Pl.Admin.Models/Pl.Admin.Models.csproj">
+    <Project Path="src/Apps/Web/Pl.Admin.Models/Pl.Admin.Models.csproj">
       <Platform Project="x64" />
     </Project>
   </Folder>
   <Folder Name="/Infrastructure/">
-    <Project Path="Src/Infrastructure/Pl.Database/Pl.Database.csproj">
+    <Project Path="src/Infrastructure/Pl.Database/Pl.Database.csproj">
       <Platform Project="x64" />
     </Project>
   </Folder>
   <Folder Name="/Libs/">
-    <Project Path="Src/Libs/Pl.Components/Pl.Components.csproj">
+    <Project Path="src/Libs/Pl.Components/Pl.Components.csproj">
       <Platform Project="x64" />
     </Project>
-    <Project Path="Src/Libs/Pl.Print/Pl.Print.csproj">
+    <Project Path="src/Libs/Pl.Print/Pl.Print.csproj">
       <Platform Project="x64" />
     </Project>
-    <Project Path="Src/Libs/Pl.Shared.Web/Pl.Shared.Web.csproj">
+    <Project Path="src/Libs/Pl.Shared.Web/Pl.Shared.Web.csproj">
       <Platform Project="x64" />
     </Project>
-    <Project Path="Src/Libs/Pl.Shared/Pl.Shared.csproj">
+    <Project Path="src/Libs/Pl.Shared/Pl.Shared.csproj">
       <Platform Project="x64" />
     </Project>
   </Folder>
   <Folder Name="/Tests/">
-    <Project Path="Src/Tests/Pl.Architecture.Tests/Pl.Architecture.Tests.csproj">
+    <Project Path="src/Tests/Pl.Architecture.Tests/Pl.Architecture.Tests.csproj">
       <Platform Project="x64" />
     </Project>
-    <Project Path="Src/Tests/Pl.Components.Tests/Pl.Components.Tests.csproj">
+    <Project Path="src/Tests/Pl.Components.Tests/Pl.Components.Tests.csproj">
       <Platform Project="x64" />
     </Project>
-    <Project Path="Src/Tests/Pl.Print.Tests/Pl.Print.Tests.csproj">
+    <Project Path="src/Tests/Pl.Print.Tests/Pl.Print.Tests.csproj">
       <Platform Project="x64" />
     </Project>
-    <Project Path="Src/Tests/Pl.Shared.Tests/Pl.Shared.Tests.csproj">
+    <Project Path="src/Tests/Pl.Shared.Tests/Pl.Shared.Tests.csproj">
       <Platform Project="x64" />
     </Project>
   </Folder>
