@@ -4,6 +4,6 @@ public class DatabaseOptions
 {
     public const string Database = "Database";
 
-    public bool IsShowSql { get; set; }
+    public bool IsShowSql { get; set; } = false;
     public string ConnectionString { get; set; } = string.Empty;
 }
