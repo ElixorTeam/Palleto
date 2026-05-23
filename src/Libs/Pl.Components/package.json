@@ -1,27 +1,22 @@
 {
-  "name": "ws-components",
+  "name": "palleto-ui-kit",
   "version": "1.0.0",
   "type": "module",
-  "author": "WS",
-  "license": "ISC",
+  "main": "index.ts",
   "scripts": {
-    "format": "prettier wwwroot/libs --write",
-    "build": "esbuild ./wwwroot/libs/index.js --bundle --minify --target=es6 --outfile=wwwroot/index.js",
-    "lint": "eslint wwwroot/libs"
+    "format": "bunx biome format wwwroot/libs --write",
+    "lint": "bunx biome lint wwwroot/libs/**/*.{ts} --write",
+    "build:modules": "node build-modules.mjs",
+    "build:css": "bunx @tailwindcss/cli -i wwwroot/app.css -o wwwroot/app.min.css --minify",
+    "build:js": "esbuild wwwroot/ts/index.ts --bundle --minify --target=es2020 --outfile=wwwroot/index.js",
+    "build": "bun run build:js && bun run build:modules && bun run build:css"
   },
   "devDependencies": {
-    "esbuild": "^0.23.1",
-    "typescript": "^5.5.4"
-  },
-  "optionalDependencies": {
-    "@eslint/js": "^9.8.0",
-    "eslint": "^9.8.0",
-    "eslint-plugin-promise": "^7.1.0",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "eslint-plugin-sonarjs": "^2.0.1",
-    "eslint-plugin-unicorn": "^55.0.0",
-    "globals": "^15.9.0",
-    "prettier": "^3.3.3",
-    "typescript-eslint": "^8.2.0"
+    "@biomejs/biome": "2.3.6",
+    "@tailwindcss/cli": "^4.3.0",
+    "esbuild": "^0.27.7",
+    "fast-glob": "^3.3.3",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^5.9.3"
   }
 }
