@@ -1,5 +1,3 @@
-@using Blazor.Heroicons
-@using Blazor.Heroicons.Mini
 @using Pl.Components.Components
 @using Pl.Desktop.Client.Source.Features.ErrorBoundaries
 
@@ -11,14 +9,13 @@
         <PlButton
           Variant="ButtonVariant.Outline"
           OnClick="@PrintLabelsAsync"
-          Disabled="@(!SelectedItems.Any() || IsPrinting)"
-        >
-          <PrinterIcon class="size-4 mr-2" />
+          Disabled="@(!SelectedItems.Any() || IsPrinting)">
+          <HeroIcon Name="printer" Class="size-4 mr-2" />
           @Localizer["BtnSelectedLabelsPrinting"]
         </PlButton>
         <UseEndpoint Endpoint="@PalletEndpoints.PalletLabelsEndpoint" Arg="@new(Pallet.Id)" Context="labelsQuery">
           <PlButton OnClick="@PrintPalletCard">
-            <DocumentTextIcon class="size-4 mr-2" />
+            <HeroIcon Name="document-text" Class="size-4 mr-2" />
             @Localizer["BtnPrintPC"]
           </PlButton>
         </UseEndpoint>
@@ -27,11 +24,7 @@
     <div class="flex w-full pb-2 justify-between items-end">
       <div class="w-1/2 pb-2">
         <div class="w-full border bg-background rounded-md pb-0.5 px-2 h-9 flex items-center shadow-xs gap-2 justify-between overflow-hidden">
-          <Heroicon
-            Name="@HeroiconName.MagnifyingGlass"
-            Type="HeroiconType.Outline"
-            class="size-5 py-px text-muted-foreground"
-          />
+          <HeroIcon Name="magnifying-glass" Class="size-5 py-px text-muted-foreground" />
           <input
             name="label-search"
             @bind="SearchingNumber"
@@ -81,7 +74,7 @@
                 type="button"
                 onclick="@(() => SaveToClipboard(context.Label.Barcode))"
                 class="text-muted-foreground opacity-50 hover:opacity-100">
-                <ClipboardDocumentIcon class="size-5"/>
+                <HeroIcon Name="clipboard-document" Class="size-5" />
               </button>
             </TemplateColumn>
           </FluentDataGrid>

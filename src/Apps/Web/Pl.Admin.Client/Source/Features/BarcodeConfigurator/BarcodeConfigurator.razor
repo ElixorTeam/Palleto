@@ -1,4 +1,3 @@
-@using Blazor.Heroicons.Outline
 @using Force.DeepCloner
 @using Pl.Admin.Models.Features.References.Template.Universal
 @using Pl.Components.Components
@@ -33,11 +32,11 @@
   </PlBadge>
   <div class="gap-2 flex">
     <PlButton Variant="ButtonVariant.Outline" OnClick="@ResetBarcode">
-      <ArrowUturnLeftIcon class="size-[1.1rem] md:mr-2"/>
+      <HeroIcon Name="arrow-uturn-left" Class="size-[1.1rem] md:mr-2"/>
       <span class="hidden md:block">@Localizer["BtnReset"]</span>
     </PlButton>
     <PlButton OnClick="@AddBarcodeItem">
-      <PlusIcon class="size-5 md:mr-2"/>
+      <HeroIcon Name="plus" Class="size-5 md:mr-2"/>
       <span class="hidden md:block">@Localizer["BtnAdd"]</span>
     </PlButton>
   </div>

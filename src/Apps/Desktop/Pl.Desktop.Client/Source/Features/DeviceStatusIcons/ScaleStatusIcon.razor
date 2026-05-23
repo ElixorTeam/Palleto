@@ -1,4 +1,3 @@
-@using Blazor.Heroicons.Outline
 @using MassaK.Plugin.Abstractions.Enums
 @using Pl.Components.Components
 @using Pl.Desktop.Client.Source.Shared.Services.Devices.Scales
@@ -12,7 +11,7 @@
   OnClick="@PrintStatusMessage"
 >
   <div class="@Css.Class("size-3 rounded-full shadow-xs overflow-hidden absolute -top-1 -right-1", GetIndicatorStyle)"></div>
-  <ScaleIcon class="@Css.Class("size-5", GetIconStyle)"/>
+  <HeroIcon Name="scale" Class="@Css.Class("size-5", GetIconStyle)" />
 </PlButton>
 
 @code {

@@ -1,7 +1,6 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Services.Stores
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
@@ -34,11 +33,10 @@
             role="combobox"
             aria-haspopup="listbox"
             aria-expanded="@select.IsDropdownOpened.ToString()"
-            aria-disabled="false"
-          >
-            <HomeIcon class="size-4 mr-2" />
+            aria-disabled="false">
+            <HeroIcon Name="home" Class="size-4 mr-2"/>
             <span class="truncate pt-px">@(select.Value?.Name ?? "Склад не выбран")</span>
-            <ChevronUpDownIcon class="size-4 ml-auto" />
+            <HeroIcon Name="chevron-up-down" Class="size-4 ml-auto"/>
           </PlButton>
         </TriggerContent>
       </SelectSingle>

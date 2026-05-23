@@ -1,4 +1,3 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Desktop.Client.Source.Features.ErrorBoundaries
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
@@ -18,8 +17,8 @@
         </div>
         <div class="text-muted-foreground text-xs text-center xl:text-sm">
           @Localizer["PluDisplayUnselectedStatusesInfo"]
-          <PrinterIcon class="size-4 inline-block"/>
-          <ScaleIcon class="size-4 inline-block"/>
+          <HeroIcon Name="printer" Class="size-4 inline-block" />
+          <HeroIcon Name="scale" Class="size-4 inline-block" />
         </div>
       </div>
     </div>

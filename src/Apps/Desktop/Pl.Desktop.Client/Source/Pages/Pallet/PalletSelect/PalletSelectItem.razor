@@ -1,4 +1,3 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Components.Components
 @using Pl.Desktop.Models.Features.Pallets.Output
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
@@ -34,12 +33,12 @@
       <div class="flex items-center gap-1">
         @if (Pallet.IsDelete)
         {
-        <PlBadge Variant="@BadgeVariant.Destructive" Class="px-1">
-          <TrashIcon class="size-4" />
-        </PlBadge>
+          <PlBadge Variant="@BadgeVariant.Destructive" Class="px-1">
+            <HeroIcon Name="trash" Class="size-4" />
+          </PlBadge>
         }
         <PlBadge Variant="@BadgeVariant.Secondary" Class="@(IsSelected ? "border-primary/[.1]" : "")">
-          <CalculatorIcon class="size-3 mr-1"/>
+          <HeroIcon Name="calculator" Class="size-3 mr-1" />
           <span class="text-xs pt-px">@Pallet.BoxCount</span>
         </PlBadge>
       </div>

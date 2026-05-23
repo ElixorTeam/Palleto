@@ -1,4 +1,3 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Components.Components
 @using Pl.Desktop.Client.Source.Shared.Services.Devices.Printer
 @using Pl.Desktop.Models.Features.Plus.Weight.Output
@@ -24,7 +23,7 @@
             <span class="truncate">
               @(PluState.Value.Plu == null ? Localizer["PluSelectPlaceholder"] : PluState.Value.Plu.Name)
             </span>
-            <ChevronDownIcon class="size-5" />
+            <HeroIcon Name="chevron-down" Class="size-5" />
           </div>
         </PlButton>
         }

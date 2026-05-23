@@ -1,5 +1,4 @@
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
 
 @implements IDialogContentComponent<string>
 
@@ -9,9 +8,8 @@
     <PlButton
       Variant="ButtonVariant.Ghost"
       Size="ButtonSize.Icon"
-      OnClick="@(OnCancelAction)"
-    >
-      <XMarkIcon class="size-5"/>
+      OnClick="@(OnCancelAction)">
+      <HeroIcon Name="x-mark" Class="size-5"/>
     </PlButton>
   </div>
   <p class="text-sm text-muted-foreground pt-1">
@@ -28,9 +26,8 @@
         OnClick="@CopyToClipboard"
         Size="ButtonSize.Icon"
         Variant="ButtonVariant.Ghost"
-        Class="h-[1.6rem] w-7 shrink-0"
-      >
-        <ClipboardIcon class="size-4" />
+        Class="h-[1.6rem] w-7 shrink-0">
+        <HeroIcon Name="clipboard" Class="size-4"/>
       </PlButton>
     </div>
     <PlButton

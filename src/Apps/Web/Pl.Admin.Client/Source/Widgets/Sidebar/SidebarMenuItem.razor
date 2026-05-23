@@ -1,5 +1,3 @@
-@using Blazor.Heroicons.Outline
-@using Blazor.Heroicons
 @implements IDisposable
 
 <AuthorizeView Policy="@(RequiredClaim)">
@@ -12,16 +10,12 @@
         class="peer w-full h-9 gap-2 p-2 overflow-hidden flex text-left items-center transition-colors justify-between rounded-md hover:bg-secondary/50 data-[active=true]:font-normal"
       >
         <div class="flex gap-2 items-center">
-          <Heroicon
-            Name="@Icon"
-            Type="HeroiconType.Outline"
-            class="size-[1.1rem] shrink-0 pb-px"
-          />
+          <HeroIcon Name="@Icon" Class="size-[1.1rem] shrink-0 pb-px"/>
           <span class="truncate">
-          @Label
-        </span>
+            @Label
+          </span>
         </div>
-        <ChevronRightIcon class="@Css.Class("peer size-4 transition-transform shrink-0", IsOpened ? "rotate-90" : "")" />
+        <HeroIcon Name="chevron-right" Class="@Css.Class("peer size-4 transition-transform shrink-0", IsOpened ? "rotate-90" : "")"/>
       </button>
       <ul class="@Css.Class("flex flex-col border-s mx-4 px-2.5 transition-colors", IsOpened ? "visible py-0.5" : "invisible h-0 overflow-hidden", GetIsAnyActive() ? "border-s-accent-foreground/[.4]" : "")">
         @foreach (NavMenuItemModel item in Items)
@@ -50,7 +44,7 @@
   [Inject] private NavigationManager NavigationManager { get; set; } = default!;
 
   [Parameter, EditorRequired] public string Label { get; set; } = string.Empty;
-  [Parameter, EditorRequired] public string Icon { get; set; } = HeroiconName.Home;
+  [Parameter, EditorRequired] public string Icon { get; set; } = "home";
   [Parameter, EditorRequired] public NavMenuItemModel[] Items { get; set; } = [];
   [Parameter, EditorRequired] public string RequiredClaim { get; set; } = string.Empty;
 

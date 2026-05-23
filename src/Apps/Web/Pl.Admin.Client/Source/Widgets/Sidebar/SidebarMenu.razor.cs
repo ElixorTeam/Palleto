@@ -1,4 +1,3 @@
-using Blazor.Heroicons;
 using Pl.Admin.Client.Source.Shared.Constants;
 
 namespace Pl.Admin.Client.Source.Widgets.Sidebar;
@@ -29,12 +28,12 @@ public sealed partial class SidebarMenu : ComponentBase
 
     private IEnumerable<MenuSection> CreateNavMenus() =>
     [
-        new(Localizer["MenuDevices"], HeroiconName.ComputerDesktop, [
+        new(Localizer["MenuDevices"], "computer-desktop", [
             new(Localizer["SectionArm"], Routes.Arms),
             new(Localizer["SectionPrinters"], Routes.Printers)
         ], PolicyEnum.Support),
 
-        new(Localizer["Menu1CReferences"], HeroiconName.CurrencyEuro, [
+        new(Localizer["Menu1CReferences"], "currency-euro", [
             new(Localizer["SectionPlu"], Routes.Plus),
             new(Localizer["SectionBoxes"], Routes.Boxes),
             new(Localizer["SectionClips"], Routes.Clips),
@@ -42,22 +41,22 @@ public sealed partial class SidebarMenu : ComponentBase
             new(Localizer["SectionBrands"], Routes.Brands)
         ]),
 
-        new(Localizer["MenuReferences"], HeroiconName.BookOpen, [
+        new(Localizer["MenuReferences"], "book-open", [
             new(Localizer["SectionWarehouses"], Routes.Warehouses),
             new(Localizer["SectionProductionSites"], Routes.ProductionSites)
         ], PolicyEnum.Support),
 
-        new(Localizer["MenuPrintSettings"], HeroiconName.Printer, [
+        new(Localizer["MenuPrintSettings"], "printer", [
             new(Localizer["SectionTemplates"], Routes.Templates),
             new(Localizer["SectionTemplateResources"], Routes.Resources),
         ], PolicyEnum.Support),
 
-        new(Localizer["MenuAdministration"], HeroiconName.UserGroup, [
+        new(Localizer["MenuAdministration"], "user-group", [
             new(Localizer["SectionPalletMen"], Routes.PalletMen, PolicyEnum.Support),
             new(Localizer["SectionUsers"], Routes.Users, PolicyEnum.SeniorSupport),
         ], PolicyEnum.Support),
 
-        new(Localizer["MenuDiagnostics"], HeroiconName.Wrench, [
+        new(Localizer["MenuDiagnostics"], "wrench", [
             new(Localizer["SectionMigrations"], Routes.Migrations),
             new(Localizer["SectionTables"], Routes.Tables),
         ], PolicyEnum.Admin),

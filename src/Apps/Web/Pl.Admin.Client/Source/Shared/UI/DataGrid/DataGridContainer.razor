@@ -1,5 +1,4 @@
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
 @typeparam TItem
 @attribute [CascadingTypeParameter(nameof(TItem))]
 
@@ -50,9 +49,8 @@
       <PlButton
         Variant="ButtonVariant.Outline"
         Size="ButtonSize.Icon"
-        Class="size-[2.1rem]"
-      >
-        <ChevronRightIcon class="size-4 text-muted-foreground" />
+        Class="size-[2.1rem]">
+        <HeroIcon Name="chevron-right" Class="size-4 text-muted-foreground"/>
         <span class="sr-only">Next page</span>
       </PlButton>
     </NextPageButtonTemplate>
@@ -60,9 +58,8 @@
       <PlButton
         Variant="ButtonVariant.Outline"
         Size="ButtonSize.Icon"
-        Class="size-[2.1rem]"
-      >
-        <ChevronLeftIcon class="size-4 text-muted-foreground" />
+        Class="size-[2.1rem]">
+        <HeroIcon Name="chevron-left" Class="size-4 text-muted-foreground"/>
         <span class="sr-only">Previous page</span>
       </PlButton>
     </PreviousPageButtonTemplate>
@@ -70,9 +67,8 @@
       <PlButton
         Variant="ButtonVariant.Outline"
         Size="ButtonSize.Icon"
-        Class="size-[2.1rem]"
-      >
-        <ChevronDoubleRightIcon class="size-4 text-muted-foreground" />
+        Class="size-[2.1rem]">
+        <HeroIcon Name="chevron-double-right" Class="size-4 text-muted-foreground"/>
         <span class="sr-only">Last page</span>
       </PlButton>
     </LastPageButtonTemplate>
@@ -80,9 +76,8 @@
       <PlButton
         Variant="ButtonVariant.Outline"
         Size="ButtonSize.Icon"
-        Class="size-[2.1rem]"
-      >
-        <ChevronDoubleLeftIcon class="size-4 text-muted-foreground" />
+        Class="size-[2.1rem]">
+        <HeroIcon Name="chevron-double-left" Class="size-4 text-muted-foreground"/>
         <span class="sr-only">First page</span>
       </PlButton>
     </FirstPageButtonTemplate>

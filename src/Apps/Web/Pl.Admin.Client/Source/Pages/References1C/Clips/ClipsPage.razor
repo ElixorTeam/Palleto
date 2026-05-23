@@ -1,4 +1,3 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Components.Components
 @using Pl.Admin.Client.Source.Shared.Constants
@@ -42,9 +41,9 @@
         <DisplayTemplate>
           @if (context.Name.StartsWith('я'))
           {
-          <div class="w-full flex items-center justify-center">
-            <TrashIcon class="text-red-600 size-5"/>
-          </div>
+            <div class="w-full flex items-center justify-center">
+              <HeroIcon Name="trash" Class="text-destructive size-5"/>
+            </div>
           }
         </DisplayTemplate>
       </DataGridColumn>

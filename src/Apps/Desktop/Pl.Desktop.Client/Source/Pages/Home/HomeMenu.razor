@@ -1,4 +1,3 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Components.Components
 @using Pl.Desktop.Client.Source.Shared.Constants
 @using Pl.Components.Source.UI.AppMenu
@@ -11,7 +10,7 @@
       {
         <AppMenuItem Description="Этикирование весовой продукции" Title="@WsDataLocalizer["ColLabel"]" Link="@Routes.Labels">
           <IconContent>
-            <TagIcon class="size-full" />
+            <HeroIcon Name="tag" Class="size-full" />
           </IconContent>
           <TitleContent>
             <div class="flex gap-2 items-center">
@@ -25,7 +24,7 @@
       {
         <AppMenuItem Description="Создание штучной паллетной карты" Title="@WsDataLocalizer["ColPallet"]" Link="@Routes.Pallet">
           <IconContent>
-            <ClipboardIcon class="size-full" />
+            <HeroIcon Name="clipboard" Class="size-full" />
           </IconContent>
           <TitleContent>
             <div class="flex gap-2 items-center">
@@ -40,13 +39,13 @@
 
   <AppMenuItem Title="Информация" Description="QR код с данными устройства" OnClick="@ShowQrUserDialog">
     <IconContent>
-      <QrCodeIcon class="size-full" />
+      <HeroIcon Name="qr-code" Class="size-full" />
     </IconContent>
   </AppMenuItem>
 
   <AppMenuItem Description="Завершение текущего сеанса" Title="@Localizer["BtnExit"]" OnClick="@ShowCloseAppDialog">
     <IconContent>
-      <ArrowLeftOnRectangleIcon class="size-full" />
+      <HeroIcon Name="arrow-left-end-on-rectangle" Class="size-full" />
     </IconContent>
   </AppMenuItem>
 </AppMenu>

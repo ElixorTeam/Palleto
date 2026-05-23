@@ -1,13 +1,11 @@
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
 
 <PlButton
   OnClick="@OnClick"
   Variant="ButtonVariant.Outline"
   Class="@Css.Class("w-full justify-start", Class)"
-  Disabled="Disabled"
->
-  <ArrowRightOnRectangleIcon class="size-4 mr-2" />
+  Disabled="Disabled">
+  <HeroIcon Name="arrow-right-end-on-rectangle" Class="size-4 mr-2"/>
   @Localizer["FormActionReset"]
 </PlButton>
 

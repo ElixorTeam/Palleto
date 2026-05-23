@@ -1,8 +1,6 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Services.Stores
 @using IToastService = Microsoft.FluentUI.AspNetCore.Components.IToastService
-@using Refit
 
 <UseParameterlessEndpoint
   Endpoint="ReferencesEndpoints.ProxyUserProductionSiteEndpoint"
@@ -19,7 +17,7 @@
   {
     <div class="size-full flex items-center justify-center p-6">
       <div class="max-w-md flex flex-col gap-2 text-center items-center">
-        <ExclamationTriangleIcon class="size-16"/>
+        <HeroIcon Name="exclamation-triangle" Class="size-16"/>
         @Localizer["ProductionSiteSuspenseDescription"]
       </div>
     </div>

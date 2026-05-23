@@ -1,4 +1,3 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Components.Components
 @using Pl.Desktop.Client.Source.Shared.Extensions
 
@@ -10,9 +9,8 @@
     <PlButton
       Variant="ButtonVariant.Ghost"
       Size="ButtonSize.Icon"
-      OnClick="@CloseDialog"
-    >
-      <XMarkIcon class="size-5"/>
+      OnClick="@CloseDialog">
+      <HeroIcon Name="x-mark" Class="size-5" />
     </PlButton>
   </div>
   <div class="w-full flex justify-center">
@@ -21,7 +19,7 @@
         <Spinner Class="size-20" />
       </LoadingContent>
       <ErrorContent>
-        <ExclamationTriangleIcon class="size-20 text-destructive" />
+        <HeroIcon Name="exclamation-triangle" Class="size-20 text-destructive" />
       </ErrorContent>
     </QRCode>
   </div>

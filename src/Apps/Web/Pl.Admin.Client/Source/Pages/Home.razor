@@ -1,7 +1,5 @@
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Components.Components
-@using Pl.Components.Components.Switch
-@using Blazor.Heroicons.Outline
 
 @attribute [Route(Routes.Home)]
 @attribute [Authorize]
@@ -16,7 +14,7 @@
   <div class="flex flex-col items-center max-sm md:max-w-md lg:max-w-2xl">
     <div>
       <PlBadge Variant="@BadgeVariant.Outline" Class="mb-3">
-        <BoltIcon class="size-3.5 mr-1.5" />
+        <HeroIcon Name="bolt" Class="size-3.5 mr-1.5"/>
         @Localizer["WelcomeBadge"]
       </PlBadge>
     </div>
@@ -25,13 +23,17 @@
     </h2>
     <div class="flex flex-col gap-3 w-fit mt-9 md:flex-row">
       <PlButton Href="#func" Variant="ButtonVariant.Secondary" Class="rounded-full">
-        <Icon><ArrowLeftIcon class="size-[1.1rem]"/></Icon>
+        <Icon>
+          <HeroIcon Name="arrow-left" Class="size-[1.1rem]"/>
+        </Icon>
         <ChildContent>@Localizer["WelcomeLearnMore"]</ChildContent>
       </PlButton>
       @if (!IsProduction)
       {
         <PlButton Href="https://github.com/ElixorTeam/Palleto" Variant="ButtonVariant.Outline" Class="rounded-full">
-          <Icon><CodeBracketIcon class="size-[1.1rem]"/></Icon>
+          <Icon>
+            <HeroIcon Name="code-bracket" Class="size-[1.1rem]"/>
+          </Icon>
           <ChildContent>Github</ChildContent>
         </PlButton>
       }
@@ -89,11 +91,11 @@
     <CardContent class="size-full flex items-center justify-center">
       <div class="flex gap-6">
         <div class="size-16 p-3 relative border rounded-md">
-          <DevicePhoneMobileIcon class="size-full stroke-[0.8]" />
+          <HeroIcon Name="device-phone-mobile" Class="size-full stroke-[0.8]"/>
           <div class="absolute rounded-full bg-primary overflow-hidden size-4 animate-pulse -bottom-1.5 -right-1.5"></div>
         </div>
         <div class="size-16 p-3 relative border rounded-md">
-          <ComputerDesktopIcon class="size-full stroke-[0.8]" />
+          <HeroIcon Name="computer-desktop" Class="size-full stroke-[0.8]"/>
           <div class="absolute rounded-full bg-primary overflow-hidden size-4 animate-pulse -bottom-1.5 -right-1.5"></div>
         </div>
       </div>
@@ -141,7 +143,7 @@
       </CardDescription>
     </CardHeader>
     <CardContent class="size-full flex items-center justify-center">
-      <PrinterIcon class="size-28 text-muted-foreground stroke-[0.5]" />
+      <HeroIcon Name="printer" Class="size-28 text-muted-foreground stroke-[0.5]"/>
     </CardContent>
   </Card>
 </div>
@@ -152,14 +154,14 @@
   <ul class="flex flex-col gap-3 w-full">
     <li class="w-full">
       <a href="@Routes.PrinterControlGuide" class="w-full rounded-lg border shadow-xs flex gap-1 items-center h-12 px-4 overflow-hidden transition-colors hover:bg-secondary">
-        <BookOpenIcon class="size-5 mr-2 pb-px" />
+        <HeroIcon Name="book-open" Class="size-5 mr-2 pb-px"/>
         <span class="font-medium">Работа с принтерами на сайте</span>
         <PlBadge Variant="@BadgeVariant.Secondary">2 мин</PlBadge>
       </a>
     </li>
     <li class="w-full">
       <a href="@Routes.ErrorReportGuide" class="w-full rounded-lg border shadow-xs flex gap-1 items-center h-12 px-4 overflow-hidden transition-colors hover:bg-secondary">
-        <BookOpenIcon class="size-5 mr-2 pb-px" />
+        <HeroIcon Name="book-open" Class="size-5 mr-2 pb-px"/>
         <span class="font-medium">Репорт ошибок приложений</span>
         <PlBadge Variant="@BadgeVariant.Secondary">3 мин</PlBadge>
       </a>

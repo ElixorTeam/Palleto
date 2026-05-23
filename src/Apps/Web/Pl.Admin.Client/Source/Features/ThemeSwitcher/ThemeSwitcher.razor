@@ -1,5 +1,4 @@
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
 @rendermode InteractiveServer
 
 <PlDropdown>
@@ -8,8 +7,8 @@
       Variant="ButtonVariant.Ghost"
       Size="ButtonSize.Icon"
       Class="shrink-0">
-      <SunIcon class="size-5 dark:hidden"/>
-      <MoonIcon class="size-5 hidden dark:block"/>
+      <HeroIcon Name="sun" Class="size-5 dark:hidden"/>
+      <HeroIcon Name="moon" Class="size-5 hidden dark:block"/>
       <span class="sr-only">Toggle theme</span>
     </PlButton>
   </PlDropdownTrigger>
@@ -17,15 +16,15 @@
     <PlDropdownLabel>Theme</PlDropdownLabel>
     <PlDropdownSeparator/>
     <PlDropdownItem OnClick="@(() => SetTheme("light"))">
-      <Icon><SunIcon/></Icon>
+      <Icon><HeroIcon Name="sun" /></Icon>
       <ChildContent>@Localizer[ThemeType.Light.GetDescription()]</ChildContent>
     </PlDropdownItem>
     <PlDropdownItem OnClick="@(() => SetTheme("dark"))">
-      <Icon><MoonIcon/></Icon>
+      <Icon><HeroIcon Name="moon" /></Icon>
       <ChildContent>@Localizer[ThemeType.Dark.GetDescription()]</ChildContent>
     </PlDropdownItem>
     <PlDropdownItem OnClick="@(() => SetTheme("system"))">
-      <Icon><ComputerDesktopIcon/></Icon>
+      <Icon><HeroIcon Name="computer-desktop" /></Icon>
       <ChildContent>@Localizer[ThemeType.System.GetDescription()]</ChildContent>
     </PlDropdownItem>
   </PlDropdownContent>

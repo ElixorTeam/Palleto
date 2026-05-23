@@ -1,5 +1,3 @@
-@using Blazor.Heroicons.Outline
-
 @implements IDisposable
 
 <li class="relative">
@@ -22,7 +20,7 @@
       }
       else if (ParentStepper.CurrentIndex > Index)
       {
-        <CheckIcon class="h-5 text-secondary"/>
+        <HeroIcon Name="check" Class="h-5 text-secondary"/>
       }
       else
       {

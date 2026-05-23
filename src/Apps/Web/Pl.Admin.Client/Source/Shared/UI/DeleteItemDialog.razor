@@ -1,6 +1,4 @@
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
-
 @implements IDialogContentComponent<EventCallback>
 
 <Dialog Class="max-w-lg p-6">
@@ -9,9 +7,8 @@
     <PlButton
       Variant="ButtonVariant.Ghost"
       Size="ButtonSize.Icon"
-      OnClick="@(OnCancelAction)"
-    >
-      <XMarkIcon class="size-5"/>
+      OnClick="@(OnCancelAction)">
+      <HeroIcon Name="x-mark" Class="size-5"/>
     </PlButton>
   </div>
   <p class="text-sm text-muted-foreground pt-1">

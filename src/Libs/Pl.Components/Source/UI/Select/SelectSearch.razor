@@ -1,10 +1,9 @@
 @typeparam TSelectItem
 @using System.Timers
-@using Blazor.Heroicons.Outline
 @typeparam TSelectType
 
 <div class="h-10 w-full border-b flex items-center px-3">
-  <MagnifyingGlassIcon class="size-4 text-muted-foreground mr-2"/>
+  <HeroIcon Name="magnifying-glass" Class="size-4 text-muted-foreground mr-2"/>
   <input
     type="text"
     name="select-search"
@@ -13,8 +12,7 @@
     @bind:after="OnInputChanged"
     class="size-full border-none text-sm bg-transparent px-0 focus:outline-hidden focus:border-none focus:ring-0 placeholder:font-light placeholder:text-muted-foreground"
     placeholder="@Placeholder"
-    tabindex="-1"
-  />
+    tabindex="-1"/>
 </div>
 
 @code {

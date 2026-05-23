@@ -1,4 +1,3 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Components.Components
 @using Pl.Admin.Client.Source.Shared.Api.Keycloak
 
@@ -6,9 +5,8 @@
   OnClick="@ReloginUser"
   Variant="ButtonVariant.Outline"
   Class="@Css.Class("w-full justify-start", Class)"
-  Disabled="Disabled"
->
-  <UserIcon class="size-4 mr-2" />
+  Disabled="Disabled">
+  <HeroIcon Name="user" Class="size-4 mr-2"/>
   @Localizer["FormActionRelogin"]
 </PlButton>
 

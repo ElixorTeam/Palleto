@@ -1,7 +1,5 @@
 @typeparam TSelectItem
 @typeparam TSelectType
-
-@using Blazor.Heroicons.Outline
 @implements IDisposable
 
 @if (IsInFilter)
@@ -15,7 +13,7 @@
       @onkeydown="HandleKeyDown"
       class="@Css.Class("relative w-full flex items-center rounded-xs px-2 py-1.5 text-sm outline-hidden transition-colors truncate hover:bg-accent focus:bg-accent/[.5] disabled:pointer-events-none disabled:opacity-50", Class)"
     >
-      <CheckIcon class="@Css.Class("mr-2 size-4 shrink-0", IsActive ? "visible" : "invisible")"/>
+      <HeroIcon Name="check" Class="@Css.Class("mr-2 size-4 shrink-0", IsActive ? "visible" : "invisible")"/>
       <span class="truncate">@Parent.ItemDisplayName(Item)</span>
     </button>
   </li>

@@ -1,10 +1,9 @@
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
 <div class="flex justify-between items-center w-full">
   <div class="size-12 shrink-0 rounded-full flex items-center justify-center bg-secondary">
-    <UserIcon class="size-6" />
+    <HeroIcon Name="user" Class="size-6" />
   </div>
   <div class="flex w-full flex-col px-3 justify-start">
     <span class="font-medium text-sm truncate">@PalletManState.Value.PalletMan?.Fio.DisplayShortName</span>
@@ -22,9 +21,8 @@
   <PlButton
     Class="shrink-0 border"
     OnClick="@LogoutPalletMan"
-    Variant="ButtonVariant.Secondary"
-  >
-    <ArrowLeftOnRectangleIcon class="size-4 mr-2" />
+    Variant="ButtonVariant.Secondary">
+    <HeroIcon Name="arrow-left-end-on-rectangle" Class="size-4 mr-2" />
     @Localizer["BtnExit"]
   </PlButton>
 </div>

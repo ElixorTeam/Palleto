@@ -1,6 +1,4 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Components.Components
-@using Pl.Desktop.Client.Source.Shared.Services.Devices.Printer
 @using Pl.Desktop.Models.Features.Arms.Output
 
 <div class="flex justify-between shrink-0 items-center w-full overflow-hidden">
@@ -17,22 +15,22 @@
           @switch (query.Data.Type)
           {
             case ArmType.Pc:
-              <ComputerDesktopIcon class="size-full"/>
+              <HeroIcon Name="computer-desktop" Class="size-full" />
               break;
             case ArmType.Tablet:
-              <DeviceTabletIcon class="size-full rotate-[270deg]"/>
+              <HeroIcon Name="device-tablet" Class="size-full rotate-[270deg]" />
               break;
             case ArmType.Universal:
-              <ServerIcon class="size-full"/>
+              <HeroIcon Name="server" Class="size-full" />
               break;
             default:
-              <ExclamationTriangleIcon class="size-full text-destructive"/>
+              <HeroIcon Name="exclamation-triangle" Class="size-full text-destructive" />
               break;
           }
         }
         else
         {
-          <ExclamationTriangleIcon class="size-full text-destructive"/>
+          <HeroIcon Name="exclamation-triangle" Class="size-full text-destructive" />
         }
       </div>
     }
@@ -58,9 +56,8 @@
       OnClick="@(async () => await RefetchArm(query))"
       Variant="@(Small ? ButtonVariant.Outline : ButtonVariant.Secondary)"
       Size="@(Small ? ButtonSize.Sm : ButtonSize.Default)"
-      Disabled="@query.IsFetching"
-    >
-      <ArrowPathIcon class="size-4 mr-2"/>
+      Disabled="@query.IsFetching">
+      <HeroIcon Name="arrow-path" Class="size-4 mr-2" />
       @Localizer["BtnUpdate"]
     </PlButton>
   </UseParameterlessEndpoint>
@@ -68,7 +65,6 @@
 </div>
 
 @code {
-  [Inject] private IPrinterService PrinterService { get; set; } = default!;
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private ArmEndpoints ArmEndpoints { get; set; } = default!;
 

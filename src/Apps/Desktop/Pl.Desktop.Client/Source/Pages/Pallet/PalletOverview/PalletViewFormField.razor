@@ -1,5 +1,4 @@
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
 
 <div class="space-y-2 relative">
   <FieldLabel HtmlFor="@HtmlId">@Label</FieldLabel>
@@ -14,9 +13,8 @@
       Variant="ButtonVariant.Ghost"
       Size="ButtonSize.Icon"
       OnClick="@(() => SaveToClipboard(Value))"
-      class="text-muted-foreground absolute size-7 top-7 right-1.5"
-    >
-      <ClipboardIcon class="size-[1.1rem]" />
+      class="text-muted-foreground absolute size-7 top-7 right-1.5">
+      <HeroIcon Name="clipboard" Class="size-[1.1rem]" />
     </PlButton>
   }
 </div>

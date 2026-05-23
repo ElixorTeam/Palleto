@@ -1,5 +1,4 @@
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
 
 <LabelCreateFormFieldItem Label="@Localizer["ColDt"]">
   <div class="grid overflow-hidden grid-cols-7 size-full">
@@ -7,9 +6,8 @@
       <PlButton
         Variant="ButtonVariant.Outline"
         Size="ButtonSize.Full"
-        OnClick="@DecreaseDate"
-      >
-        <ChevronLeftIcon class="size-full p-3"/>
+        OnClick="@DecreaseDate">
+        <HeroIcon Name="chevron-left" Class="size-full p-3" />
       </PlButton>
     </div>
     <div class="col-span-3 flex items-center justify-center size-full overflow-hidden">
@@ -21,16 +19,14 @@
       <PlButton
         Variant="ButtonVariant.Outline"
         Size="ButtonSize.Full"
-        OnClick="@ResetDate"
-      >
-        <ArrowPathIcon class="size-full p-3" />
+        OnClick="@ResetDate">
+        <HeroIcon Name="arrow-path" Class="size-full p-3" />
       </PlButton>
       <PlButton
         Variant="ButtonVariant.Outline"
         Size="ButtonSize.Full"
-        OnClick="@IncreaseDate"
-      >
-        <ChevronRightIcon class="size-full p-3" />
+        OnClick="@IncreaseDate">
+        <HeroIcon Name="chevron-right" Class="size-full p-3" />
       </PlButton>
     </div>
   </div>

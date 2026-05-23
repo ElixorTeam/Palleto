@@ -1,5 +1,4 @@
 @using Pl.Admin.Client.Source.Shared.Constants
-@using Blazor.Heroicons.Outline
 @using Pl.Components.Components
 @using Pl.Admin.Client.Source.Features.ThemeSwitcher
 
@@ -17,7 +16,7 @@
         <form method="post" action="@($"{Routes.Authorization}/logout")" class="shrink-0">
           <PlButton Variant="ButtonVariant.Ghost" Size="ButtonSize.Icon" Type="@Components.Components.ButtonType.Submit">
             <span class="sr-only">Logout</span>
-            <ArrowLeftOnRectangleIcon class="size-5" />
+            <HeroIcon Name="arrow-left-end-on-rectangle" Class="size-5"/>
           </PlButton>
           <AntiforgeryToken/>
         </form>

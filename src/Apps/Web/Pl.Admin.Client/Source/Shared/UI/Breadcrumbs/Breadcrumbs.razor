@@ -1,25 +1,24 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Components.Components
 
 <PlBreadcrumb Class="@TwMerge.Merge(Class)">
   <PlBreadcrumbList AutoSeparator>
     <SeparatorContent>
-      <ChevronRightIcon class="size-3" />
+      <HeroIcon Name="chevron-right" Class="size-3"/>
     </SeparatorContent>
     <ChildContent>
       <PlBreadcrumbItem Class="home">
       @if (Start == BreadcrumbStart.Home)
       {
-          <PlBreadcrumbLink Href="@Routes.Home" Class="flex items-center gap-1.5">
-            <HomeIcon class="size-4"/>
-            Домой
-          </PlBreadcrumbLink>
+        <PlBreadcrumbLink Href="@Routes.Home" Class="flex items-center gap-1.5">
+          <HeroIcon Name="home" Class="size-4"/>
+          Домой
+        </PlBreadcrumbLink>
       }
       else if (Start == BreadcrumbStart.Back)
       {
         <button type="button" @onclick="GoBack" class="flex items-center gap-1.5 transition-colors hover:text-foreground">
-          <ArrowLeftIcon class="size-4"/>
+          <HeroIcon Name="arrow-left" Class="size-4"/>
           <span>Назад</span>
         </button>
       }

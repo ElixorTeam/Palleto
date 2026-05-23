@@ -1,14 +1,12 @@
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
 
 <div class="h-14 shrink-0 w-full grid grid-cols-8 bg-background border-b px-4">
   <div class="flex items-center">
     <PlButton
       Variant="ButtonVariant.Ghost"
       Size="ButtonSize.Icon"
-      OnClick="@CloseAsync"
-    >
-      <ArrowLeftIcon class="size-[1.2rem]" />
+      OnClick="@CloseAsync">
+      <HeroIcon Name="arrow-left" Class="size-[1.2rem]"/>
     </PlButton>
   </div>
   <div class="h-full flex items-center justify-center w-full col-span-6 grow overflow-hidden">

@@ -1,5 +1,3 @@
-@using Blazor.Heroicons.Outline
-
 @typeparam TSelectItem
 @typeparam TSelectType
 
@@ -17,7 +15,7 @@
   aria-disabled="@Disabled.ToString()"
 >
   @ChildContent
-  <ChevronDownIcon class="@Css.Class("transition-transform text-muted-foreground size-4", Parent.IsDropdownOpened ? "rotate-180" : "rotate-0")"/>
+  <HeroIcon Name="chevron-down" Class="@Css.Class("transition-transform text-muted-foreground size-4", Parent.IsDropdownOpened ? "rotate-180" : "rotate-0")"/>
 </button>
 
 @code {

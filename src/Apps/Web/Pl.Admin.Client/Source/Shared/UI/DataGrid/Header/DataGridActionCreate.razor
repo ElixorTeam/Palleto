@@ -1,8 +1,7 @@
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
 
 <PlButton Size="ButtonSize.Sm" Variant="ButtonVariant.Outline" OnClick="@OnClick" Disabled="@IsLoading">
-  <PlusIcon class="size-4 sm:mr-2" />
+  <HeroIcon Name="plus" Class="size-4 sm:mr-2"/>
   <span class="sr-only sm:!not-sr-only">@Localizer["BtnAdd"]</span>
 </PlButton>
 

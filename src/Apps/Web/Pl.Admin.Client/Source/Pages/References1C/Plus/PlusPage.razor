@@ -1,4 +1,3 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Admin.Client.Source.Pages.References1C.Plus.Update
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
@@ -49,19 +48,19 @@
           @if (context.Name.StartsWith('я'))
           {
             <div class="w-full flex items-center justify-center">
-              <TrashIcon class="text-destructive size-5"/>
+              <HeroIcon Name="trash" Class="text-destructive size-5"/>
             </div>
           }
           else if (context.Template?.Id.IsEmpty() == true)
           {
             <div class="w-full flex items-center justify-center">
-              <BookmarkSlashIcon class="text-purple-500 size-5 transition-colors hover:text-purple-700 dark:hover:text-purple-300"/>
+              <HeroIcon Name="bookmark-slash" Class="text-purple-500 size-5 transition-colors hover:text-purple-700 dark:hover:text-purple-300" />
             </div>
           }
           else if (!PluViewValidator.Validate(context).IsValid)
           {
             <div class="w-full flex items-center justify-center">
-              <ExclamationTriangleIcon class="text-orange-400 size-5"/>
+              <HeroIcon Name="exclamation-triangle" Class="text-orange-400 size-5" />
             </div>
           }
         </DisplayTemplate>

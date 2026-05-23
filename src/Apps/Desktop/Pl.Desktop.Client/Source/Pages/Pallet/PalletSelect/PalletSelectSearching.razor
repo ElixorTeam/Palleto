@@ -1,10 +1,9 @@
 @using System.Timers
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
 
 <div class="h-14 flex gap-2 w-full px-4 items-center shrink-0">
   <div class="border px-2 gap-1 flex items-center rounded-md overflow-hidden w-full h-9">
-    <MagnifyingGlassIcon class="size-5 pb-[2px] text-gray-500"/>
+    <HeroIcon Name="magnifying-glass" Class="size-5 pb-[2px] text-gray-500" />
     <input
       type="text"
       name="pallet-search"
@@ -33,9 +32,8 @@
           role="combobox"
           aria-haspopup="listbox"
           aria-expanded="@select.IsDropdownOpened.ToString()"
-          aria-disabled="false"
-        >
-          <FunnelIcon class="size-5" />
+          aria-disabled="false">
+          <HeroIcon Name="funnel" Class="size-5" />
         </PlButton>
       </TriggerContent>
     </SelectSingle>

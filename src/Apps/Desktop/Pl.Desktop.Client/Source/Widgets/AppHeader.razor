@@ -1,7 +1,6 @@
 @using Pl.Desktop.Client.Source.Shared.Services.System
 @using Pl.Desktop.Client.Source.Shared.Constants
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
 @inherits Pl.Components.Source.UI.PlComponentBase
 
 <div
@@ -26,7 +25,7 @@
         @ChildContent
       </div>
       <PlButton Link="@Routes.Home" Variant="ButtonVariant.Outline">
-        <HomeIcon class="size-5 mr-2"/>
+        <HeroIcon Name="home" Class="size-5 mr-2" />
         <span>@Localizer["BtnMenu"]</span>
       </PlButton>
     </div>

@@ -1,13 +1,12 @@
 @using Pl.Desktop.Client.Source.Shared.Constants
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
 
 <UseParameterlessEndpoint Endpoint="@ArmEndpoints.ArmEndpoint" Context="query">
   @if (query is { HasData: false, IsLoading: false })
   {
     <div class="size-full flex items-center justify-center">
       <div class="flex max-w-sm flex-col items-center space-y-5">
-        <ExclamationTriangleIcon class="size-24 text-destructive" />
+        <HeroIcon Name="exclamation-triangle" Class="size-24 text-destructive" />
         <div class="flex flex-col text-center gap-2">
           <h2 class="text-xl font-semibold">@Localizer["ArmIsNewWarningTitle"]</h2>
           <p class="text-sm">
@@ -16,11 +15,11 @@
         </div>
         <div class="w-full max-w-xs mx-auto flex flex-col space-y-2">
           <PlButton OnClick="@query.Refetch" Variant="ButtonVariant.Outline" Class="w-full">
-            <ArrowPathIcon class="size-4 mr-2" />
+            <HeroIcon Name="arrow-path" Class="size-4 mr-2" />
             @Localizer["BtnUpdate"]
           </PlButton>
           <PlButton Link="@Routes.Home" Class="w-full">
-            <ArrowRightStartOnRectangleIcon class="size-4 mr-2" />
+            <HeroIcon Name="arrow-right-start-on-rectangle" Class="size-4 mr-2" />
             Главная страница
           </PlButton>
         </div>
@@ -39,7 +38,6 @@
 
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private ArmEndpoints ArmEndpoints { get; set; } = default!;
-  [Inject] private IDialogService DialogService { get; set; } = default!;
 
   # endregion
 

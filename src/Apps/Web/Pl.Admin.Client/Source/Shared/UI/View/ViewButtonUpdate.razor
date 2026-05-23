@@ -1,9 +1,8 @@
 @using Pl.Components.Components
-@using Blazor.Heroicons.Outline
 @typeparam TDialog where TDialog: IDialogContentComponent
 
 <PlButton Variant="ButtonVariant.Outline" OnClick="@OpenUpdateDialog">
-  <PencilIcon class="size-4 mr-2"/>
+  <HeroIcon Name="pencil" Class="size-4 mr-2"/>
   <span class="sr-only sm:!not-sr-only">@Localizer["BtnUpdate"]</span>
 </PlButton>
 

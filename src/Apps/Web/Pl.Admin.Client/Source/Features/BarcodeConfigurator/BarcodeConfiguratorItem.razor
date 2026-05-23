@@ -1,11 +1,10 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Components.Components
 @using Pl.Print.Features.Barcodes.Models
 @using Pl.Print.Features.Barcodes.Utils
 
 <li class="size-full h-10 flex bg-background divide-x">
   <div class="sortable-grab shrink-0 !w-12 !bg-secondary transition-opacity flex items-center justify-center px-3 text-sm opacity-75 hover:opacity-100">
-    <ChevronUpDownIcon class="size-5"/>
+    <HeroIcon Name="chevron-up-down" Class="size-5"/>
   </div>
   <div class="sortable-item-content grid grid-cols-[14rem_1fr_1fr_7rem_1fr_3rem] divide-x size-full">
     <div class="size-full flex items-center justify-center px-2">
@@ -48,7 +47,7 @@
         />
         @if (GetTypedBarcode()?.Type == typeof(DateTime))
         {
-          <InformationCircleIcon id="@MaskId" class="text-muted-foreground size-5 mr-2 shrink-0 cursor-pointer"/>
+          <HeroIcon Name="information-circle" id="@MaskId" Class="text-muted-foreground size-5 mr-2 shrink-0 cursor-pointer"/>
           <Tooltip Anchor="@MaskId">
             <b>yy</b>: Год (00-99)<br/>
             <b>MM</b>: Месяц (01-12)<br/>
@@ -95,7 +94,7 @@
         Variant="ButtonVariant.Ghost"
         Size="ButtonSize.Icon"
         OnClick="@(() => Parent.DeleteBarcodeItem(Value))">
-        <TrashIcon class="size-5 text-destructive"/>
+        <HeroIcon Name="trash" Class="size-5 text-destructive" />
       </PlButton>
     </div>
   </div>

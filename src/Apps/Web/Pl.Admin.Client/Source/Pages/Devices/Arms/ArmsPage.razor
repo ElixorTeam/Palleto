@@ -1,4 +1,3 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Admin.Client.Source.Features
 @using Pl.Admin.Client.Source.Pages.Devices.Arms.Create
 @using Pl.Admin.Client.Source.Pages.Devices.Arms.Update
@@ -23,7 +22,7 @@
     Context="query"
   >
     <Breadcrumbs Class="pb-5">
-      <Breadcrumb Label=@Localizer["SectionArm"] Link="@Routes.Arms" />
+      <Breadcrumb Label=@Localizer["SectionArm"] Link="@Routes.Arms"/>
     </Breadcrumbs>
 
     <DataGridHeader>
@@ -58,16 +57,16 @@
             @switch (context.Type)
             {
               case ArmType.Pc:
-                <ComputerDesktopIcon class="size-5"/>
+                <HeroIcon Name="computer-desktop" Class="size-5" />
                 break;
               case ArmType.Tablet:
-                <DeviceTabletIcon class="size-5"/>
+                <HeroIcon Name="device-tablet" Class="size-5" />
                 break;
               case ArmType.Universal:
-                <ServerIcon class="size-5"/>
+                <HeroIcon Name="server" Class="size-5" />
                 break;
               default:
-                <ExclamationTriangleIcon class="size-5 text-destructive"/>
+                <HeroIcon Name="exclamation-triangle" Class="size-5 text-destructive" />
                 break;
             }
           </DisplayTemplate>

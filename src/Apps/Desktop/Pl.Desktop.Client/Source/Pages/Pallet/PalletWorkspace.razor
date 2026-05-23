@@ -1,4 +1,3 @@
-@using Blazor.Heroicons.Outline
 @using Pl.Components.Components
 @using Pl.Desktop.Models.Features.Pallets.Output
 @using Pl.Desktop.Client.Source.Pages.Pallet.PalletOverview
@@ -14,9 +13,8 @@
         <PlButton
           Size="ButtonSize.Icon"
           Variant="ButtonVariant.Ghost"
-          OnClick="@CloseCurrentPallet"
-        >
-          <ArrowLeftIcon class="size-5 text-muted-foreground"/>
+          OnClick="@CloseCurrentPallet">
+          <HeroIcon Name="arrow-left" Class="size-5 text-muted-foreground" />
         </PlButton>
       </div>
       <div class="h-full flex items-center justify-center w-full col-span-2 grow overflow-hidden">
