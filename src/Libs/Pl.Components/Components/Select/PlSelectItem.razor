@@ -8,7 +8,7 @@
   class="@CssClass"
   TValue="TValue"
   Value="Value"
-  Text="@DisplayText"
+  Text="@GetDisplayText()"
   Disabled="Disabled">
   <span class="truncate">
     @if (ChildContent is not null)
@@ -17,7 +17,7 @@
     }
     else
     {
-      @DisplayText
+      @GetDisplayText()
     }
   </span>
   @if (IsSelected)
@@ -46,7 +46,7 @@
     /// If not provided, will use ChildContent text or Value.ToString().
     /// </summary>
     [Parameter]
-    public string Text { get; set; } = string.Empty;
+    public string? Text { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the content to be rendered as the item's display text.
@@ -69,8 +69,8 @@
     /// Gets the display text for this item.
     /// Uses Text parameter if provided, otherwise falls back to Value.ToString().
     /// </summary>
-    private string? DisplayText =>
-      string.IsNullOrEmpty(Text) ? Text : Value?.ToString();
+    private string? GetDisplayText() =>
+      Text ?? Value?.ToString();
 
     /// <summary>
     /// Gets the computed CSS classes for the item.

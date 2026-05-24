@@ -16,15 +16,15 @@
   class="@CssClass">
     @if (Options is not null)
     {
-        <BbSelectTrigger TValue="TValue">
-            <BbSelectValue Placeholder="@Placeholder" />
-        </BbSelectTrigger>
-        <BbSelectContent TValue="TValue" OnLoadMore="@OnLoadMore" IsLoading="@IsLoading" EndOfListMessage="@EndOfListMessage">
+        <PlSelectTrigger TValue="TValue">
+            <PlSelectValue Placeholder="@Placeholder" />
+        </PlSelectTrigger>
+        <PlSelectContent TValue="TValue" OnLoadMore="@OnLoadMore" IsLoading="@IsLoading" EndOfListMessage="@EndOfListMessage">
             @foreach (SelectOption<TValue> option in Options)
             {
-                <BbSelectItem TValue="TValue" Value="@option.Value" Text="@option.Text" />
+              <PlSelectItem TValue="TValue" Value="@option.Value" Text="@option.Text">@option.Text</PlSelectItem>
             }
-        </BbSelectContent>
+        </PlSelectContent>
     }
     else
     {
@@ -192,4 +192,4 @@
     /// Gets the computed CSS classes for the select container.
     /// </summary>
     private string CssClass => ClassNames.Cn("relative", Class);
-}}
+}

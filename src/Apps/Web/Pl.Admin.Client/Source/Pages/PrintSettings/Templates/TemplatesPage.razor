@@ -1,9 +1,11 @@
+@using BlazorBlueprint.Primitives
 @using Pl.Admin.Client.Source.Pages.PrintSettings.Templates.Create
 @using Pl.Admin.Client.Source.Pages.PrintSettings.Templates.Update
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References.Template.Queries
+@using Pl.Components.Components
 
 @attribute [Route(Routes.Templates)]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
@@ -60,14 +62,12 @@
       >
         <FilterTemplate>
           @{ context.SearchValue = Type; }
-          <SelectSingle
-            TItem="bool?"
-            Items="@([false, true, null])"
+          <PlSelect
+            TValue="bool?"
             @bind-Value="@Type"
             @bind-Value:after="@(() => context.TriggerFilterChange(Type))"
-            Placeholder="@Localizer["SelectItemNotSelected"]"
-            ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] : GetTemplateTypeName(item.Value))"
-          />
+            Options="@TypeFilterOptions"
+            Placeholder="@Localizer["SelectItemNotSelected"]" />
         </FilterTemplate>
         <DisplayTemplate>
         <span>
@@ -114,6 +114,18 @@
   #endregion
 
   private bool? Type { get; set; }
+  private IList<SelectOption<bool?>> TypeFilterOptions { get; set; } = [];
+
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    TypeFilterOptions =
+    [
+      new(null, Localizer["SelectItemNotSelected"]),
+      new(false, GetTemplateTypeName(false)),
+      new(true, GetTemplateTypeName(true))
+    ];
+  }
 
   private Task OpenCreateDialog() =>
     DialogService.ShowDialogAsync<TemplateCreateDialog>(PageHelper.DialogParameters);

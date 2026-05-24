@@ -2,6 +2,7 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References.Template.Commands
 @using Pl.Admin.Models.Features.References.Template.Queries
+@using Pl.Components.Components
 
 @inherits SectionFormBase<TemplateUpdateDto>
 
@@ -29,14 +30,12 @@
       For="@(() => FormModel.Name)"
     />
 
-    <SectionSelectSingleField
-      TItem="short"
+    <PlFieldSelect
       @bind-Value="@FormModel.Rotate"
-      Items="@([0, 90])"
-      Label="@WsDataLocalizer["ColRotation"]"
-      ItemDisplayName="@(value => $"{value}°")"
-      For="@(() => FormModel.Rotate)"
-    />
+      Label="@($"{WsDataLocalizer["ColRotation"]} (°)")">
+      <PlSelectItem Value="@((short)0)" Text="0" />
+      <PlSelectItem Value="@((short)90)" Text="90" />
+    </PlFieldSelect>
 
     <SectionNumericField
       @bind-Value="@FormModel.Width"

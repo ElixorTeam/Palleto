@@ -1,6 +1,8 @@
+@using BlazorBlueprint.Primitives
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Models.Features.Database
+@using Pl.Components.Components
 
 @attribute [Route($"{Routes.Tables}")]
 @attribute [Authorize(Policy = PolicyEnum.Developer)]
@@ -43,14 +45,12 @@
           @{ context.SearchValue = Scheme; }
           @if (query.HasData)
           {
-            <SelectSingle
-              TItem="string?"
-              Items="@(query.Data.Select(x => x.Schema).ToHashSet().Union([null]))"
+            <PlSelect
+              TValue="string?"
               @bind-Value="@Scheme"
               @bind-Value:after="@(() => context.TriggerFilterChange(Scheme))"
-              Placeholder="@Localizer["SelectItemNotSelected"]"
-              ItemDisplayName="@(item => item ?? Localizer["SelectItemNotSelected"])"
-            />
+              Options="@BuildSchemeFilterOptions(query.Data)"
+              Placeholder="@Localizer["SelectItemNotSelected"]" />
           }
           else
           {
@@ -91,4 +91,10 @@
   # endregion
 
   private string? Scheme { get; set; }
+
+  private IList<SelectOption<string?>> BuildSchemeFilterOptions(IEnumerable<DataBaseTableDto> tables) =>
+    tables.Select(x => x.Schema).ToHashSet()
+      .Select(schema => new SelectOption<string?>(schema, schema))
+      .Append(new SelectOption<string?>(null, Localizer["SelectItemNotSelected"]))
+      .ToList();
 }

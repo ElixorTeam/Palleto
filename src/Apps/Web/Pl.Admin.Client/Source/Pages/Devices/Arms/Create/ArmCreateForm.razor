@@ -1,8 +1,10 @@
+@using BlazorBlueprint.Primitives
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Services.Stores
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Arms.Commands
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
+@using Pl.Components.Components
 
 @inherits SectionFormBase<ArmCreateDto>
 
@@ -29,14 +31,11 @@
       MaxLength="32"
     />
 
-    <SectionSelectSingleField
-      TItem="ArmType"
-      Label="@WsDataLocalizer["ColType"]"
-      Items="ArmTypes"
+    <PlFieldSelect
+      TValue="ArmType"
       @bind-Value="@FormModel.Type"
-      ItemDisplayName="item => Localizer[item.GetDescription()]"
-      For="@(() => FormModel.Type)"
-    />
+      Label="@WsDataLocalizer["ColType"]"
+      Options="ArmTypeOptions" />
 
     <FormDivider>@WsDataLocalizer["ColDevice"]</FormDivider>
 
@@ -137,7 +136,16 @@
 
   # endregion
 
-  private IEnumerable<ArmType> ArmTypes { get; } = Enum.GetValues(typeof(ArmType)).Cast<ArmType>().ToList();
+  private IList<SelectOption<ArmType>> ArmTypeOptions { get; set; } = [];
+
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    ArmTypeOptions = Enum.GetValues(typeof(ArmType))
+      .Cast<ArmType>()
+      .Select(item => new SelectOption<ArmType>(item, Localizer[item.GetDescription()]))
+      .ToList();
+  }
 
   protected override async Task CreateItemAction(ArmCreateDto item)
   {

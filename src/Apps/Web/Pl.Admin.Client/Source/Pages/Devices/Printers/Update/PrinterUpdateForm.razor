@@ -1,8 +1,10 @@
+@using BlazorBlueprint.Primitives
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using TscZebra.Plugin.Abstractions.Enums
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Printers.Commands
 @using Pl.Admin.Models.Features.Devices.Printers.Queries
+@using Pl.Components.Components
 
 @inherits SectionFormBase<PrinterUpdateDto>
 
@@ -34,13 +36,11 @@
         Path="@($"http://{FormModel.Ip}")"
       />
 
-      <SectionSelectSingleField
-        TItem="PrinterTypes"
-        Label="@WsDataLocalizer["ColManufacturer"]"
-        Items="PrinterTypes"
+      <PlFieldSelect
+        TValue="PrinterTypes"
         @bind-Value="@FormModel.Type"
-        For="@(() => FormModel.Type)"
-      />
+        Label="@WsDataLocalizer["ColManufacturer"]"
+        Options="PrinterTypeOptions" />
     </FieldsContent>
     <ActionsContent>
       <FormActionReset OnClick="@ResetAction" />
@@ -64,7 +64,16 @@
 
   [Parameter, EditorRequired] public PrinterDto Model { get; set; } = default!;
 
-  private IEnumerable<PrinterTypes> PrinterTypes { get; } = Enum.GetValues(typeof(PrinterTypes)).Cast<PrinterTypes>().ToList();
+  private IList<SelectOption<PrinterTypes>> PrinterTypeOptions { get; set; } = [];
+
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    PrinterTypeOptions = Enum.GetValues(typeof(PrinterTypes))
+      .Cast<PrinterTypes>()
+      .Select(item => new SelectOption<PrinterTypes>(item, Localizer[item.GetDescription()]))
+      .ToList();
+  }
 
   protected override async Task UpdateItemAction(PrinterUpdateDto item)
   {

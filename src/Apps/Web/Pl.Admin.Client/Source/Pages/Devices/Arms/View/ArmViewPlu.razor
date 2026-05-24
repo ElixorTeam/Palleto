@@ -1,9 +1,11 @@
+@using BlazorBlueprint.Primitives
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Refit
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
 @using Pl.Admin.Models.Features.References1C.Brands
 @using Pl.Admin.Client.Source.Features
+@using Pl.Components.Components
 
 
 <SupportAuthView ProductionSiteUid="Model.ProductionSite.Id" Ignore Context="isSupportAllowed">
@@ -35,15 +37,12 @@
         >
           <FilterTemplate>
             @{ context.SearchValue = IsActiveFilter; }
-            <SelectSingle
-              TItem="bool?"
-              Items="@( [false, true, null])"
+            <PlSelect
+              TValue="bool?"
               @bind-Value="@IsActiveFilter"
               @bind-Value:after="@(() => context.TriggerFilterChange(IsActiveFilter))"
-              Placeholder="@Localizer["SelectItemNotSelected"]"
-              ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] :
-                                 item.Value ? Localizer["StateOn"] : Localizer["StateOff"])"
-            />
+              Options="@IsActiveFilterOptions"
+              Placeholder="@Localizer["SelectItemNotSelected"]" />
           </FilterTemplate>
           <DisplayTemplate>
             <div class="size-full flex items-center justify-center">
@@ -71,15 +70,12 @@
         >
           <FilterTemplate>
             @{ context.SearchValue = IsWeightFilter; }
-            <SelectSingle
-              TItem="bool?"
-              Items="@( [false, true, null])"
+            <PlSelect
+              TValue="bool?"
               @bind-Value="@IsWeightFilter"
               @bind-Value:after="@(() => context.TriggerFilterChange(IsWeightFilter))"
-              Placeholder="@Localizer["SelectItemNotSelected"]"
-              ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] :
-                                 item.Value ? WsDataLocalizer["ColPluWeight"] : WsDataLocalizer["ColPluPiece"])"
-            />
+              Options="@IsWeightFilterOptions"
+              Placeholder="@Localizer["SelectItemNotSelected"]" />
           </FilterTemplate>
           <DisplayTemplate>
           <span>
@@ -106,15 +102,12 @@
             <UseParameterlessEndpoint Endpoint="@References1CEndpoints.BrandsEndpoint" Context="brandsQuery">
               @if (brandsQuery.HasData)
               {
-                <SelectSingle
-                  TItem="BrandDto?"
-                  Items="@(brandsQuery.Data.Concat([null]))"
+                <PlSelect
+                  TValue="BrandDto?"
                   @bind-Value="@BrandFilter"
                   @bind-Value:after="@(() => context.TriggerFilterChange(BrandFilter?.Name))"
-                  Placeholder="@Localizer["SelectItemNotSelected"]"
-                  ItemDisplayName="@(item => item?.Name ?? Localizer["SelectItemNotSelected"])"
-                  Filterable
-                />
+                  Options="@BuildBrandFilterOptions(brandsQuery.Data)"
+                  Placeholder="@Localizer["SelectItemNotSelected"]" />
               }
               else
               {
@@ -153,10 +146,24 @@
   private BrandDto? BrandFilter { get; set; }
   private bool? IsWeightFilter { get; set; }
   private bool? IsActiveFilter { get; set; }
+  private IList<SelectOption<bool?>> IsActiveFilterOptions { get; set; } = [];
+  private IList<SelectOption<bool?>> IsWeightFilterOptions { get; set; } = [];
 
   protected override void OnInitialized()
   {
     base.OnInitialized();
+    IsActiveFilterOptions =
+    [
+      new(null, Localizer["SelectItemNotSelected"]),
+      new(false, Localizer["StateOff"]),
+      new(true, Localizer["StateOn"])
+    ];
+    IsWeightFilterOptions =
+    [
+      new(null, Localizer["SelectItemNotSelected"]),
+      new(false, WsDataLocalizer["ColPluPiece"]),
+      new(true, WsDataLocalizer["ColPluWeight"])
+    ];
     IsWeightFilter = Model.Type switch
     {
       ArmType.Pc => false,
@@ -164,6 +171,11 @@
       _ => IsWeightFilter
     };
   }
+
+  private IList<SelectOption<BrandDto?>> BuildBrandFilterOptions(IEnumerable<BrandDto> brands) =>
+    brands.Select(brand => new SelectOption<BrandDto?>(brand, brand.Name))
+      .Append(new SelectOption<BrandDto?>(null, Localizer["SelectItemNotSelected"]))
+      .ToList();
 
   private async Task DeleteArmPlu(PluArmDto item)
   {

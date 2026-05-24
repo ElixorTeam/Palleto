@@ -8,7 +8,16 @@
   class="@CssClass"
   @attributes="AdditionalAttributes">
     @ChildContent
-    <svg class="ms-2 h-4 w-4 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg
+      class="ms-2 h-4 w-4 opacity-50 transition-transform duration-200"
+      style="transform: @(IsOpen ? "rotate(180deg)" : "rotate(0deg)")"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round">
       <polyline points="6 9 12 15 18 9"></polyline>
     </svg>
 </BbSelectTrigger>

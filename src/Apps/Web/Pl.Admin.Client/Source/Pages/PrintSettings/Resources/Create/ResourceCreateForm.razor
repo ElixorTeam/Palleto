@@ -1,7 +1,9 @@
+@using BlazorBlueprint.Primitives
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References.TemplateResources.Commands
 @using Pl.Admin.Models.Features.References.TemplateResources.Queries
+@using Pl.Components.Components
 @inherits SectionFormBase<ZplResourceCreateDto>
 
 <SectionForm
@@ -17,14 +19,11 @@
       For="@(() => FormModel.Name)"
     />
 
-    <SectionSelectSingleField
-      TItem="ZplResourceType"
-      Label="@WsDataLocalizer["ColType"]"
-      Items="ZplResourceTypes"
+    <PlFieldSelect
+      TValue="ZplResourceType"
       @bind-Value="@FormModel.Type"
-      ItemDisplayName="item => Localizer[item.GetDescription()]"
-      For="@(() => FormModel.Type)"
-    />
+      Label="@WsDataLocalizer["ColType"]"
+      Options="ZplResourceTypes" />
 
     <SectionTextAreaField
       @bind-Value="@FormModel.Body"
@@ -45,7 +44,16 @@
 
   #endregion
 
-  private IList<ZplResourceType> ZplResourceTypes { get; set; } = Enum.GetValues(typeof(ZplResourceType)).Cast<ZplResourceType>().ToList();
+  private IList<SelectOption<ZplResourceType>> ZplResourceTypes { get; set; } = [];
+
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    ZplResourceTypes = Enum.GetValues(typeof(ZplResourceType))
+      .Cast<ZplResourceType>()
+      .Select(item => new SelectOption<ZplResourceType>(item, Localizer[item.GetDescription()]))
+      .ToList();
+  }
 
   protected override async Task CreateItemAction(ZplResourceCreateDto item)
   {

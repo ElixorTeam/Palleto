@@ -1,9 +1,11 @@
+@using BlazorBlueprint.Primitives
 @using Pl.Admin.Client.Source.Pages.PrintSettings.Resources.Create
 @using Pl.Admin.Client.Source.Pages.PrintSettings.Resources.Update
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References.TemplateResources.Queries
+@using Pl.Components.Components
 
 @attribute [Route(Routes.Resources)]
 @attribute [Authorize(Policy = PolicyEnum.Support)]
@@ -55,14 +57,12 @@
       >
         <FilterTemplate>
           @{ context.SearchValue = Type; }
-          <SelectSingle
-            TItem="ZplResourceType?"
-            Items="@(Enum.GetValues(typeof(ZplResourceType)).Cast<ZplResourceType?>().ToList().Union([null]))"
+          <PlSelect
+            TValue="ZplResourceType?"
             @bind-Value="@Type"
             @bind-Value:after="@(() => context.TriggerFilterChange(Type))"
-            Placeholder="@Localizer["SelectItemNotSelected"]"
-            ItemDisplayName="@(item => item == null ? Localizer["SelectItemNotSelected"] : Localizer[item.Value.GetDescription()])"
-          />
+            Options="@TypeFilterOptions"
+            Placeholder="@Localizer["SelectItemNotSelected"]" />
         </FilterTemplate>
         <DisplayTemplate>
           @Localizer[context.Type.GetDescription()]
@@ -103,6 +103,17 @@
   #endregion
 
   private ZplResourceType? Type { get; set; }
+  private IList<SelectOption<ZplResourceType?>> TypeFilterOptions { get; set; } = [];
+
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    TypeFilterOptions = Enum.GetValues(typeof(ZplResourceType))
+      .Cast<ZplResourceType>()
+      .Select(item => new SelectOption<ZplResourceType?>(item, Localizer[item.GetDescription()]))
+      .Append(new(null, Localizer["SelectItemNotSelected"]))
+      .ToList();
+  }
 
   private Task OpenCreateDialog() =>
     DialogService.ShowDialogAsync<ResourceCreateDialog>(PageHelper.DialogParameters);

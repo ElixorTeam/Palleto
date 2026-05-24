@@ -2,6 +2,7 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References.Template.Commands
 @using Pl.Admin.Models.Features.References.Template.Queries
+@using Pl.Components.Components
 @inherits SectionFormBase<TemplateCreateDto>
 
 <SectionForm
@@ -18,13 +19,13 @@
       For="@(() => FormModel.Name)"
     />
 
-    <SectionSelectSingleField
-      TItem="bool"
-      Items="@(new[] { false, true })"
+    <PlFieldSelect
+      @bind-Value="@FormModel.IsWeight"
       Label="@WsDataLocalizer["ColType"]"
-      @bind-Value="FormModel.IsWeight"
-      ItemDisplayName="GetTemplateTypeName"
-    />
+      ItemDisplayName='i => WsDataLocalizer[i ? "ColTemplateWeight" : "ColTemplatePiece"]'>
+      <PlSelectItem Value="true" Text="@WsDataLocalizer["ColTemplateWeight"]" />
+      <PlSelectItem Value="false" Text="@WsDataLocalizer["ColTemplatePiece"]" />
+    </PlFieldSelect>
 
     <FormDivider>@WsDataLocalizer["ColSize"]</FormDivider>
 
@@ -42,13 +43,12 @@
       For="@(() => FormModel.Height)"
     />
 
-    <SectionSelectSingleField
-      TItem="short"
+    <PlFieldSelect
       @bind-Value="@FormModel.Rotate"
-      Items="@( [0, 90])"
-      Label="@($"{WsDataLocalizer["ColRotation"]} (°)")"
-      For="@(() => FormModel.Rotate)"
-    />
+      Label="@($"{WsDataLocalizer["ColRotation"]} (°)")">
+      <PlSelectItem Value="@((short)0)" Text="0" />
+      <PlSelectItem Value="@((short)90)" Text="90" />
+    </PlFieldSelect>
 
     <FormDivider>@WsDataLocalizer["ColTemplate"]</FormDivider>
 
@@ -76,7 +76,4 @@
     TemplateDto dto = await WebApi.CreateTemplate(item);
     PrintSettingsEndpoints.AddTemplate(dto, FormModel.Body);
   }
-
-  private string GetTemplateTypeName(bool isWeight) =>
-    isWeight ? WsDataLocalizer["ColTemplateWeight"] : WsDataLocalizer["ColTemplatePiece"];
 }

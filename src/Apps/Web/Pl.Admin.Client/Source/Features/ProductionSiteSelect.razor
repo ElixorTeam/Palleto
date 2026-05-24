@@ -1,4 +1,6 @@
+@using BlazorBlueprint.Primitives
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Components.Components
 
 <UseParameterlessEndpoint
   Endpoint="ReferencesEndpoints.ProxyProductionSiteEndpoint"
@@ -6,18 +8,13 @@
 >
   @if (productionSiteQuery.HasData)
   {
-    <SelectSingle
-      TItem="ProxyDto"
-      Items="GetFilteredProductionSiteList(productionSiteQuery.Data)"
+    <PlSelect
+      TValue="ProxyDto"
       @bind-Value="Value"
       @bind-Value:after="OnValueChanged"
-      ItemDisplayName="@(item => item.Name)"
+      Options="@GetProductionSiteOptions(productionSiteQuery.Data)"
       Placeholder="@Localizer["FormProductionSiteDefaultPlaceholder"]"
-      EmptyPlaceholder="@Localizer["FormSelectEmptyDefaultPlaceholder"]"
-      SearchPlaceholder="@Localizer["FormSelectSearchDefaultPlaceholder"]"
-      Disabled="@(productionSiteQuery.Data.Length <= 1)"
-      Filterable
-    />
+      Disabled="@(productionSiteQuery.Data.Length <= 1)" />
   }
   else
   {
@@ -45,4 +42,9 @@
     if (AllowIsNew) productionSitesList = productionSitesList.Append(new(Guid.Empty, "Без площадки")).ToList();
     return productionSitesList;
   }
+
+  private IList<SelectOption<ProxyDto>> GetProductionSiteOptions(ProxyDto[] productionSites) =>
+    GetFilteredProductionSiteList(productionSites)
+      .Select(item => new SelectOption<ProxyDto>(item, item.Name))
+      .ToList();
 }

@@ -1,3 +1,4 @@
+@using BlazorBlueprint.Primitives
 @using Pl.Components.Components
 @using Pl.Print.Features.Barcodes.Models
 @using Pl.Print.Features.Barcodes.Utils
@@ -25,14 +26,13 @@
       }
       else
       {
-        <SelectSingle
-          TItem="string"
-          Items="@GetFilteredValues().Select(x => x.Property)"
+        <PlSelect
+          TValue="string"
           @bind-Value="@Value.Property"
           @bind-Value:after="@OnVarSelect"
-          ItemDisplayName="@(item => string.IsNullOrWhiteSpace(item) ? Localizer["BarcodeEditorVariableSelectPlaceholder"] : item.ToString())"
-          Class="border-none rounded-none h-full"
-        />
+          Options="@GetVariableOptions()"
+          Placeholder="@Localizer["BarcodeEditorVariableSelectPlaceholder"]"
+          Class="border-none rounded-none h-full w-full" />
       }
     </div>
     <div class="size-full flex items-center transition-colors hover:bg-accent hover:text-accent-foreground">
@@ -60,14 +60,13 @@
       }
       else
       {
-        <SelectSingle
-          TItem="string"
+        <PlSelect
+          TValue="string"
           @bind-Value="@Value.FormatStr"
           @bind-Value:after="@OnMaskEnter"
-          Items="@BarcodeVarUtils.BarcodeVarConstantsFormats"
+          Options="@FormatOptions"
           Placeholder="@Localizer["BarcodeEditorMaskPlaceholder"]"
-          Class="border-none rounded-none bg-inherit h-full"
-        />
+          Class="border-none rounded-none bg-inherit h-full w-full" />
       }
     </div>
     <div class="size-full flex items-center px-3 gap-1 text-sm">
@@ -110,6 +109,16 @@
   [Parameter] public EventCallback<ExtendedBarcodeItemDto> ValueChanged { get; set; }
 
   private string MaskId { get; set; } = $"mask-info-{Guid.NewGuid()}";
+
+  private IList<SelectOption<string>> FormatOptions { get; } =
+    BarcodeVarUtils.BarcodeVarConstantsFormats
+      .Select(format => new SelectOption<string>(format, format))
+      .ToList();
+
+  private IList<SelectOption<string>> GetVariableOptions() =>
+    GetFilteredValues()
+      .Select(item => new SelectOption<string>(item.Property, item.Property))
+      .ToList();
 
   private async Task UpdateValueAsync() => await ValueChanged.InvokeAsync(Value);
 
