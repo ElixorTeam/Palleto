@@ -1,4 +1,5 @@
 ﻿@namespace Pl.Components.Components
+@inherits PlComponentBase
 @* @inject IBbLocalizer Localizer *@
 @* aria-label="@Localizer["Breadcrumb.Breadcrumb"]" *@
 
@@ -11,10 +12,7 @@
 
 @code {
   [Parameter]
-  public string Class { get; set; } = string.Empty;
-
-  [Parameter]
   public RenderFragment? ChildContent { get; set; }
 
-  private string CssClass => ClassNames.Cn(Class);
+  protected override string CssClass => ClassNames.Cn(Class);
 }

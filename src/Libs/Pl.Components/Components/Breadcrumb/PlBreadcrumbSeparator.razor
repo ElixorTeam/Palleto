@@ -1,4 +1,5 @@
 ﻿@namespace Pl.Components.Components
+@inherits PlComponentBase
 
 @if (string.IsNullOrEmpty(Href))
 {
@@ -18,10 +19,7 @@ else
   public string? Href { get; set; }
 
   [Parameter]
-  public string? Class { get; set; }
-
-  [Parameter]
   public RenderFragment? ChildContent { get; set; }
 
-  private string CssClass => ClassNames.Cn("transition-colors hover:text-foreground", Class);
+  protected override string CssClass => ClassNames.Cn("transition-colors hover:text-foreground", Class);
 }

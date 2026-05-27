@@ -1,16 +1,16 @@
-using Pl.Admin.Client.Source.Shared.Auth.Settings;
 using Pl.Admin.Client.Source.Shared.Auth.Shared;
 using Pl.Admin.Client.Source.Shared.Constants;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Pl.Admin.Client.Source.Shared.Auth.Options;
 
 namespace Pl.Admin.Client.Source.Shared.Auth;
 
 internal static class AuthSetupServiceCollectionExtensions
 {
-    internal static IServiceCollection ConfigureKeycloakAuthorization(this IServiceCollection services, OidcSettings oidcConfiguration)
+    internal static IServiceCollection ConfigureKeycloakAuthorization(this IServiceCollection services, OidcOptions oidcConfiguration)
     {
         services
             .AddAuthentication(oidcConfiguration.Scheme)
@@ -76,7 +76,7 @@ file static class AuthBuilderExtensions
         return authBuilder;
     }
 
-    public static AuthenticationBuilder ConfigureOpenIdConnectAuthentication(this AuthenticationBuilder authBuilder, OidcSettings oidcConfiguration)
+    public static AuthenticationBuilder ConfigureOpenIdConnectAuthentication(this AuthenticationBuilder authBuilder, OidcOptions oidcConfiguration)
     {
         authBuilder
             .AddOpenIdConnect(oidcConfiguration.Scheme, options =>

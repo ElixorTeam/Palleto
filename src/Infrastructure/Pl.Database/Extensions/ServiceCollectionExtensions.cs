@@ -1,16 +1,14 @@
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Pl.Database.Options;
 
 namespace Pl.Database;
 
-public static class DependencyInjection
+public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddEfCore(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddPlDatabase(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<DatabaseOptions>(configuration.GetSection(DatabaseOptions.Database));
-
         DatabaseOptions databaseOptions =
-            configuration.GetSection(DatabaseOptions.Database).Get<DatabaseOptions>()
+            configuration.GetRequiredSection(DatabaseOptions.Database).Get<DatabaseOptions>()
             ?? throw new InvalidOperationException($"{DatabaseOptions.Database} is missing in configuration");
 
         services.AddDbContext<WsDbContext>((_, options) =>

@@ -20,7 +20,7 @@ builder.Services
     );
 
 builder.Services
-    .AddEfCore(builder.Configuration)
+    .AddPlDatabase(builder.Configuration)
     .AddLabelsServices(palychSettings)
     .AddHelpers<IDesktopApiAssembly>()
     .AddMiddlewares<IDesktopApiAssembly>()

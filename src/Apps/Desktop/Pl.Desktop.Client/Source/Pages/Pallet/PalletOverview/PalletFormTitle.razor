@@ -17,10 +17,10 @@
     }
     @if (PalletState.Value.Pallet.IsDelete)
     {
-      <PlBadge Variant="@BadgeVariant.Destructive" Class="pb-1" id="badge-deleted-pallet">Удалено</PlBadge>
-      <Tooltip Anchor="badge-deleted-pallet">
+      <PlBadge Variant="@BadgeVariant.Destructive" Class="pb-1">Удалено</PlBadge>
+      @*<Tooltip Anchor="badge-deleted-pallet">
         @PalletState.Value.Pallet.DeletedAt
-      </Tooltip>
+      </Tooltip>*@
     }
   </div>
 }

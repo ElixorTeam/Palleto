@@ -18,6 +18,10 @@
 }
 
 @layer base {
+  ::selection {
+    @apply bg-primary text-primary-foreground;
+  }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
@@ -27,8 +31,8 @@
     @apply border-border;
   }
 
-  *:focus-visible {
-    @apply focus-visible:outline-none;
+  body {
+    @apply bg-background text-foreground font-sans;
   }
 
   button:not(:disabled),

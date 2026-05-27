@@ -1,5 +1,4 @@
 using BF.Utilities.Handlers;
-using BlazorBlueprint.Primitives.Extensions;
 using Blazorise;
 using Blazorise.Icons.FontAwesome;
 using Fluxor;
@@ -7,8 +6,9 @@ using Pl.Admin.Client;
 using Pl.Admin.Client.Source.App;
 using Pl.Admin.Client.Source.Shared.Api;
 using Pl.Admin.Client.Source.Shared.Auth;
-using Pl.Admin.Client.Source.Shared.Auth.Settings;
+using Pl.Admin.Client.Source.Shared.Auth.Options;
 using Pl.Admin.Models;
+using Pl.Components.Components;
 using Pl.Shared.Constants;
 using Pl.Shared.Web.Extensions;
 using TailwindMerge.Extensions;
@@ -16,25 +16,24 @@ using Routes = Pl.Admin.Client.Source.Shared.Constants.Routes;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-OidcSettings oidcSettings = builder.Configuration
-    .GetSection("Oidc").Get<OidcSettings>() ?? throw new NullReferenceException();
+OidcOptions oidcOptions = builder.Configuration
+    .GetRequiredSection("Oidc").Get<OidcOptions>() ?? throw new NullReferenceException();
 
 builder.RegisterRefitClients();
 
-builder.Services.AddBlazorBlueprintPrimitives();
+builder.Services
+    .AddRazorComponents()
+    .AddInteractiveServerComponents()
+    .AddCircuitOptions(options => options.DetailedErrors = true);
 
 builder.Services
+    .AddPlComponents()
     .AddUserClaims()
     .AddHelpers<IAdminAssembly>()
     .AddRefitEndpoints<IAdminAssembly>()
     .AddDelegatingHandlers<IAdminAssembly>()
     .AddValidators<IAdminModelsAssembly>()
     .AddTransient<AcceptLanguageHandler>();
-
-builder.Services
-    .AddRazorComponents()
-    .AddInteractiveServerComponents()
-    .AddCircuitOptions(options => options.DetailedErrors = true);
 
 builder.Services
     .AddBlazorise()
@@ -44,9 +43,8 @@ builder.Services
     .AddLocalization()
     .AddFluxor(c => c.ScanAssemblies(typeof(IAdminAssembly).Assembly))
     .AddFluentUIComponents(c => c.ValidateClassNames = false)
-    .ConfigureKeycloakAuthorization(oidcSettings);
-
-builder.Services.AddTailwindMerge();
+    .ConfigureKeycloakAuthorization(oidcOptions)
+    .AddTailwindMerge();
 
 WebApplication app = builder.Build();
 
@@ -68,7 +66,7 @@ app.UseStatusCodePagesWithRedirects("/not-found");
 
 app
     .MapGroup(Routes.Authorization)
-    .MapLoginAndLogout(oidcSettings.Scheme);
+    .MapLoginAndLogout(oidcOptions.Scheme);
 
 app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 app.Run();

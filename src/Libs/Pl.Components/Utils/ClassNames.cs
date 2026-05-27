@@ -5,9 +5,11 @@ namespace Pl.Components.Components;
 
 public static partial class ClassNames
 {
+    [GeneratedRegex(@"^[a-zA-Z0-9_\-:/.[\]()%!@#&>+~=*,' ]+$", RegexOptions.Compiled)]
+    private static partial Regex ValidClassNameRegexGen();
+
     private static readonly TwMerge TwMerge = new();
     private static readonly Regex ValidClassNameRegex = ValidClassNameRegexGen();
-
     private static readonly char[] WhitespaceSeparators = [' ', '\t', '\n', '\r'];
 
     /// <summary>
@@ -29,25 +31,9 @@ public static partial class ClassNames
         return TwMerge.Merge(string.Join(" ", classes)) ?? string.Empty;
     }
 
-    /// <summary>
-    /// Returns the class string if the condition is true
-    /// </summary>
-    /// <code>
-    /// cn("btn", when(isActive, "btn-active"), "px-4")
-    /// // Instead of:
-    /// cn("btn", isActive ? "btn-active" : null, "px-4")
-    /// </code>
-    public static string? When(bool condition, string className) =>
-        condition ? className : null;
+    public static string When(bool condition, string className) =>
+        condition ? className : string.Empty;
 
-    /// <summary>
-    /// Returns the class string if / else condition
-    /// </summary>
-    /// <code>
-    /// cn("btn", WhenElse(isActive, "btn-active", "btn-disabled"), "px-4")
-    /// // Instead of:
-    /// cn("btn", isActive ? "btn-active" : "btn-disabled", "px-4")
-    /// </code>
     public static string WhenElse(bool condition, string ifClass, string elseClass) =>
         condition ? ifClass : elseClass;
 
@@ -103,7 +89,4 @@ public static partial class ClassNames
 
         return ValidClassNameRegex.IsMatch(className);
     }
-
-    [GeneratedRegex(@"^[a-zA-Z0-9_\-:/.[\]()%!@#&>+~=*,' ]+$", RegexOptions.Compiled)]
-    private static partial Regex ValidClassNameRegexGen();
 }

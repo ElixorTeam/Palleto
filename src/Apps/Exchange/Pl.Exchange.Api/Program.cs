@@ -15,7 +15,7 @@ builder.Services
     .AddXmlSerializerFormatters();
 
 builder.Services
-    .AddEfCore(builder.Configuration)
+    .AddPlDatabase(builder.Configuration)
     .AddValidators<IExchangeAssembly>()
     .AddMiddlewares<IExchangeAssembly>()
     .AddApiServices<IExchangeAssembly>();

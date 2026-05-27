@@ -5,7 +5,7 @@ using Pl.Shared.Web.Extensions;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddEfCore(builder.Configuration)
+    .AddPlDatabase(builder.Configuration)
     .AddLocalization()
     .AddHttpContextAccessor()
     .AddEndpointsApiExplorer();

@@ -1,6 +1,6 @@
-namespace Pl.Admin.Client.Source.Shared.Auth.Settings;
+namespace Pl.Admin.Client.Source.Shared.Auth.Options;
 
-public class OidcSettings
+public class OidcOptions
 {
     [JsonPropertyName("RequireHttpsMetadata")]
     public bool RequireHttpsMetadata { get; init; }

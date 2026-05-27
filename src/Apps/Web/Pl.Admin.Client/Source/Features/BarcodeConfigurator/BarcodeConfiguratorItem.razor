@@ -47,15 +47,15 @@
         />
         @if (GetTypedBarcode()?.Type == typeof(DateTime))
         {
-          <HeroIcon Name="information-circle" id="@MaskId" Class="text-muted-foreground size-5 mr-2 shrink-0 cursor-pointer"/>
-          <Tooltip Anchor="@MaskId">
+          <HeroIcon Name="information-circle" Class="text-muted-foreground size-5 mr-2 shrink-0 cursor-pointer"/>
+          @*<Tooltip Anchor="@MaskId">
             <b>yy</b>: Год (00-99)<br/>
             <b>MM</b>: Месяц (01-12)<br/>
             <b>dd</b>: День (01-31)<br/>
             <b>HH</b>: Часы (00-23)<br/>
             <b>mm</b>: Минуты (00-59)<br/>
             <b>ss</b>: Секунды (00-59)<br/>
-          </Tooltip>
+          </Tooltip>*@
         }
       }
       else
@@ -107,8 +107,6 @@
 
   [Parameter, EditorRequired] public ExtendedBarcodeItemDto Value { get; set; } = default!;
   [Parameter] public EventCallback<ExtendedBarcodeItemDto> ValueChanged { get; set; }
-
-  private string MaskId { get; set; } = $"mask-info-{Guid.NewGuid()}";
 
   private IList<SelectOption<string>> FormatOptions { get; } =
     BarcodeVarUtils.BarcodeVarConstantsFormats

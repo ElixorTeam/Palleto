@@ -6,13 +6,13 @@
 </CascadingValue>
 
 @code {
-  private int _itemCount = 0;
+  private int _itemCount;
 
   [Parameter]
   public RenderFragment? ChildContent { get; set; }
 
   /// <summary>
-  /// When true, automatically inserts <see cref="BbBreadcrumbSeparator"/> between each <see cref="BbBreadcrumbItem"/>.
+  /// When true, automatically inserts <see cref="PlBreadcrumbSeparator"/> between each <see cref="PlBreadcrumbItem"/>.
   /// </summary>
   [Parameter]
   public bool AutoSeparator { get; set; }
