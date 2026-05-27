@@ -46,11 +46,11 @@
           </FilterTemplate>
           <DisplayTemplate>
             <div class="size-full flex items-center justify-center">
-              <Switch
-                Value="@context.IsActive"
+              <PlSwitch
+                @Value="@context.IsActive"
                 ValueChanged="@(value => value ? AddArmPlu(context) : DeleteArmPlu(context))"
                 Disabled="@(!isSupportAllowed)"
-              />
+                />
             </div>
           </DisplayTemplate>
         </DataGridColumn>
@@ -174,7 +174,7 @@
 
   private IList<SelectOption<BrandDto?>> BuildBrandFilterOptions(IEnumerable<BrandDto> brands) =>
     brands.Select(brand => new SelectOption<BrandDto?>(brand, brand.Name))
-      .Append(new SelectOption<BrandDto?>(null, Localizer["SelectItemNotSelected"]))
+      .Append(new(null, Localizer["SelectItemNotSelected"]))
       .ToList();
 
   private async Task DeleteArmPlu(PluArmDto item)

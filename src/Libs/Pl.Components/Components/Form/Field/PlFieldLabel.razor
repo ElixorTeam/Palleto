@@ -1,0 +1,39 @@
+﻿@namespace Pl.Components.Components
+@inherits PlComponentBase
+
+<label
+  for="@For"
+  data-slot="field-label"
+  class="@CssClass"
+  @attributes="AdditionalAttributes">
+  @ChildContent
+</label>
+
+@code {
+  /// <summary>
+  /// Gets or sets the ID of the form control this label is associated with.
+  /// </summary>
+  /// <remarks>
+  /// Should match the ID of the input element for proper accessibility.
+  /// Enables clicking the label to focus the associated input.
+  /// </remarks>
+  [Parameter]
+  public string? For { get; set; }
+
+  /// <summary>
+  /// Gets or sets the content to be rendered inside the label.
+  /// </summary>
+  /// <remarks>
+  /// Typically contains text describing the associated form control.
+  /// Can also include required indicators, tooltips, etc.
+  /// </remarks>
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
+
+  protected override string CssClass => ClassNames.Cn(
+    "text-sm font-medium leading-none",
+    "shrink-0",
+    "peer-aria-[invalid=true]:text-destructive",
+    Class
+  );
+}

@@ -1,0 +1,42 @@
+﻿@namespace Pl.Components.Components
+@inherits PlComponentBase
+
+<div
+  data-slot="field-description"
+  class="@CssClass"
+  @attributes="AdditionalAttributes">
+  @ChildContent
+</div>
+
+@code {
+  /// <summary>
+  /// Gets or sets the ID for aria-describedby association.
+  /// </summary>
+  /// <remarks>
+  /// When set, this ID should be referenced by the associated input's
+  /// aria-describedby attribute for proper accessibility.
+  /// </remarks>
+  [Parameter]
+  public string? Id { get; set; }
+
+  /// <summary>
+  /// Gets or sets the content to be rendered inside the description.
+  /// </summary>
+  /// <remarks>
+  /// Typically contains helpful text explaining the purpose or format
+  /// of the associated form field.
+  /// </remarks>
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
+
+  protected override string CssClass => ClassNames.Cn(
+    // Typography - smaller size
+    "text-sm",
+    // Color - muted for helper text
+    "text-muted-foreground",
+    // Text balancing for better line breaks
+    "text-balance",
+    // Custom classes (if provided)
+    Class
+  );
+}

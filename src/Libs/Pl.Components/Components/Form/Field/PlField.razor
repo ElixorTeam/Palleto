@@ -1,0 +1,100 @@
+﻿@namespace Pl.Components.Components
+@inherits PlComponentBase
+
+<div
+  role="group"
+  data-slot="field"
+  data-orientation="@Orientation.ToString().ToLowerInvariant()"
+  data-invalid="@(IsInvalid ? "true" : null)"
+  class="@CssClass"
+  @attributes="AdditionalAttributes">
+  <CascadingValue Value="@IsInvalid" Name="FieldIsInvalid">
+    @ChildContent
+  </CascadingValue>
+</div>
+
+@code {
+    /// <summary>
+    /// Full-width vertical stacking (default)
+    /// </summary>
+    private const string VerticalClasses = "flex-col w-full";
+
+    /// <summary>
+    /// Row-based layout with aligned items, full width to fill container
+    /// </summary>
+    private static readonly string HorizontalClasses = ClassNames.Cn(
+        "flex-row items-start w-full",
+        "[&:has([data-slot=checkbox])]:items-center",
+        "[&:has([data-slot=radio])]:items-center",
+        "[&:has([data-slot=switch])]:items-center"
+    );
+
+    /// <summary>
+    /// Vertical by default, horizontal at medium breakpoint
+    /// </summary>
+    private static readonly string ResponsiveClasses = ClassNames.Cn(
+        "flex-col w-full",
+        "@md:flex-row @md:items-start",
+        "@md:[&:has([data-slot=checkbox])]:items-center",
+        "@md:[&:has([data-slot=radio])]:items-center",
+        "@md:[&:has([data-slot=switch])]:items-center"
+    );
+
+    /// <summary>
+    /// Row-reverse layout: content first, then label (label on right/end), full width to fill container
+    /// </summary>
+    private static readonly string HorizontalEndClasses = ClassNames.Cn(
+        "flex-row-reverse items-start w-full",
+        "[&:has([data-slot=checkbox])]:items-center",
+        "[&:has([data-slot=radio])]:items-center",
+        "[&:has([data-slot=switch])]:items-center"
+    );
+
+    /// <summary>
+    /// Column-reverse layout: content first, then label (label on bottom)
+    /// </summary>
+    private const string VerticalEndClasses = "flex-col-reverse w-full";
+
+    /// <summary>
+    /// Gets or sets the orientation of the field layout.
+    /// </summary>
+    /// <remarks>
+    /// Default value is <see cref="FieldOrientation.Vertical"/>.
+    /// </remarks>
+    [Parameter]
+    public FieldOrientation Orientation { get; set; } = FieldOrientation.Vertical;
+
+    /// <summary>
+    /// Gets or sets whether the field is in an invalid/error state.
+    /// </summary>
+    /// <remarks>
+    /// Default value is false.
+    /// </remarks>
+    [Parameter]
+    public bool IsInvalid { get; set; }
+
+    /// <summary>
+    /// Gets or sets the content to be rendered inside the field.
+    /// </summary>
+    /// <remarks>
+    /// Typically contains FieldLabel, FieldContent, FieldDescription,
+    /// and FieldError components for a complete form field.
+    /// </remarks>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    protected override string CssClass => ClassNames.Cn(
+        "flex gap-2",
+        Orientation switch
+        {
+            FieldOrientation.Vertical => VerticalClasses,
+            FieldOrientation.Horizontal => HorizontalClasses,
+            FieldOrientation.Responsive => ResponsiveClasses,
+            FieldOrientation.HorizontalEnd => HorizontalEndClasses,
+            FieldOrientation.VerticalEnd => VerticalEndClasses,
+            _ => string.Empty
+        },
+        "data-[invalid=true]:text-destructive",
+        Class
+    );
+}

@@ -3,7 +3,7 @@
  * Handles input/blur/focus/keydown events in JS to minimize Blazor interop calls.
  */
 
-import type { DotNetObjectType } from "./types/dotnet-object-type";
+import type { DotNetObjectType } from "../types/dotnet-object-type";
 
 export interface NumericInputConfig {
 	disableDebounce: boolean;

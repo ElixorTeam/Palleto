@@ -1,0 +1,67 @@
+﻿@namespace Pl.Components.Components
+@inherits PlComponentBase
+
+@if (Errors != null && Errors.Any())
+{
+  <div
+    data-slot="field-error"
+    class="@CssClass"
+    @attributes="AdditionalAttributes">
+    @foreach (string error in Errors)
+    {
+      <div class="flex items-start gap-1.5">
+        <span class="mt-0.5">•</span>
+        <span>@error</span>
+      </div>
+    }
+  </div>
+}
+else if (ChildContent != null)
+{
+  <div
+    data-slot="field-error"
+    class="@CssClass"
+    @attributes="AdditionalAttributes">
+    @ChildContent
+  </div>
+}
+
+@code {
+      /// <summary>
+    /// Gets or sets the array of error messages to display.
+    /// </summary>
+    /// <remarks>
+    /// When provided, each error is rendered as a bulleted list item.
+    /// If both Errors and ChildContent are provided, Errors takes precedence.
+    /// Component only renders when errors are present or ChildContent is not null.
+    /// </remarks>
+    [Parameter]
+    public IEnumerable<string>? Errors { get; set; }
+
+    /// <summary>
+    /// Gets or sets the ID for aria-describedby association.
+    /// </summary>
+    /// <remarks>
+    /// When set, this ID should be referenced by the associated input's
+    /// aria-describedby attribute for proper accessibility.
+    /// </remarks>
+    [Parameter]
+    public string? Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets custom error content to be rendered.
+    /// </summary>
+    /// <remarks>
+    /// Used when you need custom error rendering beyond simple text messages.
+    /// If both Errors and ChildContent are provided, Errors takes precedence.
+    /// </remarks>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    protected override string CssClass => ClassNames.Cn(
+        "text-sm",
+        "font-medium",
+        "text-destructive",
+        Class
+    );
+}

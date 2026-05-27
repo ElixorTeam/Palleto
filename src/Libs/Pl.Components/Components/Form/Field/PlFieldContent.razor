@@ -1,0 +1,31 @@
+﻿@namespace Pl.Components.Components
+@inherits PlComponentBase
+
+<div
+  data-slot="field-content"
+  class="@CssClass"
+  @attributes="AdditionalAttributes">
+  @ChildContent
+</div>
+
+@code {
+  /// <summary>
+  /// Gets or sets the content to be rendered inside the field content container.
+  /// </summary>
+  /// <remarks>
+  /// Typically contains an input control, followed by optional
+  /// FieldDescription and FieldError components.
+  /// </remarks>
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
+
+
+  protected override string CssClass => ClassNames.Cn(
+    // Flex column layout with gap
+    "flex flex-col gap-1.5",
+    // Full width for responsive behavior, min-w-0 prevents overflow in horizontal layouts
+    "w-full min-w-0",
+    // Custom classes (if provided)
+    Class
+  );
+}

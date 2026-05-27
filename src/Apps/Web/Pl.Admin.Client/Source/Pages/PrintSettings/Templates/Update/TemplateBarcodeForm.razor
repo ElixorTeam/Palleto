@@ -1,3 +1,4 @@
+@using BlazorBlueprint.Primitives
 @using Pl.Admin.Client.Source.Features.BarcodeConfigurator
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using FluentValidation.Results
@@ -9,26 +10,36 @@
 @using Pl.Print.Features.Barcodes.Utils
 
 <div class="w-full bg-secondary/[.3] pt-6 pb-8 px-5 overflow-y-auto dark:bg-inherit">
-  <Accordion Label="@WsDataLocalizer["ColBarcodeTop"]">
-    <BarcodeConfigurator
-      BarcodeVariables="@BarcodeVarUtils.BarcodeVarInfos"
-      @bind-BarcodeDictionary="BarcodesCopy.Top"
-    />
-  </Accordion>
-  <Accordion Label="@WsDataLocalizer["ColBarcodeBottom"]">
-    <BarcodeConfigurator
-      BarcodeVariables="@BarcodeVarUtils.BarcodeVarInfos"
-      @bind-BarcodeDictionary="BarcodesCopy.Bottom"
-    />
-  </Accordion>
-  <Accordion Label="@WsDataLocalizer["ColBarcodeRight"]">
-    <BarcodeConfigurator
-      BarcodeVariables="@BarcodeVarUtils.BarcodeVarInfos"
-      @bind-BarcodeDictionary="BarcodesCopy.Right"
-    />
-  </Accordion>
+
+  <PlAccordion Type="AccordionType.Multiple">
+    <PlAccordionItem Value="ColBarcodeTop">
+      <PlAccordionTrigger>@WsDataLocalizer["ColBarcodeTop"]</PlAccordionTrigger>
+      <PlAccordionContent>
+        <BarcodeConfigurator
+          BarcodeVariables="@BarcodeVarUtils.BarcodeVarInfos"
+          @bind-BarcodeDictionary="BarcodesCopy.Top"/>
+      </PlAccordionContent>
+    </PlAccordionItem>
+    <PlAccordionItem Value="ColBarcodeBottom">
+      <PlAccordionTrigger>@WsDataLocalizer["ColBarcodeBottom"]</PlAccordionTrigger>
+      <PlAccordionContent>
+        <BarcodeConfigurator
+          BarcodeVariables="@BarcodeVarUtils.BarcodeVarInfos"
+          @bind-BarcodeDictionary="BarcodesCopy.Bottom"/>
+      </PlAccordionContent>
+    </PlAccordionItem>
+    <PlAccordionItem Value="ColBarcodeRight">
+      <PlAccordionTrigger>@WsDataLocalizer["ColBarcodeRight"]</PlAccordionTrigger>
+      <PlAccordionContent>
+        <BarcodeConfigurator
+          BarcodeVariables="@BarcodeVarUtils.BarcodeVarInfos"
+          @bind-BarcodeDictionary="BarcodesCopy.Right"/>
+      </PlAccordionContent>
+    </PlAccordionItem>
+  </PlAccordion>
+
   <div class="pt-4 flex justify-end gap-3">
-    <SectionCaptcha @bind-Valid="CaptchaValid" Class="!w-48" />
+    <SectionCaptcha @bind-Valid="CaptchaValid" Class="!w-48"/>
     <PlButton OnClick="@UpdateBarcode">
       @Localizer["BtnSubmit"]
     </PlButton>
