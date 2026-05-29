@@ -152,43 +152,24 @@
     /// <summary>
     /// Gets the computed CSS classes for the switch track element.
     /// </summary>
-    protected override string CssClass => ClassNames.Cn(
+    protected override string CssClass => CssUtil.Cn(
         "peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent",
         "transition-colors focus-visible:outline-none focus-visible:ring-2",
         "focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         "disabled:cursor-not-allowed disabled:opacity-50",
-        Size switch
-        {
-            SwitchSize.Small => "h-5 w-9",
-            SwitchSize.Medium => "h-6 w-11",
-            SwitchSize.Large => "h-7 w-14",
-            _ => "h-6 w-11"
-        },
-        ClassNames.WhenElse(Value, "bg-primary", "bg-input"),
+        Size.SwitchCss(),
+        CssUtil.WhenElse(Value, "bg-primary", "bg-input"),
         Class
     );
 
     /// <summary>
     /// Gets the computed CSS classes for the switch thumb element
     /// </summary>
-    private string ThumbCssClass => ClassNames.Cn(
+    private string ThumbCssClass => CssUtil.Cn(
         "pointer-events-none block rounded-full bg-background shadow-lg ring-0 transition-transform",
-        Size switch
-        {
-            SwitchSize.Small  => "h-4 w-4",
-            SwitchSize.Medium => "h-5 w-5",
-            SwitchSize.Large  => "h-6 w-6",
-            _                 => "h-5 w-5"
-        },
-        Value ? Size switch
-        {
-            SwitchSize.Small  => "translate-x-4",
-            SwitchSize.Medium => "translate-x-5",
-            SwitchSize.Large  => "translate-x-7",
-            _                 => "translate-x-5"
-        } : "translate-x-0",
-        ClassNames.When(ThumbContent is not null, "flex items-center justify-center"),
-        ClassNames.WhenElse(Value, ThumbCheckedClass, ThumbUncheckedClass),
+        Size.ThumbCss(Value),
+        CssUtil.When(ThumbContent is not null, "flex items-center justify-center"),
+        CssUtil.WhenElse(Value, ThumbCheckedClass, ThumbUncheckedClass),
         ThumbClass
     );
 

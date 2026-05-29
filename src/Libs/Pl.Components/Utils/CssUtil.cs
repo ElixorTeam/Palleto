@@ -3,13 +3,10 @@ using TailwindMerge;
 
 namespace Pl.Components.Components;
 
-public static partial class ClassNames
+public static partial class CssUtil
 {
-    [GeneratedRegex(@"^[a-zA-Z0-9_\-:/.[\]()%!@#&>+~=*,' ]+$", RegexOptions.Compiled)]
-    private static partial Regex ValidClassNameRegexGen();
-
     private static readonly TwMerge TwMerge = new();
-    private static readonly Regex ValidClassNameRegex = ValidClassNameRegexGen();
+    private static readonly Regex ValidClassNameRegex = new(@"^[a-zA-Z0-9_\-:/.[\]()%!@#&>+~=*,' ]+$", RegexOptions.Compiled);
     private static readonly char[] WhitespaceSeparators = [' ', '\t', '\n', '\r'];
 
     /// <summary>
@@ -31,8 +28,8 @@ public static partial class ClassNames
         return TwMerge.Merge(string.Join(" ", classes)) ?? string.Empty;
     }
 
-    public static string When(bool condition, string className) =>
-        condition ? className : string.Empty;
+    public static string? When(bool condition, string className) =>
+        condition ? className : null;
 
     public static string WhenElse(bool condition, string ifClass, string elseClass) =>
         condition ? ifClass : elseClass;

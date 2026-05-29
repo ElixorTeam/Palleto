@@ -102,7 +102,7 @@
     [Parameter]
     public string? Style { get; set; }
 
-    protected override string CssClass => ClassNames.Cn(
+    protected override string CssClass => CssUtil.Cn(
         "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover outline-none",
         "text-popover-foreground shadow-md",
         "data-[state=open]:animate-in data-[state=closed]:animate-out",

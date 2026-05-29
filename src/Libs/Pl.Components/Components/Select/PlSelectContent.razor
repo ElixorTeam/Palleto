@@ -73,7 +73,7 @@
     /// <summary>
     /// Outer container: border, shadow, animation — no scrolling.
     /// </summary>
-    private string OuterCssClass => ClassNames.Cn(
+    private string OuterCssClass => CssUtil.Cn(
         "z-50 w-full overflow-hidden rounded-md border",
         "bg-popover text-popover-foreground shadow-md",
         "data-[state=open]:animate-in data-[state=closed]:animate-out",

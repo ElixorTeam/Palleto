@@ -16,12 +16,11 @@
 >
   <FieldsContent>
 
-    <SectionNumericField
-      Label="@WsDataLocalizer["ColNumber"]"
+    <PlFieldInputNumber
       @bind-Value="@FormModel.Number"
+      Label="@WsDataLocalizer["ColNumber"]"
       Min="10000"
       Max="99999"
-      For="@(() => FormModel.Number)"
     />
 
     <SectionTextField

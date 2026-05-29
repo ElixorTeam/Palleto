@@ -40,9 +40,9 @@
     /// - Orientation-specific classes (width/height)
     /// - Custom classes from the Class parameter
     /// </remarks>
-    protected override string CssClass => ClassNames.Cn(
+    protected override string CssClass => CssUtil.Cn(
         "shrink-0 bg-border",
-        ClassNames.WhenElse(Vertical, "h-full w-[1px]", "h-[1px] w-full"),
+        CssUtil.WhenElse(Vertical, "h-full w-[1px]", "h-[1px] w-full"),
         Class
     );
 

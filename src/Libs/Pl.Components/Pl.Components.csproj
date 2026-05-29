@@ -20,19 +20,4 @@
             <CopyToPublishDirectory>Never</CopyToPublishDirectory>
         </None>
     </ItemGroup>
-
-    <ItemGroup>
-      <TypeScriptCompile Include="wwwroot\ts\index.ts" />
-      <TypeScriptCompile Include="wwwroot\ts\legacy\copy-base64-to-clipboard.ts" />
-      <TypeScriptCompile Include="wwwroot\ts\legacy\dialog-animation.ts" />
-      <TypeScriptCompile Include="wwwroot\ts\legacy\element-size.ts" />
-      <TypeScriptCompile Include="wwwroot\ts\legacy\focus-check.ts" />
-      <TypeScriptCompile Include="wwwroot\ts\legacy\handle-barcode.ts" />
-      <TypeScriptCompile Include="wwwroot\ts\legacy\handle-middle-mouse-click.ts" />
-      <TypeScriptCompile Include="wwwroot\ts\legacy\theme-utils.ts" />
-      <TypeScriptCompile Include="wwwroot\ts\modules\numeric-input.ts" />
-      <TypeScriptCompile Include="wwwroot\ts\types\dotnet-object-type.ts" />
-      <TypeScriptCompile Include="wwwroot\ts\types\element-with-dialog-type.ts" />
-      <TypeScriptCompile Include="wwwroot\ts\types\global.d.ts" />
-    </ItemGroup>
 </Project>

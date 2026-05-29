@@ -56,12 +56,12 @@
     [Parameter]
     public bool CloseOnSelect { get; set; } = true;
 
-    protected override string CssClass => ClassNames.Cn(
+    protected override string CssClass => CssUtil.Cn(
         "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5",
         "text-sm outline-none transition-colors",
         "focus:bg-accent focus:text-accent-foreground",
         "data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
-        ClassNames.When(!Disabled, "hover:bg-accent hover:text-accent-foreground"),
+        CssUtil.When(!Disabled, "hover:bg-accent hover:text-accent-foreground"),
         Class
     );
 }

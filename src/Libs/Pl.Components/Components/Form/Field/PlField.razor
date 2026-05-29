@@ -22,7 +22,7 @@
     /// <summary>
     /// Row-based layout with aligned items, full width to fill container
     /// </summary>
-    private static readonly string HorizontalClasses = ClassNames.Cn(
+    private static readonly string HorizontalClasses = CssUtil.Cn(
         "flex-row items-start w-full",
         "[&:has([data-slot=checkbox])]:items-center",
         "[&:has([data-slot=radio])]:items-center",
@@ -32,7 +32,7 @@
     /// <summary>
     /// Vertical by default, horizontal at medium breakpoint
     /// </summary>
-    private static readonly string ResponsiveClasses = ClassNames.Cn(
+    private static readonly string ResponsiveClasses = CssUtil.Cn(
         "flex-col w-full",
         "@md:flex-row @md:items-start",
         "@md:[&:has([data-slot=checkbox])]:items-center",
@@ -43,7 +43,7 @@
     /// <summary>
     /// Row-reverse layout: content first, then label (label on right/end), full width to fill container
     /// </summary>
-    private static readonly string HorizontalEndClasses = ClassNames.Cn(
+    private static readonly string HorizontalEndClasses = CssUtil.Cn(
         "flex-row-reverse items-start w-full",
         "[&:has([data-slot=checkbox])]:items-center",
         "[&:has([data-slot=radio])]:items-center",
@@ -83,7 +83,7 @@
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
-    protected override string CssClass => ClassNames.Cn(
+    protected override string CssClass => CssUtil.Cn(
         "flex gap-2",
         Orientation switch
         {

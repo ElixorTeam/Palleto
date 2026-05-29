@@ -4,9 +4,10 @@
  */
 
 import type { DotNetObjectType } from "../types/dotnet-object-type";
+import type { InputUpdateMode } from "../types/input-update-mode.ts";
 
 export interface NumericInputConfig {
-	disableDebounce: boolean;
+    mode: InputUpdateMode;
 	debounceMs: number;
 	stepKeys: string[];
 	allowDecimal: boolean;
@@ -19,6 +20,8 @@ interface NumericInputState {
 	dotNetRef: DotNetObjectType;
 	config: NumericInputConfig;
 	debounceTimer: number | null;
+    rafId: number | null;
+    pendingValue: string | null;
 }
 
 interface NumericInputInstance {
@@ -44,17 +47,44 @@ export function initialize(
 	if (!element || !dotNetRef) {
 		return;
 	}
-
 	const state: NumericInputState = {
 		element,
 		dotNetRef,
 		config,
-		debounceTimer: null,
+        debounceTimer: null,
+        rafId: null,
+        pendingValue: null,
 	};
 
-	const stepKeySet = new Set(config.stepKeys ?? []);
+    const stepKeySet = new Set(config.stepKeys ?? []);
 
-	/**
+
+    const callOnInput = (value: string): void => {
+        void dotNetRef.invokeMethodAsync("JsOnInput", value).catch(() => {});
+    };
+
+    const handleFocus = (): void => {
+        void dotNetRef.invokeMethodAsync("JsOnFocus").catch(() => {});
+    };
+
+    const handleBlur = (): void => {
+        cancelPending();
+        void dotNetRef
+            .invokeMethodAsync<string>("JsOnBlur", element.value)
+            .then((displayValue) => {
+                element.value = displayValue;
+            })
+            .catch(() => {});
+    };
+
+    const handleKeyDown = (e: KeyboardEvent): void => {
+        if (stepKeySet.has(e.key)) {
+            e.preventDefault();
+            void dotNetRef.invokeMethodAsync("JsOnKeyDown", e.key).catch(() => {});
+        }
+    };
+
+    /**
 	 * Sanitizes numeric input while preserving cursor position.
 	 */
 	const sanitizeInput = (): void => {
@@ -105,10 +135,14 @@ export function initialize(
 	};
 
 	const cancelPending = (): void => {
-		if (state.debounceTimer !== null) {
-			window.clearTimeout(state.debounceTimer);
-			state.debounceTimer = null;
-		}
+        if (state.debounceTimer !== null) {
+            window.clearTimeout(state.debounceTimer);
+            state.debounceTimer = null;
+        }
+        if (state.rafId !== null) {
+            cancelAnimationFrame(state.rafId);
+            state.rafId = null;
+        }
 	};
 
 	const handleInput = (): void => {
@@ -116,35 +150,33 @@ export function initialize(
 
 		const value = element.value;
 
-		if (state.config.disableDebounce) {
-			void dotNetRef.invokeMethodAsync("JsOnInput", value).catch(() => {});
-		} else {
-			cancelPending();
+        if (config.mode === "onblur") {
+            return;
+        }
 
-			state.debounceTimer = window.setTimeout(() => {
-				state.debounceTimer = null;
+        if (config.mode === "immediate") {
+            if (state.rafId !== null) {
+                cancelAnimationFrame(state.rafId);
+            }
+            state.pendingValue = value;
+            state.rafId = requestAnimationFrame(() => {
+                state.rafId = null;
+                callOnInput(state.pendingValue ?? "");
+            });
+            return;
+        }
 
-				void dotNetRef.invokeMethodAsync("JsOnInput", value).catch(() => {});
-			}, state.config.debounceMs);
-		}
-	};
+        if (config.mode === "debounced") {
+            callOnInput(value);
 
-	const handleBlur = (): void => {
-		cancelPending();
-
-		void dotNetRef.invokeMethodAsync("JsOnBlur", element.value).catch(() => {});
-	};
-
-	const handleFocus = (): void => {
-		void dotNetRef.invokeMethodAsync("JsOnFocus").catch(() => {});
-	};
-
-	const handleKeyDown = (e: KeyboardEvent): void => {
-		if (stepKeySet.has(e.key)) {
-			e.preventDefault();
-
-			void dotNetRef.invokeMethodAsync("JsOnKeyDown", e.key).catch(() => {});
-		}
+            if (state.debounceTimer !== null) {
+                window.clearTimeout(state.debounceTimer);
+            }
+            state.debounceTimer = window.setTimeout(() => {
+                state.debounceTimer = null;
+                callOnInput(element.value);
+            }, config.debounceMs);
+        }
 	};
 
 	element.addEventListener("input", handleInput);

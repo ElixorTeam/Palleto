@@ -37,18 +37,18 @@
       <PlSelectItem Value="@((short)90)" Text="90" />
     </PlFieldSelect>
 
-    <SectionNumericField
+    <PlFieldInputNumber
       @bind-Value="@FormModel.Width"
-      Max="255"
       Label="@($"{WsDataLocalizer["ColWidth"]} ({WsDataLocalizer["MeasureMm"]})")"
-      For="@(() => FormModel.Width)"
+      Min="1"
+      Max="255"
     />
 
-    <SectionNumericField
+    <PlFieldInputNumber
       @bind-Value="@FormModel.Height"
-      Max="255"
       Label="@($"{WsDataLocalizer["ColHeight"]} ({WsDataLocalizer["MeasureMm"]})")"
-      For="@(() => FormModel.Height)"
+      Min="1"
+      Max="255"
     />
 
     <FormDivider>@WsDataLocalizer["ColTemplate"]</FormDivider>

@@ -22,7 +22,7 @@ public abstract class FieldBase : ComponentBase, IDisposable
     /// Gets or sets the label text displayed above or beside the control.
     /// </summary>
     [Parameter]
-    public string Label { get; set; } = string.Empty;
+    public string? Label { get; set; }
 
     /// <summary>
     /// Gets or sets the helper text displayed below the control.
@@ -31,7 +31,7 @@ public abstract class FieldBase : ComponentBase, IDisposable
     /// Hidden when the field is in an error state; the error message takes its place.
     /// </remarks>
     [Parameter]
-    public string HelperText { get; set; } = string.Empty;
+    public string? HelperText { get; set; }
 
     /// <summary>
     /// Gets or sets a manual error text to display on the field.
@@ -43,13 +43,13 @@ public abstract class FieldBase : ComponentBase, IDisposable
     /// errors, this text takes precedence over the auto-generated validation messages.
     /// </remarks>
     [Parameter]
-    public string ErrorText { get; set; } = string.Empty;
+    public string? ErrorText { get; set; }
 
     /// <summary>
     /// Gets or sets the ARIA label for the control.
     /// </summary>
     [Parameter]
-    public string AriaLabel { get; set; } = string.Empty;
+    public string? AriaLabel { get; set; }
 
     /// <summary>
     /// Gets or sets the orientation of the field layout.

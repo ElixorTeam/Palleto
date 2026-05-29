@@ -29,18 +29,18 @@
 
     <FormDivider>@WsDataLocalizer["ColSize"]</FormDivider>
 
-    <SectionNumericField
+    <PlFieldInputNumber
       @bind-Value="@FormModel.Width"
-      Max="255"
       Label="@($"{WsDataLocalizer["ColWidth"]} ({WsDataLocalizer["MeasureMm"]})")"
-      For="@(() => FormModel.Width)"
+      Min="1"
+      Max="512"
     />
 
-    <SectionNumericField
+    <PlFieldInputNumber
       @bind-Value="@FormModel.Height"
-      Max="255"
       Label="@($"{WsDataLocalizer["ColHeight"]} ({WsDataLocalizer["MeasureMm"]})")"
-      For="@(() => FormModel.Height)"
+      Min="1"
+      Max="512"
     />
 
     <PlFieldSelect

@@ -29,19 +29,18 @@
         MaxLength="32"
       />
 
-      <SectionNumericField
-        Label="@WsDataLocalizer["ColNumber"]"
+      <PlFieldInputNumber
         @bind-Value="@FormModel.Number"
+        Label="@WsDataLocalizer["ColNumber"]"
         Min="10000"
         Max="99999"
-        For="@(() => FormModel.Number)"
       />
 
-      <SectionNumericField
+      <PlFieldInputNumber
+        @bind-Value="@FormModel.Counter"
         Label="@WsDataLocalizer["ColCounter"]"
-        @bind-Value="@(FormModel.Counter)"
         Min="0"
-        For="@(() => FormModel.Counter)"
+        Max="1000000"
       />
 
       <PlFieldSelect

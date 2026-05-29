@@ -25,5 +25,5 @@
   [Parameter]
   public RenderFragment? ChildContent { get; set; }
 
-  protected override string CssClass => ClassNames.Cn("border-b", Class);
+  protected override string CssClass => CssUtil.Cn("border-b", Class);
 }

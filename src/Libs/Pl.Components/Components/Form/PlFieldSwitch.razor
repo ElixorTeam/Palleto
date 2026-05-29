@@ -4,7 +4,7 @@
 @inherits FieldBase
 
 <PlSwitch Orientation="@Orientation" IsInvalid="@IsInvalid" Class="@Class">
-  @if (string.IsNullOrEmpty(Label))
+  @if (!string.IsNullOrEmpty(Label))
   {
     <PlFieldLabel For="@ControlId">@Label</PlFieldLabel>
   }
@@ -23,7 +23,7 @@
     {
       <PlFieldDescription Id="@DescriptionId">@HelperText</PlFieldDescription>
     }
-    @if (IsInvalid && !string.IsNullOrEmpty(ErrorText))
+    @if (!string.IsNullOrEmpty(ErrorText) && IsInvalid)
     {
       <PlFieldError Id="@ErrorId">@ErrorText</PlFieldError>
     }

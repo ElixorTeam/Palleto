@@ -24,3 +24,14 @@ public enum ButtonType
     /// </summary>
     Button
 }
+
+internal static class ButtonTypeExtensions
+{
+    internal static string GetHtmlType(this ButtonType type) =>
+        type switch
+        {
+            ButtonType.Submit => "submit",
+            ButtonType.Reset => "reset",
+            _ => "button"
+        };
+}

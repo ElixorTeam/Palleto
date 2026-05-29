@@ -3,7 +3,7 @@
 @inherits FieldBase
 
 <PlField Orientation="@EffectiveOrientation" IsInvalid="@IsInvalid" Class="@Class">
-  @if (string.IsNullOrEmpty(Label) && Orientation is FieldOrientation.Vertical)
+  @if (!string.IsNullOrEmpty(Label) && Orientation is FieldOrientation.Vertical)
   {
     <PlFieldLabel For="@ControlId">@Label</PlFieldLabel>
   }
@@ -56,7 +56,7 @@
     {
       <PlFieldDescription Pl="@DescriptionId">@HelperText</PlFieldDescription>
     }
-    @if (IsInvalid && !string.IsNullOrEmpty(ErrorText))
+    @if (!string.IsNullOrEmpty(ErrorText) && IsInvalid)
     {
       <PlFieldError Id="@ErrorId">@ErrorText</PlFieldError>
     }
@@ -114,7 +114,7 @@
     /// Gets or sets additional CSS classes applied to the inner Checkbox element.
     /// </summary>
     [Parameter]
-    public string? InputClass { get; set; }
+    public string InputClass { get; set; } = string.Empty;
 
     public override Task SetParametersAsync(ParameterView parameters)
     {

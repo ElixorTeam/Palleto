@@ -1,0 +1,19 @@
+﻿@namespace Pl.Components.Components
+@inherits ComponentBase
+@inject IJSRuntime JsRuntime
+@typeparam TValue
+
+<input
+  @ref="_inputRef"
+  id="@EffectiveId"
+  name="@EffectiveName"
+  type="@Type.GetHtmlType()"
+  class="@CssClass"
+  value="@(Type == InputType.File ? null : DisplayValue)"
+  placeholder="@Placeholder"
+  disabled="@Disabled"
+  required="@Required"
+  aria-label="@AriaLabel"
+  aria-describedby="@AriaDescribedBy"
+  aria-invalid="@(ComputedAriaInvalid?.ToString().ToLower())"
+  @onfocus="HandleFocus" />
