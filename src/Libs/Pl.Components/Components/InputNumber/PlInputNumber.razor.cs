@@ -6,8 +6,7 @@ using static System.GC;
 
 namespace Pl.Components.Components;
 
-public partial class PlInputNumber<TValue> : ComponentBase
-    where TValue : struct, INumber<TValue>
+public partial class PlInputNumber<TValue> : PlComponentBase where TValue : struct, INumber<TValue>
 {
     #region Fields
 
@@ -19,7 +18,7 @@ public partial class PlInputNumber<TValue> : ComponentBase
     /// <summary>
     /// Handles EditForm field change notifications and validation state.
     /// </summary>
-    private readonly InputValidationBehavior _validation = new();
+    private readonly EditContextFieldState _validation = new();
 
     /// <summary>
     /// Reference to the native input element for JS interop initialization.
@@ -124,20 +123,20 @@ public partial class PlInputNumber<TValue> : ComponentBase
     public string? Format { get; set; }
 
     /// <summary>
-    /// Default value is <see cref="Components.UpdateTiming.OnBlur"/>.
+    /// Default value is <see cref="JsSyncTiming.OnBlur"/>.
     /// </summary>
     /// <remarks>
     /// <list type="bullet">
-    /// <item><see cref="UpdateTiming.Immediate"/> — every keystroke (batched via requestAnimationFrame).</item>
-    /// <item><see cref="Components.UpdateTiming.OnBlur"/> — only on blur (default).</item>
-    /// <item><see cref="UpdateTiming.Debounced"/> — after typing pauses for <see cref="DebounceInterval"/> ms.</item>
+    /// <item><see cref="JsSyncTiming.Immediate"/> — every keystroke (batched via requestAnimationFrame).</item>
+    /// <item><see cref="JsSyncTiming.OnBlur"/> — only on blur (default).</item>
+    /// <item><see cref="JsSyncTiming.Debounced"/> — after typing pauses for <see cref="DebounceInterval"/> ms.</item>
     /// </list>
     /// </remarks>
     [Parameter]
-    public UpdateTiming UpdateTiming { get; set; } = UpdateTiming.OnBlur;
+    public JsSyncTiming JsSyncTiming { get; set; } = JsSyncTiming.OnBlur;
 
     /// <summary>
-    /// Default value is <c>300</c>. Used when <see cref="UpdateTiming"/> is <see cref="UpdateTiming.Debounced"/>.
+    /// Default value is <c>300</c>. Used when <see cref="JsSyncTiming"/> is <see cref="UpdateTiming.Debounced"/>.
     /// </summary>
     [Parameter]
     public int DebounceInterval { get; set; } = 300;
@@ -163,12 +162,6 @@ public partial class PlInputNumber<TValue> : ComponentBase
     /// </summary>
     [Parameter]
     public bool Required { get; set; }
-
-    /// <summary>
-    /// Gets or sets additional CSS classes applied to the input element.
-    /// </summary>
-    [Parameter]
-    public string? Class { get; set; }
 
     /// <summary>
     /// Gets or sets the HTML id attribute.
@@ -334,7 +327,7 @@ public partial class PlInputNumber<TValue> : ComponentBase
     /// </summary>
     private object GetJsConfig() => new
     {
-        mode = UpdateTiming.ToJsValue(),
+        mode = JsSyncTiming.ToJsValue(),
         debounceMs = DebounceInterval,
         stepKeys = new[] { "ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End" },
         allowDecimal = IsFloatingPoint,
@@ -382,7 +375,7 @@ public partial class PlInputNumber<TValue> : ComponentBase
         string inputValue = value ?? string.Empty;
         _isEditing = false;
 
-        if (UpdateTiming == UpdateTiming.OnBlur)
+        if (JsSyncTiming == JsSyncTiming.OnBlur)
         {
             if (TryCommitValue(inputValue, out TValue committedValue))
             {

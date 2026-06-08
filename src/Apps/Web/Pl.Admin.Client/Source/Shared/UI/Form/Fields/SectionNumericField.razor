@@ -1,28 +1,21 @@
-@* @typeparam TItem where TItem : new() *@
-@* @inherits SectionFieldBase<TItem> *@
-@* *@
-@* <SectionInputWrapper *@
-@*   Path="@Path" *@
-@*   Label="@Label" *@
-@*   HtmlFor="@HtmlId" *@
-@* > *@
-@*   <InputNumberField *@
-@*     TValue="TItem" *@
-@*     id="@HtmlId" *@
-@*     @bind-Value="@Value" *@
-@*     @bind-Value:after="OnValueChanged" *@
-@*     Placeholder="@Placeholder" *@
-@*     Step="@Step" *@
-@*     Disabled="Disabled" *@
-@*   /> *@
-@*   @if (For != null) *@
-@*   { *@
-@*     <FieldValidation For="@For"/> *@
-@*   } *@
-@* </SectionInputWrapper> *@
-@* *@
-@* @code { *@
-@*   [Parameter] public string? Min { get; set; } *@
-@*   [Parameter] public string? Max { get; set; } *@
-@*   [Parameter] public string Step { get; set; } = "1"; *@
-@* } *@
+@typeparam TItem where TItem : struct, System.Numerics.INumber<TItem>
+@using Pl.Components.Components
+@inherits SectionFieldBase<TItem>
+
+<SectionInputWrapper>
+  <PlFieldInputNumber
+    Label="@Label"
+    Value="@Value"
+    ValueChanged="@ValueChanged"
+    ValueExpression="@ValueExpression"
+    Placeholder="@Placeholder"
+    Disabled="@Disabled"
+    Step="@Step"
+  />
+</SectionInputWrapper>
+
+@code {
+  [Parameter] public TItem? Min { get; set; }
+  [Parameter] public TItem? Max { get; set; }
+  [Parameter] public TItem? Step { get; set; }
+}

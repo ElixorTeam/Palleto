@@ -281,7 +281,7 @@ else
     /// </summary>
     private string? Rel => Target == "_blank" ? "noopener noreferrer" : null;
 
-    protected override string CssClass => CssUtil.Cn(
+    private string CssClass => CssUtil.Cn(
         "inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium",
         "transition-colors focus-visible:outline-none focus-visible:ring-2",
         "focus-visible:ring-ring focus-visible:ring-offset-2",

@@ -12,5 +12,5 @@
   [Parameter]
   public RenderFragment? ChildContent { get; set; }
 
-  protected override string CssClass => CssUtil.Cn("py-1.5 px-2 text-sm font-semibold text-foreground", Class);
+  private string CssClass => CssUtil.Cn("py-1.5 px-2 text-sm font-semibold text-foreground", Class);
 }

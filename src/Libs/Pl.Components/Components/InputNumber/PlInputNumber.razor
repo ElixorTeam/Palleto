@@ -1,6 +1,7 @@
 ﻿@namespace Pl.Components.Components
 @typeparam TValue where TValue : struct, System.Numerics.INumber<TValue>
 @inject IJSRuntime JsRuntime
+@inherits PlComponentBase
 @implements IAsyncDisposable
 
 <div class="@ContainerClass">

@@ -26,7 +26,7 @@
       Disabled="@Disabled"
       Required="@Required"
       Format="@Format"
-      UpdateTiming="@UpdateTiming"
+      JsSyncTiming="@JsSyncTiming"
       DebounceInterval="@DebounceInterval"
       AriaLabel="@AriaLabel"
       AriaDescribedBy="@DescribedById"
@@ -134,20 +134,20 @@
     public string? Format { get; set; }
 
     /// <summary>
-    /// Default value is <see cref="UpdateTiming.OnBlur"/>.
+    /// Default value is <see cref="JsSyncTiming.OnBlur"/>.
     /// </summary>
     /// <remarks>
     /// <list type="bullet">
-    /// <item><see cref="UpdateTiming.Immediate"/> — every keystroke (batched via requestAnimationFrame).</item>
-    /// <item><see cref="UpdateTiming.OnBlur"/> — only on blur (default).</item>
-    /// <item><see cref="UpdateTiming.Debounced"/> — after typing pauses for <see cref="DebounceInterval"/> ms.</item>
+    /// <item><see cref="JsSyncTiming.Immediate"/> — every keystroke (batched via requestAnimationFrame).</item>
+    /// <item><see cref="JsSyncTiming.OnBlur"/> — only on blur (default).</item>
+    /// <item><see cref="JsSyncTiming.Debounced"/> — after typing pauses for <see cref="DebounceInterval"/> ms.</item>
     /// </list>
     /// </remarks>
     [Parameter]
-    public UpdateTiming UpdateTiming { get; set; } = UpdateTiming.OnBlur;
+    public JsSyncTiming JsSyncTiming { get; set; } = JsSyncTiming.OnBlur;
 
     /// <summary>
-    /// Debounce delay when <see cref="UpdateTiming"/> is <see cref="UpdateTiming.Debounced"/>.
+    /// Debounce delay when <see cref="JsSyncTiming"/> is <see cref="JsSyncTiming.Debounced"/>.
     /// </summary>
     [Parameter]
     public int DebounceInterval { get; set; } = 300;

@@ -9,5 +9,5 @@
   [Parameter]
   public RenderFragment? ChildContent { get; set; }
 
-  protected override string CssClass => CssUtil.Cn("font-normal text-foreground", Class);
+  private string CssClass => CssUtil.Cn("font-normal text-foreground", Class);
 }

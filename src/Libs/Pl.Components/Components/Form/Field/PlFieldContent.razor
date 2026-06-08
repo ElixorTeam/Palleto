@@ -20,7 +20,7 @@
   public RenderFragment? ChildContent { get; set; }
 
 
-  protected override string CssClass => CssUtil.Cn(
+  private string CssClass => CssUtil.Cn(
     // Flex column layout with gap
     "flex flex-col gap-1.5",
     // Full width for responsive behavior, min-w-0 prevents overflow in horizontal layouts

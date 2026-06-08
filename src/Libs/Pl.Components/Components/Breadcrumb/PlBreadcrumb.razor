@@ -14,5 +14,5 @@
   [Parameter]
   public RenderFragment? ChildContent { get; set; }
 
-  protected override string CssClass => CssUtil.Cn(Class);
+  private string CssClass => CssUtil.Cn(Class);
 }

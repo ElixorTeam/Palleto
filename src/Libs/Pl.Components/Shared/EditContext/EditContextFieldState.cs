@@ -7,7 +7,7 @@ namespace Pl.Components.Components;
 /// Encapsulates shared EditContext validation logic used by all input components.
 /// Used via composition since input components inherit directly from ComponentBase.
 /// </summary>
-internal sealed class InputValidationBehavior
+internal sealed class EditContextFieldState
 {
     private FieldIdentifier _fieldIdentifier;
     private EditContext? _editContext;

@@ -1,25 +1,18 @@
+@using Pl.Components.Components
 @inherits SectionFieldBase<string>
 
-<SectionInputWrapper
-  Path="@Path"
-  Label="@Label"
-  HtmlFor="@HtmlId"
-  ValueToCopy="@(IsCopyable ? ValueToCopy ?? Value : string.Empty)"
->
-  <InputTextField
-    id="@HtmlId"
-    @bind-Value="@Value"
-    @bind-Value:after="OnValueChanged"
+<SectionInputWrapper ValueToCopy="@(IsCopyable ? ValueToCopy ?? Value : string.Empty)">
+  <PlFieldInput
+    Value="@Value"
+    ValueChanged="@ValueChanged"
+    ValueExpression="@ValueExpression"
+    Label="@Label"
     Placeholder="@Placeholder"
-    Disabled="Disabled"
-    maxlength="@(MaxLength <= 0 ? string.Empty : MaxLength)"
-  />
-  @if (For != null)
-  {
-    <FieldValidation For="@For" />
-  }
+    Disabled="@Disabled"
+   />
 </SectionInputWrapper>
 
 @code {
+@*   maxlength="@(MaxLength <= 0 ? string.Empty : MaxLength)" *@
   [Parameter] public short MaxLength { get; set; }
 }

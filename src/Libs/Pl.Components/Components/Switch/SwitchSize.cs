@@ -41,8 +41,7 @@ internal static class SwitchSizeExtensions
                 SwitchSize.Large  => "h-6 w-6",
                 _                 => "h-5 w-5"
             },
-            value
-                ? size switch
+            value ? size switch
                 {
                     SwitchSize.Small  => "translate-x-4",
                     SwitchSize.Medium => "translate-x-5",

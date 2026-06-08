@@ -1,16 +1,14 @@
+@using Pl.Components.Components
 @inherits SectionFieldBase<object>
 
 <SectionInputWrapper
-  Label="@Label"
-  HtmlFor="@HtmlId"
-  Path="@Path"
   ValueToCopy="@(IsCopyable ? ValueToCopy ?? Value?.ToString() : string.Empty)"
-  Size="@(IsLarge ? SectionInputSizeType.Large : SectionInputSizeType.Default)"
+  Size="@(IsLarge ? SectionInputSize.Large : SectionInputSize.Default)"
 >
   @if (IsLarge)
   {
-    <InputTextAreaField
-      id="@HtmlId"
+    <PlFieldTextArea
+      Label="@Label"
       Value="@Value?.ToString()"
       Placeholder="@Placeholder"
       Disabled
@@ -18,8 +16,8 @@
   }
   else
   {
-    <InputTextField
-      id="@HtmlId"
+    <PlFieldInput
+      Label="@Label"
       Value="@Value?.ToString()"
       Placeholder="@Placeholder"
       Disabled

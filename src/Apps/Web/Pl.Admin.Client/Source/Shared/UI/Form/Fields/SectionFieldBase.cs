@@ -4,10 +4,27 @@ namespace Pl.Admin.Client.Source.Shared.UI.Form.Fields;
 
 public abstract class SectionFieldBase<TValue> : ComponentBase
 {
-    [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
+    [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = null!;
 
-    [Parameter] public TValue? Value { get; set; }
-    [Parameter] public EventCallback<TValue?> ValueChanged { get; set; }
+    /// <summary>
+    /// Gets or sets the current value of the textarea.
+    /// </summary>
+    [Parameter]
+    public TValue? Value { get; set; }
+
+    /// <summary>
+    /// Gets or sets the callback invoked when the textarea value changes.
+    /// </summary>
+    [Parameter]
+    public EventCallback<TValue?> ValueChanged { get; set; }
+
+    /// <summary>
+    /// Gets or sets an expression that identifies the bound value for EditForm integration.
+    /// Automatically provided by <c>@bind-Value</c>.
+    /// </summary>
+    [Parameter]
+    public Expression<Func<TValue?>>? ValueExpression { get; set; }
+
     [Parameter] public bool Disabled { get; set; }
     [Parameter] public bool IsCopyable { get; set; }
     [Parameter] public string Label { get; set; } = string.Empty;

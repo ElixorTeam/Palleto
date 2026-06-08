@@ -35,7 +35,7 @@
   [Parameter]
   public string AriaLabel { get; set; } = "Loading";
 
-  protected override string CssClass => CssUtil.Cn(
+  private string CssClass => CssUtil.Cn(
     "animate-spin text-muted-foreground",
     Size switch
     {

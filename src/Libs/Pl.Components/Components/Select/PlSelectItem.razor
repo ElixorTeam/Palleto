@@ -75,7 +75,7 @@
     /// <summary>
     /// Gets the computed CSS classes for the item.
     /// </summary>
-    protected override string CssClass => CssUtil.Cn(
+    private string CssClass => CssUtil.Cn(
       "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 px-2 text-sm",
       "outline-none transition-colors",
       "data-[focused=true]:bg-accent data-[focused=true]:text-accent-foreground",

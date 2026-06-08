@@ -58,7 +58,7 @@ else if (ChildContent != null)
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
-    protected override string CssClass => CssUtil.Cn(
+    private string CssClass => CssUtil.Cn(
         "text-sm",
         "font-medium",
         "text-destructive",

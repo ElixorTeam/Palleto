@@ -155,19 +155,21 @@ public abstract class FieldBase : ComponentBase, IDisposable
 
     private static FieldIdentifier CreateFieldIdentifier(LambdaExpression expression)
     {
-        if (expression.Body is MemberExpression memberExpression)
+        switch (expression.Body)
         {
-            object model = EvaluateExpression(memberExpression.Expression!);
-            return new(model, memberExpression.Member.Name);
+            case MemberExpression memberExpression:
+            {
+                object model = EvaluateExpression(memberExpression.Expression!);
+                return new(model, memberExpression.Member.Name);
+            }
+            case UnaryExpression { Operand: MemberExpression innerMember }:
+            {
+                object model = EvaluateExpression(innerMember.Expression!);
+                return new(model, innerMember.Member.Name);
+            }
+            default:
+                throw new ArgumentException("The provided expression must be a member access expression.", nameof(expression));
         }
-
-        if (expression.Body is UnaryExpression { Operand: MemberExpression innerMember })
-        {
-            object model = EvaluateExpression(innerMember.Expression!);
-            return new(model, innerMember.Member.Name);
-        }
-
-        throw new ArgumentException("The provided expression must be a member access expression.", nameof(expression));
     }
 
     private static object EvaluateExpression(Expression expression) =>

@@ -45,7 +45,7 @@
   /// Gets the computed CSS classes for the accordion trigger.
   /// Uses the cn() utility for intelligent class merging and Tailwind conflict resolution.
   /// </summary>
-  protected override string CssClass => CssUtil.Cn(
+  private string CssClass => CssUtil.Cn(
     "flex w-full items-center justify-between text-sm font-medium transition-all",
     Class
   );

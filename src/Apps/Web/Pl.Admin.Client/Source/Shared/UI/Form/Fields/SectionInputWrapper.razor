@@ -1,4 +1,8 @@
-<div class="@Css.Class("space-y-1.5 w-full relative flex-col flex", Size == SectionInputSizeType.Large ? "col-span-2" : string.Empty, Class)">
+@inject IJSRuntime JsRuntime;
+@inject IToastService ToastService;
+@inject IStringLocalizer<ApplicationResources> Localizer;
+
+<div class="@Css.Class("space-y-1.5 w-full relative flex-col flex", Size == SectionInputSize.Large ? "col-span-2" : string.Empty, Class)">
   <FieldLabel HtmlFor="@HtmlFor" Url="@Path">@Label</FieldLabel>
   @ChildContent
   @if (!string.IsNullOrWhiteSpace(ValueToCopy))
@@ -11,3 +15,28 @@
     </button>
   }
 </div>
+
+@code {
+  [Parameter] public string Label { get; set; } = string.Empty;
+  [Parameter] public string Path { get; set; } = string.Empty;
+  [Parameter] public string HtmlFor { get; set; } = string.Empty;
+  [Parameter] public string Class { get; set; } = string.Empty;
+  [Parameter] public string ValueToCopy { get; set; } = string.Empty;
+  [Parameter] public SectionInputSize Size { get; set; } = SectionInputSize.Default;
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  private async Task SaveToClipboard(string value)
+  {
+    if (string.IsNullOrWhiteSpace(value)) return;
+
+    try
+    {
+      await JsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", value);
+      ToastService.ShowInfo(Localizer["ToastCopyToClipboard"]);
+    }
+    catch
+    {
+      ToastService.ShowError("Ваш браузер не потдерживает копирование");
+    }
+  }
+}

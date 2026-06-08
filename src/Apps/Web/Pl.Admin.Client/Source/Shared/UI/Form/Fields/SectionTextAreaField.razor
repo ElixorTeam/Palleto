@@ -1,21 +1,15 @@
+@using Pl.Components.Components
 @inherits SectionFieldBase<string>
 
 <SectionInputWrapper
-  Path="@Path"
-  Label="@Label"
-  HtmlFor="@HtmlId"
   ValueToCopy="@(IsCopyable ? ValueToCopy ?? Value : string.Empty)"
-  Size="SectionInputSizeType.Large"
+  Size="SectionInputSize.Large"
 >
-  <InputTextAreaField
-    id="@HtmlId"
-    @bind-Value="@Value"
-    @bind-Value:after="OnValueChanged"
+  <PlFieldTextArea
+    Value="@Value"
+    ValueChanged="@ValueChanged"
+    ValueExpression="@ValueExpression"
+    Label="@Label"
     Placeholder="@Placeholder"
-    Disabled="Disabled"
-  />
-  @if (For != null)
-  {
-    <FieldValidation For="@For" />
-  }
+    Disabled="@Disabled" />
 </SectionInputWrapper>

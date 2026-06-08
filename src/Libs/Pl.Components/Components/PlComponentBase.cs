@@ -11,9 +11,4 @@ public abstract class PlComponentBase : ComponentBase
     /// Gets or sets a collection of additional attributes that will be applied to the created element
     /// </summary>
     [Parameter(CaptureUnmatchedValues = true)] public virtual IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
-
-    /// <summary>
-    /// Gets the computed CSS classes for the component
-    /// </summary>
-    protected abstract string CssClass { get; }
 }

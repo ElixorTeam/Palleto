@@ -1,6 +1,6 @@
 ﻿namespace Pl.Components.Components;
 
-public enum UpdateTiming
+public enum JsSyncTiming
 {
     /// <summary>
     /// Fires <c>ValueChanged</c> on every keystroke, batched via requestAnimationFrame in JavaScript.
@@ -21,14 +21,14 @@ public enum UpdateTiming
     Debounced
 }
 
-internal static class UpdateTimingExtensions
+internal static class JsSyncTimingExtensions
 {
-    internal static string ToJsValue(this UpdateTiming timing) =>
+    internal static string ToJsValue(this JsSyncTiming timing) =>
         timing switch
         {
-            UpdateTiming.OnBlur => "onblur",
-            UpdateTiming.Debounced => "debounced",
-            UpdateTiming.Immediate => "immediate",
+            JsSyncTiming.OnBlur => "onblur",
+            JsSyncTiming.Debounced => "debounced",
+            JsSyncTiming.Immediate => "immediate",
             _ => "onchange"
         };
 }
