@@ -5,7 +5,7 @@
 @using Pl.Admin.Models
 
 @attribute [Route(Routes.Warehouses + "/{Id:guid}")]
-@attribute [Authorize(Policy = PolicyEnum.Support)]
+@attribute [Authorize(Policy = Policies.Support)]
 
 <UseEndpoint
   Endpoint="@ReferencesEndpoints.WarehouseEndpoint"
@@ -27,7 +27,7 @@
       @if (query.HasData)
       {
         <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToWarehouse(query.Data.Id))" />
-        <AuthorizeView Policy="@PolicyEnum.Admin">
+        <AuthorizeView Policy="@Policies.Admin">
           <ViewButtonUpdate TDialog="WarehouseUpdateDialog" Model="query.Data" />
           <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
         </AuthorizeView>

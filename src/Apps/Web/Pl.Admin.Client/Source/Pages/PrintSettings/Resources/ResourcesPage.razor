@@ -8,7 +8,7 @@
 @using Pl.Components.Components
 
 @attribute [Route(Routes.Resources)]
-@attribute [Authorize(Policy = PolicyEnum.Support)]
+@attribute [Authorize(Policy = Policies.Support)]
 @rendermode InteractiveServer
 
 <BrowserTitle Label="@Localizer["SectionTemplateResources"]" />
@@ -29,7 +29,7 @@
       IsLoading="query.IsLoading"
     />
     <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching" />
-    <AuthorizeView Policy="@PolicyEnum.Developer">
+    <AuthorizeView Policy="@Policies.Developer">
       <DataGridActionCreate OnClick="@OpenCreateDialog"/>
     </AuthorizeView>
   </DataGridHeader>
@@ -76,12 +76,12 @@
       />
     </ColumnsContent>
     <ContextMenuContent>
-      <AuthorizeView Policy="@PolicyEnum.Developer" Context="authContext">
+      <AuthorizeView Policy="@Policies.Developer" Context="authContext">
         <DataGridActionUpdateItem TItem="TemplateResourceDto" Action="@OpenUpdateDialog"/>
       </AuthorizeView>
       <DataGridActionOpenItem Link="@(RedirectHelper.ToResource(context.Item.Id))"/>
       <DataGridActionOpenInNewTab TItem="TemplateResourceDto" Link="@(RedirectHelper.ToResource(context.Item.Id))"/>
-      <AuthorizeView Policy="@PolicyEnum.Developer" Context="authContext">
+      <AuthorizeView Policy="@Policies.Developer" Context="authContext">
         <DataGridActionDeleteItem TItem="TemplateResourceDto" Action="@DeleteItem"/>
       </AuthorizeView>
     </ContextMenuContent>

@@ -27,7 +27,7 @@ public sealed class PluController(IPluService pluService)
     #region Commands
 
     [HttpPut("{id:guid}")]
-    [Authorize(PolicyEnum.Support)]
+    [Authorize(Policies.Support)]
     public Task<PluDto> Update([FromRoute] Guid id, [FromBody] PluUpdateDto dto) =>
         pluService.Update(id, dto);
 

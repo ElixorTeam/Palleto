@@ -6,7 +6,7 @@ namespace Pl.Admin.Api.App.Features.Admins.PalletMen;
 
 [ApiController]
 [Route(ApiEndpoints.PalletMen)]
-[Authorize(PolicyEnum.Support)]
+[Authorize(Policies.Support)]
 public sealed class PalletManController(IPalletManService palletManService)
 {
     #region Queries

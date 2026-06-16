@@ -10,12 +10,12 @@ public sealed class WarehouseController(IWarehouseService warehouseService)
 {
     #region Queries
 
-    [Authorize(PolicyEnum.Support)]
+    [Authorize(Policies.Support)]
     [HttpGet]
     public Task<WarehouseDto[]> GetAllByProdSite([FromQuery(Name = "productionSite")] Guid prodSiteId) =>
         warehouseService.GetAllByProdSiteAsync(prodSiteId);
 
-    [Authorize(PolicyEnum.Support)]
+    [Authorize(Policies.Support)]
     [HttpGet("{id:guid}")]
     public Task<WarehouseDto> GetById([FromRoute] Guid id) => warehouseService.GetByIdAsync(id);
 
@@ -27,17 +27,17 @@ public sealed class WarehouseController(IWarehouseService warehouseService)
 
     #region Commands
 
-    [Authorize(PolicyEnum.Admin)]
+    [Authorize(Policies.Admin)]
     [HttpPost]
     public Task<WarehouseDto> Create([FromBody] WarehouseCreateDto dto) =>
         warehouseService.CreateAsync(dto);
 
-    [Authorize(PolicyEnum.Admin)]
+    [Authorize(Policies.Admin)]
     [HttpPut("{id:guid}")]
     public Task<WarehouseDto> Update([FromRoute] Guid id, [FromBody] WarehouseUpdateDto dto) =>
         warehouseService.UpdateAsync(id, dto);
 
-    [Authorize(PolicyEnum.Admin)]
+    [Authorize(Policies.Admin)]
     [HttpDelete("{id:guid}")]
     public Task Delete([FromRoute] Guid id) =>
         warehouseService.DeleteAsync(id);

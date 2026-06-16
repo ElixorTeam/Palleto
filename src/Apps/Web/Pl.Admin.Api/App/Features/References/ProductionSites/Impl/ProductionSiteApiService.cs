@@ -31,10 +31,10 @@ internal sealed class ProductionSiteApiService(
 
     public async Task<ProxyDto[]> GetProxiesAsync()
     {
-        bool seniorSupport = await userHelper.ValidatePolicyAsync(PolicyEnum.SeniorSupport);
+        bool seniorSupport = await userHelper.ValidatePolicyAsync(Policies.SeniorSupport);
         if (seniorSupport)
         {
-            bool developer = await userHelper.ValidatePolicyAsync(PolicyEnum.Developer);
+            bool developer = await userHelper.ValidatePolicyAsync(Policies.Developer);
             return await dbContext.ProductionSites
                 .AsNoTracking()
                 .IfWhere(!developer, entity => entity.Id != DefaultTypes.GuidMax)

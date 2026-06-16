@@ -12,7 +12,6 @@
 
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
   [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
   [Inject] private IDispatcher Dispatcher { get; set; } = default!;
@@ -28,10 +27,11 @@
 
   private void OnFailure(QueryFailureEventArgs<Unit> obj)
   {
-    String message;
     if (obj.Exception is ApiException apiException)
-      message = apiException.GetMessage("Неизвестная ошибка сервера");
-    else message = obj.Exception.Message;
-    ToastService.ShowError(message);
+    {
+      ToastService.ShowError(apiException.GetMessage($"Ошибка сервера : {apiException.StatusCode}"));
+      return;
+    }
+    ToastService.ShowError(obj.Exception.Message);
   }
 }

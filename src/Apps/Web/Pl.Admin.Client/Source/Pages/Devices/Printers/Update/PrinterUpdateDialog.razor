@@ -5,7 +5,7 @@
 
 <SectionDialog>
   <Tab Id="@typeof(PrinterUpdateForm).ToString()" Label="@Localizer["SectionPrinters"]">
-    <PrinterUpdateForm Model="Content" FormModel="@PrinterMapper.DtoToUpdateDto(Content)" />
+    <PrinterUpdateForm Model="Content" FormModel="@Content.ToUpdateDto()" />
   </Tab>
 </SectionDialog>
 

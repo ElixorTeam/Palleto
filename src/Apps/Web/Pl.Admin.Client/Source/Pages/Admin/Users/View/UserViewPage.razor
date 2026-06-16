@@ -5,7 +5,7 @@
 @using Pl.Admin.Models
 
 @attribute [Route(Routes.Users + "/{Id:guid}")]
-@attribute [Authorize(Policy = PolicyEnum.SeniorSupport)]
+@attribute [Authorize(Policy = Policies.SeniorSupport)]
 
 <UseParameterlessEndpoint
   Endpoint="@AdminEndpoints.UsersEndpoint"

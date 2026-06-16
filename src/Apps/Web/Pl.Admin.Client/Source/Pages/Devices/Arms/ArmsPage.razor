@@ -8,7 +8,7 @@
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
 
 @attribute [Route(Routes.Arms)]
-@attribute [Authorize(Policy = PolicyEnum.Support)]
+@attribute [Authorize(Policy = Policies.Support)]
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @rendermode InteractiveServer
 
@@ -35,7 +35,7 @@
         OnClick="@query.RefetchAsync"
         IsLoading="query.IsFetching"
       />
-      <AuthorizeView Policy="@PolicyEnum.SeniorSupport">
+      <AuthorizeView Policy="@Policies.SeniorSupport">
         <DataGridActionCreate OnClick="@OpenCreateDialog"/>
       </AuthorizeView>
     </DataGridHeader>
@@ -98,7 +98,7 @@
         <DataGridActionUpdateItem TItem="ArmDto" Action="@OpenUpdateDialog" />
         <DataGridActionOpenItem Link="@(RedirectHelper.ToArm(context.Item.Id))" />
         <DataGridActionOpenInNewTab TItem="ArmDto" Link="@(RedirectHelper.ToArm(context.Item.Id))" />
-        <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
+        <AuthorizeView Policy="@Policies.SeniorSupport" Context="authContext">
           <DataGridActionDeleteItem TItem="ArmDto" Action="@DeleteItem" />
         </AuthorizeView>
       </ContextMenuContent>

@@ -33,7 +33,7 @@
           <ViewButtonUpdate TDialog="PalletManUpdateDialog" Model="query.Data" />
         </SupportAuthView>
 
-        <AuthorizeView Policy="@PolicyEnum.SeniorSupport">
+        <AuthorizeView Policy="@Policies.SeniorSupport">
           <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
         </AuthorizeView>
       }

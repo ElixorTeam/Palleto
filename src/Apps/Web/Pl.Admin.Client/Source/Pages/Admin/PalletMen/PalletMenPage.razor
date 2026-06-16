@@ -9,7 +9,7 @@
 @using Pl.Components.Components
 
 @attribute [Route(Routes.PalletMen)]
-@attribute [Authorize(Policy = PolicyEnum.Support)]
+@attribute [Authorize(Policy = Policies.Support)]
 @rendermode InteractiveServer
 
 <BrowserTitle Label="@Localizer["SectionPalletMen"]" />
@@ -34,7 +34,7 @@
         IsLoading="query.IsLoading"
       />
       <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching" />
-      <AuthorizeView Policy="@PolicyEnum.SeniorSupport">
+      <AuthorizeView Policy="@Policies.SeniorSupport">
         <DataGridActionCreate OnClick="@OpenCreateDialog" />
       </AuthorizeView>
     </DataGridHeader>
@@ -74,7 +74,7 @@
         <DataGridActionUpdateItem TItem="PalletManDto" Action="@OpenUpdateDialog" />
         <DataGridActionOpenItem Link="@(RedirectHelper.ToPalletMan(context.Item.Id))" />
         <DataGridActionOpenInNewTab TItem="PalletManDto" Link="@(RedirectHelper.ToPalletMan(context.Item.Id))" />
-        <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
+        <AuthorizeView Policy="@Policies.SeniorSupport" Context="authContext">
           <DataGridActionDeleteItem TItem="PalletManDto" Action="@DeleteItem" />
         </AuthorizeView>
       </ContextMenuContent>

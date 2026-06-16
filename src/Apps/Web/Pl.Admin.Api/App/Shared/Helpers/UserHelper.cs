@@ -29,11 +29,11 @@ public sealed class UserHelper(
     {
         if (productionSiteId.IsMax())
         {
-            bool isDeveloper = await ValidatePolicyAsync(PolicyEnum.Developer);
+            bool isDeveloper = await ValidatePolicyAsync(Policies.Developer);
             if (isDeveloper) return;
         }
 
-        bool isSenior = await ValidatePolicyAsync(PolicyEnum.SeniorSupport);
+        bool isSenior = await ValidatePolicyAsync(Policies.SeniorSupport);
         if (isSenior && !productionSiteId.IsMax()) return;
 
         bool canWork =

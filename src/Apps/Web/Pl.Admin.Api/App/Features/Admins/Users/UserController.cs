@@ -6,7 +6,7 @@ namespace Pl.Admin.Api.App.Features.Admins.Users;
 
 [ApiController]
 [Route(ApiEndpoints.Users)]
-[Authorize(PolicyEnum.SeniorSupport)]
+[Authorize(Policies.SeniorSupport)]
 public sealed class UserController(IUserService userService)
 {
     #region Queries

@@ -6,7 +6,7 @@
 @using Pl.Admin.Models.Features.References.ProductionSites.Queries
 
 @attribute [Route(Routes.ProductionSites)]
-@attribute [Authorize(Policy = PolicyEnum.Support)]
+@attribute [Authorize(Policy = Policies.Support)]
 @rendermode InteractiveServer
 
 <BrowserTitle Label="@Localizer["SectionProductionSites"]" />
@@ -27,7 +27,7 @@
       IsLoading="query.IsLoading"
     />
     <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching" />
-    <AuthorizeView Policy="@PolicyEnum.Admin">
+    <AuthorizeView Policy="@Policies.Admin">
       <DataGridActionCreate OnClick="@OpenCreateDialog" />
     </AuthorizeView>
   </DataGridHeader>
@@ -51,12 +51,12 @@
       />
     </ColumnsContent>
     <ContextMenuContent>
-      <AuthorizeView Policy="@PolicyEnum.Admin" Context="authContext">
+      <AuthorizeView Policy="@Policies.Admin" Context="authContext">
         <DataGridActionUpdateItem TItem="ProductionSiteDto" Action="@OpenUpdateDialog" />
       </AuthorizeView>
       <DataGridActionOpenItem Link="@(RedirectHelper.ToProductionSite(context.Item.Id))" />
       <DataGridActionOpenInNewTab TItem="ProductionSiteDto" Link="@(RedirectHelper.ToProductionSite(context.Item.Id))" />
-      <AuthorizeView Policy="@PolicyEnum.Admin" Context="authContext">
+      <AuthorizeView Policy="@Policies.Admin" Context="authContext">
         <DataGridActionDeleteItem TItem="ProductionSiteDto" Action="@DeleteItem" />
       </AuthorizeView>
     </ContextMenuContent>

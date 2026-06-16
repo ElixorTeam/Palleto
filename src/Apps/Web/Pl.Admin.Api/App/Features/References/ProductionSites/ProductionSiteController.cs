@@ -12,12 +12,12 @@ public sealed class ProductionSiteController(IProductionSiteService productionSi
 
     #region Support
 
-    [Authorize(PolicyEnum.Support)]
+    [Authorize(Policies.Support)]
     [HttpGet]
     public Task<ProductionSiteDto[]> GetAll() =>
         productionSiteService.GetAllAsync();
 
-    [Authorize(PolicyEnum.Support)]
+    [Authorize(Policies.Support)]
     [HttpGet("{id:guid}")]
     public Task<ProductionSiteDto> GetById([FromRoute] Guid id) =>
         productionSiteService.GetByIdAsync(id);
@@ -36,17 +36,17 @@ public sealed class ProductionSiteController(IProductionSiteService productionSi
 
     #region Commamnds
 
-    [Authorize(PolicyEnum.Admin)]
+    [Authorize(Policies.Admin)]
     [HttpPost]
     public Task<ProductionSiteDto> Create([FromBody] ProductionSiteCreateDto dto) =>
         productionSiteService.CreateAsync(dto);
 
-    [Authorize(PolicyEnum.Admin)]
+    [Authorize(Policies.Admin)]
     [HttpPut("{id:guid}")]
     public Task<ProductionSiteDto> Update([FromRoute] Guid id, [FromBody] ProductionSiteUpdateDto dto) =>
         productionSiteService.UpdateAsync(id, dto);
 
-    [Authorize(PolicyEnum.Admin)]
+    [Authorize(Policies.Admin)]
     [HttpDelete("{id:guid}")]
     public Task Delete([FromRoute] Guid id) =>
         productionSiteService.DeleteAsync(id);

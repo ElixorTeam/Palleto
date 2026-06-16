@@ -11,17 +11,17 @@ public sealed class TemplateController(ITemplateService templateService)
 {
     #region Queries
 
-    [Authorize(PolicyEnum.Support)]
+    [Authorize(Policies.Support)]
     [HttpGet]
     public Task<TemplateDto[]> GetAll() =>
         templateService.GetAllAsync();
 
-    [Authorize(PolicyEnum.Support)]
+    [Authorize(Policies.Support)]
     [HttpGet("{id:guid}")]
     public Task<TemplateDto> GetById([FromRoute] Guid id) =>
         templateService.GetByIdAsync(id);
 
-    [Authorize(PolicyEnum.Support)]
+    [Authorize(Policies.Support)]
     [HttpGet("{id:guid}/body")]
     public Task<TemplateBodyDto> GetBodyById([FromRoute] Guid id) =>
         templateService.GetBodyByIdAsync(id);
@@ -38,22 +38,22 @@ public sealed class TemplateController(ITemplateService templateService)
 
     #region Commands
 
-    [Authorize(PolicyEnum.Developer)]
+    [Authorize(Policies.Developer)]
     [HttpPost]
     public Task<TemplateDto> Create([FromBody] TemplateCreateDto dto) =>
         templateService.CreateAsync(dto);
 
-    [Authorize(PolicyEnum.Developer)]
+    [Authorize(Policies.Developer)]
     [HttpPut("{id:guid}")]
     public Task<TemplateDto> Update([FromRoute] Guid id, [FromBody] TemplateUpdateDto dto) =>
         templateService.UpdateAsync(id, dto);
 
-    [Authorize(PolicyEnum.Developer)]
+    [Authorize(Policies.Developer)]
     [HttpDelete("{id:guid}")]
     public Task Delete([FromRoute] Guid id) =>
         templateService.DeleteAsync(id);
 
-    [Authorize(PolicyEnum.Developer)]
+    [Authorize(Policies.Developer)]
     [HttpPut("{id:guid}/barcodes")]
     public Task<BarcodeItemWrapper> UpdateBarcodes([FromRoute] Guid id, [FromBody] BarcodeItemWrapper dto) =>
         templateService.UpdateBarcodeTemplates(id, dto);

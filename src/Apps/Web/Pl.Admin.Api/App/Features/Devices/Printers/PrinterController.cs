@@ -5,7 +5,7 @@ using Pl.Admin.Models.Features.Devices.Printers.Queries;
 namespace Pl.Admin.Api.App.Features.Devices.Printers;
 
 [ApiController]
-[Authorize(PolicyEnum.Support)]
+[Authorize(Policies.Support)]
 [Route(ApiEndpoints.Printers)]
 public sealed class PrinterController(IPrinterService printerService)
 {
@@ -28,7 +28,7 @@ public sealed class PrinterController(IPrinterService printerService)
     #region Commands
 
     [HttpPost]
-    [Authorize(PolicyEnum.SeniorSupport)]
+    [Authorize(Policies.SeniorSupport)]
     public Task<PrinterDto> Create([FromBody] PrinterCreateDto dto) =>
         printerService.CreateAsync(dto);
 
@@ -37,7 +37,7 @@ public sealed class PrinterController(IPrinterService printerService)
         printerService.UpdateAsync(id, dto);
 
     [HttpDelete("{id:guid}")]
-    [Authorize(PolicyEnum.SeniorSupport)]
+    [Authorize(Policies.SeniorSupport)]
     public Task Delete([FromRoute] Guid id) =>
         printerService.DeleteAsync(id);
 

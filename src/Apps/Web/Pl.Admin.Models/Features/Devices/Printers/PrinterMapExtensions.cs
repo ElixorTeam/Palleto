@@ -3,9 +3,9 @@ using Pl.Admin.Models.Features.Devices.Printers.Queries;
 
 namespace Pl.Admin.Models.Features.Devices.Printers;
 
-public static class PrinterMapper
+public static class PrinterMapExtensions
 {
-    public static PrinterUpdateDto DtoToUpdateDto(PrinterDto item)
+    public static PrinterUpdateDto ToUpdateDto(this PrinterDto item)
     {
         return new()
         {

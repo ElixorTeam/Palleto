@@ -7,7 +7,7 @@
 @using Pl.Admin.Models
 
 @attribute [Route($"{Routes.Users}")]
-@attribute [Authorize(Policy = PolicyEnum.SeniorSupport)]
+@attribute [Authorize(Policy = Policies.SeniorSupport)]
 @rendermode InteractiveServer
 
 <BrowserTitle Label="@Localizer["SectionUsers"]" />
@@ -65,7 +65,7 @@
       <DataGridActionUpdateItem TItem="UserModel" Action="@OpenUpdateDialog" />
       <DataGridActionOpenItem Link="@(RedirectHelper.ToUser(context.Item.KcId))" />
       <DataGridActionOpenInNewTab TItem="UserModel" Link="@(RedirectHelper.ToUser(context.Item.KcId))" />
-      <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
+      <AuthorizeView Policy="@Policies.SeniorSupport" Context="authContext">
         <DataGridActionDeleteItem TItem="UserModel" Action="@DeleteItem" />
       </AuthorizeView>
     </ContextMenuContent>

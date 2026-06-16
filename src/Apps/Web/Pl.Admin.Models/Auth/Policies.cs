@@ -1,6 +1,6 @@
 namespace Pl.Admin.Models.Auth;
 
-public static class PolicyEnum
+public static class Policies
 {
     public const string Admin = nameof(Admin);
     public const string Support = nameof(Support);

@@ -5,7 +5,7 @@
 @using Pl.Admin.Models
 
 @attribute [Route(Routes.Templates + "/{Id:guid}")]
-@attribute [Authorize(Policy = PolicyEnum.Support)]
+@attribute [Authorize(Policy = Policies.Support)]
 
 <UseEndpoint
   Endpoint="@PrintSettingsEndpoints.TemplateEndpoint"
@@ -27,7 +27,7 @@
       @if (query.HasData)
       {
         <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToTemplate(query.Data.Id))" />
-        <AuthorizeView Policy="@PolicyEnum.Developer">
+        <AuthorizeView Policy="@Policies.Developer">
           <ViewButtonUpdate TDialog="TemplateUpdateDialog" Model="query.Data" />
           <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
         </AuthorizeView>

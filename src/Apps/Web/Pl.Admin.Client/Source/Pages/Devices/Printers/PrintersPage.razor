@@ -12,7 +12,7 @@
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @attribute [Route(Routes.Printers)]
-@attribute [Authorize(Policy = PolicyEnum.Support)]
+@attribute [Authorize(Policy = Policies.Support)]
 @rendermode InteractiveServer
 
 <BrowserTitle Label="@Localizer["SectionPrinters"]" />
@@ -35,7 +35,7 @@
         IsLoading="query.IsLoading"
       />
       <DataGridActionReload OnClick="@query.RefetchAsync" IsLoading="query.IsFetching" />
-      <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
+      <AuthorizeView Policy="@Policies.SeniorSupport" Context="authContext">
         <DataGridActionCreate OnClick="@OpenCreateDialog"/>
       </AuthorizeView>
     </DataGridHeader>
@@ -79,7 +79,7 @@
         <DataGridActionUpdateItem TItem="PrinterDto" Action="@OpenUpdateDialog" />
         <DataGridActionOpenItem Link="@(RedirectHelper.ToPrinter(context.Item.Id))"/>
         <DataGridActionOpenInNewTab TItem="PrinterDto" Link="@RedirectHelper.ToPrinter(context.Item.Id)"/>
-        <AuthorizeView Policy="@PolicyEnum.SeniorSupport" Context="authContext">
+        <AuthorizeView Policy="@Policies.SeniorSupport" Context="authContext">
           <DataGridActionDeleteItem TItem="PrinterDto" Action="@DeleteItem"/>
         </AuthorizeView>
       </ContextMenuContent>

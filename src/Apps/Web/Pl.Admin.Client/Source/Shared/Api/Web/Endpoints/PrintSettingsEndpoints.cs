@@ -11,13 +11,11 @@ public class PrintSettingsEndpoints(IWebApi webApi)
 {
     # region Template
 
-    public ParameterlessEndpoint<TemplateDto[]> TemplatesEndpoint { get; } = new(
-        webApi.GetTemplates,
-        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+    public ParameterlessEndpoint<TemplateDto[]> TemplatesEndpoint =>
+        new(webApi.GetTemplates, options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
-    public Endpoint<Guid, TemplateDto> TemplateEndpoint { get; } = new(
-        webApi.GetTemplateByUid,
-        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+    public Endpoint<Guid, TemplateDto> TemplateEndpoint =>
+        new(webApi.GetTemplateByUid, options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
     public void AddTemplate(TemplateDto template, string body)
     {
@@ -51,9 +49,8 @@ public class PrintSettingsEndpoints(IWebApi webApi)
 
     # region Proxy Template
 
-    public Endpoint<bool, ProxyDto[]> ProxyTemplatesEndpoint { get; } = new(
-        webApi.GetProxyTemplatesByPluType,
-        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+    public Endpoint<bool, ProxyDto[]> ProxyTemplatesEndpoint =>
+        new(webApi.GetProxyTemplatesByPluType, options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
     public void AddProxyTemplate(bool isWeight, ProxyDto proxyTemplate) =>
         ProxyTemplatesEndpoint.UpdateQueryData(isWeight, query =>
@@ -71,9 +68,9 @@ public class PrintSettingsEndpoints(IWebApi webApi)
 
     # region Template Body
 
-    public Endpoint<Guid, string> TemplateBodyEndpoint { get; } = new(
-        async value => (await webApi.GetTemplateBody(value)).Body,
-        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+    public Endpoint<Guid, string> TemplateBodyEndpoint =>
+        new(async value => (await webApi.GetTemplateBody(value)).Body,
+            options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
     public void AddTemplateBody(Guid templateId, string body) =>
         TemplateBodyEndpoint.UpdateQueryData(templateId, _ => body);
@@ -88,13 +85,11 @@ public class PrintSettingsEndpoints(IWebApi webApi)
 
     # region Resource
 
-    public ParameterlessEndpoint<TemplateResourceDto[]> ResourcesEndpoint { get; } = new(
-        webApi.GetResources,
-        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+    public ParameterlessEndpoint<TemplateResourceDto[]> ResourcesEndpoint =>
+        new(webApi.GetResources, options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
-    public Endpoint<Guid, TemplateResourceDto> ResourceEndpoint { get; } = new(
-        webApi.GetResourceByUid,
-        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+    public Endpoint<Guid, TemplateResourceDto> ResourceEndpoint =>
+        new(webApi.GetResourceByUid, options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
     public void AddResource(TemplateResourceDto resource, string body)
     {
@@ -124,8 +119,8 @@ public class PrintSettingsEndpoints(IWebApi webApi)
 
     # region Resource Body
 
-    public Endpoint<Guid, string> ResourceBodyEndpoint { get; } = new(
-        async value => (await webApi.GetTemplateResourceBody(value)).Body,
+    public Endpoint<Guid, string> ResourceBodyEndpoint =>
+        new(async value => (await webApi.GetTemplateResourceBody(value)).Body,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
     public void AddResourceBody(Guid resourceId, string body) =>
@@ -139,19 +134,10 @@ public class PrintSettingsEndpoints(IWebApi webApi)
 
     # endregion
 
-    # region Variables
-
-    public Endpoint<Guid, BarcodeVarDto[]> VariablesEndpoint { get; } = new(
-        webApi.GetBarcodeVariables,
-        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
-
-    # endregion
-
     # region Barcodes
 
-    public Endpoint<Guid, BarcodeItemWrapper> BarcodesEndpoint { get; set; } = new(
-        webApi.GetBarcodes,
-        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
+    public Endpoint<Guid, BarcodeItemWrapper> BarcodesEndpoint =>
+        new(webApi.GetBarcodes, options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
     public void UpdateBarcodes(Guid templateId, BarcodeItemWrapper barcodes) =>
         BarcodesEndpoint.UpdateQueryData(templateId, query => query.Data == null ? query.Data! : barcodes);

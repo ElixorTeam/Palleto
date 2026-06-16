@@ -23,6 +23,7 @@ public readonly struct WorkShift
         Start = CalculateStartOfShift(DateTime.Now);
         End = CalculateEndOfShift(DateTime.Now);
     }
+
     private static DateTime CalculateStartOfShift(DateTime date)
     {
         if (date.Hour < 8)

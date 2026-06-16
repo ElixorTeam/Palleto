@@ -6,7 +6,7 @@ namespace Pl.Admin.Api.App.Features.Devices.Arms;
 
 [ApiController]
 [Route(ApiEndpoints.Arms)]
-[Authorize(PolicyEnum.Support)]
+[Authorize(Policies.Support)]
 public sealed class ArmController(IArmService armService)
 {
     #region Queries
@@ -47,12 +47,12 @@ public sealed class ArmController(IArmService armService)
 
     // Senior support
 
-    [Authorize(PolicyEnum.SeniorSupport)]
+    [Authorize(Policies.SeniorSupport)]
     [HttpPost]
     public Task<ArmDto> Create([FromBody] ArmCreateDto dto) =>
         armService.CreateAsync(dto);
 
-    [Authorize(PolicyEnum.SeniorSupport)]
+    [Authorize(Policies.SeniorSupport)]
     [HttpDelete("{id:guid}")]
     public Task Delete([FromRoute] Guid id) =>
         armService.DeleteAsync(id);

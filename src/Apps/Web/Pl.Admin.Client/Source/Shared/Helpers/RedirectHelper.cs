@@ -21,28 +21,28 @@ public sealed class RedirectHelper(IAuthorizationService authorizationService, N
     #region For Support
 
     public string ToTemplate(Guid uid) =>
-        Link(uid, Routes.Templates, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.Templates, CheckPolicy(Policies.Support));
 
     public string ToResource(Guid uid) =>
-        Link(uid, Routes.Resources, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.Resources, CheckPolicy(Policies.Support));
 
     public string ToArm(Guid uid) =>
-        Link(uid, Routes.Arms, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.Arms, CheckPolicy(Policies.Support));
 
     public string ToPrinter(Guid uid) =>
-        Link(uid, Routes.Printers, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.Printers, CheckPolicy(Policies.Support));
 
     public string ToPalletMan(Guid uid) =>
-        Link(uid, Routes.PalletMen, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.PalletMen, CheckPolicy(Policies.Support));
 
     public string ToUser(Guid uid) =>
-        Link(uid, Routes.Users, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.Users, CheckPolicy(Policies.Support));
 
     public string ToWarehouse(Guid uid) =>
-        Link(uid, Routes.Warehouses, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.Warehouses, CheckPolicy(Policies.Support));
 
     public string ToProductionSite(Guid uid) =>
-        Link(uid, Routes.ProductionSites, CheckPolicy(PolicyEnum.Support));
+        Link(uid, Routes.ProductionSites, CheckPolicy(Policies.Support));
 
     #endregion
 

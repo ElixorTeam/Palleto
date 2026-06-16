@@ -5,7 +5,7 @@
 @using Pl.Components.Components
 
 @attribute [Route($"{Routes.Tables}")]
-@attribute [Authorize(Policy = PolicyEnum.Developer)]
+@attribute [Authorize(Policy = Policies.Developer)]
 @rendermode InteractiveServer
 
 <BrowserTitle Label="@Localizer["SectionTables"]" />

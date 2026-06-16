@@ -29,7 +29,7 @@
       @if (query.HasData)
       {
         <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPlu(query.Data.Id))" />
-        <AuthorizeView Policy="@PolicyEnum.Support">
+        <AuthorizeView Policy="@Policies.Support">
           <ViewButtonUpdate TDialog="PluUpdateDialog" Model="query.Data" />
         </AuthorizeView>
       }

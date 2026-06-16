@@ -6,7 +6,7 @@
 @using Pl.Admin.Client.Source.Features
 
 @attribute [Route(Routes.Arms + "/{Id:guid}")]
-@attribute [Authorize(Policy = PolicyEnum.Support)]
+@attribute [Authorize(Policy = Policies.Support)]
 
 <UseEndpoint
   Endpoint="@DevicesEndpoints.ArmEndpoint"
@@ -41,7 +41,7 @@
         <SupportAuthView ProductionSiteUid="@query.Data.ProductionSite.Id">
           <ViewButtonUpdate TDialog="ArmUpdateDialog" Model="query.Data" />
         </SupportAuthView>
-        <AuthorizeView Policy="@PolicyEnum.SeniorSupport">
+        <AuthorizeView Policy="@Policies.SeniorSupport">
           <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
         </AuthorizeView>
       }

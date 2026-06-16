@@ -6,30 +6,30 @@ public static class PolicyAuthUtils
 {
     public static void RegisterAuthorization(AuthorizationOptions options)
     {
-        options.AddPolicy(PolicyEnum.Admin, builder =>
+        options.AddPolicy(Policies.Admin, builder =>
             builder.RequireAssertion(x =>
-                x.User.HasRole(RoleEnum.Admin)
+                x.User.HasRole(Roles.Admin)
             )
         );
 
-        options.AddPolicy(PolicyEnum.SeniorSupport, builder =>
+        options.AddPolicy(Policies.SeniorSupport, builder =>
             builder.RequireAssertion(x =>
-                x.User.HasRole(RoleEnum.Admin, RoleEnum.SeniorSupport)
+                x.User.HasRole(Roles.Admin, Roles.SeniorSupport)
             )
         );
 
-        options.AddPolicy(PolicyEnum.Support, builder =>
+        options.AddPolicy(Policies.Support, builder =>
             builder.RequireAssertion(x =>
                 x.User.HasRole(
-                    RoleEnum.Support, RoleEnum.Admin, RoleEnum.SeniorSupport
+                    Roles.Support, Roles.Admin, Roles.SeniorSupport
                 )
             )
         );
 
-        options.AddPolicy(PolicyEnum.Developer, builder =>
+        options.AddPolicy(Policies.Developer, builder =>
             builder.RequireAssertion(x =>
                 x.User.HasRole(
-                    RoleEnum.Developer, RoleEnum.Admin
+                    Roles.Developer, Roles.Admin
                 )
             )
         );

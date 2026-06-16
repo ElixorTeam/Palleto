@@ -3,7 +3,7 @@
 @using Pl.Admin.Models.Features.Database
 
 @attribute [Route($"{Routes.Migrations}")]
-@attribute [Authorize(Policy = PolicyEnum.Developer)]
+@attribute [Authorize(Policy = Policies.Developer)]
 @rendermode InteractiveServer
 
 <BrowserTitle Label="@Localizer["SectionMigrations"]" />

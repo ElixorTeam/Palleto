@@ -139,7 +139,7 @@
       />
     </ColumnsContent>
     <ContextMenuContent>
-      <AuthorizeView Policy="@PolicyEnum.Support" Context="authContext">
+      <AuthorizeView Policy="@Policies.Support" Context="authContext">
         <DataGridActionUpdateItem TItem="PluDto" Action="@OpenUpdateDialog"/>
       </AuthorizeView>
       <DataGridActionOpenItem Link="@RedirectHelper.ToPlu(context.Item.Id)"/>

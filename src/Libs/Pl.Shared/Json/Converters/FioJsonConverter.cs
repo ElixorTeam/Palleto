@@ -10,7 +10,9 @@ public class FioJsonConverter : JsonConverter<Fio>
         if (!root.TryGetProperty("name", out JsonElement nameElement) ||
             !root.TryGetProperty("surname", out JsonElement surnameElement) ||
             !root.TryGetProperty("patronymic", out JsonElement patronymicElement))
+        {
             throw new JsonException("Missing required properties for Fio.");
+        }
 
         string name = nameElement.GetString() ?? throw new JsonException("Missing 'name' property");
         string surname = surnameElement.GetString() ?? throw new JsonException("Missing 'surname' property");
