@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace Pl.Components.Components;
+namespace Pl.Components;
 
 /// <summary>
 /// Encapsulates shared EditContext validation logic used by all input components.

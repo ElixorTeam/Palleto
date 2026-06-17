@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FluentUI.AspNetCore.Components;
 
-namespace Pl.Components.Components;
+namespace Pl.Components;
 
 public static class ServiceCollectionExtensions
 {

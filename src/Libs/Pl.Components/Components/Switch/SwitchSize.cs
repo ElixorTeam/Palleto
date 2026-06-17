@@ -1,4 +1,4 @@
-﻿namespace Pl.Components.Components.Switch;
+﻿namespace Pl.Components;
 
 /// <summary>
 /// Size variants for the Switch component

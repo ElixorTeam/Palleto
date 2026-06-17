@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using static System.GC;
 
-namespace Pl.Components.Components;
+namespace Pl.Components;
 
 public partial class PlInputNumber<TValue> : PlComponentBase where TValue : struct, INumber<TValue>
 {
@@ -233,15 +233,15 @@ public partial class PlInputNumber<TValue> : PlComponentBase where TValue : stru
 
     private string ContainerClass => CssUtil.Cn(
         "flex items-center",
-        CssUtil.When(ShowButtons, "rounded-md")
+        ShowButtons ? "rounded-md" : null
     );
 
     private string CssClass => CssUtil.Cn(
         "flex h-10 w-full border border-input bg-background px-3 py-2 text-base",
         "placeholder:text-muted-foreground",
-        CssUtil.WhenElse(
-            ShowButtons, "rounded-l-md focus-visible:outline-none pr-8 border-r-0", "rounded-md focus-visible:outline-none"
-        ),
+        ShowButtons
+            ? "rounded-l-md focus-visible:outline-none pr-8 border-r-0"
+            : "rounded-md focus-visible:outline-none",
         "disabled:cursor-not-allowed disabled:opacity-50",
         "aria-[invalid=true]:border-destructive",
         "transition-colors",

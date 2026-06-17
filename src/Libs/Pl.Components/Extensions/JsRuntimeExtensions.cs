@@ -1,6 +1,6 @@
 ﻿using Microsoft.JSInterop;
 
-namespace Pl.Components.Components;
+namespace Pl.Components;
 
 public static class JsRuntimeExtensions
 {

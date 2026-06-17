@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using TailwindMerge;
 
-namespace Pl.Components.Components;
+namespace Pl.Components;
 
 public static partial class CssUtil
 {

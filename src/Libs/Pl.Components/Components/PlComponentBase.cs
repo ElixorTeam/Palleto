@@ -1,4 +1,4 @@
-﻿namespace Pl.Components.Components;
+﻿namespace Pl.Components;
 
 public abstract class PlComponentBase : ComponentBase
 {

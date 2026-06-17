@@ -1,9 +1,9 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace Pl.Components.Components;
+namespace Pl.Components;
 
-public abstract class FieldBase : ComponentBase, IDisposable
+public abstract class FieldBase<TValue> : ComponentBase, IDisposable
 {
     private FieldIdentifier? _fieldIdentifier;
     private LambdaExpression? _cachedExpression;
@@ -13,10 +13,35 @@ public abstract class FieldBase : ComponentBase, IDisposable
     private EditContext? CascadedEditContext { get; set; }
 
     /// <summary>
+    /// Gets or sets the current value.
+    /// </summary>
+    [Parameter]
+    public TValue? Value { get; set; }
+
+    /// <summary>
+    /// Gets or sets the callback invoked when the value changes.
+    /// </summary>
+    [Parameter]
+    public EventCallback<TValue?> ValueChanged { get; set; }
+
+    /// <summary>
+    /// Gets or sets an expression that identifies the bound value for EditForm integration.
+    /// Automatically provided by <c>@bind-Value</c>.
+    /// </summary>
+    [Parameter]
+    public Expression<Func<TValue?>>? ValueExpression { get; set; }
+
+    /// <summary>
     /// Gets or sets additional CSS classes applied to the outer Field container.
     /// </summary>
     [Parameter]
-    public string Class { get; set; } = string.Empty;
+    public string? Class { get; set; }
+
+    /// <summary>
+    /// Gets or sets additional CSS classes applied to the inner element.
+    /// </summary>
+    [Parameter]
+    public string? InputClass { get; set; }
 
     /// <summary>
     /// Gets or sets the label text displayed above or beside the control.
@@ -32,6 +57,12 @@ public abstract class FieldBase : ComponentBase, IDisposable
     /// </remarks>
     [Parameter]
     public string? HelperText { get; set; }
+
+    /// <summary>
+    /// Gets or sets disabled.
+    /// </summary>
+    [Parameter]
+    public bool Disabled { get; set; }
 
     /// <summary>
     /// Gets or sets a manual error text to display on the field.

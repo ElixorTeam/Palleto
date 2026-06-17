@@ -1,4 +1,4 @@
-﻿namespace Pl.Components.Components;
+﻿namespace Pl.Components;
 
 /// <summary>
 /// Defines the visual style variant for a Button component.

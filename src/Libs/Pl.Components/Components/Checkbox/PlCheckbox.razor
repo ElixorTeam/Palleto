@@ -1,0 +1,181 @@
+﻿@using System.Linq.Expressions
+@using BlazorBlueprint.Primitives.Checkbox
+@using Microsoft.AspNetCore.Components.Forms
+@namespace Pl.Components
+@inherits PlComponentBase
+
+<BbCheckbox
+  Id="@EffectiveId"
+  Checked="@Value"
+  CheckedChanged="@HandleValueChanged"
+  Indeterminate="@Indeterminate"
+  IndeterminateChanged="@IndeterminateChanged"
+  Disabled="@Disabled"
+  Required="@Required"
+  AriaLabel="@AriaLabel"
+  class="@CssClass"
+  aria-invalid="@(IsInvalid ? "true" : null)"
+  aria-describedby="@AriaDescribedBy">
+  <BbCheckboxIndicator />
+</BbCheckbox>
+
+@code {
+    private FieldIdentifier _fieldIdentifier;
+    private EditContext? _editContext;
+    private string? _generatedId;
+
+    /// <summary>
+    /// Gets or sets the cascaded EditContext from a parent EditForm.
+    /// </summary>
+    [CascadingParameter]
+    private EditContext? CascadedEditContext { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the checkbox is checked.
+    /// </summary>
+    /// <remarks>
+    /// This property supports two-way binding using the @bind-Checked directive.
+    /// Changes to this property trigger the CheckedChanged event callback.
+    /// </remarks>
+    [Parameter]
+    public bool Value { get; set; }
+
+    /// <summary>
+    /// Gets or sets the callback invoked when the checked state changes.
+    /// </summary>
+    /// <remarks>
+    /// This event callback enables two-way binding with @bind-Checked.
+    /// It is invoked whenever the user toggles the checkbox state.
+    /// Also notifies EditContext for form validation.
+    /// </remarks>
+    [Parameter]
+    public EventCallback<bool> ValueChanged { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the checkbox is in an indeterminate state.
+    /// </summary>
+    /// <remarks>
+    /// The indeterminate state is typically used for "select all" checkboxes
+    /// when only some child items are selected. When indeterminate is true,
+    /// a dash icon is displayed instead of a checkmark.
+    /// </remarks>
+    [Parameter]
+    public bool Indeterminate { get; set; }
+
+    /// <summary>
+    /// Gets or sets the callback invoked when the indeterminate state changes.
+    /// </summary>
+    [Parameter]
+    public EventCallback<bool> IndeterminateChanged { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the checkbox is disabled.
+    /// </summary>
+    /// <remarks>
+    /// When disabled:
+    /// - Checkbox cannot be clicked or focused
+    /// - Opacity is reduced
+    /// - Pointer events are disabled
+    /// - aria-disabled attribute is set to true
+    /// </remarks>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the checkbox is required in a form context.
+    /// </summary>
+    [Parameter]
+    public bool Required { get; set; }
+
+    /// <summary>
+    /// Gets or sets the ARIA label for the checkbox.
+    /// </summary>
+    /// <remarks>
+    /// Provides accessible text for screen readers when the checkbox
+    /// doesn't have associated label text.
+    /// </remarks>
+    [Parameter]
+    public string? AriaLabel { get; set; }
+
+    /// <summary>
+    /// Gets or sets the ID attribute for the checkbox element.
+    /// </summary>
+    /// <remarks>
+    /// Used for associating the checkbox with label elements via htmlFor attribute.
+    /// </remarks>
+    [Parameter]
+    public string? Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the IDs of elements that describe the checkbox, for accessibility.
+    /// </summary>
+    [Parameter]
+    public string? AriaDescribedBy { get; set; }
+
+    /// <summary>
+    /// Gets or sets an expression that identifies the bound value.
+    /// </summary>
+    /// <remarks>
+    /// Used for form validation integration. When provided, the checkbox
+    /// registers with the EditContext and participates in form validation.
+    /// </remarks>
+    [Parameter]
+    public Expression<Func<bool>>? CheckedExpression { get; set; }
+
+    /// <summary>
+    /// Gets whether the checkbox is in an invalid state (for validation).
+    /// </summary>
+    private bool IsInvalid
+    {
+        get
+        {
+            if (_editContext != null && CheckedExpression != null)
+                return _editContext.GetValidationMessages(_fieldIdentifier).Any();
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Gets the computed CSS classes for the checkbox element.
+    /// </summary>
+    /// <remarks>
+    /// Combines:
+    /// - Base checkbox styles (size, border, transitions)
+    /// - State-specific classes (checked, indeterminate, disabled)
+    /// - Focus ring for keyboard navigation
+    /// - Custom classes from the Class parameter
+    /// </remarks>
+    private string EffectiveId => Id ?? (_generatedId ??= $"checkbox-{Guid.NewGuid().ToString("N")[..8]}");
+
+    private string CssClass => CssUtil.Cn(
+        "peer h-5 w-5 shrink-0 rounded-sm border border-primary flex items-center justify-center",
+        "ring-offset-background focus-visible:outline-none focus-visible:ring-2",
+        "focus-visible:ring-ring focus-visible:ring-offset-2",
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        Value || Indeterminate ? "bg-primary text-primary-foreground" : "bg-background",
+        Class
+    );
+
+    /// <summary>
+    /// Handles the checked state change and notifies EditContext for form validation.
+    /// </summary>
+    private async Task HandleValueChanged(bool value)
+    {
+        Value = value;
+        await ValueChanged.InvokeAsync(value);
+
+        // Notify EditContext of field change for validation
+        if (_editContext != null && CheckedExpression != null)
+            _editContext.NotifyFieldChanged(_fieldIdentifier);
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (CascadedEditContext == null || CheckedExpression == null)
+          return;
+        _editContext = CascadedEditContext;
+        _fieldIdentifier = FieldIdentifier.Create(CheckedExpression);
+    }
+}
