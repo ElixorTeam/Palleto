@@ -83,7 +83,7 @@
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
-    protected override string CssClass => CssUtil.Cn(
+    private string CssClass => CssUtil.Cn(
         "flex gap-2",
         Orientation switch
         {

@@ -80,7 +80,7 @@
       "outline-none transition-colors",
       "data-[focused=true]:bg-accent data-[focused=true]:text-accent-foreground",
       "data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
-      CssUtil.When(IsSelected, "bg-accent/50 text-accent-foreground"),
+      IsSelected ? "bg-accent/50 text-accent-foreground" : null,
       Class
     );
 

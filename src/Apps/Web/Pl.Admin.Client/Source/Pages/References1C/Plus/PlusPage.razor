@@ -4,7 +4,6 @@
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Models.Features.References1C.Brands
 @using Pl.Admin.Models.Features.References1C.Plus.Queries
-@using Pl.Components.Components
 
 @attribute [Route(Routes.Plus)]
 @rendermode InteractiveServer
@@ -17,6 +16,9 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["Menu1CReferences"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
     <PlBreadcrumbItem>
       <PlBreadcrumbPage>@Localizer["SectionPlu"]</PlBreadcrumbPage>
     </PlBreadcrumbItem>

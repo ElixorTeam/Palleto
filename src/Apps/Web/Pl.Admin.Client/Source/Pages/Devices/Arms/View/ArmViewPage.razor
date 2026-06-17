@@ -15,11 +15,18 @@
 >
   <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionArm"])" />
 
-  <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label=@Localizer["SectionArm"] Link="@Routes.Arms" />
+  <Breadcrumbs>
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["MenuDevices"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
+    <PlBreadcrumbItem>
+      <PlBreadcrumbLink Href="@Routes.Arms">@Localizer["SectionArm"]</PlBreadcrumbLink>
+    </PlBreadcrumbItem>
     @if (query.HasData)
     {
-      <Breadcrumb Label="@query.Data.Name" />
+      <PlBreadcrumbItem>
+        <PlBreadcrumbPage>@query.Data.Name</PlBreadcrumbPage>
+      </PlBreadcrumbItem>
     }
   </Breadcrumbs>
 

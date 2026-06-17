@@ -10,10 +10,15 @@
 >
   <BrowserTitle Label="@WsDataLocalizer["ColLabel"]" />
 
-  <Breadcrumbs Start="BreadcrumbStart.Back">
+  <Breadcrumbs>
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["MenuOperations"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
     @if (query.HasData)
     {
-      <Breadcrumb Label="@(WsDataLocalizer["ColLabel"] + " №" + query.Data.Id)" />
+      <PlBreadcrumbItem>
+        <PlBreadcrumbPage>@(WsDataLocalizer["ColLabel"] + " №" + query.Data.Id)</PlBreadcrumbPage>
+      </PlBreadcrumbItem>
     }
   </Breadcrumbs>
 

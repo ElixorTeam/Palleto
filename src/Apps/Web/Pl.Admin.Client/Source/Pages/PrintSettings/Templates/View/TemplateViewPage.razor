@@ -14,11 +14,18 @@
 >
   <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionTemplates"])" />
 
-  <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label="@Localizer["SectionTemplates"]" Link="@Routes.Templates" />
+  <Breadcrumbs>
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["MenuPrintSettings"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
+    <PlBreadcrumbItem>
+      <PlBreadcrumbLink Href="@Routes.Templates">@Localizer["SectionTemplates"]</PlBreadcrumbLink>
+    </PlBreadcrumbItem>
     @if (query.HasData)
     {
-      <Breadcrumb Label="@query.Data.Name" />
+      <PlBreadcrumbItem>
+        <PlBreadcrumbPage>@query.Data.Name</PlBreadcrumbPage>
+      </PlBreadcrumbItem>
     }
   </Breadcrumbs>
 

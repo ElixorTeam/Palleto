@@ -57,7 +57,7 @@
     "hover:bg-accent hover:text-accent-foreground",
     "focus:outline-none select-none",
     "disabled:cursor-not-allowed disabled:opacity-50",
-    CssUtil.When(IsOpen, ActiveClass),
+    IsOpen ? ActiveClass : null,
     Class
   );
 }

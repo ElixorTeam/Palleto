@@ -15,11 +15,18 @@
 
   <BrowserTitle Label="@(user?.Fio.DisplayShortName ?? Localizer["SectionUsers"])" />
 
-  <Breadcrumbs Start="BreadcrumbStart.Back">
-    <Breadcrumb Label="@Localizer["SectionUsers"]" Link="@Routes.Users" />
+  <Breadcrumbs>
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["MenuAdministration"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
+    <PlBreadcrumbItem>
+      <PlBreadcrumbLink Href="@Routes.Users">@Localizer["SectionUsers"]</PlBreadcrumbLink>
+    </PlBreadcrumbItem>
     @if (user != null)
     {
-      <Breadcrumb Label="@user.Fio.DisplayShortName" />
+      <PlBreadcrumbItem>
+        <PlBreadcrumbPage>@user.Fio.DisplayShortName</PlBreadcrumbPage>
+      </PlBreadcrumbItem>
     }
   </Breadcrumbs>
 

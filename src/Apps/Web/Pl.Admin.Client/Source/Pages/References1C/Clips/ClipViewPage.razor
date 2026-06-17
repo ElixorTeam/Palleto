@@ -1,5 +1,4 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
-@using Pl.Components.Components
 @using Pl.Admin.Client.Source.Shared.Constants
 
 @attribute [Route(Routes.Clips + "/{Id:guid}")]
@@ -11,13 +10,18 @@
 >
   <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionClips"])" />
 
-  <Breadcrumbs Start="BreadcrumbStart.Back">
+  <Breadcrumbs>
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["Menu1CReferences"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
     <PlBreadcrumbItem>
       <PlBreadcrumbLink Href="@Routes.Clips">@Localizer["SectionClips"]</PlBreadcrumbLink>
     </PlBreadcrumbItem>
     @if (query.HasData)
     {
-      <PlBreadcrumbPage>@query.Data.Name</PlBreadcrumbPage>
+      <PlBreadcrumbItem>
+        <PlBreadcrumbPage>@query.Data.Name</PlBreadcrumbPage>
+      </PlBreadcrumbItem>
     }
   </Breadcrumbs>
 

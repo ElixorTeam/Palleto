@@ -8,7 +8,6 @@
 @using TscZebra.Plugin.Abstractions.Enums
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Printers.Queries
-@using Pl.Components.Components
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @attribute [Route(Routes.Printers)]
@@ -25,7 +24,12 @@
     Context="query"
   >
     <Breadcrumbs Class="pb-5">
-      <Breadcrumb Label="@Localizer["SectionPrinters"]" Link="@Routes.Printers" />
+      <PlBreadcrumbItem>
+        <PlBreadcrumbPage>@Localizer["MenuDevices"]</PlBreadcrumbPage>
+      </PlBreadcrumbItem>
+      <PlBreadcrumbItem>
+        <PlBreadcrumbPage>@Localizer["SectionPrinters"]</PlBreadcrumbPage>
+      </PlBreadcrumbItem>
     </Breadcrumbs>
 
     <DataGridHeader>

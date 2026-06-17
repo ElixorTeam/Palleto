@@ -18,7 +18,12 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label=@Localizer["SectionUsers"] Link="@Routes.Users" />
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["MenuAdministration"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["SectionUsers"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
   </Breadcrumbs>
 
   <DataGridHeader>

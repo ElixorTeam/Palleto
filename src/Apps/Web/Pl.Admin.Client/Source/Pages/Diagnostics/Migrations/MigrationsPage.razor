@@ -13,7 +13,12 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label="@Localizer["SectionMigrations"]" Link="@Routes.Migrations" />
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["MenuDiagnostics"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["SectionMigrations"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
   </Breadcrumbs>
 
   <DataGridHeader>

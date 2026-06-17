@@ -28,12 +28,6 @@ public static partial class CssUtil
         return TwMerge.Merge(string.Join(" ", classes)) ?? string.Empty;
     }
 
-    public static string? When(bool condition, string className) =>
-        condition ? className : null;
-
-    public static string WhenElse(bool condition, string ifClass, string elseClass) =>
-        condition ? ifClass : elseClass;
-
     /// <summary>
     /// Recursively processes input values and extracts class names.
     /// </summary>
@@ -47,7 +41,7 @@ public static partial class CssUtil
             {
                 if (string.IsNullOrWhiteSpace(str))
                     return;
-                string[]? parts = str.Split(WhitespaceSeparators, StringSplitOptions.RemoveEmptyEntries);
+                string[] parts = str.Split(WhitespaceSeparators, StringSplitOptions.RemoveEmptyEntries);
                 classes.AddRange(parts.Where(IsValidClassName));
                 return;
             }

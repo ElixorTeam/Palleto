@@ -30,7 +30,7 @@
     /// Whether the menu item is disabled.
     /// </summary>
     [Parameter]
-    public bool Disabled { get; set; } = false;
+    public bool Disabled { get; set; }
 
     /// <summary>
     /// Custom click handler.
@@ -61,7 +61,7 @@
         "text-sm outline-none transition-colors",
         "focus:bg-accent focus:text-accent-foreground",
         "data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
-        CssUtil.When(!Disabled, "hover:bg-accent hover:text-accent-foreground"),
+        !Disabled ? "hover:bg-accent hover:text-accent-foreground" : null,
         Class
     );
 }

@@ -5,7 +5,6 @@
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References.Template.Queries
-@using Pl.Components.Components
 
 @attribute [Route(Routes.Templates)]
 @attribute [Authorize(Policy = Policies.Support)]
@@ -19,7 +18,12 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label=@Localizer["SectionTemplates"] Link="@Routes.Templates" />
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["MenuPrintSettings"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["SectionTemplates"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
   </Breadcrumbs>
 
   <DataGridHeader>

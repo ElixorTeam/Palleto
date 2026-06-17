@@ -6,7 +6,6 @@
 @using Pl.Admin.Client.Source.Shared.Services.Stores
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Admins.PalletMen.Queries
-@using Pl.Components.Components
 
 @attribute [Route(Routes.PalletMen)]
 @attribute [Authorize(Policy = Policies.Support)]
@@ -22,6 +21,9 @@
     Context="query"
   >
     <Breadcrumbs Class="pb-5">
+      <PlBreadcrumbItem>
+        <PlBreadcrumbPage>@Localizer["MenuAdministration"]</PlBreadcrumbPage>
+      </PlBreadcrumbItem>
       <PlBreadcrumbItem>
         <PlBreadcrumbPage>@Localizer["SectionPalletMen"]</PlBreadcrumbPage>
       </PlBreadcrumbItem>

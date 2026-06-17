@@ -54,5 +54,5 @@
 
     private bool IsOpen => Context?.IsOpen ?? false;
 
-    private string CssClass => CssUtil.Cn(CssUtil.When(IsOpen, ActiveClass), Class);
+    private string CssClass => CssUtil.Cn(IsOpen ? ActiveClass : null, Class);
 }

@@ -5,10 +5,10 @@ public readonly struct WorkShift
     public readonly DateTime Start;
     public readonly DateTime End;
 
-    public WorkShift(DateTime dateTime)
+    public WorkShift()
     {
-        Start = CalculateStartOfShift(dateTime);
-        End = CalculateEndOfShift(dateTime);
+        Start = CalculateStartOfShift(DateTime.Now);
+        End = CalculateEndOfShift(DateTime.Now);
     }
 
     public WorkShift(DateOnly date)
@@ -18,10 +18,10 @@ public readonly struct WorkShift
         End = CalculateEndOfShift(dateTime);
     }
 
-    public WorkShift()
+    public WorkShift(DateTime dateTime)
     {
-        Start = CalculateStartOfShift(DateTime.Now);
-        End = CalculateEndOfShift(DateTime.Now);
+        Start = CalculateStartOfShift(dateTime);
+        End = CalculateEndOfShift(dateTime);
     }
 
     private static DateTime CalculateStartOfShift(DateTime date)

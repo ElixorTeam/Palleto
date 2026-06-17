@@ -17,7 +17,12 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label="@Localizer["SectionProductionSites"]" Link="@Routes.ProductionSites" />
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["MenuReferences"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["SectionProductionSites"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
   </Breadcrumbs>
 
   <DataGridHeader>

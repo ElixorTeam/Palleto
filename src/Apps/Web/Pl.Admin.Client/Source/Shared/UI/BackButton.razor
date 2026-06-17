@@ -1,0 +1,13 @@
+@inject TwMerge TwMerge
+@inject IJSRuntime JsRuntime
+@inject IStringLocalizer<ApplicationResources> Localizer
+
+<PlButton Variant="ButtonVariant.Link" Class="@TwMerge.Merge("-ml-3 mb-2", Class)" OnClick="GoBackAsync">
+  <HeroIcon Name="arrow-left" Class="size-4"/>
+  @Localizer["BtnBack"]
+</PlButton>
+
+@code {
+  [Parameter] public string Class { get; set; } = string.Empty;
+  private Task GoBackAsync() => JsRuntime.InvokeVoidAsync("history.back").AsTask();
+}

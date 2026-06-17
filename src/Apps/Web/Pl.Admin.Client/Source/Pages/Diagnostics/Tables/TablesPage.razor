@@ -2,7 +2,6 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Models.Features.Database
-@using Pl.Components.Components
 
 @attribute [Route($"{Routes.Tables}")]
 @attribute [Authorize(Policy = Policies.Developer)]
@@ -15,7 +14,12 @@
   Context="query"
 >
   <Breadcrumbs Class="pb-5">
-    <Breadcrumb Label="@Localizer["SectionTables"]" Link="@Routes.Tables" />
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["MenuDiagnostics"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
+    <PlBreadcrumbItem>
+      <PlBreadcrumbPage>@Localizer["SectionTables"]</PlBreadcrumbPage>
+    </PlBreadcrumbItem>
   </Breadcrumbs>
 
   <DataGridHeader>
