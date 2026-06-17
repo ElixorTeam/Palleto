@@ -10,6 +10,15 @@
 @attribute [Authorize(Policy = Policies.SeniorSupport)]
 @rendermode InteractiveServer
 
+@inject IWebApi WebApi
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject IState<ProductionSiteState> ProductionSiteState
+@inject IDialogService DialogService
+@inject PageHelper PageHelper
+@inject AdminEndpoints AdminEndpoints
+@inject RedirectHelper RedirectHelper
+
 <BrowserTitle Label="@Localizer["SectionUsers"]" />
 
 <UseParameterlessEndpoint
@@ -78,20 +87,6 @@
 </UseParameterlessEndpoint>
 
 @code {
-  #region Inject
-
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
-  [Inject] private IDialogService DialogService { get; set; } = default!;
-
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private AdminEndpoints AdminEndpoints { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-
-  #endregion
-
   private ProxyDto? ProductionSite { get; set; }
   private ProxyDto CurrentProductionSite => ProductionSite ?? ProductionSiteState.Value.ProductionSite;
 

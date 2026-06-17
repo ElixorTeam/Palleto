@@ -4,9 +4,17 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Arms.Commands
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
-@using Pl.Components.Components
 
 @inherits SectionFormBase<ArmCreateDto>
+
+@inject IWebApi WebApi
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IState<ProductionSiteState> ProductionSiteState
+@inject RedirectHelper RedirectHelper
+@inject DevicesEndpoints DevicesEndpoints
+@inject ReferencesEndpoints ReferencesEndpoints
+@inject ArmCreateValidator ArmCreateValidator
 
 <SectionForm
   FormModel="@FormModel"
@@ -121,20 +129,6 @@
 </SectionForm>
 
 @code {
-  # region Injects
-
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
-
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
-  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
-  [Inject] private ArmCreateValidator ArmCreateValidator { get; set; } = default!;
-
-  # endregion
-
   private IList<SelectOption<ArmType>> ArmTypeOptions { get; set; } = [];
 
   protected override void OnInitialized()

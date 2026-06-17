@@ -1,5 +1,7 @@
 @using vNext.BlazorComponents.FluentValidation
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+
 <EditForm Model="@FormModel" OnValidSubmit="@OnSubmitAction" class="w-full flex flex-col overflow-y-auto overflow-x-hidden bg-secondary/[.3] dark:bg-inherit">
   <FluentValidationValidator Validator="Validator" />
   <div class="w-full flex bg-secondary/[.3] dark:bg-inherit">
@@ -25,8 +27,6 @@
 </EditForm>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
   [Parameter] public object FormModel { get; set; } = new();
   [Parameter] public RenderFragment? FieldsContent { get; set; }
   [Parameter] public RenderFragment? ActionsContent { get; set; }

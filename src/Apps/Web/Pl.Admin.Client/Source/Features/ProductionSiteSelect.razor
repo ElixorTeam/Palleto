@@ -1,6 +1,8 @@
 @using BlazorBlueprint.Primitives
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
-@using Pl.Components.Components
+
+@inject ReferencesEndpoints ReferencesEndpoints
+@inject IStringLocalizer<ApplicationResources> Localizer
 
 <UseParameterlessEndpoint
   Endpoint="ReferencesEndpoints.ProxyProductionSiteEndpoint"
@@ -23,13 +25,6 @@
 </UseParameterlessEndpoint>
 
 @code {
-  # region Injects
-
-  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
-  # endregion
-
   [Parameter] public bool AllowIsNew { get; set; }
   [Parameter] public ProxyDto Value { get; set; } = new(Guid.Empty, "Без площадки");
   [Parameter] public EventCallback<ProxyDto> ValueChanged { get; set; }

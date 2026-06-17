@@ -4,6 +4,10 @@
 
 @implements IDialogContentComponent<TemplateDto>
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject PrintSettingsEndpoints PrintSettingsEndpoints
+
 <SectionDialog>
   <Tab Id="@typeof(TemplateUpdateForm).ToString()" Label="@Localizer["SectionTemplates"]">
     <TemplateUpdateForm Model="Content" FormModel="@TemplateMapper.DtoToUpdateDto(Content)" />
@@ -20,9 +24,5 @@
 </SectionDialog>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
-
   [Parameter] public TemplateDto Content { get; set; } = default!;
 }

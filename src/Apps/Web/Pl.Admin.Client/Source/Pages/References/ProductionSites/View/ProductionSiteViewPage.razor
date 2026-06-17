@@ -7,6 +7,12 @@
 @attribute [Route(Routes.ProductionSites + "/{Id:guid}")]
 @attribute [Authorize(Policy = Policies.Support)]
 
+@inject IWebApi WebApi
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject PageHelper PageHelper
+@inject RedirectHelper RedirectHelper
+@inject ReferencesEndpoints ReferencesEndpoints
+
 <UseEndpoint
   Endpoint="@ReferencesEndpoints.ProductionSiteEndpoint"
   Arg="@Id"
@@ -59,17 +65,6 @@
 </UseEndpoint>
 
 @code {
-  # region Injects
-
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
-
-  # endregion
-
   [Parameter] public Guid Id { get; set; }
 
   private string CurrentTab { get; set; } = "info";

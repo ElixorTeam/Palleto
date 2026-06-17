@@ -1,5 +1,7 @@
 @using System.Drawing
 
+@inject IJSRuntime JsRuntime
+
 <div
   tabindex="0"
   @ref="DivRef"
@@ -11,8 +13,6 @@
 </div>
 
 @code {
-  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
-
   [Parameter] public RenderFragment? ChildContent { get; set; }
 
   private bool IsOpen { get; set; }

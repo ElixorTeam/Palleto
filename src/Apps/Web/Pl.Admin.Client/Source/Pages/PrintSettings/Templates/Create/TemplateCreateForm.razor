@@ -2,8 +2,12 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References.Template.Commands
 @using Pl.Admin.Models.Features.References.Template.Queries
-@using Pl.Components.Components
 @inherits SectionFormBase<TemplateCreateDto>
+
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject PrintSettingsEndpoints PrintSettingsEndpoints
+@inject IWebApi WebApi
+@inject TemplateCreateValidator TemplateCreateValidator
 
 <SectionForm
   FormModel="@FormModel"
@@ -60,15 +64,6 @@
 </SectionForm>
 
 @code {
-  #region Inject
-
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private TemplateCreateValidator TemplateCreateValidator { get; set; } = default!;
-
-  #endregion
-
   protected override async Task CreateItemAction(TemplateCreateDto item)
   {
     TemplateDto dto = await WebApi.CreateTemplate(item);

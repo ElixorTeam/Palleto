@@ -1,6 +1,8 @@
-@using Pl.Components.Components
-
 @implements IDialogContentComponent<string>
+
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IJSRuntime JsRuntime
+@inject IToastService ToastService
 
 <Dialog Class="max-w-lg p-6">
   <div class="shrink-0 w-full flex items-center justify-between bg-background">
@@ -41,14 +43,6 @@
 </Dialog>
 
 @code {
-  # region Injects
-
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
-  [Inject] private IToastService ToastService { get; set; } = default!;
-
-  # endregion
-
   [CascadingParameter] protected FluentDialog Dialog { get; set; } = default!;
   [Parameter] public string Content { get; set; } = string.Empty;
 

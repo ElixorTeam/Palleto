@@ -1,4 +1,6 @@
-@using Pl.Components.Components
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IDialogService DialogService
+@inject PageHelper PageHelper
 
 <PlButton Variant="ButtonVariant.Outline" OnClick="@OpenShareDialog">
   <HeroIcon Name="share" Class="size-4 mr-2"/>
@@ -6,14 +8,6 @@
 </PlButton>
 
 @code {
-  # region Injects
-
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IDialogService DialogService { get; set; } = default!;
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-
-  # endregion
-
   [Parameter, EditorRequired] public string Link { get; set; } = string.Empty;
 
   private Task OpenShareDialog() => DialogService.ShowDialogAsync<ShareUrlDialog>(Link, PageHelper.DialogParameters);

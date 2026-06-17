@@ -1,3 +1,6 @@
+@inject TwMerge TwMerge
+@inject NavigationManager NavigationManager
+
 <button
   type="button"
   @onclick="@SetValue"
@@ -7,9 +10,6 @@
 </button>
 
 @code {
-  [Inject] private NavigationManager NavigationManager { get; set; } = default!;
-  [Inject] private TwMerge TwMerge { get; set; } = default!;
-
   [Parameter] public string CurrentTab { get; set; } = string.Empty;
   [Parameter] public EventCallback<string> CurrentTabChanged { get; set; }
   [Parameter] public string Value { get; set; } = string.Empty;

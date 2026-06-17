@@ -1,6 +1,10 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject DevicesEndpoints DevicesEndpoints
+
 <h2 class="text-xl font-medium mb-4">@Localizer["SectionViewWorkshiftArmAnalytics"]</h2>
 <div class="grid w-full gap-6 grid-cols-1 xl:grid-cols-2">
   <Card class="w-full h-96 flex flex-col">
@@ -70,13 +74,5 @@
 </div>
 
 @code {
-  # region Injects
-
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
-
-  # endregion
-
   [Parameter] public ArmDto Model { get; set; } = default!;
 }

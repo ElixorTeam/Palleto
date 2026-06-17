@@ -1,6 +1,7 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
-@using Pl.Admin.Client.Source.Shared.Services.Stores
-@using IToastService = Microsoft.FluentUI.AspNetCore.Components.IToastService
+
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject ReferencesEndpoints ReferencesEndpoints
 
 <UseParameterlessEndpoint
   Endpoint="ReferencesEndpoints.ProxyUserProductionSiteEndpoint"
@@ -30,11 +31,5 @@
 
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
-  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
-  [Inject] private IDispatcher Dispatcher { get; set; } = default!;
-  [Inject] private IToastService ToastService { get; set; } = default!;
-
   [Parameter] public RenderFragment? ChildContent { get; set; }
 }

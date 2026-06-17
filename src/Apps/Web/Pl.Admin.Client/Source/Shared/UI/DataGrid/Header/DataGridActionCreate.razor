@@ -1,4 +1,4 @@
-@using Pl.Components.Components
+@inject IStringLocalizer<ApplicationResources> Localizer
 
 <PlButton Size="ButtonSize.Sm" Variant="ButtonVariant.Outline" OnClick="@OnClick" Disabled="@IsLoading">
   <HeroIcon Name="plus" Class="size-4 sm:mr-2"/>
@@ -6,8 +6,6 @@
 </PlButton>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
   [Parameter] public EventCallback OnClick { get; set; }
   [Parameter] public bool IsLoading { get; set; }
 }

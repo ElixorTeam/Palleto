@@ -1,5 +1,6 @@
-@using Pl.Components.Components
 @implements IDialogContentComponent<EventCallback>
+
+@inject IStringLocalizer<ApplicationResources> Localizer
 
 <Dialog Class="max-w-lg p-6">
   <div class="shrink-0 w-full flex items-center justify-between bg-background">
@@ -31,8 +32,6 @@
 </Dialog>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
   [CascadingParameter] protected FluentDialog Dialog { get; set; } = default!;
   [Parameter] public EventCallback Content { get; set; }
 

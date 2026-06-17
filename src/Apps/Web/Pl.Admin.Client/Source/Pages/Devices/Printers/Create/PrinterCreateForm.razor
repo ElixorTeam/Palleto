@@ -4,9 +4,14 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Printers.Commands
 @using Pl.Admin.Models.Features.Devices.Printers.Queries
-@using Pl.Components.Components
 
 @inherits SectionFormBase<PrinterCreateDto>
+
+@inject IWebApi WebApi
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject DevicesEndpoints DevicesEndpoints
+@inject PrinterCreateValidator PrinterCreateValidator
 
 <SectionForm
   FormModel="@FormModel"
@@ -37,18 +42,6 @@
 </SectionForm>
 
 @code {
-  # region Injects
-
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
-  [Inject] private PrinterCreateValidator PrinterCreateValidator { get; set; } = default!;
-
-  # endregion
-
   private IList<SelectOption<PrinterTypes>> PrinterTypeOptions { get; set; } = [];
 
   protected override void OnInitialized()

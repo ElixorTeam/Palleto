@@ -3,6 +3,8 @@
 
 @implements IDialogContentComponent<ArmDto>
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+
 <SectionDialog>
   <Tab Id="@typeof(ArmUpdateForm).ToString()" Label="@Localizer["SectionArm"]">
     <ArmUpdateForm Model="Content" FormModel="@ArmMapper.DtoToUpdateDto(Content)" />
@@ -10,7 +12,5 @@
 </SectionDialog>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
   [Parameter] public ArmDto Content { get; set; } = default!;
 }

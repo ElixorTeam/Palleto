@@ -5,9 +5,14 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References.Template.Queries
 @using Pl.Admin.Models.Features.References.Template.Universal
-@using Pl.Components.Components
 @using Pl.Print.Features.Barcodes.Models
 @using Pl.Print.Features.Barcodes.Utils
+
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject PrintSettingsEndpoints PrintSettingsEndpoints
+@inject IWebApi WebApi
+@inject IToastService ToastService
 
 <div class="w-full bg-secondary/[.3] pt-6 pb-8 px-5 overflow-y-auto dark:bg-inherit">
 
@@ -48,16 +53,6 @@
 
 
 @code {
-  # region Injects
-
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private IToastService ToastService { get; set; } = default!;
-
-  # endregion
-
   [CascadingParameter] protected FluentDialog Dialog { get; set; } = default!;
 
   [Parameter, EditorRequired] public TemplateDto Template { get; set; } = default!;

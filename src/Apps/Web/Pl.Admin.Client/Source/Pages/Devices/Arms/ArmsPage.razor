@@ -12,6 +12,15 @@
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @rendermode InteractiveServer
 
+@inject IWebApi WebApi
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject IState<ProductionSiteState> ProductionSiteState
+@inject IDialogService DialogService
+@inject PageHelper PageHelper
+@inject DevicesEndpoints DevicesEndpoints
+@inject RedirectHelper RedirectHelper
+
 <BrowserTitle Label="@Localizer["SectionArm"]" />
 
 <UserProductionSiteErrorSuspense>
@@ -112,20 +121,6 @@
 </UserProductionSiteErrorSuspense>
 
 @code {
-  #region Inject
-
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
-  [Inject] private IDialogService DialogService { get; set; } = default!;
-
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-
-  #endregion
-
   private Task OpenCreateDialog() =>
     DialogService.ShowDialogAsync<ArmCreateDialog>(PageHelper.DialogParameters);
 

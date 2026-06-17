@@ -1,6 +1,8 @@
 @typeparam TItem
 @inherits SectionFieldBase<ISet<TItem>>
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+
 <SectionInputWrapper Path="@Path" Label="@Label" HtmlFor="@HtmlId">
   <SelectMultiple
     TItem="TItem"
@@ -21,8 +23,6 @@
 </SectionInputWrapper>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
   [Parameter] public ISet<TItem> Items { get; set; } = new HashSet<TItem>();
   [Parameter] public bool IsFilterable { get; set; }
   [Parameter] public string EmptyPlaceholder { get; set; } = string.Empty;

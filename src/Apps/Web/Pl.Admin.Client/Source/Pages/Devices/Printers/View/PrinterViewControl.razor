@@ -1,6 +1,7 @@
 @using Pl.Admin.Models.Features.Devices.Printers.Queries
 @using Pl.Admin.Client.Source.Shared.Constants
-@using Pl.Components.Components
+
+@inject IStringLocalizer<ApplicationResources> Localizer
 
 <div class="flex flex-col pb-2 px-2">
   <div class="flex gap-1 mb-2 items-center">
@@ -26,7 +27,6 @@
 </div>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Parameter, EditorRequired] public PrinterDto Model { get; set; } = default!;
 
   private string PrinterUrl => $"http://{Model.Ip}";

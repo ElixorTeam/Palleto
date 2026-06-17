@@ -6,6 +6,14 @@
 @using Pl.Admin.Models.Features.References.ProductionSites.Queries
 @inherits SectionFormBase<UserUpdateDto>
 
+@inject IWebApi WebApi
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject RedirectHelper RedirectHelper
+@inject AdminEndpoints AdminEndpoints
+@inject ReferencesEndpoints ReferencesEndpoints
+@inject UserUpdateValidator UserUpdateValidator
+
 <SectionForm
   FormModel="@FormModel"
   Validator="@UserUpdateValidator"
@@ -59,19 +67,6 @@
 </SectionForm>
 
 @code {
-  #region Inject
-
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private AdminEndpoints AdminEndpoints { get; set; } = default!;
-  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
-  [Inject] private UserUpdateValidator UserUpdateValidator { get; set; } = default!;
-
-  #endregion
-
   [Parameter, EditorRequired] public UserModel Model { get; set; } = default!;
 
   protected override async Task UpdateItemAction(UserUpdateDto item)

@@ -1,6 +1,10 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Models.Features.References.TemplateResources.Queries
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject PrintSettingsEndpoints PrintSettingsEndpoints
+
 <div class="flex gap-8">
   @if (Model.Type == ZplResourceType.Sign)
   {
@@ -55,8 +59,5 @@
 
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
   [Parameter, EditorRequired] public TemplateResourceDto Model { get; set; } = default!;
 }

@@ -1,14 +1,14 @@
 @using Pl.Admin.Client.Source.Shared.Services.Stores
 
+@inject IState<ProductionSiteState> ProductionSiteState
+@inject UserHelper UserHelper
+
 @if ((Ignore || IsAllowed) && ChildContent != null)
 {
   @ChildContent(IsAllowed)
 }
 
 @code {
-  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
-  [Inject] private UserHelper UserHelper { get; set; } = default!;
-
   [Parameter] public Guid? ProductionSiteUid { get; set; }
   [Parameter] public RenderFragment<bool>? ChildContent { get; set; }
   [Parameter] public bool Ignore { get; set; }

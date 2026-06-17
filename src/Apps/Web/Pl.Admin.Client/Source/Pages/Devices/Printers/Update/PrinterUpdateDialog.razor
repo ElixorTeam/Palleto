@@ -3,6 +3,8 @@
 
 @implements IDialogContentComponent<PrinterDto>
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+
 <SectionDialog>
   <Tab Id="@typeof(PrinterUpdateForm).ToString()" Label="@Localizer["SectionPrinters"]">
     <PrinterUpdateForm Model="Content" FormModel="@Content.ToUpdateDto()" />
@@ -10,7 +12,5 @@
 </SectionDialog>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
   [Parameter] public PrinterDto Content { get; set; } = default!;
 }

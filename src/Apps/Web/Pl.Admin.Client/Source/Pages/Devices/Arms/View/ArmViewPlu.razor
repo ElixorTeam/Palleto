@@ -5,8 +5,15 @@
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
 @using Pl.Admin.Models.Features.References1C.Brands
 @using Pl.Admin.Client.Source.Features
-@using Pl.Components.Components
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject RedirectHelper RedirectHelper
+@inject PageHelper PageHelper
+@inject IWebApi WebApi
+@inject References1CEndpoints References1CEndpoints
+@inject DevicesEndpoints DevicesEndpoints
+@inject IToastService ToastService
 
 <SupportAuthView ProductionSiteUid="Model.ProductionSite.Id" Ignore Context="isSupportAllowed">
   <UseEndpoint Endpoint="@DevicesEndpoints.ArmPluEndpoint" Arg="Model.Id" Options="@(PageHelper.DefaultEndpointOptions)" Context="plusQuery">
@@ -127,20 +134,6 @@
 
 
 @code {
-
-  # region Injects
-
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
-  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
-  [Inject] private IToastService ToastService { get; set; } = default!;
-
-  # endregion
-
   [Parameter, EditorRequired] public ArmDto Model { get; set; } = default!;
 
   private BrandDto? BrandFilter { get; set; }

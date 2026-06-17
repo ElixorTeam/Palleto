@@ -1,16 +1,14 @@
-@using Pl.Components.Components
-
 <div class="gap-1 flex items-center">
   <span class="text-xl font-medium">@Label</span>
   <PlBadge Variant="BadgeVariant.Secondary" Class="px-1.5 py-px mb-1">
-  @if (IsLoading)
-  {
-    <Spinner Class="size-3" />
-  }
-  else
-  {
-    @(ItemsCount ?? 0)
-  }
+    @if (IsLoading)
+    {
+      <Spinner Class="size-3" />
+    }
+    else
+    {
+      @(ItemsCount ?? 0)
+    }
   </PlBadge>
 </div>
 

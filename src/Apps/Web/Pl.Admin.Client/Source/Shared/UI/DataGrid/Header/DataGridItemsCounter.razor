@@ -1,3 +1,5 @@
+@inject IStringLocalizer<ApplicationResources> Localizer
+
 <div class="px-3 truncate shrink-0 h-8 items-center border flex gap-2 rounded-md overflow-hidden transition-colors">
   @if (IsLoading)
   {
@@ -15,7 +17,6 @@
 </div>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Parameter] public bool IsLoading { get; set; }
   [Parameter] public int ItemsCount { get; set; }
 }

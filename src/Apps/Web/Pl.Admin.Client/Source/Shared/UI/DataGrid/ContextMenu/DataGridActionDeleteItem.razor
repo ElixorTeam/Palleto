@@ -1,15 +1,15 @@
 @typeparam TItem
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IDialogService DialogService
+@inject PageHelper PageHelper
+
 <DropdownItem OnClick="@OnClickAction">
   <HeroIcon Name="trash" Class="size-4 mr-4"/>
   @Localizer["DataGridContextMenuDelete"]
 </DropdownItem>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IDialogService DialogService { get; set; } = default!;
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-
   [CascadingParameter] public ContextMenuContext<TItem> Context { get; set; } = default!;
   [Parameter] public EventCallback<TItem> Action { get; set; }
 

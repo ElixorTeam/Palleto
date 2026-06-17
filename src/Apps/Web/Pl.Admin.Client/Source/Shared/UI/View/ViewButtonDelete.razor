@@ -1,4 +1,6 @@
-@using Pl.Components.Components
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IDialogService DialogService
+@inject PageHelper PageHelper
 
 <PlButton Variant="ButtonVariant.Destructive" OnClick="@OpenDeleteDialog">
   <HeroIcon Name="trash" Class="size-4 mr-2"/>
@@ -6,14 +8,6 @@
 </PlButton>
 
 @code {
-  # region Injects
-
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IDialogService DialogService { get; set; } = default!;
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-
-  # endregion
-
   [Parameter, EditorRequired] public EventCallback Action { get; set; }
 
   private Task OpenDeleteDialog() => DialogService.ShowDialogAsync<DeleteItemDialog>(

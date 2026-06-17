@@ -3,6 +3,8 @@
 
 @implements IDialogContentComponent<WarehouseDto>
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+
 <SectionDialog>
   <Tab Id="@typeof(WarehouseUpdateForm).ToString()" Label="@Localizer["SectionWarehouses"]">
     <WarehouseUpdateForm Model="Content" FormModel="@WarehouseMapper.DtoToUpdateDto(Content)" />
@@ -10,7 +12,5 @@
 </SectionDialog>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
   [Parameter] public WarehouseDto Content { get; set; } = default!;
 }

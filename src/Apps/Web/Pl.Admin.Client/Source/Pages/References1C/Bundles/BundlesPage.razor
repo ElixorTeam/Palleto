@@ -4,6 +4,11 @@
 @attribute [Route(Routes.Bundles)]
 @rendermode InteractiveServer
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject PageHelper PageHelper
+@inject RedirectHelper RedirectHelper
+@inject References1CEndpoints References1CEndpoints
 
 <BrowserTitle Label="@Localizer["SectionBundles"]" />
 
@@ -37,20 +42,6 @@
   >
     <ColumnsContent>
       <DataGridColumn
-        Caption="@WsDataLocalizer["ColStatus"]"
-        Width="5%"
-        Filterable="false"
-      >
-        <DisplayTemplate>
-          @if (context.Name.StartsWith('я'))
-          {
-            <div class="w-full flex items-center justify-center">
-              <HeroIcon Name="trash" Class="text-destructive size-5"/>
-            </div>
-          }
-        </DisplayTemplate>
-      </DataGridColumn>
-      <DataGridColumn
         Caption="@WsDataLocalizer["ColChangeDt"]"
         Field="@nameof(PackageDto.ChangeDt)"
         Width="20%"
@@ -59,7 +50,7 @@
       <DataGridColumn
         Caption="@WsDataLocalizer["ColName"]"
         Field="@nameof(PackageDto.Name)"
-        Width="55%"
+        Width="60%"
       />
 
       <DataGridColumn
@@ -74,16 +65,3 @@
     </ContextMenuContent>
   </DataGridContainer>
 </UseParameterlessEndpoint>
-
-@code {
-  #region Inject
-
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
-
-  #endregion
-}

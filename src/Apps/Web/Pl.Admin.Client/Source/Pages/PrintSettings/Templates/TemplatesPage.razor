@@ -10,6 +10,14 @@
 @attribute [Authorize(Policy = Policies.Support)]
 @rendermode InteractiveServer
 
+@inject IWebApi WebApi
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject IDialogService DialogService
+@inject PageHelper PageHelper
+@inject RedirectHelper RedirectHelper
+@inject PrintSettingsEndpoints PrintSettingsEndpoints
+
 <BrowserTitle Label="@Localizer["SectionTemplates"]" />
 
 <UseParameterlessEndpoint
@@ -104,19 +112,6 @@
 </UseParameterlessEndpoint>
 
 @code {
-  #region Region
-
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private IDialogService DialogService { get; set; } = default!;
-
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
-
-  #endregion
-
   private bool? Type { get; set; }
   private IList<SelectOption<bool?>> TypeFilterOptions { get; set; } = [];
 

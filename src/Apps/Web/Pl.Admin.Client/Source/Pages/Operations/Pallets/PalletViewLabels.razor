@@ -2,6 +2,11 @@
 @using Pl.Admin.Client.Source.Shared.Constants
 @using Pl.Admin.Models.Features.Print.Pallets
 
+@inject OperationsEndpoints OperationsEndpoints
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject NavigationManager NavigationManager
+@inject RedirectHelper RedirectHelper
+
 <UseEndpoint
   Endpoint="@OperationsEndpoints.PalletLabelsEndpoint"
   Arg="@Model.Id"
@@ -39,11 +44,6 @@
 </UseEndpoint>
 
 @code {
-  [Inject] private OperationsEndpoints OperationsEndpoints { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private NavigationManager NavigationManager { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-
   [Parameter, EditorRequired] public PalletDto Model { get; set; } = default!;
 
   private IEnumerable<OrderedPalletLabel> GetOrderedLabels(LabelPalletDto[] labels) =>

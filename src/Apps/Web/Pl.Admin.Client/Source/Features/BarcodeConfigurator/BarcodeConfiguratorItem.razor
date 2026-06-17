@@ -1,7 +1,8 @@
 @using BlazorBlueprint.Primitives
-@using Pl.Components.Components
 @using Pl.Print.Features.Barcodes.Models
 @using Pl.Print.Features.Barcodes.Utils
+
+@inject IStringLocalizer<ApplicationResources> Localizer
 
 <li class="size-full h-10 flex bg-background divide-x">
   <div class="sortable-grab shrink-0 !w-12 !bg-secondary transition-opacity flex items-center justify-center px-3 text-sm opacity-75 hover:opacity-100">
@@ -100,9 +101,6 @@
 </li>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-
   [CascadingParameter] public BarcodeConfigurator Parent { get; set; } = default!;
 
   [Parameter, EditorRequired] public ExtendedBarcodeItemDto Value { get; set; } = default!;

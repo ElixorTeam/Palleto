@@ -2,9 +2,13 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References.Template.Commands
 @using Pl.Admin.Models.Features.References.Template.Queries
-@using Pl.Components.Components
 
 @inherits SectionFormBase<TemplateUpdateDto>
+
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject IWebApi WebApi
+@inject PrintSettingsEndpoints PrintSettingsEndpoints
+@inject TemplateUpdateValidator TemplateUpdateValidator
 
 <SectionForm
   FormModel="@FormModel"
@@ -82,17 +86,6 @@
 </SectionForm>
 
 @code {
-  #region Inject
-
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
-  [Inject] private TemplateUpdateValidator TemplateUpdateValidator { get; set; } = default!;
-
-  #endregion
-
   [Parameter] public TemplateDto Model { get; set; } = default!;
 
   protected override async Task UpdateItemAction(TemplateUpdateDto item)

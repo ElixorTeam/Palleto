@@ -1,3 +1,5 @@
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+
 <div class="h-9 rounded-md p-1 grid grid-cols-2">
   <button
     type="button"
@@ -18,8 +20,6 @@
 </div>
 
 @code {
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-
   [Parameter] public bool Value { get; set; }
   [Parameter] public EventCallback<bool> ValueChanged { get; set; }
 

@@ -1,4 +1,6 @@
 @page "/not-found"
+@inject IStringLocalizer<ApplicationResources> Localizer
+
 <PageTitle>Admin - 404</PageTitle>
 
 <div class="size-full flex items-center justify-center">
@@ -11,8 +13,3 @@
     </h2>
   </div>
 </div>
-
-
-@code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-}

@@ -2,6 +2,11 @@
 @using Pl.Admin.Models.Features.References.ProductionSites.Queries
 @using Pl.Admin.Models.Features.References.Warehouses.Queries
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject RedirectHelper RedirectHelper
+@inject ReferencesEndpoints ReferencesEndpoints
+
 <ViewFieldGrid Label="@Localizer["FieldCommon"]">
   <ViewFieldGuid Value="@Model.Id" />
 
@@ -21,15 +26,5 @@
 </ViewFieldGrid>
 
 @code {
-  # region Injects
-
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
-
-  # endregion
-
   [Parameter, EditorRequired] public WarehouseDto Model { get; set; } = default!;
 }

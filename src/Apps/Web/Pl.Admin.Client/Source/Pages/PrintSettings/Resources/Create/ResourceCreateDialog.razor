@@ -1,11 +1,9 @@
 @implements IDialogContentComponent
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+
 <SectionDialog>
   <Tab Id="@typeof(ResourceCreateForm).ToString()" Label="@Localizer["SectionResources"]">
     <ResourceCreateForm FormModel="@new()" />
   </Tab>
 </SectionDialog>
-
-@code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-}

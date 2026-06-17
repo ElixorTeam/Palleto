@@ -1,10 +1,11 @@
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+
 <div class="px-3 truncate text-sm shrink-0 h-9 items-center border flex gap-2 rounded-md overflow-hidden">
   <span>@CurrentSize / @MaxSize</span>
   <span>@WsDataLocalizer["MeasureMb"]</span>
 </div>
 
 @code {
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Parameter] public int CurrentSize { get; set; }
   [Parameter] public int MaxSize { get; set; }
 }

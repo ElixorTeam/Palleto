@@ -1,5 +1,7 @@
-@using Pl.Components.Components
 @rendermode InteractiveServer
+
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IJSRuntime JsRuntime
 
 <PlDropdown>
   <PlDropdownTrigger>
@@ -31,8 +33,5 @@
 </PlDropdown>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
-
   private async Task SetTheme(string theme) => await JsRuntime.InvokeVoidAsync("switchTheme", theme);
 }

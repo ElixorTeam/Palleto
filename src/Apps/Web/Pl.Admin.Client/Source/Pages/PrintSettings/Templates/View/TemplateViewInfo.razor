@@ -1,5 +1,8 @@
 @using Pl.Admin.Models.Features.References.Template.Queries
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+
 <ViewFieldGrid Label="@Localizer["FieldCommon"]" Border>
   <ViewFieldGuid Value="@Model.Id" />
 
@@ -32,7 +35,5 @@
 </ViewFieldGrid>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
   [Parameter, EditorRequired] public TemplateDto Model { get; set; } = default!;
 }

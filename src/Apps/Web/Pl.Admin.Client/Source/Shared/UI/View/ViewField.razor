@@ -1,4 +1,5 @@
-@using Pl.Components.Components
+@inject IJSRuntime JsRuntime
+@inject IToastService ToastService
 
 <div class="w-full overflow-hidden flex flex-col">
   <span class="truncate text-muted-foreground">
@@ -37,9 +38,6 @@
 </div>
 
 @code {
-  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
-  [Inject] private IToastService ToastService { get; set; } = default!;
-
   [Parameter] public string Label { get; set; } = string.Empty;
   [Parameter] public string? Value { get; set; }
   [Parameter] public string Link { get; set; } = string.Empty;

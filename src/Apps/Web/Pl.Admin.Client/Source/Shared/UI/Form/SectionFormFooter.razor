@@ -1,5 +1,8 @@
 @using ButtonType=Pl.Components.Components.ButtonType
-@using Pl.Components.Components
+
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+
 <div class="w-full mt-0 bg-background border-t gap-3 py-4 flex flex-col">
   @if (CreateDate != null || ChangeDate != null)
   {
@@ -42,9 +45,6 @@
 </div>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-
   [Parameter] public DateTime? CreateDate { get; set; }
   [Parameter] public DateTime? ChangeDate { get; set; }
   [Parameter] public EventCallback OnSubmitAction { get; set; }

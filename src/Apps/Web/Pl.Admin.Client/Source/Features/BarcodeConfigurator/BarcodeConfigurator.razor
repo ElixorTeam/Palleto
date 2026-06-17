@@ -1,8 +1,10 @@
 @using Force.DeepCloner
 @using Pl.Admin.Models.Features.References.Template.Universal
-@using Pl.Components.Components
 @using Pl.Print.Features.Barcodes.Models
 @using Pl.Print.Features.Barcodes.Utils
+
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject IStringLocalizer<ApplicationResources> Localizer
 
 <CascadingValue Value="this">
   <div class="@Css.Class("border gap-px rounded-md overflow-hidden", Class)">
@@ -43,9 +45,6 @@
 </div>
 
 @code {
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
   [Parameter] public List<BarcodeItemDto> BarcodeDictionary { get; set; } = [];
   [Parameter] public EventCallback<List<BarcodeItemDto>> BarcodeDictionaryChanged { get; set; }
   [Parameter] public List<BarcodeVarInfo> BarcodeVariables { get; set; } = [];

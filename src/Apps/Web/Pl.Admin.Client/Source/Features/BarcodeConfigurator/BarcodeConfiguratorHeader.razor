@@ -1,3 +1,5 @@
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+
 <div class="w-full h-10 grid grid-cols-[3rem_14rem_1fr_1fr_7rem_1fr_3rem] bg-background divide-x border-b px-1.5">
   @foreach (string title in Titles)
   {
@@ -8,7 +10,5 @@
 </div>
 
 @code {
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-
   private IEnumerable<string> Titles { get; } = ["", "ColType", "ColName", "ColMask", "ColLength", "ColExample", ""];
 }

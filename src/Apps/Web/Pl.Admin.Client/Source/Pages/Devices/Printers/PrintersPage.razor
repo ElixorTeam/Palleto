@@ -14,6 +14,15 @@
 @attribute [Authorize(Policy = Policies.Support)]
 @rendermode InteractiveServer
 
+@inject IWebApi WebApi
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject IState<ProductionSiteState> ProductionSiteState
+@inject IDialogService DialogService
+@inject PageHelper PageHelper
+@inject RedirectHelper RedirectHelper
+@inject DevicesEndpoints DevicesEndpoints
+
 <BrowserTitle Label="@Localizer["SectionPrinters"]" />
 
 <UserProductionSiteErrorSuspense>
@@ -92,20 +101,6 @@
 </UserProductionSiteErrorSuspense>
 
 @code {
-  #region Inject
-
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
-  [Inject] private IDialogService DialogService { get; set; } = default!;
-
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
-
-  #endregion
-
   private PrinterTypes? Type { get; set; }
   private IList<SelectOption<PrinterTypes?>> PrinterTypeFilterOptions { get; set; } = [];
 

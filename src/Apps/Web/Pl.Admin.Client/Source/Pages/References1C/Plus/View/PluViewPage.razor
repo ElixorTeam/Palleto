@@ -4,6 +4,12 @@
 
 @attribute [Route(Routes.Plus + "/{Id:guid}")]
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject References1CEndpoints References1CEndpoints
+@inject RedirectHelper RedirectHelper
+@inject PageHelper PageHelper
+
 <UseEndpoint
   Endpoint="@References1CEndpoints.PluEndpoint"
   Arg="@Id"
@@ -61,17 +67,6 @@
 </UseEndpoint>
 
 @code {
-  # region Injects
-
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-
-  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-
-  # endregion
-
   [Parameter] public Guid Id { get; set; }
 
   private string CurrentTab { get; set; } = "info";

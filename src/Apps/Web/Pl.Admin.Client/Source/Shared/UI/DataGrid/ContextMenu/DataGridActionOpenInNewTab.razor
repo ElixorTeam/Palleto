@@ -1,14 +1,14 @@
 @typeparam TItem
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject PageHelper PageHelper
+
 <DropdownItem OnClick="@OnClickAction">
   <HeroIcon Name="arrow-top-right-on-square" Class="size-4 mr-4"/>
   @Localizer["DataGridContextMenuOpenInNewTab"]
 </DropdownItem>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private PageHelper PageHelper { get; set; } = default!;
-
   [CascadingParameter] public ContextMenuContext<TItem> Context { get; set; } = default!;
   [Parameter] public string Link { get; set; } = "/";
 

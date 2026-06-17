@@ -1,3 +1,5 @@
+@inject IStringLocalizer<ApplicationResources> Localizer
+
 <a href="@Link" class="w-full">
   <DropdownItem>
     <HeroIcon Name="arrow-top-right-on-square" Class="size-4 mr-4"/>
@@ -6,6 +8,5 @@
 </a>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Parameter] public string Link { get; set; } = "/";
 }

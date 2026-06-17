@@ -1,8 +1,11 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Services.Stores
-@using Pl.Components.Components
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@inject IState<ProductionSiteState> ProductionSiteState
+@inject ReferencesEndpoints ReferencesEndpoints
+@inject IDispatcher Dispatcher
 
 <UseParameterlessEndpoint
   Endpoint="ReferencesEndpoints.ProxyProductionSiteEndpoint"
@@ -49,10 +52,6 @@
 </UseParameterlessEndpoint>
 
 @code {
-  [Inject] private IState<ProductionSiteState> ProductionSiteState { get; set; } = default!;
-  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
-  [Inject] private IDispatcher Dispatcher { get; set; } = default!;
-
   private void OnItemChanged(ProxyDto? value)
   {
     if (value == null) return;

@@ -4,6 +4,12 @@
 @using Pl.Admin.Models.Features.Print.Labels
 @using Pl.Shared.ValueTypes
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject DevicesEndpoints DevicesEndpoints
+@inject NavigationManager NavigationManager
+@inject RedirectHelper RedirectHelper
+
 <UseEndpoint
   Endpoint="@DevicesEndpoints.ArmLabels"
   Arg="@Model.Id"
@@ -88,17 +94,6 @@
 </UseEndpoint>
 
 @code {
-  # region Injects
-
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-
-  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
-  [Inject] private NavigationManager NavigationManager { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-
-  # endregion
-
   [Parameter, EditorRequired] public ArmDto Model { get; set; } = default!;
 
   private WorkShift WorkShift { get; set; } = new();

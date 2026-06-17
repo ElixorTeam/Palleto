@@ -3,6 +3,8 @@
 
 @implements IDialogContentComponent<UserModel>
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+
 <SectionDialog>
   <Tab Id="@typeof(UserUpdateForm).ToString()" Label="@Localizer["SectionUsers"]">
     <UserUpdateForm Model="Content" FormModel="@(new UserUpdateDto { ProductionSiteId = Content.ProductionSite.Id })" />
@@ -10,7 +12,5 @@
 </SectionDialog>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
   [Parameter] public UserModel Content { get; set; } = default!;
 }

@@ -5,6 +5,12 @@
 
 @inherits SectionFormBase<ZplResourceUpdateDto>
 
+@inject IWebApi WebApi
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject PrintSettingsEndpoints PrintSettingsEndpoints
+@inject ZplResourceUpdateValidator ZplResourceUpdateValidator
+
 <SectionForm
   FormModel="@FormModel"
   ChangeDate="@Model.ChangeDt"
@@ -79,17 +85,6 @@
 </SectionForm>
 
 @code {
-  #region Inject
-
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
-  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
-  [Inject] private ZplResourceUpdateValidator ZplResourceUpdateValidator { get; set; } = default!;
-
-  #endregion
-
   [Parameter, EditorRequired] public TemplateResourceDto Model { get; set; } = default!;
 
   private IList<ZplResourceType> ZplResourceTypes { get; set; } = Enum.GetValues(typeof(ZplResourceType)).Cast<ZplResourceType>().ToList();

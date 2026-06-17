@@ -1,5 +1,9 @@
 @using Pl.Admin.Models.Features.Print.Pallets
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject RedirectHelper RedirectHelper
+
 <ViewFieldGrid Label="@Localizer["FieldCommon"]" Border>
   <ViewFieldGuid Value="@Model.Id" />
   <ViewField Label="@WsDataLocalizer["ColNumber"]" Value="@Model.Number" />
@@ -20,9 +24,5 @@
 </ViewFieldGrid>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-
   [Parameter, EditorRequired] public PalletDto Model { get; set; } = default!;
 }

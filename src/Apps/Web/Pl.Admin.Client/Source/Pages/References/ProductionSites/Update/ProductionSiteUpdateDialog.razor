@@ -3,6 +3,8 @@
 
 @implements IDialogContentComponent<ProductionSiteDto>
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+
 <SectionDialog>
   <Tab Id="@typeof(ProductionSiteUpdateForm).ToString()" Label="@Localizer["SectionProductionSites"]">
     <ProductionSiteUpdateForm Model="Content" FormModel="@ProductionSiteMapper.DtoToUpdateDto(Content)" />
@@ -10,7 +12,5 @@
 </SectionDialog>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
   [Parameter] public ProductionSiteDto Content { get; set; } = default!;
 }

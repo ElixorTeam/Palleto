@@ -1,7 +1,11 @@
-@using Pl.Admin.Client.Source.Shared.Api.Labelary
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Models.Features.Print.Labels
-@using Pl.Components.Components
+
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject ZplEndpoints ZplEndpoints
+@inject OperationsEndpoints OperationsEndpoints
+@inject IJSRuntime JsRuntime
+@inject IToastService ToastService
 
 <div class="flex items-center min-h-72 max-w-screen-lg w-full overflow-hidden justify-center mx-auto p-4">
   <UseEndpoint Endpoint="OperationsEndpoints.LabelZplEndpoint" Arg="Model.Id" Context="labelZplQuery">
@@ -13,7 +17,7 @@
     {
       <UseEndpoint
         Endpoint="@ZplEndpoints.ZplEndpoint"
-        Arg="@(new ZplEndpointArgs(labelZplQuery.Data.Zpl, labelZplQuery.Data.Width, labelZplQuery.Data.Height, (short)labelZplQuery.Data.Rotate))"
+        Arg="@(new(labelZplQuery.Data.Zpl, labelZplQuery.Data.Width, labelZplQuery.Data.Height, (short)labelZplQuery.Data.Rotate))"
         Context="zplQuery"
       >
         @if (zplQuery.IsLoading)
@@ -73,17 +77,6 @@
 </div>
 
 @code {
-  # region Injects
-
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private ILabelaryApi LabelaryApi { get; set; } = default!;
-  [Inject] private ZplEndpoints ZplEndpoints { get; set; } = default!;
-  [Inject] private OperationsEndpoints OperationsEndpoints { get; set; } = default!;
-  [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
-  [Inject] private IToastService ToastService { get; set; } = default!;
-
-  # endregion
-
   [Parameter, EditorRequired] public LabelDto Model { get; set; } = default!;
 
   private async Task CopyToClipboard(string valueToCopy)

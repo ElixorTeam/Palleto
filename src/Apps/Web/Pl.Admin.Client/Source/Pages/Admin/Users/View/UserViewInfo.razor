@@ -1,5 +1,9 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Models
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject RedirectHelper RedirectHelper
+
 <ViewFieldGrid Label="@Localizer["FieldCommon"]" Border>
   <ViewFieldGuid Value="@Model.KcId" Label="UID KC" />
 
@@ -25,8 +29,5 @@
 </ViewFieldGrid>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Parameter, EditorRequired] public UserModel Model { get; set; } = default!;
 }

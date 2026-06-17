@@ -1,5 +1,7 @@
 @implements IDisposable
 
+@inject NavigationManager NavigationManager
+
 <AuthorizeView Policy="@(RequiredClaim)">
   <ChildContent Context="main">
     <li class="group relative font-light" data-sidebar="menu-item" data-state="@(IsOpened ? "open" : "closed")">
@@ -41,8 +43,6 @@
 </AuthorizeView>
 
 @code {
-  [Inject] private NavigationManager NavigationManager { get; set; } = default!;
-
   [Parameter, EditorRequired] public string Label { get; set; } = string.Empty;
   [Parameter, EditorRequired] public string Icon { get; set; } = "home";
   [Parameter, EditorRequired] public NavMenuItemModel[] Items { get; set; } = [];

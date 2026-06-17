@@ -1,6 +1,8 @@
 @typeparam TItem
 @inherits SectionFieldBase<TItem>
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+
 <SectionInputWrapper Path="@Path" Label="@Label" HtmlFor="@HtmlId">
   <SelectSingle
     TItem="TItem"
@@ -27,7 +29,6 @@
   [Parameter] public string EmptyPlaceholder { get; set; } = string.Empty;
   [Parameter] public string SearchPlaceholder { get; set; } = string.Empty;
   [Parameter] public Func<TItem,string> ItemDisplayName { get; set; } = item => item!.ToString()!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
 
   protected override void OnInitialized()
   {

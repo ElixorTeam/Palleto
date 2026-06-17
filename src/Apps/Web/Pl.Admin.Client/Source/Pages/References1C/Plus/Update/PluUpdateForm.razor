@@ -5,6 +5,13 @@
 
 @inherits SectionFormBase<PluUpdateDto>
 
+@inject IWebApi WebApi
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject RedirectHelper RedirectHelper
+@inject References1CEndpoints References1CEndpoints
+@inject PrintSettingsEndpoints PrintSettingsEndpoints
+
 <SectionForm
   FormModel="@FormModel"
   ChangeDate="Model.ChangeDt"
@@ -59,18 +66,6 @@
 </SectionForm>
 
 @code {
-  # region Injects
-
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private References1CEndpoints References1CEndpoints { get; set; } = default!;
-  [Inject] private PrintSettingsEndpoints PrintSettingsEndpoints { get; set; } = default!;
-
-  # endregion
-
   [Parameter, EditorRequired] public PluDto Model { get; set; } = default!;
 
   protected override async Task UpdateItemAction(PluUpdateDto item)

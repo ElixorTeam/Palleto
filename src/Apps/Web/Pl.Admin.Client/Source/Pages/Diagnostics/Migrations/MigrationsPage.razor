@@ -6,6 +6,10 @@
 @attribute [Authorize(Policy = Policies.Developer)]
 @rendermode InteractiveServer
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject DiagnosticEndpoints DiagnosticEndpoints
+
 <BrowserTitle Label="@Localizer["SectionMigrations"]" />
 
 <UseParameterlessEndpoint
@@ -50,11 +54,4 @@
 </UseParameterlessEndpoint>
 
 @code {
-  # region Injects
-
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private DiagnosticEndpoints DiagnosticEndpoints { get; set; } = default!;
-
-  # endregion
 }

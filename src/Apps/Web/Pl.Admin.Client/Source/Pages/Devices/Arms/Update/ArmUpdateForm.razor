@@ -3,9 +3,16 @@
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Arms.Commands
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
-@using Pl.Components.Components
 
 @inherits SectionFormBase<ArmUpdateDto>
+
+@inject IWebApi WebApi
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject RedirectHelper RedirectHelper
+@inject DevicesEndpoints DevicesEndpoints
+@inject ReferencesEndpoints ReferencesEndpoints
+@inject ArmUpdateValidator ArmUpdateValidator
 
 <UseParameterlessEndpoint
   Endpoint="ReferencesEndpoints.ProxyUserProductionSiteEndpoint"
@@ -138,19 +145,6 @@
 </UseParameterlessEndpoint>
 
 @code {
-  # region Injects
-
-  [Inject] private IWebApi WebApi { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
-  [Inject] private DevicesEndpoints DevicesEndpoints { get; set; } = default!;
-  [Inject] private ReferencesEndpoints ReferencesEndpoints { get; set; } = default!;
-  [Inject] private ArmUpdateValidator ArmUpdateValidator { get; set; } = default!;
-
-  # endregion
-
   [Parameter, EditorRequired] public ArmDto Model { get; set; } = default!;
 
   private IList<SelectOption<ArmType>> ArmTypeOptions { get; set; } = [];

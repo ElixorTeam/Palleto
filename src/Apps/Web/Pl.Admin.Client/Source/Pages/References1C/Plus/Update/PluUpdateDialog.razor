@@ -3,6 +3,8 @@
 
 @implements IDialogContentComponent<PluDto>
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+
 <SectionDialog>
   <Tab Id="@typeof(PluUpdateForm).ToString()" Label="@Localizer["SectionPlu"]">
     <PluUpdateForm Model="Content" FormModel="@PluMapper.DtoToUpdateDto(Content)" />
@@ -10,7 +12,5 @@
 </SectionDialog>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
   [Parameter] public PluDto Content { get; set; } = default!;
 }

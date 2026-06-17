@@ -1,3 +1,6 @@
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+
 <ViewFieldGrid Label="@Localizer["FieldCommon"]">
   <ViewFieldGuid Value="@Model.Id" />
 
@@ -14,8 +17,5 @@
 </ViewFieldGrid>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-
   [Parameter, EditorRequired] public PackageDto Model { get; set; } = default!;
 }

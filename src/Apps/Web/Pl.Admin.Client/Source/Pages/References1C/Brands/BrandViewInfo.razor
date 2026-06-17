@@ -1,5 +1,8 @@
 @using Pl.Admin.Models.Features.References1C.Brands
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+
 <ViewFieldGrid Label="@Localizer["FieldCommon"]">
   <ViewFieldGuid Value="@Model.Id" />
 
@@ -10,8 +13,5 @@
 </ViewFieldGrid>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-
   [Parameter, EditorRequired] public BrandDto Model { get; set; } = default!;
 }

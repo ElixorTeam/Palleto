@@ -1,6 +1,9 @@
 @using Pl.Admin.Models.Features.Admins.PalletMen.Queries
 @using Pl.Admin.Client.Source.Features
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IStringLocalizer<WsDataResources> WsDataLocalizer
+
 <ViewFieldGrid Label="@Localizer["FieldCommon"]" Border>
   <ViewFieldGuid Value="@Model.Id" />
 
@@ -33,8 +36,5 @@
 </ViewFieldGrid>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-  [Inject] private RedirectHelper RedirectHelper { get; set; } = default!;
   [Parameter, EditorRequired] public PalletManDto Model { get; set; } = default!;
 }

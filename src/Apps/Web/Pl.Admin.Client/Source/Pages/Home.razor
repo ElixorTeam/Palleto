@@ -1,8 +1,9 @@
 @using Pl.Admin.Client.Source.Shared.Constants
-@using Pl.Components.Components
 
 @attribute [Route(Routes.Home)]
 @attribute [Authorize]
+
+@inject IStringLocalizer<ApplicationResources> Localizer
 
 <div class="divide-x justify-center flex">
   <PlButton Href="#welcome" Variant="ButtonVariant.Link" Class="rounded-none h-7">Palleto</PlButton>
@@ -170,8 +171,6 @@
 </div>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-
   private static bool IsProduction => !ConfigurationUtils.IsDevelop;
   private Random Random { get; } = new();
 }

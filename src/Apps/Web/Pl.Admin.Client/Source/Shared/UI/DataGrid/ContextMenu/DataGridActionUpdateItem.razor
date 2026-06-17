@@ -1,12 +1,13 @@
 @typeparam TItem
 
+@inject IStringLocalizer<ApplicationResources> Localizer
+
 <DropdownItem OnClick="@OnClickAction">
   <HeroIcon Name="pencil" Class="size-4 mr-4"/>
   @Localizer["DataGridContextMenuUpdate"]
 </DropdownItem>
 
 @code {
-  [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [CascadingParameter] public ContextMenuContext<TItem> Context { get; set; } = default!;
   [Parameter] public EventCallback<TItem> Action { get; set; }
 
