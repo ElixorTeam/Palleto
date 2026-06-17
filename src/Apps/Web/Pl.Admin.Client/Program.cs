@@ -8,7 +8,7 @@ using Pl.Admin.Client.Source.Shared.Api;
 using Pl.Admin.Client.Source.Shared.Auth;
 using Pl.Admin.Client.Source.Shared.Auth.Options;
 using Pl.Admin.Models;
-using Pl.Components.Components;
+using Pl.Components;
 using Pl.Shared.Constants;
 using Pl.Shared.Web.Extensions;
 using TailwindMerge.Extensions;

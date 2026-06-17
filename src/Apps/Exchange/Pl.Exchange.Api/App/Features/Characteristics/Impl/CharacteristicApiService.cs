@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using Pl.Database;
 using Pl.Exchange.Api.App.Features.Characteristics.Common;
 using Pl.Exchange.Api.App.Features.Characteristics.Impl.Models;

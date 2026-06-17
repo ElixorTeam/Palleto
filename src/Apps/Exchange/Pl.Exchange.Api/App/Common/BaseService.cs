@@ -1,6 +1,5 @@
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
-using Pl.Database;
 using Pl.Database.Common;
 
 namespace Pl.Exchange.Api.App.Common;
