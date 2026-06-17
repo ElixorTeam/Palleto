@@ -114,7 +114,7 @@
     /// Gets or sets additional CSS classes applied to the inner Checkbox element.
     /// </summary>
     [Parameter]
-    public string InputClass { get; set; } = string.Empty;
+    public string? InputClass { get; set; }
 
     public override Task SetParametersAsync(ParameterView parameters)
     {

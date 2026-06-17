@@ -19,12 +19,6 @@ public abstract class FieldBase : ComponentBase, IDisposable
     public string? Class { get; set; }
 
     /// <summary>
-    /// Gets or sets additional CSS classes applied to the inner element.
-    /// </summary>
-    [Parameter]
-    public string? InputClass { get; set; }
-
-    /// <summary>
     /// Gets or sets the label text displayed above or beside the control.
     /// </summary>
     [Parameter]
@@ -38,12 +32,6 @@ public abstract class FieldBase : ComponentBase, IDisposable
     /// </remarks>
     [Parameter]
     public string? HelperText { get; set; }
-
-    /// <summary>
-    /// Gets or sets disabled.
-    /// </summary>
-    [Parameter]
-    public bool Disabled { get; set; }
 
     /// <summary>
     /// Gets or sets a manual error text to display on the field.
