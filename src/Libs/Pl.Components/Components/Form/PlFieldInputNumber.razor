@@ -156,7 +156,7 @@
     /// Gets or sets additional CSS classes applied to the inner NumericInput element.
     /// </summary>
     [Parameter]
-    public string InputClass { get; set; } = string.Empty;
+    public string? InputClass { get; set; }
 
     /// <inheritdoc />
     protected override LambdaExpression? GetFieldExpression() => ValueExpression;

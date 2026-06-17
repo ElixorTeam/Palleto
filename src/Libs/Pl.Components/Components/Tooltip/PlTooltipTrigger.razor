@@ -1,0 +1,56 @@
+﻿@using BlazorBlueprint.Primitives.Tooltip
+@namespace Pl.Components
+@inherits PlComponentBase
+
+@if (AsChild)
+{
+  <BbTooltipTrigger
+    AsChild="true"
+    Focusable="@Focusable"
+    OnMouseEnter="@OnMouseEnter"
+    OnMouseLeave="@OnMouseLeave"
+    @attributes="AdditionalAttributes">
+        @ChildContent
+    </BbTooltipTrigger>
+}
+else
+{
+    <span class="@CssClass">
+      <BbTooltipTrigger
+        Focusable="@Focusable"
+        OnMouseEnter="@OnMouseEnter"
+        OnMouseLeave="@OnMouseLeave"
+        @attributes="AdditionalAttributes">
+            @ChildContent
+      </BbTooltipTrigger>
+    </span>
+}
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// When true, the trigger does not render its own span element.
+    /// Instead, it passes trigger behavior via TriggerContext to child components.
+    /// Use this when you want a custom component to act as the trigger.
+    /// </summary>
+    [Parameter]
+    public bool AsChild { get; set; } = true;
+
+    /// <summary>
+    /// Whether the trigger should be by keyboard focusable.
+    /// Default is true. Set to false if child content is already focusable.
+    /// </summary>
+    [Parameter]
+    public bool Focusable { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnMouseEnter { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnMouseLeave { get; set; }
+
+    private string CssClass =>
+      CssUtil.Cn("contents", Class);
+}

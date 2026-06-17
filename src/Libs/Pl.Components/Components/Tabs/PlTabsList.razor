@@ -1,0 +1,152 @@
+﻿@namespace Pl.Components
+@using BlazorBlueprint.Primitives.Tabs
+@implements IAsyncDisposable
+@inherits PlComponentBase
+@inject JSRuntime JsRuntime
+
+@if (Responsive)
+{
+  <div @ref="_containerRef" class="relative w-full">
+    @* Tab buttons — use visibility:hidden (not display:none) when overflowing
+           so the element retains its measured width for the ResizeObserver. *@
+    <BbTabsList class="@CssUtil.Cn(CssClass, TabListVisibilityClass)">
+      <CascadingValue Value="this" IsFixed="true">
+        @ChildContent
+      </CascadingValue>
+    </BbTabsList>
+
+    @* Select fallback — positioned absolute so it doesn't affect tablist measurement.
+           When not overflowing it is invisible and non-interactive. *@
+    @if (_responsiveTriggers.Count > 0)
+    {
+      <div class="@SelectWrapperClass">
+        <PlSelect
+          TValue="string"
+          Value="@Context.ActiveValue"
+          ValueChanged="@HandleSelectChange"
+          Options="@SelectOptions"
+          Class="@CssUtil.Cn("w-full", SelectClass)" />
+      </div>
+    }
+  </div>
+}
+else
+{
+  <BbTabsList class="@CssClass">
+    @ChildContent
+  </BbTabsList>
+}
+
+@code {
+    private ElementReference _containerRef;
+    private IJSObjectReference? _jsModule;
+    private DotNetObjectReference<PlTabsList>? _dotNetRef;
+
+    private bool _isOverflowing;
+    private bool _disposed;
+    private readonly List<(string Value, string Label)> _responsiveTriggers = [];
+    private readonly string _componentId = Guid.NewGuid().ToString("N")[..8];
+
+    /// <summary>
+    /// The child content to render within the tabs list.
+    /// Should contain TabsTrigger components.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// When true, collapses tabs into a Select dropdown when they overflow their container.
+    /// </summary>
+    [Parameter]
+    public bool Responsive { get; set; }
+
+    /// <summary>
+    /// Additional CSS classes to apply to the responsive Select fallback.
+    /// </summary>
+    [Parameter]
+    public string? SelectClass { get; set; }
+
+    /// <summary>
+    /// Cascading parameter to receive the tabs context from the Primitives layer.
+    /// </summary>
+    [CascadingParameter]
+    public TabsContext Context { get; set; } = null!;
+
+    private string CssClass =>
+      CssUtil.Cn(
+        "inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+        Class
+    );
+
+    private string? TabListVisibilityClass => _isOverflowing ? "nvisible pointer-even ts-none" : null;
+
+    private string SelectWrapperClass => _isOverflowing ? "absolute inset-x-0 top-0" : "hidden";
+
+    private SelectOption<string>[] SelectOptions =>
+        _responsiveTriggers.Select(t => new SelectOption<string>(t.Value, t.Label)).ToArray();
+
+    internal void RegisterResponsiveTrigger(string value, string label)
+    {
+        if (_responsiveTriggers.All(t => t.Value != value))
+            _responsiveTriggers.Add((value, label));
+    }
+
+    internal void UnregisterResponsiveTrigger(string value) =>
+        _responsiveTriggers.RemoveAll(t => t.Value == value);
+
+    private void HandleSelectChange(string? value)
+    {
+        if (value is not null)
+            Context.SetActiveTab(value);
+    }
+
+    [JSInvokable]
+    public void OnOverflowChange(bool isOverflowing)
+    {
+      if (_isOverflowing == isOverflowing)
+        return;
+      _isOverflowing = isOverflowing;
+      StateHasChanged();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && Responsive)
+        {
+            try
+            {
+                _dotNetRef = DotNetObjectReference.Create(this);
+                _jsModule = await JsRuntime.ImportJsModuleAsync("responsive-tabs");
+                await _jsModule.InvokeVoidAsync("initialize", _dotNetRef, _componentId, _containerRef);
+            }
+            catch (Exception ex) when (ex is JSDisconnectedException or TaskCanceledException or ObjectDisposedException)
+            {
+                // Circuit disconnected, ignore
+            }
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_disposed)
+            return;
+
+        _disposed = true;
+        GC.SuppressFinalize(this);
+
+        if (_jsModule is not null)
+        {
+            try
+            {
+                await _jsModule.InvokeVoidAsync("dispose", _componentId);
+                await _jsModule.DisposeAsync();
+            }
+            catch (Exception ex) when (ex is JSDisconnectedException or TaskCanceledException or ObjectDisposedException)
+            {
+                // Circuit disconnected, ignore
+            }
+        }
+
+        _dotNetRef?.Dispose();
+    }
+}

@@ -1,35 +1,45 @@
-@namespace Pl.Components
+﻿@namespace Pl.Components
+@inject IJSRuntime JsRuntime
+@inherits PlComponentBase
 @using System.Linq.Expressions
 @using Microsoft.AspNetCore.Components.Forms
-@inherits PlComponentBase
 @implements IAsyncDisposable
-@inject IJSRuntime JsRuntime
 
-<input
-  @ref="_inputRef"
-  id="@EffectiveId"
-  name="@EffectiveName"
-  type="@Type.GetHtmlType()"
-  class="@CssClass"
-  value="@Value"
-  placeholder="@Placeholder"
-  disabled="@Disabled"
-  required="@Required"
-  aria-label="@AriaLabel"
-  aria-describedby="@AriaDescribedBy"
-  aria-invalid="@EffectiveAriaInvalid"
-  @attributes="AdditionalAttributes" />
+@if (ShowCharacterCount)
+{
+  <div class="space-y-1.5" data-textarea-wrapper>
+    @TextareaContent
+    <p class="text-xs text-muted-foreground text-right" data-character-count>@CharacterCountText</p>
+  </div>
+} else {
+  @TextareaContent
+}
 
 @code {
+    private RenderFragment TextareaContent =>
+    @<textarea
+      @ref="_inputRef"
+      id="@EffectiveId"
+      name="@EffectiveName"
+      class="@CssClass"
+      value="@Value"
+      placeholder="@Placeholder"
+      disabled="@Disabled"
+      required="@Required"
+      maxlength="@MaxLength"
+      aria-label="@AriaLabel"
+      aria-describedby="@AriaDescribedBy"
+      aria-invalid="@EffectiveAriaInvalid"
+      data-slot="textarea-control">
+    </textarea>;
+
     private ElementReference _inputRef;
     private IJSObjectReference? _jsModule;
-    private DotNetObjectReference<PlInput>? _dotNetRef;
-
+    private DotNetObjectReference<PlTextArea>? _dotNetRef;
     private readonly string _instanceId = Guid.NewGuid().ToString("N");
     private string? _generatedId;
     private bool _jsInitialized;
     private bool _disposed;
-
     private readonly EditContextFieldState _validation = new();
 
     /// <summary>
@@ -42,17 +52,7 @@
     private bool? FieldIsInvalid { get; set; }
 
     /// <summary>
-    /// Gets or sets the type of input.
-    /// </summary>
-    /// <remarks>
-    /// Determines the HTML input type attribute.
-    /// Default value is <see cref="InputType.Text"/>.
-    /// </remarks>
-    [Parameter]
-    public InputType Type { get; set; } = InputType.Text;
-
-    /// <summary>
-    /// Gets or sets the current value of the input.
+    /// Gets or sets the current value of the textarea.
     /// </summary>
     /// <remarks>
     /// Supports two-way binding via @bind-Value syntax.
@@ -61,17 +61,23 @@
     public string? Value { get; set; }
 
     /// <summary>
-    /// Gets or sets the callback invoked when the input value changes.
+    /// Gets or sets the callback invoked when the textarea value changes.
     /// </summary>
     /// <remarks>
     /// When <see cref="JsSyncTiming"/> is <see cref="JsSyncTiming.OnBlur"/> (default),
-    /// fires only on blur or Enter. Use <see cref="JsSyncTiming.Immediate"/> for per-keystroke updates.
+    /// fires only on blur. Use <see cref="JsSyncTiming.Immediate"/> for per-keystroke updates.
     /// </remarks>
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }
 
     /// <summary>
-    /// Gets or sets the placeholder text displayed when the input is empty.
+    /// Gets or sets an expression that identifies the bound value.
+    /// </summary>
+    [Parameter]
+    public Expression<Func<string?>>? ValueExpression { get; set; }
+
+    /// <summary>
+    /// Gets or sets the placeholder text displayed when the textarea is empty.
     /// </summary>
     /// <remarks>
     /// Provides a hint to the user about what to enter.
@@ -81,11 +87,11 @@
     public string? Placeholder { get; set; }
 
     /// <summary>
-    /// Gets or sets whether the input is disabled.
+    /// Gets or sets whether the textarea is disabled.
     /// </summary>
     /// <remarks>
     /// When disabled:
-    /// - Input cannot be focused or edited
+    /// - Textarea cannot be focused or edited
     /// - Cursor is set to not-allow
     /// - Opacity is reduced for visual feedback
     /// </remarks>
@@ -93,7 +99,7 @@
     public bool Disabled { get; set; }
 
     /// <summary>
-    /// Gets or sets whether the input is required.
+    /// Gets or sets whether the textarea is required.
     /// </summary>
     /// <remarks>
     /// When true, the HTML5 required attribute is set.
@@ -103,17 +109,37 @@
     public bool Required { get; set; }
 
     /// <summary>
-    /// Gets or sets the HTML id attribute for the input element.
+    /// Gets or sets the maximum number of characters allowed in the textarea.
     /// </summary>
     /// <remarks>
-    /// Used to associate the input with a label element via the label's 'for' attribute.
-    /// This is essential for accessibility and allows clicking the label to focus the input.
+    /// When set, the HTML5 maxlength attribute is applied.
+    /// Browser will prevent users from entering more than this many characters.
+    /// </remarks>
+    [Parameter]
+    public int? MaxLength { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether to display a character count below the textarea.
+    /// </summary>
+    /// <remarks>
+    /// When true and <see cref="MaxLength"/> is set, displays a "{current}/{max}" counter
+    /// below the textarea. When <see cref="MaxLength"/> is not set, displays only the current count.
+    /// </remarks>
+    [Parameter]
+    public bool ShowCharacterCount { get; set; }
+
+    /// <summary>
+    /// Gets or sets the HTML id attribute for the textarea element.
+    /// </summary>
+    /// <remarks>
+    /// Used to associate the textarea with a label element via the label's 'for' attribute.
+    /// This is essential for accessibility and allows clicking the label to focus the textarea.
     /// </remarks>
     [Parameter]
     public string? Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the ARIA label for the input.
+    /// Gets or sets the ARIA label for the textarea.
     /// </summary>
     /// <remarks>
     /// Provides an accessible name for screen readers.
@@ -123,27 +149,28 @@
     public string? AriaLabel { get; set; }
 
     /// <summary>
-    /// Gets or sets the ID of the element that describes the input.
+    /// Gets or sets the ID of the element that describes the textarea.
     /// </summary>
     /// <remarks>
     /// References the id of an element containing help text or error messages.
-    /// Associates descriptive text with the input via aria-describedby.
+    /// Associates descriptive text with the textarea via aria-describedby.
     /// </remarks>
     [Parameter]
     public string? AriaDescribedBy { get; set; }
 
     /// <summary>
-    /// Gets or sets whether the input value is invalid.
+    /// Gets or sets whether the textarea value is invalid.
     /// </summary>
     /// <remarks>
     /// When true, aria-invalid="true" is set.
     /// Should be set based on a validation state.
+    /// Triggers destructive color styling for error states.
     /// </remarks>
     [Parameter]
-    public bool? AriaInvalid { get; set; }
+    public bool AriaInvalid { get; set; }
 
     /// <summary>
-    /// Gets or sets the HTML name attribute for the input element.
+    /// Gets or sets the HTML name attribute for the textarea element.
     /// </summary>
     /// <remarks>
     /// When inside an EditForm and not explicitly set, the name is automatically
@@ -153,22 +180,12 @@
     public string? Name { get; set; }
 
     /// <summary>
-    /// Gets or sets an expression that identifies the bound value.
-    /// </summary>
-    /// <remarks>
-    /// Used for form validation integration. When provided, the input
-    /// registers with the EditContext and participates in form validation.
-    /// </remarks>
-    [Parameter]
-    public Expression<Func<string?>>? ValueExpression { get; set; }
-
-    /// <summary>
     /// Gets or sets when <see cref="ValueChanged"/> fires.
     /// </summary>
     /// <remarks>
     /// <list type="bullet">
     /// <item><see cref="JsSyncTiming.Immediate"/> — every keystroke (batched via requestAnimationFrame).</item>
-    /// <item><see cref="JsSyncTiming.OnBlur"/> — only on blur / Enter (default).</item>
+    /// <item><see cref="JsSyncTiming.OnBlur"/> — only on blur (default).</item>
     /// <item><see cref="JsSyncTiming.Debounced"/> — after typing pauses for <see cref="DebounceInterval"/> ms.</item>
     /// </list>
     /// </remarks>
@@ -194,23 +211,32 @@
     /// </summary>
     private string? EffectiveAriaInvalid => _validation.GetEffectiveAriaInvalid(AriaInvalid, FieldIsInvalid);
 
-    private string EffectiveId => Id ?? (_generatedId ??= $"input-{Guid.NewGuid().ToString("N")[..8]}");
+    private string EffectiveId => Id ?? (_generatedId ??= $"textarea-{Guid.NewGuid().ToString("N")[..8]}");
 
     /// <summary>
-    /// Gets the computed CSS classes for the input element.
+    /// Gets the character count display text.
+    /// </summary>
+    private string CharacterCountText => MaxLength.HasValue
+        ? $"{Value?.Length ?? 0}/{MaxLength}"
+        : $"{Value?.Length ?? 0}";
+
+    /// <summary>
+    /// Gets the computed CSS classes for the textarea element.
     /// </summary>
     private string CssClass => CssUtil.Cn(
-        // Base input styles (from shadcn/ui)
-        "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base",
-        "file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground",
+        // Base textarea styles (from shadcn/ui v4)
+        "flex field-sizing-content min-h-[80px] w-full rounded-md border border-input",
+        "bg-transparent dark:bg-input/30 px-3 py-2 text-base shadow-xs",
         "placeholder:text-muted-foreground",
-        "focus-visible:outline-none",
-        "disabled:cursor-not-allowed disabled:opacity-50",
-        // aria-invalid state styling (destructive error colors)
+        // Focus states
+        "outline-none focus-visible:border-ring",
+        // Error states (aria-invalid)
         "aria-[invalid=true]:border-destructive",
-        // Smooth transitions for state changes
-        "transition-colors",
-        // Medium screens and up: smaller text
+        // Disabled state
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        // Smooth transitions
+        "transition-[color,box-shadow]",
+        // Responsive text sizing
         "md:text-sm",
         // Custom classes (if provided)
         Class
@@ -220,7 +246,6 @@
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-
         _validation.Update(CascadedEditContext, ValueExpression);
     }
 
@@ -231,9 +256,9 @@
         {
             try
             {
-                _jsModule = await JsRuntime.ImportJsModuleAsync("input-text");
+               _jsModule = await JsRuntime.ImportJsModuleAsync("input-text");
                 _dotNetRef = DotNetObjectReference.Create(this);
-                await _jsModule.InvokeVoidAsync("initialize", _inputRef, _dotNetRef, _instanceId, JsSyncTiming.ToJsValue());
+                await _jsModule.InvokeVoidAsync("initialize", _inputRef, _dotNetRef, _instanceId, GetJsConfig());
                 _jsInitialized = true;
             }
             catch (Exception ex) when (ex is JSDisconnectedException or TaskCanceledException or ObjectDisposedException)
@@ -248,77 +273,79 @@
     }
 
     /// <summary>
+    /// Builds the JS configuration object from current parameters.
+    /// </summary>
+    private object GetJsConfig() => new
+    {
+        mode = JsSyncTiming.ToJsValue(),
+        debounceMs = DebounceInterval,
+        hasCharacterCount = ShowCharacterCount,
+        characterCountSelector = ShowCharacterCount ? "[data-character-count]" : null,
+        maxLength = MaxLength
+    };
+
+    /// <summary>
     /// Called from JavaScript during typing (Immediate/Debounced modes only).
     /// </summary>
     [JSInvokable]
     public async Task JsOnInput(string? value)
     {
-        if (_disposed) { return; }
+        if (_disposed) return;
 
         if (string.IsNullOrWhiteSpace(value))
-        {
             value = null;
-        }
 
         Value = value;
 
         if (ValueChanged.HasDelegate)
-        {
             await ValueChanged.InvokeAsync(value);
-        }
 
         _validation.NotifyFieldChanged();
-
         StateHasChanged();
     }
 
     /// <summary>
-    /// Called from JavaScript on blur/Enter (all modes).
+    /// Called from JavaScript on blur (all modes).
     /// </summary>
     [JSInvokable]
     public async Task JsOnChange(string? value)
     {
-        if (_disposed) { return; }
+        if (_disposed) return;
 
         if (string.IsNullOrWhiteSpace(value))
-        {
             value = null;
-        }
 
         Value = value;
 
         if (ValueChanged.HasDelegate)
-        {
             await ValueChanged.InvokeAsync(value);
-        }
 
         _validation.NotifyFieldChanged();
-
         StateHasChanged();
     }
 
     public async ValueTask DisposeAsync()
     {
-      _disposed = true;
+        _disposed = true;
 
-      if (_jsModule != null && _jsInitialized)
-      {
-        try
+        if (_jsModule != null && _jsInitialized)
         {
-          await _jsModule.InvokeVoidAsync("dispose", _instanceId);
-          await _jsModule.DisposeAsync();
+            try
+            {
+                await _jsModule.InvokeVoidAsync("dispose", _instanceId);
+                await _jsModule.DisposeAsync();
+            }
+            catch (Exception ex) when (ex is JSDisconnectedException or TaskCanceledException or ObjectDisposedException)
+            {
+                // Expected during circuit disconnect
+            }
+            catch (InvalidOperationException)
+            {
+                // JS interop not available
+            }
         }
-        catch (Exception ex) when (ex is JSDisconnectedException or TaskCanceledException or ObjectDisposedException)
-        {
-          // Expected during circuit disconnect
-        }
-        catch (InvalidOperationException)
-        {
-          // JS interop not available
-        }
-      }
 
-      _dotNetRef?.Dispose();
-      GC.SuppressFinalize(this);
+        _dotNetRef?.Dispose();
+        GC.SuppressFinalize(this);
     }
 }

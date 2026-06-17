@@ -1,0 +1,133 @@
+﻿@namespace Pl.Components
+@using System.Linq.Expressions
+@inherits FieldBase
+
+<PlField Orientation="@Orientation" IsInvalid="@IsInvalid" Class="@Class">
+  @if (Label is not null)
+  {
+    <PlFieldLabel For="@ControlId">@Label</PlFieldLabel>
+  }
+  <PlFieldContent>
+    <PlTextArea
+      Id="@ControlId"
+      Value="@Value"
+      ValueChanged="HandleValueChanged"
+      ValueExpression="@ValueExpression"
+      Name="@Name"
+      Placeholder="@Placeholder"
+      Disabled="@Disabled"
+      Required="@Required"
+      MaxLength="@MaxLength"
+      ShowCharacterCount="@ShowCharacterCount"
+      JsSyncTiming="@JsSyncTiming"
+      DebounceInterval="@DebounceInterval"
+      AriaLabel="@AriaLabel"
+      AriaDescribedBy="@DescribedById"
+      AriaInvalid="@IsInvalid"
+      Class="@InputClass" />
+    @if (!string.IsNullOrEmpty(HelperText) && !IsInvalid)
+    {
+      <PlFieldDescription Id="@DescriptionId">@HelperText</PlFieldDescription>
+    }
+    @if (IsInvalid && !string.IsNullOrEmpty(ErrorText))
+    {
+      <PlFieldError Id="@ErrorId">@ErrorText</PlFieldError>
+    }
+    else if (HasEditContextErrors)
+    {
+      <PlFieldError Id="@ErrorId" Errors="@EditContextErrors" />
+    }
+  </PlFieldContent>
+</PlField>
+
+@code {
+    /// <summary>
+    /// Gets or sets the current value of the textarea.
+    /// </summary>
+    /// <remarks>
+    /// Supports two-way binding via @bind-Value syntax.
+    /// </remarks>
+    [Parameter]
+    public string? Value { get; set; }
+
+    /// <summary>
+    /// Gets or sets the callback invoked when the textarea value changes.
+    /// </summary>
+    /// <remarks>
+    /// When <see cref="JsSyncTiming"/> is <see cref="JsSyncTiming.OnBlur"/> (default),
+    /// fires only on blur. Use <see cref="JsSyncTiming.Immediate"/> for per-keystroke updates.
+    /// </remarks>
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    /// <summary>
+    /// Gets or sets an expression that identifies the bound value.
+    /// </summary>
+    [Parameter]
+    public Expression<Func<string?>>? ValueExpression { get; set; }
+
+    /// <summary>
+    /// Gets or sets the HTML name attribute. Passed through to the inner Textarea.
+    /// </summary>
+    [Parameter]
+    public string? Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the placeholder text.
+    /// </summary>
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the textarea is required.
+    /// </summary>
+    [Parameter]
+    public bool Required { get; set; }
+
+    /// <summary>
+    /// Gets or sets the maximum number of characters allowed.
+    /// </summary>
+    [Parameter]
+    public int? MaxLength { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether to display a character count below the textarea.
+    /// </summary>
+    [Parameter]
+    public bool ShowCharacterCount { get; set; }
+
+    /// <summary>
+    /// Gets or sets when ValueChanged fires.
+    /// </summary>
+    [Parameter]
+    public JsSyncTiming JsSyncTiming { get; set; } = JsSyncTiming.OnBlur;
+
+    /// <summary>
+    /// Gets or sets the debounced delay in milliseconds.
+    /// </summary>
+    [Parameter]
+    public int DebounceInterval { get; set; } = 500;
+
+    /// <summary>
+    /// Gets or sets whether the textarea is disabled.
+    /// </summary>
+    [Parameter]
+    public bool Disabled { get; set; }
+
+
+    /// <summary>
+    /// Gets or sets additional CSS classes applied to the inner PlTextArea element.
+    /// </summary>
+    [Parameter]
+    public string? InputClass { get; set; }
+
+    /// <inheritdoc />
+    protected override LambdaExpression? GetFieldExpression() => ValueExpression;
+
+    private async Task HandleValueChanged(string? value)
+    {
+        Value = value;
+        await ValueChanged.InvokeAsync(value);
+        NotifyFieldChanged();
+    }
+}

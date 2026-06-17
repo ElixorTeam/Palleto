@@ -6,7 +6,8 @@ using static System.GC;
 
 namespace Pl.Components;
 
-public partial class PlInputNumber<TValue> : PlComponentBase where TValue : struct, INumber<TValue>
+public partial class PlInputNumber<TValue> : PlComponentBase
+    where TValue : struct, INumber<TValue>
 {
     #region Fields
 
@@ -136,7 +137,7 @@ public partial class PlInputNumber<TValue> : PlComponentBase where TValue : stru
     public JsSyncTiming JsSyncTiming { get; set; } = JsSyncTiming.OnBlur;
 
     /// <summary>
-    /// Default value is <c>300</c>. Used when <see cref="JsSyncTiming"/> is <see cref="UpdateTiming.Debounced"/>.
+    /// Default value is <c>300</c>. Used when <see cref="JsSyncTiming"/> is <see cref="JsSyncTiming.Debounced"/>.
     /// </summary>
     [Parameter]
     public int DebounceInterval { get; set; } = 300;
@@ -203,9 +204,7 @@ public partial class PlInputNumber<TValue> : PlComponentBase where TValue : stru
     #region Computed Properties
 
     private static bool IsFloatingPoint =>
-        typeof(TValue) == typeof(double) ||
-        typeof(TValue) == typeof(float) ||
-        typeof(TValue) == typeof(decimal);
+        typeof(TValue) == typeof(double) || typeof(TValue) == typeof(float) || typeof(TValue) == typeof(decimal);
 
     private static string InputMode => IsFloatingPoint ? "decimal" : "numeric";
 
@@ -218,46 +217,43 @@ public partial class PlInputNumber<TValue> : PlComponentBase where TValue : stru
     /// <summary>
     /// Gets the effective aria-invalid value combining manual AriaInvalid and EditContext validation.
     /// </summary>
-    private string? EffectiveAriaInvalid =>
-        _validation.GetEffectiveAriaInvalid(AriaInvalid, FieldIsInvalid);
+    private string? EffectiveAriaInvalid => _validation.GetEffectiveAriaInvalid(AriaInvalid, FieldIsInvalid);
 
     /// <summary>
     /// Gets the effective name attribute, falling back to the FieldIdentifier name when inside an EditForm.
     /// </summary>
     private string? EffectiveName => _validation.GetEffectiveName(Name);
 
-    private string EffectiveId =>
-        Id ?? (_generatedId ??= $"numeric-{Guid.NewGuid().ToString("N")[..8]}");
+    private string EffectiveId => Id ?? (_generatedId ??= $"numeric-{Guid.NewGuid().ToString("N")[..8]}");
 
     private string DisplayValue => _isEditing ? _editingValue : GetFormattedValueString();
 
-    private string ContainerClass => CssUtil.Cn(
-        "flex items-center",
-        ShowButtons ? "rounded-md" : null
-    );
+    private string ContainerClass => CssUtil.Cn("flex items-center", ShowButtons ? "rounded-md" : null);
 
-    private string CssClass => CssUtil.Cn(
-        "flex h-10 w-full border border-input bg-background px-3 py-2 text-base",
-        "placeholder:text-muted-foreground",
-        ShowButtons
-            ? "rounded-l-md focus-visible:outline-none pr-8 border-r-0"
-            : "rounded-md focus-visible:outline-none",
-        "disabled:cursor-not-allowed disabled:opacity-50",
-        "aria-[invalid=true]:border-destructive",
-        "transition-colors",
-        "md:text-sm",
-        Class
-    );
+    private string CssClass =>
+        CssUtil.Cn(
+            "flex h-10 w-full border border-input bg-background px-3 py-2 text-base",
+            "placeholder:text-muted-foreground",
+            ShowButtons
+                ? "rounded-l-md focus-visible:outline-none pr-8 border-r-0"
+                : "rounded-md focus-visible:outline-none",
+            "disabled:cursor-not-allowed disabled:opacity-50",
+            "aria-[invalid=true]:border-destructive",
+            "transition-colors",
+            "md:text-sm",
+            Class
+        );
 
-    private static string ButtonClass => CssUtil.Cn(
-        "flex items-center justify-center w-8 h-5 border border-input bg-background",
-        "hover:bg-accent hover:text-accent-foreground",
-        "focus-visible:outline-none",
-        "disabled:cursor-not-allowed disabled:opacity-50",
-        "first:border-b-0",
-        "first:rounded-tr-md last:rounded-br-md",
-        "transition-colors"
-    );
+    private static string ButtonClass =>
+        CssUtil.Cn(
+            "flex items-center justify-center w-8 h-5 border border-input bg-background",
+            "hover:bg-accent hover:text-accent-foreground",
+            "focus-visible:outline-none",
+            "disabled:cursor-not-allowed disabled:opacity-50",
+            "first:border-b-0",
+            "first:rounded-tr-md last:rounded-br-md",
+            "transition-colors"
+        );
 
     #endregion
 
@@ -304,7 +300,8 @@ public partial class PlInputNumber<TValue> : PlComponentBase where TValue : stru
                 await _jsModule.InvokeVoidAsync("dispose", _instanceId);
                 await _jsModule.DisposeAsync();
             }
-            catch (Exception ex) when (ex is JSDisconnectedException or TaskCanceledException or ObjectDisposedException)
+            catch (Exception ex)
+                when (ex is JSDisconnectedException or TaskCanceledException or ObjectDisposedException)
             {
                 // Expected during circuit disconnect
             }
@@ -325,19 +322,21 @@ public partial class PlInputNumber<TValue> : PlComponentBase where TValue : stru
     /// <summary>
     /// Builds the JS configuration object from current parameters.
     /// </summary>
-    private object GetJsConfig() => new
-    {
-        mode = JsSyncTiming.ToJsValue(),
-        debounceMs = DebounceInterval,
-        stepKeys = new[] { "ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End" },
-        allowDecimal = IsFloatingPoint,
-        allowNegative = AllowNegative,
-        decimalSeparator = CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator
-    };
+    private object GetJsConfig() =>
+        new
+        {
+            mode = JsSyncTiming.ToJsValue(),
+            debounceMs = DebounceInterval,
+            stepKeys = new[] { "ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End" },
+            allowDecimal = IsFloatingPoint,
+            allowNegative = AllowNegative,
+            decimalSeparator = CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator,
+        };
 
     /// <summary>
     /// Called from JavaScript during typing.
     /// </summary>
+    /// <param>
     /// When <c>false</c>, only syncs the edit buffer for display.
     /// When <c>true</c>, also tries to commit <see cref="Value"/> (Immediate/Debounced).
     /// </param>
