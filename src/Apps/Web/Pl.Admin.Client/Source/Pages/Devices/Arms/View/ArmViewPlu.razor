@@ -5,6 +5,7 @@
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
 @using Pl.Admin.Models.Features.References1C.Brands
 @using Pl.Admin.Client.Source.Features
+@using ToastService = Pl.Components.ToastService
 
 @inject IStringLocalizer<ApplicationResources> Localizer
 @inject IStringLocalizer<WsDataResources> WsDataLocalizer
@@ -13,7 +14,7 @@
 @inject IWebApi WebApi
 @inject References1CEndpoints References1CEndpoints
 @inject DevicesEndpoints DevicesEndpoints
-@inject IToastService ToastService
+@inject ToastService ToastService
 
 <SupportAuthView ProductionSiteUid="Model.ProductionSite.Id" Ignore Context="isSupportAllowed">
   <UseEndpoint Endpoint="@DevicesEndpoints.ArmPluEndpoint" Arg="Model.Id" Options="@(PageHelper.DefaultEndpointOptions)" Context="plusQuery">
@@ -179,7 +180,7 @@
     }
     catch (ApiException ex)
     {
-      ToastService.ShowError(ex.GetMessage(string.Format(Localizer["ArmPluRemovedUnsuccessfully"], item.Number)));
+      ToastService.Error(ex.GetMessage(string.Format(Localizer["ArmPluRemovedUnsuccessfully"], item.Number)));
     }
   }
 
@@ -192,7 +193,7 @@
     }
     catch (ApiException ex)
     {
-      ToastService.ShowError(ex.GetMessage(string.Format(Localizer["ArmPluAddedUnsuccessfully"], item.Number)));
+      ToastService.Error(ex.GetMessage(string.Format(Localizer["ArmPluAddedUnsuccessfully"], item.Number)));
     }
   }
 }

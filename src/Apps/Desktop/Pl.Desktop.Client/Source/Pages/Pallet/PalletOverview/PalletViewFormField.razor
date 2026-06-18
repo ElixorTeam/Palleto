@@ -1,3 +1,4 @@
+@using ToastService = Pl.Components.ToastService
 <div class="space-y-2 relative">
   <FieldLabel HtmlFor="@HtmlId">@Label</FieldLabel>
   <InputTextField
@@ -21,7 +22,7 @@
   # region Injects
 
   [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
-  [Inject] private IToastService ToastService { get; set; } = default!;
+  [Inject] private ToastService ToastService { get; set; } = default!;
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
 
   # endregion
@@ -36,11 +37,11 @@
     try
     {
       await JsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", value);
-      ToastService.ShowInfo(Localizer["ToastValueCopiedToClipboard"]);
+      ToastService.Info(Localizer["ToastValueCopiedToClipboard"]);
     }
     catch
     {
-      ToastService.ShowError(Localizer["ToastValueCopiedToClipboardUnsuccessful"]);
+      ToastService.Error(Localizer["ToastValueCopiedToClipboardUnsuccessful"]);
     }
   }
 }

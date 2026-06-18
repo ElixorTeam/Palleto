@@ -26,3 +26,16 @@ public enum BadgeVariant
     /// </summary>
     Outline
 }
+
+internal static class BadgeVariantExtensions
+{
+    internal static string GetCss(this BadgeVariant var) =>
+        var switch
+        {
+            BadgeVariant.Default => "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
+            BadgeVariant.Secondary => "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
+            BadgeVariant.Destructive => "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
+            BadgeVariant.Outline => "text-foreground",
+            _ => string.Empty
+        };
+}

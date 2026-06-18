@@ -1,5 +1,6 @@
 @using Pl.Desktop.Client.Source.Shared.Services.Devices.Printer
 @using TscZebra.Plugin.Abstractions.Enums
+@using ToastService = Pl.Components.ToastService
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
@@ -18,7 +19,7 @@
 
   [Inject] private IState<PrinterState> PrinterState { get; set; } = default!;
   [Inject] private IPrinterService PrinterService { get; set; } = default!;
-  [Inject] private IToastService ToastService { get; set; } = default!;
+  [Inject] private ToastService ToastService { get; set; } = default!;
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
 
   # endregion
@@ -57,13 +58,13 @@
     switch (PrinterState.Value.Status)
     {
       case PrinterStatus.Disconnected:
-        ToastService.ShowError(Localizer["PrinterStatusDisconnected"]);
+        ToastService.Error(Localizer["PrinterStatusDisconnected"]);
         break;
       case PrinterStatus.Ready or PrinterStatus.Busy:
-        ToastService.ShowSuccess(Localizer["PrinterStatusReady"]);
+        ToastService.Success(Localizer["PrinterStatusReady"]);
         break;
       default:
-        ToastService.ShowWarning(PrinterState.Value.Status switch
+        ToastService.Warning(PrinterState.Value.Status switch
         {
           PrinterStatus.Paused => Localizer["PrinterStatusPaused"],
           PrinterStatus.HeadOpen => Localizer["PrinterStatusHeadOpen"],

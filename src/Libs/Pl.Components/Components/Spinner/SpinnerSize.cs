@@ -20,3 +20,14 @@ public enum SpinnerSize
     /// </summary>
     Large
 }
+
+internal static class SpinnerSizeExtensions
+{
+    internal static string GetCss(this SpinnerSize size) =>
+        size switch
+        {
+            SpinnerSize.Small => "h-4 w-4",
+            SpinnerSize.Large => "h-10 w-10",
+            _ => "h-6 w-6"
+        };
+}

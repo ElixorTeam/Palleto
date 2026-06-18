@@ -1,5 +1,6 @@
 @using MassaK.Plugin.Abstractions.Enums
 @using Pl.Desktop.Client.Source.Shared.Services.Devices.Scales
+@using ToastService = Pl.Components.ToastService
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
@@ -16,7 +17,7 @@
 @code {
   # region Injects
 
-  [Inject] private IToastService ToastService { get; set; } = default!;
+  [Inject] private ToastService ToastService { get; set; } = default!;
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
   [Inject] private IState<ScalesState> ScalesState { get; set; } = default!;
   [Inject] private IScalesService ScalesService { get; set; } = default!;
@@ -58,16 +59,16 @@
     switch (ScalesState.Value.Status)
     {
       case MassaKStatus.Detached:
-        ToastService.ShowError(Localizer["ScalesStatusDetached"]);
+        ToastService.Error(Localizer["ScalesStatusDetached"]);
         break;
       case MassaKStatus.Ready:
-        ToastService.ShowSuccess(Localizer["ScalesStatusReady"]);
+        ToastService.Success(Localizer["ScalesStatusReady"]);
         break;
       case MassaKStatus.Disabled:
-        ToastService.ShowWarning(Localizer["ScalesStatusDisabled"]);
+        ToastService.Warning(Localizer["ScalesStatusDisabled"]);
         break;
       case MassaKStatus.Initializing:
-        ToastService.ShowWarning(Localizer["ScalesStatusInitializing"]);
+        ToastService.Warning(Localizer["ScalesStatusInitializing"]);
         break;
       default:
         throw new ArgumentOutOfRangeException();

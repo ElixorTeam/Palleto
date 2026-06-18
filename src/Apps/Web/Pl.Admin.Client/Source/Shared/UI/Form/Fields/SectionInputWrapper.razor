@@ -1,5 +1,6 @@
+@using ToastService = Pl.Components.ToastService
 @inject IJSRuntime JsRuntime;
-@inject IToastService ToastService;
+@inject ToastService ToastService;
 @inject IStringLocalizer<ApplicationResources> Localizer;
 
 <div class="@Css.Class("space-y-1.5 w-full relative flex-col flex", Size == SectionInputSize.Large ? "col-span-2" : string.Empty, Class)">
@@ -32,11 +33,11 @@
     try
     {
       await JsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", value);
-      ToastService.ShowInfo(Localizer["ToastCopyToClipboard"]);
+      ToastService.Info(Localizer["ToastCopyToClipboard"], "К сведению");
     }
     catch
     {
-      ToastService.ShowError("Ваш браузер не потдерживает копирование");
+      ToastService.Error("Ваш браузер не потдерживает копирование", "Ошибка");
     }
   }
 }

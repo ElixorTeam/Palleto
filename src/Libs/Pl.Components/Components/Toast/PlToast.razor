@@ -1,0 +1,157 @@
+﻿@namespace Pl.Components
+
+<div class="@CssClass" role="alert"
+     data-state="open"
+     @onmouseenter="@HandleMouseEnter"
+     @onmouseleave="@HandleMouseLeave">
+
+    @if (ShouldShowIcon)
+    {
+        <div class="shrink-0">
+            <HeroIcon Name="@Data.Variant.IconName()" Class="@IconCssClass" />
+        </div>
+    }
+
+    <div class="@ContentCssClass">
+        @if (!string.IsNullOrEmpty(Data.Title))
+        {
+            <div class="@TitleCssClass">@Data.Title</div>
+        }
+        @if (!string.IsNullOrEmpty(Data.Description))
+        {
+            <div class="@DescriptionCssClass">@Data.Description</div>
+        }
+    </div>
+
+    @if (!string.IsNullOrEmpty(Data.ActionText) && Data.OnAction != null)
+    {
+        <button type="button"
+                class="@ActionCssClass"
+                @onclick="HandleAction">
+            @Data.ActionText
+        </button>
+    }
+
+    @if (Data.ShowClose)
+    {
+        <button type="button"
+                class="@CloseCssClass"
+                @onclick="HandleClose">
+            <HeroIcon Name="x-mark" Class="h-4 w-4" />
+            <span class="sr-only">Close</span>
+        </button>
+    }
+
+    @if (ShouldShowCountdown)
+    {
+        <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-current/20">
+            <div class="h-full bg-current/40"
+                 style="animation: bb-alert-countdown @(Data.Duration)ms linear forwards; animation-play-state: @(_isPaused ? "paused" : "running");"></div>
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>
+    /// The toast data to display.
+    /// </summary>
+    [Parameter, EditorRequired]
+    public ToastData Data { get; set; } = null!;
+
+    /// <summary>
+    /// Callback when the toast should be dismissed.
+    /// </summary>
+    [Parameter]
+    public EventCallback OnDismiss { get; set; }
+
+    /// <summary>
+    /// Callback when auto-dismiss should pause (mouse enter).
+    /// </summary>
+    [Parameter]
+    public EventCallback OnPause { get; set; }
+
+    /// <summary>
+    /// Callback when auto-dismiss should resume (mice leave).
+    /// </summary>
+    [Parameter]
+    public EventCallback OnResume { get; set; }
+
+    /// <summary>
+    /// Whether to show a visual countdown progress bar at the bottom of the toast.
+    /// </summary>
+    [Parameter]
+    public bool ShowCountdown { get; set; }
+
+    /// <summary>
+    /// Additional CSS classes to apply to the toast.
+    /// </summary>
+    [Parameter]
+    public string? Class { get; set; }
+
+    private bool _isPaused;
+
+    private async Task HandleClose()
+    {
+        await OnDismiss.InvokeAsync();
+    }
+
+    private async Task HandleAction()
+    {
+        Data.OnAction?.Invoke();
+        await OnDismiss.InvokeAsync();
+    }
+
+    private async Task HandleMouseEnter()
+    {
+        _isPaused = true;
+        if (OnPause.HasDelegate)
+            await OnPause.InvokeAsync();
+    }
+
+    private async Task HandleMouseLeave()
+    {
+        _isPaused = false;
+        if (OnResume.HasDelegate)
+            await OnResume.InvokeAsync();
+    }
+
+    private bool ShouldShowIcon => Data.ShowIcon && Data.Variant != ToastVariant.Default;
+
+    /// <summary>
+    /// Gets the computed CSS classes for the toast.
+    /// </summary>
+    private bool ShouldShowCountdown => ShowCountdown && Data.Duration > 0;
+
+    private string CssClass => CssUtil.Cn(
+        "group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border shadow-lg transition-all",
+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-80",
+        "data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full",
+        "data-[state=open]:sm:slide-in-from-bottom-full",
+        Data.ShowClose ? "p-3 pr-6" : "p-3",
+        Data.Variant.Css(),
+        Class
+    );
+
+    private string IconCssClass =>  CssUtil.Cn("h-4 w-4", Data.Variant.IconCss());
+
+    private string ContentCssClass => CssUtil.Cn("grid flex-1 gap-0.5");
+
+    private string TitleCssClass => CssUtil.Cn("text-sm font-semibold");
+
+    private string DescriptionCssClass => CssUtil.Cn("text-sm opacity-90");
+
+    private string ActionCssClass => CssUtil.Cn(
+        "inline-flex shrink-0 items-center justify-center rounded-md border bg-transparent font-medium ring-offset-background transition-colors hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", "h-7 px-2 text-sm"
+    );
+
+    /// <summary>
+    /// Gets the computed CSS classes for the close button.
+    /// </summary>
+    private string CloseCssClass => CssUtil.Cn(
+        "absolute rounded-md p-1 opacity-0 transition-opacity",
+        "hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 right-1 top-1",
+        Data.Variant == ToastVariant.Destructive
+            ? "text-red-300 hover:text-red-50 focus:ring-red-400 focus:ring-offset-red-600"
+            : "text-foreground/50 hover:text-foreground focus:ring-ring"
+    );
+}

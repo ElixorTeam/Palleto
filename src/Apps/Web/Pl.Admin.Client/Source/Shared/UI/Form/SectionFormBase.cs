@@ -2,13 +2,14 @@ using Fluxor.Blazor.Web.Components;
 using Force.DeepCloner;
 using Refit;
 using Pl.Shared.Web.Extensions;
+using ToastService=Pl.Components.ToastService;
 
 namespace Pl.Admin.Client.Source.Shared.UI.Form;
 
 public abstract class SectionFormBase<TItem> : FluxorComponent where TItem : IEquatable<TItem>
 {
     [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-    [Inject] private IToastService ToastService { get; set; } = default!;
+    [Inject] private ToastService ToastService { get; set; } = null!;
 
     [CascadingParameter] private Task<AuthenticationState> AuthState { get; set; } = default!;
     [CascadingParameter] protected FluentDialog Dialog { get; set; } = default!;
@@ -43,7 +44,7 @@ public abstract class SectionFormBase<TItem> : FluxorComponent where TItem : IEq
     protected void ResetAction()
     {
         FormModel = DialogItemCopy.DeepClone();
-        ToastService.ShowInfo(Localizer["ToastResetItem"]);
+        ToastService.Info(Localizer["ToastResetItem"], "К сведению");
     }
 
     private async Task ExecuteAction(Func<Task> action, string successMessage)
@@ -51,16 +52,16 @@ public abstract class SectionFormBase<TItem> : FluxorComponent where TItem : IEq
         try
         {
             await action();
-            ToastService.ShowSuccess(successMessage);
+            ToastService.Success(successMessage, "Готово");
             await Dialog.CloseAsync();
         }
         catch (ApiException ex)
         {
-            ToastService.ShowError(ex.GetMessage(Localizer["UnknownError"]));
+            ToastService.Error(ex.GetMessage(Localizer["UnknownError"]), "Ошибка");
         }
         catch
         {
-            ToastService.ShowError(Localizer["UnknownError"]);
+            ToastService.Error(Localizer["UnknownError"], "Ошибка");
         }
     }
 

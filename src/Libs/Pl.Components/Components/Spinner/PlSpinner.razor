@@ -37,13 +37,7 @@
 
   private string CssClass => CssUtil.Cn(
     "animate-spin text-muted-foreground",
-    Size switch
-    {
-      SpinnerSize.Small => "h-4 w-4",
-      SpinnerSize.Default => "h-6 w-6",
-      SpinnerSize.Large => "h-10 w-10",
-      _ => "h-6 w-6"
-    },
+    Size.GetCss(),
     Class
   );
 }

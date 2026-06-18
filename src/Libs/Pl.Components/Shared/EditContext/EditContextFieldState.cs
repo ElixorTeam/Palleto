@@ -15,7 +15,7 @@ internal sealed class EditContextFieldState
     /// <summary>
     /// Gets whether the field has validation errors in the current EditContext.
     /// </summary>
-    public bool IsInvalid => _editContext?.GetValidationMessages(_fieldIdentifier).Any() == true;
+    public bool IsInvalid => _editContext?.GetValidationMessages(_fieldIdentifier).Any() ?? false;
 
     /// <summary>
     /// Gets the effective name attribute, falling back to the FieldIdentifier name when inside an EditForm.

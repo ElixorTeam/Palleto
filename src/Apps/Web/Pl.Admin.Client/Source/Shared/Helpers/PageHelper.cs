@@ -5,10 +5,11 @@ using Microsoft.JSInterop;
 using Phetch.Core;
 using Pl.Shared.Web.Extensions;
 using Refit;
+using ToastService=Pl.Components.ToastService;
 
 namespace Pl.Admin.Client.Source.Shared.Helpers;
 
-public class PageHelper(IJSRuntime jsRuntime, NavigationManager navigationManager, IToastService toastService)
+public class PageHelper(IJSRuntime jsRuntime, NavigationManager navigationManager, ToastService toastService)
 {
     private DialogParameters? _dialogParameters;
 
@@ -50,17 +51,17 @@ public class PageHelper(IJSRuntime jsRuntime, NavigationManager navigationManage
         try
         {
             await func();
-            toastService.ShowSuccess(successMessage);
+            toastService.Success(successMessage, "Готово");
             if (onSuccess != null) await onSuccess();
         }
         catch (ApiException ex)
         {
-            toastService.ShowError(ex.GetMessage("Неизвестная ошибка сервера"));
+            toastService.Error(ex.GetMessage("Неизвестная ошибка сервера"), "Ошибка");
             if (onError != null) await onError(ex);
         }
         catch (Exception ex)
         {
-            toastService.ShowError(errorMessage);
+            toastService.Error(errorMessage, "Ошибка");
             if (onError != null) await onError(ex);
         }
     }

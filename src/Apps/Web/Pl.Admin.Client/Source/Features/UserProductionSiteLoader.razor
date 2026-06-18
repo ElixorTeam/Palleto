@@ -1,16 +1,13 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Services.Stores
-@using IToastService = Microsoft.FluentUI.AspNetCore.Components.IToastService
-@using Refit
 
 @inject ReferencesEndpoints ReferencesEndpoints
 @inject IState<ProductionSiteState> ProductionSiteState
 @inject IDispatcher Dispatcher
-@inject IToastService ToastService
 
 <UseParameterlessEndpoint
   Endpoint="ReferencesEndpoints.ProxyUserProductionSiteEndpoint"
-  Options="@(new() { OnSuccess = OnSuccess, OnFailure = OnFailure })"
+  Options="@(new() { OnSuccess = OnSuccess })"
 >
   @ChildContent
 </UseParameterlessEndpoint>
@@ -23,15 +20,5 @@
   {
     if (!ProductionSiteState.Value.ProductionSite.Id.IsEmpty()) return;
     Dispatcher.Dispatch(new ChangeProductionSiteAction(querySuccessEventArgs.Result));
-  }
-
-  private void OnFailure(QueryFailureEventArgs<Unit> obj)
-  {
-    if (obj.Exception is ApiException apiException)
-    {
-      ToastService.ShowError(apiException.GetMessage($"Ошибка сервера : {apiException.StatusCode}"));
-      return;
-    }
-    ToastService.ShowError(obj.Exception.Message);
   }
 }

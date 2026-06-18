@@ -1,7 +1,8 @@
 @using Pl.Admin.Client.Source.Shared.Api.Keycloak
+@using ToastService = Pl.Components.ToastService
 
 @inject IStringLocalizer<ApplicationResources> Localizer
-@inject IToastService ToastService
+@inject ToastService ToastService
 @inject IKeycloakApi KeycloakApi
 
 <PlButton
@@ -23,11 +24,11 @@
     try
     {
       await KeycloakApi.LogoutUser(UserUid);
-      ToastService.ShowSuccess(Localizer["ToastReloginUser"]);
+      ToastService.Success(Localizer["ToastReloginUser"], "Готово");
     }
     catch (Exception e)
     {
-      ToastService.ShowError($"Failed to log out user {e.Message}");
+      ToastService.Error($"Failed to log out user {e.Message}", "Ошибка");
     }
   }
 }

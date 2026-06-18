@@ -1,5 +1,6 @@
+@using ToastService = Pl.Components.ToastService
 @inject IJSRuntime JsRuntime
-@inject IToastService ToastService
+@inject ToastService ToastService
 
 <div class="w-full overflow-hidden flex flex-col">
   <span class="truncate text-muted-foreground">
@@ -53,7 +54,7 @@
     }
     catch
     {
-      ToastService.ShowError("Ваш браузер не потдерживает копирование");
+      ToastService.Error("Ваш браузер не потдерживает копирование", "Ошибка");
     }
   }
 }

@@ -1,8 +1,9 @@
+@using ToastService = Pl.Components.ToastService
 @implements IDialogContentComponent<string>
 
 @inject IStringLocalizer<ApplicationResources> Localizer
 @inject IJSRuntime JsRuntime
-@inject IToastService ToastService
+@inject ToastService ToastService
 
 <Dialog Class="max-w-lg p-6">
   <div class="shrink-0 w-full flex items-center justify-between bg-background">
@@ -56,7 +57,7 @@
     }
     catch
     {
-      ToastService.ShowError("Ваш браузер не поддерживает копирование в буфер обмена");
+      ToastService.Error("Ваш браузер не поддерживает копирование в буфер обмена");
     }
   }
 

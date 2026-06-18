@@ -11,7 +11,7 @@ public static class ServiceCollectionExtensions
         // Register all primitive services (portal, focus, positioning, dropdown manager, keyboard shortcuts)
         services.AddBlazorBlueprintPrimitives();
         services.AddScoped<ToastService>();
-        services.AddScoped<DialogService>();
+        // services.AddScoped<DialogService>();
         return services;
     }
 }

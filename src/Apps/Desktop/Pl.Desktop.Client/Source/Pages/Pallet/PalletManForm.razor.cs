@@ -13,7 +13,7 @@ public sealed partial class PalletManForm : ComponentBase
     [Inject] private IDispatcher Dispatcher { get; set; } = default!;
     [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
     [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
-    [Inject] private IToastService ToastService { get; set; } = default!;
+    [Inject] private ToastService ToastService { get; set; } = default!;
     [Inject] private IDesktopApi DesktopApi { get; set; } = default!;
 
     # endregion

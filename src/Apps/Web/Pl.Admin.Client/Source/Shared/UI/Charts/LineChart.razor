@@ -12,8 +12,6 @@
   [Parameter] public List<decimal?> Data { get; set; } = [];
   [Parameter] public bool Clear { get; set; }
 
-  private Chart Chart { get; set; } = new();
-
   private Options ChartOptions => new()
   {
     Responsive = true,

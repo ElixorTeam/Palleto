@@ -1,11 +1,12 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Models.Features.Print.Labels
+@using ToastService = Pl.Components.ToastService
 
 @inject IStringLocalizer<ApplicationResources> Localizer
 @inject ZplEndpoints ZplEndpoints
 @inject OperationsEndpoints OperationsEndpoints
 @inject IJSRuntime JsRuntime
-@inject IToastService ToastService
+@inject ToastService ToastService
 
 <div class="flex items-center min-h-72 max-w-screen-lg w-full overflow-hidden justify-center mx-auto p-4">
   <UseEndpoint Endpoint="OperationsEndpoints.LabelZplEndpoint" Arg="Model.Id" Context="labelZplQuery">
@@ -87,7 +88,7 @@
     }
     catch
     {
-      ToastService.ShowError("Ваш браузер не поддерживает копирование в буфер обмена");
+      ToastService.Error("Этот браузер не поддерживает копирование", "Ошибка");
     }
   }
 
@@ -99,7 +100,7 @@
     }
     catch
     {
-      ToastService.ShowError("Ваш браузер не поддерживает копирование в буфер обмена");
+      ToastService.Error("Этот браузер не поддерживает копирование", "Ошибка");
     }
   }
 }

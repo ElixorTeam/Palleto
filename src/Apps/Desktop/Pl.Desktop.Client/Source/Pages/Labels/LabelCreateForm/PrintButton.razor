@@ -5,6 +5,7 @@
 @using Pl.Desktop.Models.Features.Labels.Output
 @using TscZebra.Plugin.Abstractions.Enums
 @using TscZebra.Plugin.Abstractions.Exceptions
+@using ToastService = Pl.Components.ToastService
 
 @implements IAsyncDisposable
 @inherits FluxorComponent
@@ -26,7 +27,7 @@
 
     [Inject] private IStringLocalizer<WsDataResources> WsDataLocalizer { get; set; } = default!;
     [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-    [Inject] private IToastService ToastService { get; set; } = default!;
+    [Inject] private ToastService ToastService { get; set; } = default!;
     [Inject] private IPrinterService PrinterService { get; set; } = default!;
     [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
 
@@ -90,7 +91,7 @@
         }
         catch (PrinterCommandBodyException)
         {
-            ToastService.ShowError(Localizer["ZplCodeError"]);
+            ToastService.Error(Localizer["ZplCodeError"]);
         }
         catch (PrinterStatusException)
         {
@@ -98,15 +99,15 @@
         }
         catch (PrinterConnectionException)
         {
-            ToastService.ShowError(Localizer["PrinterStatusCommonError"]);
+            ToastService.Error(Localizer["PrinterStatusCommonError"]);
         }
         catch (ApiException ex)
         {
-            ToastService.ShowError(ex.GetMessage(Localizer["UnknownError"]));
+            ToastService.Error(ex.GetMessage(Localizer["UnknownError"]));
         }
         catch
         {
-            ToastService.ShowError(Localizer["UnknownError"]);
+            ToastService.Error(Localizer["UnknownError"]);
         }
 
         await InvokeAsync(StateHasChanged);
@@ -124,12 +125,12 @@
     {
         if (!WeightState.Value.IsStable)
         {
-            ToastService.ShowWarning(Localizer["ScalesStatusUnstable"]);
+            ToastService.Warning(Localizer["ScalesStatusUnstable"]);
             return false;
         }
 
         if (KneadingModel.NetWeight >= 0) return true;
-        ToastService.ShowWarning(Localizer["ScalesStatusTooLight"]);
+        ToastService.Warning(Localizer["ScalesStatusTooLight"]);
         return false;
     }
 
@@ -137,7 +138,7 @@
         new(time.Year, time.Month, time.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
 
     private void PrintPrinterStatusMessage() =>
-        ToastService.ShowWarning(PrinterState.Value.Status switch
+        ToastService.Warning(PrinterState.Value.Status switch
         {
             PrinterStatus.Disconnected => Localizer["PrinterStatusDisconnected"],
             PrinterStatus.Paused => Localizer["PrinterStatusPaused"],

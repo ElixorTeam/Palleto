@@ -1,5 +1,6 @@
 @using Pl.Desktop.Models.Features.Arms.Output
 @using Pl.Desktop.Models.Features.Pallets.Output
+@using ToastService = Pl.Components.ToastService
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
 @if (PalletState.Value.Pallet != null)
@@ -36,7 +37,7 @@ else
   [Inject] private IDesktopApi DesktopApi { get; set; } = default!;
   [Inject] private ArmEndpoints ArmEndpoints { get; set; } = default!;
   [Inject] private IStringLocalizer<ApplicationResources> Localizer { get; set; } = default!;
-  [Inject] private IToastService ToastService { get; set; } = default!;
+  [Inject] private ToastService ToastService { get; set; } = default!;
   [Inject] private PalletEndpoints PalletEndpoints { get; set; } = default!;
   [Inject] private IDispatcher Dispatcher { get; set; } = default!;
   [Inject] private IState<PalletState> PalletState { get; set; } = default!;
@@ -55,21 +56,21 @@ else
       if (PalletState.Value.Pallet?.IsDelete == false)
       {
         Dispatcher.Dispatch(new ResetPalletAction());
-        ToastService.ShowSuccess(Localizer["ToastPalletMarkedDeleted"]);
+        ToastService.Success(Localizer["ToastPalletMarkedDeleted"]);
       }
       else
       {
         Dispatcher.Dispatch(new SwitchPalletDeleteFlagAction());
-        ToastService.ShowSuccess(Localizer["ToastPalletMarkedNotDeleted"]);
+        ToastService.Success(Localizer["ToastPalletMarkedNotDeleted"]);
       }
     }
     catch (ApiException ex)
     {
-      ToastService.ShowError(ex.GetMessage(Localizer["UnknownError"]));
+      ToastService.Error(ex.GetMessage(Localizer["UnknownError"]));
     }
     catch
     {
-      ToastService.ShowError(Localizer["UnknownError"]);
+      ToastService.Error(Localizer["UnknownError"]);
     }
   }
 }

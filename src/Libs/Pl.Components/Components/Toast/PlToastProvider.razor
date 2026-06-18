@@ -1,0 +1,227 @@
+﻿@namespace Pl.Components
+
+@implements IAsyncDisposable
+@inject ToastService ToastService
+
+<div class="@GetContainerCssClass(EffectivePosition)">
+  @foreach (ToastData toast in GetToastsForPosition(null))
+  {
+    <PlToast
+      @key="toast.Id"
+      Data="@toast"
+      Class="@toast.Class"
+      ShowCountdown="@(toast.ShowCountdown ?? ShowCountdown)"
+      OnDismiss="@(() => HandleDismiss(toast.Id))"
+      OnPause="@(() => HandlePause(toast.Id))"
+      OnResume="@(() => HandleResume(toast.Id))" />
+  }
+</div>
+
+@* Per-toast position containers *@
+@foreach (ToastPosition position in GetCustomPositions())
+{
+    <div class="@GetContainerCssClass(position)">
+        @foreach (ToastData toast in GetToastsForPosition(position))
+        {
+            <PlToast @key="toast.Id"
+                     Data="@toast"
+                     Class="@toast.Class"
+                     ShowCountdown="@(toast.ShowCountdown ?? ShowCountdown)"
+                     OnDismiss="@(() => HandleDismiss(toast.Id))"
+                     OnPause="@(() => HandlePause(toast.Id))"
+                     OnResume="@(() => HandleResume(toast.Id))" />
+        }
+    </div>
+}
+
+@code {
+    private readonly Dictionary<string, ToastTimerState> _timerStates = new();
+    private bool _disposed;
+
+    /// <summary>
+    /// The position of the toast container on the screen.
+    /// </summary>
+    [Parameter]
+    public ToastPosition Position { get; set; } = ToastPosition.TopRight;
+
+    /// <summary>
+    /// Whether to pause auto-dismiss when the mouse hovers over a toast.
+    /// </summary>
+    [Parameter]
+    public bool PauseOnHover { get; set; } = true;
+
+    /// <summary>
+    /// Whether to show a visual countdown progress bar on toasts.
+    /// Individual toasts can override this via ToastData.ShowCountdown.
+    /// </summary>
+    [Parameter]
+    public bool ShowCountdown { get; set; }
+
+    /// <summary>
+    /// Additional CSS classes to apply to the container.
+    /// </summary>
+    [Parameter]
+    public string? Class { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ToastService.OnChange += HandleToastsChanged;
+    }
+
+    private void HandleToastsChanged()
+    {
+        // Start timers for new toasts
+        foreach (ToastData toast in ToastService.Toasts)
+        {
+          if (_timerStates.ContainsKey(toast.Id) || toast.Duration <= 0) continue;
+          ToastTimerState state = new ToastTimerState { RemainingMs = toast.Duration };
+          _timerStates[toast.Id] = state;
+          _ = RunDismissTimerAsync(toast.Id, state);
+        }
+
+        HashSet<string> activeIds = new HashSet<string>(ToastService.Toasts.Select(t => t.Id));
+        List<string> staleIds = _timerStates.Keys.Where(id => !activeIds.Contains(id)).ToList();
+        foreach (string id in staleIds)
+        {
+            if (_timerStates.TryGetValue(id, out ToastTimerState? state))
+            {
+                state.Dismissed = true;
+                state.Cts?.Cancel();
+                state.ResumeSignal?.TrySetResult();
+            }
+            _timerStates.Remove(id);
+        }
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    private async Task RunDismissTimerAsync(string id, ToastTimerState state)
+    {
+        while (state is { RemainingMs: > 0, Dismissed: false } && !_disposed)
+        {
+            state.Cts?.Dispose();
+            state.Cts = new();
+            DateTime segmentStart = DateTime.UtcNow;
+
+            try
+            {
+                await Task.Delay(state.RemainingMs, state.Cts.Token);
+                state.RemainingMs = 0;
+            }
+            catch (OperationCanceledException)
+            {
+                int elapsed = (int)(DateTime.UtcNow - segmentStart).TotalMilliseconds;
+                state.RemainingMs = Math.Max(0, state.RemainingMs - elapsed);
+
+                if (state.Dismissed || _disposed)
+                {
+                    return;
+                }
+
+                TaskCompletionSource tcs = new TaskCompletionSource();
+                state.ResumeSignal = tcs;
+
+                if (!state.IsPaused)
+                {
+                    state.ResumeSignal = null;
+                    continue;
+                }
+
+                await tcs.Task;
+                state.ResumeSignal = null;
+
+                if (state.Dismissed || _disposed)
+                {
+                    return;
+                }
+            }
+        }
+
+        if (!state.Dismissed && !_disposed)
+        {
+            state.Dismissed = true;
+            await InvokeAsync(() => ToastService.Dismiss(id));
+        }
+    }
+
+    private void HandleDismiss(string id)
+    {
+        if (_timerStates.TryGetValue(id, out ToastTimerState? state))
+        {
+            state.Dismissed = true;
+            state.Cts?.Cancel();
+            state.ResumeSignal?.TrySetResult();
+        }
+        ToastService.Dismiss(id);
+    }
+
+    private void HandlePause(string id)
+    {
+        if (!PauseOnHover) return;
+
+        if (!_timerStates.TryGetValue(id, out ToastTimerState? state)) return;
+        state.IsPaused = true;
+        state.Cts?.Cancel();
+    }
+
+    private void HandleResume(string id)
+    {
+        if (!PauseOnHover) return;
+        if (!_timerStates.TryGetValue(id, out ToastTimerState? state)) return;
+        state.IsPaused = false;
+        state.ResumeSignal?.TrySetResult();
+    }
+
+    private ToastPosition EffectivePosition => ToastService.Position ?? Position;
+
+    private IEnumerable<ToastPosition> GetCustomPositions()
+    {
+        return ToastService.Toasts
+            .Where(t => t.Position.HasValue)
+            .Select(t => t.Position!.Value)
+            .Distinct();
+    }
+
+    private IEnumerable<ToastData> GetToastsForPosition(ToastPosition? position)
+    {
+        if (position.HasValue)
+            return ToastService.Toasts.Where(t => t.Position == position);
+        return ToastService.Toasts.Where(t => !t.Position.HasValue);
+    }
+
+    private string GetContainerCssClass(ToastPosition position) => CssUtil.Cn(
+        // pointer-events-none lets clicks pass through the fixed-position container
+        // (which always renders, even with zero toasts) so it doesn't block the UI
+        // behind it. Each BbToast re-enables pointer-events-auto on its own root.
+        "pointer-events-none fixed z-[100] flex max-h-screen w-full flex-col-reverse gap-2 p-4 sm:flex-col md:max-w-[420px]",
+        position.Css(),
+        Class
+    );
+
+    public ValueTask DisposeAsync()
+    {
+        _disposed = true;
+        ToastService.OnChange -= HandleToastsChanged;
+
+        foreach (ToastTimerState state in _timerStates.Values)
+        {
+            state.Dismissed = true;
+            state.Cts?.Cancel();
+            state.Cts?.Dispose();
+            state.ResumeSignal?.TrySetResult();
+        }
+        _timerStates.Clear();
+
+        GC.SuppressFinalize(this);
+        return ValueTask.CompletedTask;
+    }
+
+    private class ToastTimerState
+    {
+        public CancellationTokenSource? Cts { get; set; }
+        public TaskCompletionSource? ResumeSignal { get; set; }
+        public int RemainingMs { get; set; }
+        public bool IsPaused { get; set; }
+        public bool Dismissed { get; set; }
+    }
+}

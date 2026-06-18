@@ -7,12 +7,13 @@
 @using Pl.Admin.Models.Features.References.Template.Universal
 @using Pl.Print.Features.Barcodes.Models
 @using Pl.Print.Features.Barcodes.Utils
+@using ToastService = Pl.Components.ToastService
 
 @inject IStringLocalizer<WsDataResources> WsDataLocalizer
 @inject IStringLocalizer<ApplicationResources> Localizer
 @inject PrintSettingsEndpoints PrintSettingsEndpoints
 @inject IWebApi WebApi
-@inject IToastService ToastService
+@inject ToastService ToastService
 
 <div class="w-full bg-secondary/[.3] pt-6 pb-8 px-5 overflow-y-auto dark:bg-inherit">
 
@@ -75,7 +76,7 @@
 
     if (!CaptchaValid)
     {
-      ToastService.ShowError("Введена неправильная капча");
+      ToastService.Error("Введена неправильная капча");
       return;
     }
 
@@ -89,18 +90,18 @@
       if (allBarcodeErrors.Any())
       {
         foreach (BarcodeError error in allBarcodeErrors.Take(5))
-          ToastService.ShowError($"{error.Barcode}. Поле '{error.Name}'. {error.Message}");
+          ToastService.Error($"{error.Barcode}. Поле '{error.Name}'. {error.Message}");
         return;
       }
 
       BarcodeItemWrapper newBarcodes = await WebApi.UpdateBarcodeVariables(Template.Id, BarcodesCopy);
       PrintSettingsEndpoints.UpdateBarcodes(Template.Id, newBarcodes);
-      ToastService.ShowSuccess(Localizer["ToastUpdateItem"]);
+      ToastService.Success(Localizer["ToastUpdateItem"]);
       await Dialog.CloseAsync();
     }
     catch
     {
-      ToastService.ShowError(Localizer["UnknownError"]);
+      ToastService.Error(Localizer["UnknownError"]);
     }
   }
 
