@@ -21,7 +21,6 @@
       Step="@Step"
       DecimalPlaces="@DecimalPlaces"
       AllowNegative="@AllowNegative"
-      ShowButtons="@ShowButtons"
       Placeholder="@Placeholder"
       Disabled="@Disabled"
       Required="@Required"
@@ -102,12 +101,6 @@
     /// </summary>
     [Parameter]
     public bool AllowNegative { get; set; } = true;
-
-    /// <summary>
-    /// Gets or sets whether to show increment/decrement buttons.
-    /// </summary>
-    [Parameter]
-    public bool ShowButtons { get; set; } = true;
 
     /// <summary>
     /// Gets or sets the placeholder text.

@@ -225,20 +225,20 @@
     /// </summary>
     private string CssClass => CssUtil.Cn(
         // Base textarea styles (from shadcn/ui v4)
-        "flex field-sizing-content min-h-[80px] w-full rounded-md border border-input",
-        "bg-transparent dark:bg-input/30 px-3 py-2 text-base shadow-xs",
+        "flex field-sizing-content min-h-[80px] w-full rounded-lg border border-input",
+        "bg-transparent px-2.5 py-2 text-base transition-colors outline-none",
         "placeholder:text-muted-foreground",
         // Focus states
-        "outline-none focus-visible:border-ring",
+        "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
         // Error states (aria-invalid)
-        "aria-[invalid=true]:border-destructive",
+        "aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20",
         // Disabled state
-        "disabled:cursor-not-allowed disabled:opacity-50",
-        // Smooth transitions
-        "transition-[color,box-shadow]",
+        "disabled:cursor-not-allowed disabled:bg-input/50 disabled:opacity-50",
         // Responsive text sizing
         "md:text-sm",
-        // Custom classes (if provided)
+        // Dark mode
+        "dark:bg-input/30 dark:disabled:bg-input/80",
+        "dark:aria-[invalid=true]:border-destructive/50 dark:aria-invalid:ring-destructive/40",
         Class
     );
 

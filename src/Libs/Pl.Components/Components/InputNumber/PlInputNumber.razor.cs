@@ -112,12 +112,6 @@ public partial class PlInputNumber<TValue> : PlComponentBase
     #region Parameters - Display
 
     /// <summary>
-    /// Gets or sets whether to show increment/decrement buttons.
-    /// </summary>
-    [Parameter]
-    public bool ShowButtons { get; set; } = true;
-
-    /// <summary>
     /// Gets or sets the format string for displaying the value.
     /// </summary>
     [Parameter]
@@ -228,30 +222,48 @@ public partial class PlInputNumber<TValue> : PlComponentBase
 
     private string DisplayValue => _isEditing ? _editingValue : GetFormattedValueString();
 
-    private string ContainerClass => CssUtil.Cn("flex items-center", ShowButtons ? "rounded-md" : null);
+    /// <summary>
+    /// Gets the computed CSS classes for the spinbutton group wrapper.
+    /// </summary>
+    private static string ContainerClass => "flex items-center gap-1";
 
+    /// <summary>
+    /// Gets the computed CSS classes for the numeric input element.
+    /// </summary>
     private string CssClass =>
         CssUtil.Cn(
-            "flex h-10 w-full border border-input bg-background px-3 py-2 text-base",
-            "placeholder:text-muted-foreground",
-            ShowButtons
-                ? "rounded-l-md focus-visible:outline-none pr-8 border-r-0"
-                : "rounded-md focus-visible:outline-none",
-            "disabled:cursor-not-allowed disabled:opacity-50",
-            "aria-[invalid=true]:border-destructive",
-            "transition-colors",
+            // Base input styles
+            "flex h-8 w-full border border-input bg-transparent px-2.5 py-1 text-base",
+            "transition-colors outline-none placeholder:text-muted-foreground",
+            // rounded left corners only
+            "rounded-l-md rounded-r-none",
+            // Focus states
+            "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+            // Error states (aria-invalid)
+            "aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20",
+            // Disabled state
+            "disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-input/50 disabled:opacity-50",
+            // Responsive text sizing
             "md:text-sm",
+            // Dark mode
+            "dark:bg-input/30 dark:disabled:bg-input/80",
+            "dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
             Class
         );
 
+    /// <summary>
+    /// Gets the computed CSS classes for the stepper buttons.
+    /// </summary>
     private static string ButtonClass =>
         CssUtil.Cn(
-            "flex items-center justify-center w-8 h-5 border border-input bg-background",
+            // Base button styles
+            "flex items-center justify-center w-8 h-4 border border-input bg-transparent",
             "hover:bg-accent hover:text-accent-foreground",
             "focus-visible:outline-none",
+            // Disabled state
             "disabled:cursor-not-allowed disabled:opacity-50",
-            "first:border-b-0",
-            "first:rounded-tr-md last:rounded-br-md",
+            // Spinbutton layout — merge up/down buttons, round outer right corners
+            "first:border-b-0 rounded-l-none first:rounded-tr-md last:rounded-br-md",
             "transition-colors"
         );
 
