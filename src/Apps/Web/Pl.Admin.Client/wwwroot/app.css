@@ -18,30 +18,17 @@
 }
 
 @layer base {
-  ::selection {
-    @apply bg-primary text-primary-foreground;
-  }
-
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
 
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
 
   body {
     @apply bg-background text-foreground font-sans;
-  }
-
-  button:not(:disabled),
-  [role="button"]:not(:disabled),
-  input,
-  select,
-  textarea,
-  a[href] {
-    @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2;
   }
 
   :root {
