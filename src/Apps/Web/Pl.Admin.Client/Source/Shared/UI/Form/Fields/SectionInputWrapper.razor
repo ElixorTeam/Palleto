@@ -1,10 +1,14 @@
+@using Blazorise.Extensions
 @using ToastService = Pl.Components.ToastService
 @inject IJSRuntime JsRuntime;
 @inject ToastService ToastService;
 @inject IStringLocalizer<ApplicationResources> Localizer;
 
 <div class="@Css.Class("space-y-1.5 w-full relative flex-col flex", Size == SectionInputSize.Large ? "col-span-2" : string.Empty, Class)">
-  <FieldLabel HtmlFor="@HtmlFor" Url="@Path">@Label</FieldLabel>
+  @if (!string.IsNullOrEmpty(Label))
+  {
+    <FieldLabel HtmlFor="@HtmlFor" Url="@Path">@Label</FieldLabel>
+  }
   @ChildContent
   @if (!string.IsNullOrWhiteSpace(ValueToCopy))
   {

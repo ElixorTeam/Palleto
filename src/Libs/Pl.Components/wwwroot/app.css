@@ -12,10 +12,6 @@
   ::file-selector-button {
     border-color: hsl(var(--border));
   }
-
-  .dark {
-    color-scheme: dark;
-  }
 }
 
 @theme inline {
