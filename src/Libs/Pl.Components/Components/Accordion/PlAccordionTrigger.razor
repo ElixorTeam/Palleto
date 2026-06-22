@@ -5,19 +5,10 @@
 <BbAccordionTrigger As="@As" Class="@CssClass">
   <div class="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline">
     @ChildContent
-    <svg class="h-4 w-4 shrink-0 transition-transform duration-200 data-[state=open]:rotate-180"
-         data-state="@(Item?.IsOpen == true ? "open" : "closed")"
-         xmlns="http://www.w3.org/2000/svg"
-         width="24"
-         height="24"
-         viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="2"
-         stroke-linecap="round"
-         stroke-linejoin="round">
-      <polyline points="6 9 12 15 18 9"></polyline>
-    </svg>
+    <HeroIcon
+      data-state="@(Item?.IsOpen == true ? "open" : "closed")"
+      Name="chevron-down"
+      Class="h-4 w-4 shrink-0 transition-transform duration-200 data-[state=open]:rotate-180" />
   </div>
 </BbAccordionTrigger>
 

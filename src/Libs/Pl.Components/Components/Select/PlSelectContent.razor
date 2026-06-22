@@ -74,8 +74,10 @@
     /// Outer container: border, shadow, animation — no scrolling.
     /// </summary>
     private string OuterCssClass => CssUtil.Cn(
-        "z-50 w-full overflow-hidden rounded-md border",
+        // Base popover container (from shadcn/ui v4)
+        "z-50 w-full overflow-hidden rounded-lg border outline-none",
         "bg-popover text-popover-foreground shadow-md",
+        // Open/close animations
         "data-[state=open]:animate-in data-[state=closed]:animate-out",
         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
         "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
@@ -84,9 +86,9 @@
     );
 
     /// <summary>
-    /// Inner container: scrollable area with max height.
+    /// Inner container: scrollable list area with max height.
     /// </summary>
-    private static string InnerCssClass => "max-h-60 overflow-auto p-1 [&::-webkit-scrollbar]:hidden";
+    private const string InnerCssClass = "max-h-60 overflow-auto p-1 [&::-webkit-scrollbar]:hidden";
 
     private async Task HandleScroll()
     {

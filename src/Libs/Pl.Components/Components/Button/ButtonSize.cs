@@ -18,8 +18,8 @@ internal static class ButtonSizeExtensions
         size switch
         {
             // Old palleto style (not shadcn)
-            ButtonSize.Sm => "h-8 rounded-md px-3 text-xs",
-            ButtonSize.Lg => "h-10 rounded-md px-8",
+            ButtonSize.Sm => "h-8 px-3 text-xs",
+            ButtonSize.Lg => "h-10 px-8",
             ButtonSize.Icon => "size-9",
             ButtonSize.Full => "size-full",
             ButtonSize.Default => "h-9 px-4 py-2",

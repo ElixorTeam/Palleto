@@ -234,7 +234,7 @@ public partial class PlInputNumber<TValue> : PlComponentBase
         CssUtil.Cn(
             // Base input styles
             "flex h-8 w-full border border-input bg-transparent px-2.5 py-1 text-base",
-            "transition-colors outline-none placeholder:text-muted-foreground",
+            "transition-colors outline-none placeholder:text-muted-foreground placeholder:select-none",
             // rounded left corners only
             "rounded-l-md rounded-r-none",
             // Focus states

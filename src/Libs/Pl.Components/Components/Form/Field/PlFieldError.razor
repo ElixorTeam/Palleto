@@ -9,10 +9,7 @@
     @attributes="AdditionalAttributes">
     @foreach (string error in Errors)
     {
-      <div class="flex items-start gap-1.5">
-        <span class="mt-0.5">•</span>
-        <span>@error</span>
-      </div>
+      <div>@ValidationMessageUtil.FormatFieldError(error)</div>
     }
   </div>
 }
@@ -27,11 +24,11 @@ else if (ChildContent != null)
 }
 
 @code {
-      /// <summary>
+    /// <summary>
     /// Gets or sets the array of error messages to display.
     /// </summary>
     /// <remarks>
-    /// When provided, each error is rendered as a bulleted list item.
+    /// When provided, each error is rendered on its own line.
     /// If both Errors and ChildContent are provided, Errors takes precedence.
     /// Component only renders when errors are present or ChildContent is not null.
     /// </remarks>
@@ -58,10 +55,5 @@ else if (ChildContent != null)
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
-    private string CssClass => CssUtil.Cn(
-        "text-sm",
-        "font-medium",
-        "text-destructive",
-        Class
-    );
+    private string CssClass => CssUtil.Cn("text-sm font-medium text-destructive", Class);
 }

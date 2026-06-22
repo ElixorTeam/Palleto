@@ -25,13 +25,10 @@
           <AuthorizeView Policy="@(item.Claim)">
             <ChildContent>
               <li>
-                <a href="@item.Link">
-                  <button
-                    type="button"
-                    class="@Css.Class("px-3 py-1.5 w-full h-8 flex text-primary items-center truncate transition-colors rounded-md", GetIsActivePath(item.Link) ?
-                             "font-normal bg-secondary" : "hover:bg-secondary/[.5]")">
-                    @item.Name
-                  </button>
+                <a href="@item.Link"
+                   class="@Css.Class("px-3 py-1.5 w-full h-8 flex text-primary items-center truncate transition-colors rounded-md", GetIsActivePath(item.Link) ?
+                            "font-normal bg-secondary" : "hover:bg-secondary/[.5]")">
+                  @item.Name
                 </a>
               </li>
             </ChildContent>

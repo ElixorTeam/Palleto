@@ -6,20 +6,15 @@
 <BbSelectTrigger
   TValue="TValue"
   class="@CssClass"
+  aria-invalid="@EffectiveAriaInvalid"
   @attributes="AdditionalAttributes">
-    @ChildContent
-    <svg
-      class="ms-2 h-4 w-4 opacity-50 transition-transform duration-200"
-      style="transform: @(IsOpen ? "rotate(180deg)" : "rotate(0deg)")"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round">
-      <polyline points="6 9 12 15 18 9"></polyline>
-    </svg>
+  @ChildContent
+
+  <HeroIcon
+    Name="chevron-down"
+    Class="@CssUtil.Cn(
+      "pointer-events-none size-4 text-muted-foreground transition-transform duration-200",
+      IsOpen ? "rotate-180" : "rotate-0")" />
 </BbSelectTrigger>
 
 @code {
@@ -29,14 +24,16 @@
   [CascadingParameter]
   private SelectContext<TValue>? Context { get; set; }
 
+  [CascadingParameter(Name = "FieldIsInvalid")]
+  private bool? FieldIsInvalid { get; set; }
 
   /// <summary>
-  /// Gets or sets CSS classes applied when the dropdown is open.
-  /// Default is <c>"bg-accent text-accent-foreground"</c>.
-  /// Set to <c>null</c> or empty to disable the active style.
+  /// Gets or sets whether the trigger is in an invalid state.
+  /// When null, falls back to the cascaded <c>FieldIsInvalid</c> value from <see cref="PlField"/>.
   /// </summary>
   [Parameter]
-  public string ActiveClass { get; set; } = "bg-accent text-accent-foreground";
+  public bool? AriaInvalid { get; set; }
+
 
   /// <summary>
   /// Gets or sets the content to be rendered inside the trigger button.
@@ -47,17 +44,36 @@
 
   private bool IsOpen => Context?.IsOpen ?? false;
 
+  private string? EffectiveAriaInvalid
+  {
+    get
+    {
+      if (AriaInvalid.HasValue)
+        return AriaInvalid.Value ? "true" : "false";
+      if (FieldIsInvalid == true)
+        return "true";
+      return null;
+    }
+  }
+
   /// <summary>
   /// Gets the computed CSS classes for the trigger button.
   /// </summary>
   private string CssClass => CssUtil.Cn(
-    "flex h-10 w-full items-center justify-between rounded-md border border-input",
-    "bg-background px-3 py-2 text-sm",
-    "placeholder:text-muted-foreground",
-    "hover:bg-accent hover:text-accent-foreground",
-    "focus:outline-none select-none",
+    // Base trigger styles (from shadcn/ui v4)
+    "flex h-9 w-full items-center justify-between gap-1.5 rounded-lg border border-input",
+    "py-2 px-3 text-sm whitespace-nowrap transition-colors outline-none select-none",
+    // Open state
+    IsOpen ? "bg-accent text-accent-foreground" : "bg-transparent",
+    // Focus states
+    "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+    // Error states (aria-invalid)
+    "aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20",
+    // Disabled state
     "disabled:cursor-not-allowed disabled:opacity-50",
-    IsOpen ? ActiveClass : null,
+    // Dark mode
+    IsOpen ? null : "dark:bg-input/30 dark:hover:bg-input/50",
+    "dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
     Class
   );
 }

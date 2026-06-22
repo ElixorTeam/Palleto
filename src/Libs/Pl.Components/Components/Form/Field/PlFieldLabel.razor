@@ -30,10 +30,15 @@
   [Parameter]
   public RenderFragment? ChildContent { get; set; }
 
+  /// <summary>
+  /// Gets the computed CSS classes for the label element.
+  /// </summary>
   private string CssClass => CssUtil.Cn(
-    "text-sm font-medium leading-none",
-    "shrink-0",
+    // Base label styles (from shadcn/ui v4)
+    "flex items-center gap-2 text-sm leading-none font-medium select-none",
+    // Error state (invalid peer control)
     "peer-aria-[invalid=true]:text-destructive",
+    "shrink-0",
     Class
   );
 }
