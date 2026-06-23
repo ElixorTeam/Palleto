@@ -15,8 +15,6 @@
   Arg="@Id"
   Context="query"
 >
-  <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionPlu"])" />
-
   <Breadcrumbs>
     <PlBreadcrumbItem>
       <PlBreadcrumbPage>@Localizer["Menu1CReferences"]</PlBreadcrumbPage>
@@ -32,38 +30,40 @@
     }
   </Breadcrumbs>
 
-  <ViewHeader Title="@query.Data?.Name">
-    <ButtonsContent>
-      @if (query.HasData)
-      {
-        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPlu(query.Data.Id))" />
-        <AuthorizeView Policy="@Policies.Support">
-          <ViewButtonUpdate TDialog="PluUpdateDialog" Model="query.Data" />
-        </AuthorizeView>
-      }
-    </ButtonsContent>
+  <ViewTabs @bind-CurrentTab="CurrentTab">
+    <ViewHeader Title="@query.Data?.Name">
+      <ButtonsContent>
+        @if (query.HasData)
+        {
+          <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPlu(query.Data.Id))" />
+          <AuthorizeView Policy="@Policies.Support">
+            <ViewButtonUpdate TDialog="PluUpdateDialog" Model="query.Data" />
+          </AuthorizeView>
+        }
+      </ButtonsContent>
 
-    <TabsContent>
-      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-        @Localizer["SectionViewInfo"]
-      </ViewTabButton>
-      <ViewTabButton Value="characteristics" @bind-CurrentTab="CurrentTab">
-        @WsDataLocalizer["ColCharacteristics"]
-      </ViewTabButton>
-    </TabsContent>
-  </ViewHeader>
+      <TabsContent>
+        <ViewTabsList>
+          <ViewTabTrigger Value="info" Label="@Localizer["SectionViewInfo"]">
+            @Localizer["SectionViewInfo"]
+          </ViewTabTrigger>
+          <ViewTabTrigger Value="characteristics" Label="@WsDataLocalizer["ColCharacteristics"]">
+            @WsDataLocalizer["ColCharacteristics"]
+          </ViewTabTrigger>
+        </ViewTabsList>
+      </TabsContent>
+    </ViewHeader>
 
-  <Tabs @bind-ActiveTabId="@CurrentTab">
     @if (query.HasData)
     {
-      <Tab Id="info">
+      <PlTabsContent Value="info">
         <PluViewInfo Model="@query.Data"/>
-      </Tab>
-      <Tab Id="characteristics">
+      </PlTabsContent>
+      <PlTabsContent Value="characteristics">
         <PluViewCharacteristics Model="@query.Data" />
-      </Tab>
+      </PlTabsContent>
     }
-  </Tabs>
+  </ViewTabs>
 </UseEndpoint>
 
 @code {

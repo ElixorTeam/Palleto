@@ -16,22 +16,20 @@
 @inject References1CEndpoints References1CEndpoints
 @inject PluViewValidator PluViewValidator
 
-<BrowserTitle Label="@Localizer["SectionPlu"]" />
+<Breadcrumbs Class="pb-5">
+  <PlBreadcrumbItem>
+    <PlBreadcrumbPage>@Localizer["Menu1CReferences"]</PlBreadcrumbPage>
+  </PlBreadcrumbItem>
+  <PlBreadcrumbItem>
+    <PlBreadcrumbPage>@Localizer["SectionPlu"]</PlBreadcrumbPage>
+  </PlBreadcrumbItem>
+</Breadcrumbs>
 
 <UseParameterlessEndpoint
   Endpoint="@References1CEndpoints.PlusEndpoint"
   Options="@(PageHelper.DefaultEndpointOptions)"
   Context="query"
 >
-  <Breadcrumbs Class="pb-5">
-    <PlBreadcrumbItem>
-      <PlBreadcrumbPage>@Localizer["Menu1CReferences"]</PlBreadcrumbPage>
-    </PlBreadcrumbItem>
-    <PlBreadcrumbItem>
-      <PlBreadcrumbPage>@Localizer["SectionPlu"]</PlBreadcrumbPage>
-    </PlBreadcrumbItem>
-  </Breadcrumbs>
-
   <DataGridHeader>
     <DataGridLabelWithCounter
       Label="@Localizer["SectionPlu"]"

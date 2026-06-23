@@ -18,22 +18,20 @@
 @inject RedirectHelper RedirectHelper
 @inject PrintSettingsEndpoints PrintSettingsEndpoints
 
-<BrowserTitle Label="@Localizer["SectionTemplates"]" />
+<Breadcrumbs Class="pb-5">
+  <PlBreadcrumbItem>
+    <PlBreadcrumbPage>@Localizer["MenuPrintSettings"]</PlBreadcrumbPage>
+  </PlBreadcrumbItem>
+  <PlBreadcrumbItem>
+    <PlBreadcrumbPage>@Localizer["SectionTemplates"]</PlBreadcrumbPage>
+  </PlBreadcrumbItem>
+</Breadcrumbs>
 
 <UseParameterlessEndpoint
   Endpoint="PrintSettingsEndpoints.TemplatesEndpoint"
   Options="PageHelper.DefaultEndpointOptions"
   Context="query"
 >
-  <Breadcrumbs Class="pb-5">
-    <PlBreadcrumbItem>
-      <PlBreadcrumbPage>@Localizer["MenuPrintSettings"]</PlBreadcrumbPage>
-    </PlBreadcrumbItem>
-    <PlBreadcrumbItem>
-      <PlBreadcrumbPage>@Localizer["SectionTemplates"]</PlBreadcrumbPage>
-    </PlBreadcrumbItem>
-  </Breadcrumbs>
-
   <DataGridHeader>
     <DataGridLabelWithCounter
       Label="@Localizer["SectionTemplates"]"

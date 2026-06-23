@@ -18,8 +18,6 @@
   Arg="@Id"
   Context="query"
 >
-  <BrowserTitle Label="@(query.Data?.Fio.DisplayShortName ?? Localizer["SectionPalletMen"])" />
-
   <Breadcrumbs>
     <PlBreadcrumbItem>
       <PlBreadcrumbPage>@Localizer["MenuAdministration"]</PlBreadcrumbPage>
@@ -35,37 +33,39 @@
     }
   </Breadcrumbs>
 
-  <ViewHeader Title="@query.Data?.Fio.DisplayShortName">
-    <ButtonsContent>
-      @if (query.HasData)
-      {
-        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPalletMan(query.Data.Id))" />
+  <ViewTabs @bind-CurrentTab="CurrentTab">
+    <ViewHeader Title="@query.Data?.Fio.DisplayShortName">
+      <ButtonsContent>
+        @if (query.HasData)
+        {
+          <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPalletMan(query.Data.Id))" />
 
-        <SupportAuthView ProductionSiteUid="@query.Data.ProductionSite.Id">
-          <ViewButtonUpdate TDialog="PalletManUpdateDialog" Model="query.Data" />
-        </SupportAuthView>
+          <SupportAuthView ProductionSiteUid="@query.Data.ProductionSite.Id">
+            <ViewButtonUpdate TDialog="PalletManUpdateDialog" Model="query.Data" />
+          </SupportAuthView>
 
-        <AuthorizeView Policy="@Policies.SeniorSupport">
-          <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
-        </AuthorizeView>
-      }
-    </ButtonsContent>
+          <AuthorizeView Policy="@Policies.SeniorSupport">
+            <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
+          </AuthorizeView>
+        }
+      </ButtonsContent>
 
-    <TabsContent>
-      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-        @Localizer["SectionViewInfo"]
-      </ViewTabButton>
-    </TabsContent>
-  </ViewHeader>
+      <TabsContent>
+        <ViewTabsList>
+          <ViewTabTrigger Value="info" Label="@Localizer["SectionViewInfo"]">
+            @Localizer["SectionViewInfo"]
+          </ViewTabTrigger>
+        </ViewTabsList>
+      </TabsContent>
+    </ViewHeader>
 
-  <Tabs @bind-ActiveTabId="@CurrentTab">
     @if (query.HasData)
     {
-      <Tab Id="info">
+      <PlTabsContent Value="info">
         <PalletManViewInfo Model="@query.Data"/>
-      </Tab>
+      </PlTabsContent>
     }
-  </Tabs>
+  </ViewTabs>
 </UseEndpoint>
 
 @code {

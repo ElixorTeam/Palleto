@@ -44,7 +44,7 @@ public enum ButtonVariant
 
 internal static class ButtonVariantExtensions
 {
-    internal static string GetCss(this ButtonVariant variant) =>
+    internal static string Css(this ButtonVariant variant) =>
         variant switch
         {
             ButtonVariant.Default => "bg-primary text-primary-foreground hover:bg-primary/90",

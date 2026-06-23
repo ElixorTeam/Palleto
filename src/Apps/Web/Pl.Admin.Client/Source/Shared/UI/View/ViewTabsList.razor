@@ -1,0 +1,11 @@
+<PlTabsList Class="h-auto gap-6 bg-transparent p-0" Responsive="@Responsive">
+  @ChildContent
+</PlTabsList>
+
+@code {
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
+
+  [Parameter]
+  public bool Responsive { get; set; } = true;
+}

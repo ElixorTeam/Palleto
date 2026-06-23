@@ -6,9 +6,9 @@
 @inject IStringLocalizer<ApplicationResources> Localizer
 
 <SectionDialog>
-  <Tab Id="@typeof(PalletManUpdateForm).ToString()" Label="@Localizer["SectionPalletMen"]">
+  <SectionDialogTab Id="@typeof(PalletManUpdateForm).ToString()" Label="@Localizer["SectionPalletMen"]">
     <PalletManUpdateForm Model="Content" FormModel="@PalletManMapper.DtoToUpdateDto(Content)" />
-  </Tab>
+  </SectionDialogTab>
 </SectionDialog>
 
 @code {

@@ -9,19 +9,17 @@
 >
   @if (userProductionSiteQuery.IsLoading)
   {
-    <Breadcrumbs Class="pb-5" />
     <DataGridHeader>
       <Skeleton Class="h-8 w-32" />
     </DataGridHeader>
   }
   else if (userProductionSiteQuery.IsError || !userProductionSiteQuery.HasData)
   {
-    <div class="size-full flex items-center justify-center p-6">
-      <div class="max-w-md flex flex-col gap-2 text-center items-center">
-        <HeroIcon Name="exclamation-triangle" Class="size-16"/>
-        @Localizer["ProductionSiteSuspenseDescription"]
-      </div>
-    </div>
+    <PlNotice
+      Variant="NoticeVariant.Warning"
+      Title="Площадка не установлена"
+      Description="@Localizer["ProductionSiteSuspenseDescription"]"
+    />
   }
   else
   {

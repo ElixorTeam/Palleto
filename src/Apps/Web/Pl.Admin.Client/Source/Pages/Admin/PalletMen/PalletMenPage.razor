@@ -20,7 +20,14 @@
 @inject AdminEndpoints AdminEndpoints
 @inject PageHelper PageHelper
 
-<BrowserTitle Label="@Localizer["SectionPalletMen"]" />
+<Breadcrumbs Class="pb-5">
+  <PlBreadcrumbItem>
+    <PlBreadcrumbPage>@Localizer["MenuAdministration"]</PlBreadcrumbPage>
+  </PlBreadcrumbItem>
+  <PlBreadcrumbItem>
+    <PlBreadcrumbPage>@Localizer["SectionPalletMen"]</PlBreadcrumbPage>
+  </PlBreadcrumbItem>
+</Breadcrumbs>
 
 <UserProductionSiteErrorSuspense>
   <UseEndpoint
@@ -29,15 +36,6 @@
     Options="@PageHelper.DefaultEndpointOptions"
     Context="query"
   >
-    <Breadcrumbs Class="pb-5">
-      <PlBreadcrumbItem>
-        <PlBreadcrumbPage>@Localizer["MenuAdministration"]</PlBreadcrumbPage>
-      </PlBreadcrumbItem>
-      <PlBreadcrumbItem>
-        <PlBreadcrumbPage>@Localizer["SectionPalletMen"]</PlBreadcrumbPage>
-      </PlBreadcrumbItem>
-    </Breadcrumbs>
-
     <DataGridHeader>
       <DataGridLabelWithCounter
         Label="@Localizer["SectionPalletMen"]"

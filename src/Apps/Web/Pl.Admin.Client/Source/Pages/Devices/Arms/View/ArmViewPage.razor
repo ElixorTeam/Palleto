@@ -20,8 +20,6 @@
   Arg="@Id"
   Context="query"
 >
-  <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionArm"])" />
-
   <Breadcrumbs>
     <PlBreadcrumbItem>
       <PlBreadcrumbPage>@Localizer["MenuDevices"]</PlBreadcrumbPage>
@@ -37,69 +35,71 @@
     }
   </Breadcrumbs>
 
-  <ViewHeader Title="@query.Data?.Name">
-    <TitleContent Context="header">
-      <div class="flex gap-2 items-center">
-        <h2 class="font-bold text-3xl truncate tracking-tight">@header</h2>
+  <ViewTabs @bind-CurrentTab="CurrentTab">
+    <ViewHeader Title="@query.Data?.Name">
+      <TitleContent Context="header">
+        <div class="flex gap-2 items-center">
+          <h2 class="font-bold text-3xl truncate tracking-tight">@header</h2>
+          @if (query.HasData)
+          {
+            <div class="@Css.Class("size-4 rounded-full overflow-hidden", (DateTime.Now - query.Data.ChangeDt).TotalMinutes < 5 ? "bg-green-500" : "bg-muted-foreground")"></div>
+          }
+        </div>
+      </TitleContent>
+
+      <ButtonsContent>
         @if (query.HasData)
         {
-          <div class="@Css.Class("size-4 rounded-full overflow-hidden", (DateTime.Now - query.Data.ChangeDt).TotalMinutes < 5 ? "bg-green-500" : "bg-muted-foreground")"></div>
+          <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToArm(query.Data.Id))" />
+          <SupportAuthView ProductionSiteUid="@query.Data.ProductionSite.Id">
+            <ViewButtonUpdate TDialog="ArmUpdateDialog" Model="query.Data" />
+          </SupportAuthView>
+          <AuthorizeView Policy="@Policies.SeniorSupport">
+            <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
+          </AuthorizeView>
         }
-      </div>
-    </TitleContent>
+      </ButtonsContent>
 
-    <ButtonsContent>
-      @if (query.HasData)
-      {
-        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToArm(query.Data.Id))" />
-        <SupportAuthView ProductionSiteUid="@query.Data.ProductionSite.Id">
-          <ViewButtonUpdate TDialog="ArmUpdateDialog" Model="query.Data" />
-        </SupportAuthView>
-        <AuthorizeView Policy="@Policies.SeniorSupport">
-          <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
-        </AuthorizeView>
-      }
-    </ButtonsContent>
+      <TabsContent>
+        <ViewTabsList>
+          <ViewTabTrigger Value="info" Label="@Localizer["SectionViewInfo"]">
+            @Localizer["SectionViewInfo"]
+          </ViewTabTrigger>
+          <ViewTabTrigger Value="plus" Label="@WsDataLocalizer["ColPlu"]">
+            @WsDataLocalizer["ColPlu"]
+          </ViewTabTrigger>
+          <ViewTabTrigger Value="labels" Label="@WsDataLocalizer["ColLabels"]">
+            @WsDataLocalizer["ColLabels"]
+          </ViewTabTrigger>
+          <ViewTabTrigger Value="pallets" Label="@WsDataLocalizer["ColPallets"]">
+            @WsDataLocalizer["ColPallets"]
+          </ViewTabTrigger>
+          <ViewTabTrigger Value="analytics" Label="@Localizer["SectionViewAnalytics"]">
+            @Localizer["SectionViewAnalytics"]
+          </ViewTabTrigger>
+        </ViewTabsList>
+      </TabsContent>
+    </ViewHeader>
 
-    <TabsContent>
-      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-        @Localizer["SectionViewInfo"]
-      </ViewTabButton>
-      <ViewTabButton Value="plus" @bind-CurrentTab="CurrentTab">
-        @WsDataLocalizer["ColPlu"]
-      </ViewTabButton>
-      <ViewTabButton Value="labels" @bind-CurrentTab="CurrentTab">
-        @WsDataLocalizer["ColLabels"]
-      </ViewTabButton>
-      <ViewTabButton Value="pallets" @bind-CurrentTab="CurrentTab">
-        @WsDataLocalizer["ColPallets"]
-      </ViewTabButton>
-      <ViewTabButton Value="analytics" @bind-CurrentTab="CurrentTab">
-        @Localizer["SectionViewAnalytics"]
-      </ViewTabButton>
-    </TabsContent>
-  </ViewHeader>
-
-  <Tabs @bind-ActiveTabId="@CurrentTab">
     @if (query.HasData)
     {
-      <Tab Id="info">
+      <PlTabsContent Value="info">
         <ArmViewInfo Model="@query.Data"/>
-      </Tab>
-      <Tab Id="analytics">
+      </PlTabsContent>
+      <PlTabsContent Value="analytics">
         <ArmViewAnalytics Model="@query.Data" />
-      </Tab>
-      <Tab Id="labels">
+      </PlTabsContent>
+      <PlTabsContent Value="labels">
         <ArmViewLabels Model="@query.Data" />
-      </Tab>
-      <Tab Id="pallets">
+      </PlTabsContent>
+      <PlTabsContent Value="pallets">
         <ArmViewPallets Model="@query.Data" />
-      </Tab>
-      <Tab Id="plus">
+      </PlTabsContent>
+      <PlTabsContent Value="plus">
         <ArmViewPlu Model="@query.Data" />
-      </Tab>
+      </PlTabsContent>
     }
-  </Tabs>
+  </ViewTabs>
 </UseEndpoint>
 
 @code {

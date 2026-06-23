@@ -19,8 +19,6 @@
   Arg="@Id"
   Context="query"
 >
-  <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionPrinters"])" />
-
   <Breadcrumbs>
     <PlBreadcrumbItem>
       <PlBreadcrumbPage>@Localizer["MenuDevices"]</PlBreadcrumbPage>
@@ -36,41 +34,43 @@
     }
   </Breadcrumbs>
 
-  <ViewHeader Title="@query.Data?.Name">
-    <ButtonsContent>
-      @if (query.HasData)
-      {
-        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPrinter(query.Data.Id))" />
-        <SupportAuthView ProductionSiteUid="@query.Data.ProductionSite.Id">
-          <ViewButtonUpdate TDialog="PrinterUpdateDialog" Model="query.Data" />
-        </SupportAuthView>
-        <AuthorizeView Policy="@Policies.SeniorSupport">
-          <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
-        </AuthorizeView>
-      }
-    </ButtonsContent>
+  <ViewTabs @bind-CurrentTab="CurrentTab">
+    <ViewHeader Title="@query.Data?.Name">
+      <ButtonsContent>
+        @if (query.HasData)
+        {
+          <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPrinter(query.Data.Id))" />
+          <SupportAuthView ProductionSiteUid="@query.Data.ProductionSite.Id">
+            <ViewButtonUpdate TDialog="PrinterUpdateDialog" Model="query.Data" />
+          </SupportAuthView>
+          <AuthorizeView Policy="@Policies.SeniorSupport">
+            <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
+          </AuthorizeView>
+        }
+      </ButtonsContent>
 
-    <TabsContent>
-      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-        @Localizer["SectionViewInfo"]
-      </ViewTabButton>
-      <ViewTabButton Value="control" @bind-CurrentTab="CurrentTab">
-        @Localizer["SectionViewControl"]
-      </ViewTabButton>
-    </TabsContent>
-  </ViewHeader>
+      <TabsContent>
+        <ViewTabsList>
+          <ViewTabTrigger Value="info" Label="@Localizer["SectionViewInfo"]">
+            @Localizer["SectionViewInfo"]
+          </ViewTabTrigger>
+          <ViewTabTrigger Value="control" Label="@Localizer["SectionViewControl"]">
+            @Localizer["SectionViewControl"]
+          </ViewTabTrigger>
+        </ViewTabsList>
+      </TabsContent>
+    </ViewHeader>
 
-  <Tabs @bind-ActiveTabId="@CurrentTab">
     @if (query.HasData)
     {
-      <Tab Id="info">
+      <PlTabsContent Value="info">
         <PrinterViewInfo Model="@query.Data"/>
-      </Tab>
-      <Tab Id="control">
+      </PlTabsContent>
+      <PlTabsContent Value="control">
         <PrinterViewControl Model="@query.Data" />
-      </Tab>
+      </PlTabsContent>
     }
-  </Tabs>
+  </ViewTabs>
 </UseEndpoint>
 
 @code {

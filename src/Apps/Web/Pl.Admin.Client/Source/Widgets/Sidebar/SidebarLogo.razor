@@ -6,16 +6,16 @@
       <AdminLogo Class="size-6 text-background" />
     </div>
     <div class="grid flex-1 pt-1 text-left leading-tight">
+      <span class="truncate font-medium leading-4">Шестнадцатая</span>
       <div class="flex gap-1">
-        <span class="truncate font-medium leading-4">Admin Web</span>
+        <span class="truncate font-light text-sm">Palleto HUB</span>
         @if (!IsProduction)
         {
-        <PlBadge Class="py-0 px-1.5" Variant="@BadgeVariant.Secondary">
-          dev
-        </PlBadge>
+          <PlBadge Class="py-0 px-1.5" Variant="@BadgeVariant.Secondary">
+            dev
+          </PlBadge>
         }
       </div>
-      <span class="truncate font-light text-sm">Palleto</span>
     </div>
   </a>
 </div>

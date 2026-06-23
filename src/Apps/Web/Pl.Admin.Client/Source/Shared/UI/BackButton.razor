@@ -2,12 +2,16 @@
 @inject IJSRuntime JsRuntime
 @inject IStringLocalizer<ApplicationResources> Localizer
 
-<PlButton Variant="ButtonVariant.Link" Class="@TwMerge.Merge("-ml-3 mb-2", Class)" OnClick="GoBackAsync">
-  <HeroIcon Name="arrow-left" Class="size-4"/>
-  @Localizer["BtnBack"]
+<PlButton Variant="ButtonVariant.Link" Class="@TwMerge.Merge("-ml-3 mb-2", Class)" OnClick="@GoBackAsync">
+  <Icon>
+    <HeroIcon Name="arrow-left" Class="size-4"/>
+  </Icon>
+  <ChildContent>
+    @Localizer["BtnBack"]
+  </ChildContent>
 </PlButton>
 
 @code {
-  [Parameter] public string Class { get; set; } = string.Empty;
+  [Parameter] public string? Class { get; set; }
   private Task GoBackAsync() => JsRuntime.InvokeVoidAsync("history.back").AsTask();
 }

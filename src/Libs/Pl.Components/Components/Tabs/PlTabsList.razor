@@ -2,7 +2,7 @@
 @using BlazorBlueprint.Primitives.Tabs
 @implements IAsyncDisposable
 @inherits PlComponentBase
-@inject JSRuntime JsRuntime
+@inject IJSRuntime JsRuntime
 
 @if (Responsive)
 {
@@ -48,7 +48,7 @@ else
     private readonly string _componentId = Guid.NewGuid().ToString("N")[..8];
 
     /// <summary>
-    /// The child content to render within the tabs list.
+    /// The child content to render within the tab list.
     /// Should contain TabsTrigger components.
     /// </summary>
     [Parameter]
@@ -67,7 +67,7 @@ else
     public string? SelectClass { get; set; }
 
     /// <summary>
-    /// Cascading parameter to receive the tabs context from the Primitives layer.
+    /// Cascading parameter to receive the tab context from the Primitives layer.
     /// </summary>
     [CascadingParameter]
     public TabsContext Context { get; set; } = null!;

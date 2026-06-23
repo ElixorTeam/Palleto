@@ -492,15 +492,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Такой страницы не существует.
-        /// </summary>
-        public static string NotFoundMessage {
-            get {
-                return ResourceManager.GetString("NotFoundMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Если вы видите пустой блок, это означает, что браузер блокирует запрос к принтеру через сайт. Вы можете перейти по {0} на устройство или отключить настройки защиты браузера для сайта, следуя {1}..
         /// </summary>
         public static string PrinterControlDescription {

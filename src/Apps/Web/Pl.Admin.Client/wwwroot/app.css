@@ -79,8 +79,8 @@
     --alert-warning-foreground: oklch(0.35 0.10 55);
     --alert-warning-bg: oklch(0.995 0.003 55);
 
-    --alert-danger: var(--destructive, oklch(0.55 0.22 27));
-    --alert-danger-foreground: var(--destructive-foreground, oklch(0.30 0.12 27));
+    --alert-danger: var(--destructive);
+    --alert-danger-foreground: var(--destructive-foreground);
     --alert-danger-bg: oklch(0.993 0.003 27);
   }
 
@@ -125,8 +125,8 @@
     --alert-warning-foreground: oklch(0.92 0.06 55);
     --alert-warning-bg: oklch(0.19 0.008 55);
 
-    --alert-danger: var(--destructive, oklch(0.55 0.20 27));
-    --alert-danger-foreground: var(--destructive-foreground, oklch(0.90 0.06 27));
+    --alert-danger: var(--destructive);
+    --alert-danger-foreground: var(--destructive-foreground);
     --alert-danger-bg: oklch(0.18 0.008 27);
   }
 }

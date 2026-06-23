@@ -1,13 +1,14 @@
 ﻿@implements IDisposable
+@using BlazorBlueprint.Primitives.Tabs
 @namespace Pl.Components
 @inherits PlComponentBase
 
-<PlTabsTrigger
+<BbTabsTrigger
   Value="@Value"
   Disabled="@Disabled"
   class="@CssClass">
-    @ChildContent
-</PlTabsTrigger>
+  @ChildContent
+</BbTabsTrigger>
 
 @code {
     /// <summary>

@@ -3,174 +3,177 @@
 @attribute [Route(Routes.Home)]
 @attribute [Authorize]
 
-@inject IStringLocalizer<ApplicationResources> Localizer
-
-<div class="divide-x justify-center flex">
-  <PlButton Href="#welcome" Variant="ButtonVariant.Link" Class="rounded-none h-7">Palleto</PlButton>
-  <PlButton Href="#func" Variant="ButtonVariant.Link" Class="rounded-none h-7">Функционал</PlButton>
-  <PlButton Href="#guides" Variant="ButtonVariant.Link" Class="rounded-none h-7">Статьи</PlButton>
-</div>
-
-<div id="welcome" class="h-[70vh] flex items-center justify-center">
-  <div class="flex flex-col items-center max-sm md:max-w-md lg:max-w-2xl">
+<div class="mx-auto max-w-5xl px-4 py-6 md:py-8">
+  <header class="flex items-end justify-between gap-4 pb-5 mb-6 border-b">
     <div>
-      <PlBadge Variant="@BadgeVariant.Outline" Class="mb-3">
-        <HeroIcon Name="bolt" Class="size-3.5 mr-1.5"/>
-        @Localizer["WelcomeBadge"]
-      </PlBadge>
+      <h1 class="text-xl font-medium tracking-tight">Главная</h1>
+      <p class="text-sm text-muted-foreground mt-1">Обзор возможностей системы</p>
     </div>
-    <h2 class="text-center text-2xl font-medium tracking-tighter md:text-4xl lg:text-6xl">
-      @Localizer["WelcomeTitle"]
-    </h2>
-    <div class="flex flex-col gap-3 w-fit mt-9 md:flex-row">
-      <PlButton Href="#func" Variant="ButtonVariant.Secondary" Class="rounded-full">
-        <Icon>
-          <HeroIcon Name="arrow-left" Class="size-[1.1rem]"/>
-        </Icon>
-        <ChildContent>@Localizer["WelcomeLearnMore"]</ChildContent>
-      </PlButton>
-      @if (!IsProduction)
-      {
-        <PlButton Href="https://github.com/ElixorTeam/Palleto" Variant="ButtonVariant.Outline" Class="rounded-full">
-          <Icon>
-            <HeroIcon Name="code-bracket" Class="size-[1.1rem]"/>
-          </Icon>
-          <ChildContent>Github</ChildContent>
-        </PlButton>
-      }
-    </div>
+    <PlButton Href="https://github.com/ElixorTeam/Palleto" Target="_blank" Variant="ButtonVariant.Link">
+      <Icon>
+        <HeroIcon Name="code-bracket" Class="size-4"/>
+      </Icon>
+      <ChildContent>Github</ChildContent>
+    </PlButton>
+  </header>
+
+  <h2 class="text-xl mb-5 font-medium tracking-tighter">Реальные возможности</h2>
+
+  <div class="flex flex-col gap-3 mb-10 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-4">
+    <Card class="flex flex-col h-52 md:col-span-2">
+      <CardHeader class="pb-3">
+        <CardTitle>
+          Общение с мастер данными
+        </CardTitle>
+        <CardDescription>
+          Синхронизация данных о паллетах со внешним сервисом
+        </CardDescription>
+      </CardHeader>
+      <CardContent class="size-full flex flex-col items-center justify-center overflow-hidden px-0 pt-0">
+        <div class="relative w-full h-px bg-muted">
+          <div class="absolute w-5 h-1.5 -top-[2px] left-[110%] rounded-full bg-primary animate-[move-horizontal_2s_linear_infinite]" style="animation-delay: 0.7s;"></div>
+        </div>
+        <div class="relative w-full h-px bg-muted mt-6">
+          <div class="absolute w-5 h-1.5 -top-[2px] -left-[10%] rounded-full bg-primary animate-[move-horizontal_2s_linear_infinite]" style="animation-direction: reverse;"></div>
+          <div class="absolute w-5 h-1.5 -top-[2px] -left-[10%] rounded-full bg-primary animate-[move-horizontal_2s_linear_infinite]" style="animation-delay: 0.3s;animation-direction: reverse;"></div>
+        </div>
+      </CardContent>
+    </Card>
+    <Card class="flex flex-col h-52">
+      <CardHeader class="pb-3">
+        <CardTitle>
+          Шаблоны этикеток
+        </CardTitle>
+        <CardDescription>
+          Изменение zpl шаблона в реальном времени
+        </CardDescription>
+      </CardHeader>
+      <CardContent class="size-full flex items-center justify-center pt-0">
+        <div class="rounded-md size-full p-3 flex flex-col gap-2 overflow-hidden border">
+          <Skeleton class="h-4 w-28" />
+          <Skeleton class="h-4 w-full" />
+        </div>
+      </CardContent>
+    </Card>
+    <Card class="flex flex-col h-52">
+      <CardHeader class="pb-3">
+        <CardTitle>
+          Приложение для нескольких платформ
+        </CardTitle>
+        <CardDescription class="text-muted-foreground text-sm">
+          Web, Android, Windows
+        </CardDescription>
+      </CardHeader>
+      <CardContent class="size-full flex items-center justify-center pt-0">
+        <div class="flex gap-4">
+          <div class="size-14 p-2.5 relative border rounded-md">
+            <HeroIcon Name="device-phone-mobile" Class="size-full stroke-[0.8]"/>
+            <div class="absolute rounded-full bg-primary overflow-hidden size-3.5 animate-pulse -bottom-1.5 -right-1.5"></div>
+          </div>
+          <div class="size-14 p-2.5 relative border rounded-md">
+            <HeroIcon Name="computer-desktop" Class="size-full stroke-[0.8]"/>
+            <div class="absolute rounded-full bg-primary overflow-hidden size-3.5 animate-pulse -bottom-1.5 -right-1.5"></div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+    <Card class="flex flex-col h-52 md:col-span-2">
+      <CardHeader class="pb-3">
+        <CardTitle>
+          Конфигуратор штрихкодов
+        </CardTitle>
+        <CardDescription>
+          Собрать штрихкод из реальных данных
+        </CardDescription>
+      </CardHeader>
+      <CardContent class="size-full relative overflow-hidden select-none pt-0">
+        <span class="absolute top-4 text-4xl text-muted-foreground left-4">0114607100237225310300750011241</span>
+        <div class="absolute h-12 w-28 rounded-sm border-blue-500 bg-blue-500/10 border-2 border-dashed top-4 left-21"></div>
+        <div class="absolute h-12 w-28 rounded-sm border-blue-500 bg-blue-500/10 border-2 border-dashed top-4 left-99"></div>
+      </CardContent>
+    </Card>
+    <Card class="flex flex-col h-52 col-span-2">
+      <CardHeader class="pb-3">
+        <CardTitle>
+          Аналитика производства
+        </CardTitle>
+        <CardDescription class="text-muted-foreground text-sm">
+          Просмотр работы производства в реальном времени
+        </CardDescription>
+      </CardHeader>
+      <CardContent class="size-full pt-0">
+        <LineChart
+          Data="@(Enumerable.Range(0, 10).Select(_ => (decimal?)(Random.NextDouble() * 10)).ToList())"
+          Labels="@(Enumerable.Repeat(string.Empty, 10).ToList())"
+          Clear
+        />
+      </CardContent>
+    </Card>
+    <Card class="hidden lg:flex lg:flex-col h-52">
+      <CardHeader class="pb-3">
+        <CardTitle class="font-bold">
+          Поддержка принтеров
+        </CardTitle>
+        <CardDescription class="text-muted-foreground text-sm">
+          Работа с Zebra и TSK принтерами
+        </CardDescription>
+      </CardHeader>
+      <CardContent class="size-full flex items-center justify-center pt-0">
+        <HeroIcon Name="printer" Class="size-20 text-muted-foreground stroke-[0.5]"/>
+      </CardContent>
+    </Card>
+  </div>
+
+  <h2 class="text-xl mb-4 font-medium tracking-tighter">Полезные статьи</h2>
+
+  <div class="grid gap-4 md:grid-cols-2">
+    <a href="@Routes.PrinterControlGuide" class="group block">
+      <Card class="h-full transition-colors hover:bg-accent/50">
+        <CardHeader class="pb-3">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex size-9 shrink-0 items-center justify-center rounded-md border bg-muted/50">
+              <HeroIcon Name="printer" Class="size-5 text-muted-foreground"/>
+            </div>
+            <PlBadge Variant="@BadgeVariant.Secondary">2 мин</PlBadge>
+          </div>
+          <CardTitle class="text-base">Работа с принтерами на сайте</CardTitle>
+          <CardDescription>
+            Подключение к веб-интерфейсу принтера прямо из приложения, без отдельной вкладки
+          </CardDescription>
+        </CardHeader>
+        <CardContent class="pt-0">
+          <span class="inline-flex items-center gap-1 text-sm font-medium text-primary">
+            Читать
+            <HeroIcon Name="arrow-right" Class="size-4 transition-transform group-hover:translate-x-0.5"/>
+          </span>
+        </CardContent>
+      </Card>
+    </a>
+    <a href="@Routes.ErrorReportGuide" class="group block">
+      <Card class="h-full transition-colors hover:bg-accent/50">
+        <CardHeader class="pb-3">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex size-9 shrink-0 items-center justify-center rounded-md border bg-muted/50">
+              <HeroIcon Name="exclamation-triangle" Class="size-5 text-muted-foreground"/>
+            </div>
+            <PlBadge Variant="@BadgeVariant.Secondary">3 мин</PlBadge>
+          </div>
+          <CardTitle class="text-base">Репорт ошибок приложений</CardTitle>
+          <CardDescription>
+            Как отличить техническую ошибку от логической и правильно передать её разработчикам
+          </CardDescription>
+        </CardHeader>
+        <CardContent class="pt-0">
+          <span class="inline-flex items-center gap-1 text-sm font-medium text-primary">
+            Читать
+            <HeroIcon Name="arrow-right" Class="size-4 transition-transform group-hover:translate-x-0.5"/>
+          </span>
+        </CardContent>
+      </Card>
+    </a>
   </div>
 </div>
 
-<h2 id="func" class="text-center text-3xl mb-10 font-medium tracking-tighter">Реальные возможности</h2>
-
-<div class="max-w-5xl mx-auto flex flex-col gap-3 mb-20 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-6">
-  <Card class="flex flex-col h-64 md:col-span-2">
-    <CardHeader>
-      <CardTitle>
-        Общение с мастер данными
-      </CardTitle>
-      <CardDescription>
-        Синхронизация данных о паллетах со внешним сервисом
-      </CardDescription>
-    </CardHeader>
-    <CardContent class="size-full flex flex-col items-center justify-center overflow-hidden px-0">
-      <div class="relative w-full h-px bg-muted">
-        <div class="absolute w-5 h-1.5 -top-[2px] left-[110%] rounded-full bg-primary animate-[move-horizontal_2s_linear_infinite]" style="animation-delay: 0.7s;"></div>
-      </div>
-      <div class="relative w-full h-px bg-muted mt-10">
-        <div class="absolute w-5 h-1.5 -top-[2px] -left-[10%] rounded-full bg-primary animate-[move-horizontal_2s_linear_infinite]" style="animation-direction: reverse;"></div>
-        <div class="absolute w-5 h-1.5 -top-[2px] -left-[10%] rounded-full bg-primary animate-[move-horizontal_2s_linear_infinite]" style="animation-delay: 0.3s;animation-direction: reverse;"></div>
-      </div>
-    </CardContent>
-  </Card>
-  <Card class="flex flex-col h-64">
-    <CardHeader>
-      <CardTitle>
-        Шаблоны этикеток
-      </CardTitle>
-      <CardDescription>
-        Изменение zpl шаблона в реальном времени
-      </CardDescription>
-    </CardHeader>
-    <CardContent class="size-full flex items-center justify-center">
-      <div class="rounded-md size-full p-4 flex flex-col gap-2 overflow-hidden border">
-        <Skeleton class="h-4 w-28" />
-        <Skeleton class="h-4 w-full" />
-      </div>
-    </CardContent>
-  </Card>
-  <Card class="flex flex-col h-64">
-    <CardHeader>
-      <CardTitle>
-        Приложение для нескольких платформ
-      </CardTitle>
-      <CardDescription class="text-muted-foreground text-sm">
-        Web, Android, Windows
-      </CardDescription>
-    </CardHeader>
-    <CardContent class="size-full flex items-center justify-center">
-      <div class="flex gap-6">
-        <div class="size-16 p-3 relative border rounded-md">
-          <HeroIcon Name="device-phone-mobile" Class="size-full stroke-[0.8]"/>
-          <div class="absolute rounded-full bg-primary overflow-hidden size-4 animate-pulse -bottom-1.5 -right-1.5"></div>
-        </div>
-        <div class="size-16 p-3 relative border rounded-md">
-          <HeroIcon Name="computer-desktop" Class="size-full stroke-[0.8]"/>
-          <div class="absolute rounded-full bg-primary overflow-hidden size-4 animate-pulse -bottom-1.5 -right-1.5"></div>
-        </div>
-      </div>
-    </CardContent>
-  </Card>
-  <Card class="flex flex-col h-64 md:col-span-2">
-    <CardHeader>
-      <CardTitle>
-        Конфигуратор штрихкодов
-      </CardTitle>
-      <CardDescription>
-        Собрать штрихкод из реальных данных
-      </CardDescription>
-    </CardHeader>
-    <CardContent class="size-full relative overflow-hidden select-none">
-      <span class="absolute top-8 text-5xl text-muted-foreground left-8">01146071002372253103007500112411251724</span>
-      <div class="absolute h-14 w-32 rounded-sm border-blue-500 bg-blue-500/10 border-2 border-dashed top-8 left-21"></div>
-      <div class="absolute h-14 w-32 rounded-sm border-blue-500 bg-blue-500/10 border-2 border-dashed top-8 left-99"></div>
-    </CardContent>
-  </Card>
-  <Card class="flex flex-col h-64 col-span-2">
-    <CardHeader>
-      <CardTitle>
-        Аналитика производства
-      </CardTitle>
-      <CardDescription class="text-muted-foreground text-sm">
-        Просмотр работы производства в реальном времени
-      </CardDescription>
-    </CardHeader>
-    <CardContent class="size-full">
-      <LineChart
-        Data="@(Enumerable.Range(0, 10).Select(_ => (decimal?)(Random.NextDouble() * 10)).ToList())"
-        Labels="@(Enumerable.Repeat(string.Empty, 10).ToList())"
-        Clear
-      />
-    </CardContent>
-  </Card>
-  <Card class="hidden lg:flex lg:flex-col h-64">
-    <CardHeader>
-      <CardTitle class="font-bold">
-        Поддержка принтеров
-      </CardTitle>
-      <CardDescription class="text-muted-foreground text-sm">
-        Работа с Zebra и TSK принтерами
-      </CardDescription>
-    </CardHeader>
-    <CardContent class="size-full flex items-center justify-center">
-      <HeroIcon Name="printer" Class="size-28 text-muted-foreground stroke-[0.5]"/>
-    </CardContent>
-  </Card>
-</div>
-
-<h2 id="guides" class="text-center text-3xl mb-6 font-medium tracking-tighter">Полезные статьи</h2>
-
-<div class="w-full max-w-2xl mx-auto mb-10">
-  <ul class="flex flex-col gap-3 w-full">
-    <li class="w-full">
-      <a href="@Routes.PrinterControlGuide" class="w-full rounded-lg border shadow-xs flex gap-1 items-center h-12 px-4 overflow-hidden transition-colors hover:bg-secondary">
-        <HeroIcon Name="book-open" Class="size-5 mr-2 pb-px"/>
-        <span class="font-medium">Работа с принтерами на сайте</span>
-        <PlBadge Variant="@BadgeVariant.Secondary">2 мин</PlBadge>
-      </a>
-    </li>
-    <li class="w-full">
-      <a href="@Routes.ErrorReportGuide" class="w-full rounded-lg border shadow-xs flex gap-1 items-center h-12 px-4 overflow-hidden transition-colors hover:bg-secondary">
-        <HeroIcon Name="book-open" Class="size-5 mr-2 pb-px"/>
-        <span class="font-medium">Репорт ошибок приложений</span>
-        <PlBadge Variant="@BadgeVariant.Secondary">3 мин</PlBadge>
-      </a>
-    </li>
-  </ul>
-</div>
-
 @code {
-  private static bool IsProduction => !ConfigurationUtils.IsDevelop;
   private Random Random { get; } = new();
 }

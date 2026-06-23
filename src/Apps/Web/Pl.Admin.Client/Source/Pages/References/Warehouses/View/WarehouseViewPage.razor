@@ -18,8 +18,6 @@
   Arg="@Id"
   Context="query"
 >
-  <BrowserTitle Label="@(query.Data?.Name ?? Localizer["SectionWarehouses"])" />
-
   <Breadcrumbs>
     <PlBreadcrumbItem>
       <PlBreadcrumbPage>@Localizer["MenuReferences"]</PlBreadcrumbPage>
@@ -35,33 +33,35 @@
     }
   </Breadcrumbs>
 
-  <ViewHeader Title="@query.Data?.Name">
-    <ButtonsContent>
-      @if (query.HasData)
-      {
-        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToWarehouse(query.Data.Id))" />
-        <AuthorizeView Policy="@Policies.Admin">
-          <ViewButtonUpdate TDialog="WarehouseUpdateDialog" Model="query.Data" />
-          <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
-        </AuthorizeView>
-      }
-    </ButtonsContent>
+  <ViewTabs @bind-CurrentTab="CurrentTab">
+    <ViewHeader Title="@query.Data?.Name">
+      <ButtonsContent>
+        @if (query.HasData)
+        {
+          <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToWarehouse(query.Data.Id))" />
+          <AuthorizeView Policy="@Policies.Admin">
+            <ViewButtonUpdate TDialog="WarehouseUpdateDialog" Model="query.Data" />
+            <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(query.Data))" />
+          </AuthorizeView>
+        }
+      </ButtonsContent>
 
-    <TabsContent>
-      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-        @Localizer["SectionViewInfo"]
-      </ViewTabButton>
-    </TabsContent>
-  </ViewHeader>
+      <TabsContent>
+        <ViewTabsList>
+          <ViewTabTrigger Value="info" Label="@Localizer["SectionViewInfo"]">
+            @Localizer["SectionViewInfo"]
+          </ViewTabTrigger>
+        </ViewTabsList>
+      </TabsContent>
+    </ViewHeader>
 
-  <Tabs @bind-ActiveTabId="@CurrentTab">
     @if (query.HasData)
     {
-      <Tab Id="info">
+      <PlTabsContent Value="info">
         <WarehouseViewInfo Model="@query.Data"/>
-      </Tab>
+      </PlTabsContent>
     }
-  </Tabs>
+  </ViewTabs>
 </UseEndpoint>
 
 @code {

@@ -8,19 +8,20 @@
 @inject IStringLocalizer<WsDataResources> WsDataLocalizer
 @inject PrintSettingsEndpoints PrintSettingsEndpoints
 
-<SectionDialog>
-  <Tab Id="@typeof(TemplateUpdateForm).ToString()" Label="@Localizer["SectionTemplates"]">
-    <TemplateUpdateForm Model="Content" FormModel="@TemplateMapper.DtoToUpdateDto(Content)" />
-  </Tab>
 
-  <Tab Id="@typeof(TemplateBarcodeForm).ToString()" Label="@WsDataLocalizer["ColBarcode"]">
+<SectionDialog>
+  <SectionDialogTab Id="@typeof(TemplateUpdateForm).ToString()" Label="@Localizer["SectionTemplates"]">
+    <TemplateUpdateForm Model="Content" FormModel="@TemplateMapper.DtoToUpdateDto(Content)" />
+  </SectionDialogTab>
+
+  <SectionDialogTab Id="@typeof(TemplateBarcodeForm).ToString()" Label="@WsDataLocalizer["ColBarcode"]">
     <UseEndpoint Endpoint="PrintSettingsEndpoints.BarcodesEndpoint" Arg="@Content.Id" Context="barcodesQuery">
       @if (barcodesQuery.HasData)
       {
         <TemplateBarcodeForm Template="Content" Barcodes="@barcodesQuery.Data"/>
       }
     </UseEndpoint>
-  </Tab>
+  </SectionDialogTab>
 </SectionDialog>
 
 @code {

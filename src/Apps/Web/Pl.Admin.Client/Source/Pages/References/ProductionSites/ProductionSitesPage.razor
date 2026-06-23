@@ -17,22 +17,20 @@
 @inject RedirectHelper RedirectHelper
 @inject ReferencesEndpoints ReferencesEndpoints
 
-<BrowserTitle Label="@Localizer["SectionProductionSites"]" />
+<Breadcrumbs Class="pb-5">
+  <PlBreadcrumbItem>
+    <PlBreadcrumbPage>@Localizer["MenuReferences"]</PlBreadcrumbPage>
+  </PlBreadcrumbItem>
+  <PlBreadcrumbItem>
+    <PlBreadcrumbPage>@Localizer["SectionProductionSites"]</PlBreadcrumbPage>
+  </PlBreadcrumbItem>
+</Breadcrumbs>
 
 <UseParameterlessEndpoint
   Endpoint="@ReferencesEndpoints.ProductionSitesEndpoint"
   Options="@(PageHelper.DefaultEndpointOptions)"
   Context="query"
 >
-  <Breadcrumbs Class="pb-5">
-    <PlBreadcrumbItem>
-      <PlBreadcrumbPage>@Localizer["MenuReferences"]</PlBreadcrumbPage>
-    </PlBreadcrumbItem>
-    <PlBreadcrumbItem>
-      <PlBreadcrumbPage>@Localizer["SectionProductionSites"]</PlBreadcrumbPage>
-    </PlBreadcrumbItem>
-  </Breadcrumbs>
-
   <DataGridHeader>
     <DataGridLabelWithCounter
       Label="@Localizer["SectionProductionSites"]"

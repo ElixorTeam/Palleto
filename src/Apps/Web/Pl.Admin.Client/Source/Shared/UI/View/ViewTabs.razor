@@ -1,0 +1,38 @@
+@inject NavigationManager NavigationManager
+
+<PlTabs Value="@CurrentTab" ValueChanged="HandleTabChange" Class="@Class">
+  @ChildContent
+</PlTabs>
+
+@code {
+  [Parameter]
+  public string CurrentTab { get; set; } = "info";
+
+  [Parameter]
+  public EventCallback<string> CurrentTabChanged { get; set; }
+
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
+
+  [Parameter]
+  public string? Class { get; set; }
+
+  [Parameter]
+  public bool SyncUrl { get; set; } = true;
+
+  private async Task HandleTabChange(string? value)
+  {
+    if (string.IsNullOrEmpty(value))
+      return;
+
+    CurrentTab = value;
+
+    if (SyncUrl)
+    {
+      string uri = NavigationManager.GetUriWithQueryParameter("tab", value);
+      NavigationManager.NavigateTo(uri, false, true);
+    }
+
+    await CurrentTabChanged.InvokeAsync(value);
+  }
+}

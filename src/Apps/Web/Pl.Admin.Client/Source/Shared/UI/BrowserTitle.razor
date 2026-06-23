@@ -1,7 +1,0 @@
-<PageTitle>@FinalTitle</PageTitle>
-
-@code {
-  [Parameter] public string Label { get; set; } = string.Empty;
-
-  private string FinalTitle => string.IsNullOrEmpty(Label) ? string.Empty : $"{Label} - " + "Palleto Admin";
-}

@@ -1,27 +1,64 @@
 <Dialog Class="max-w-screen-lg min-h-52 p-0">
-  <Tabs DefaultTab="@DefaultTab" @ref="TabComponent">
-    <DialogHeader>
-      <ul class="flex gap-2">
-        @foreach (Tab tab in TabComponent.TabsList)
+  <PlTabs @bind-Value="_activeTab" Class="w-full">
+  <CascadingValue Value="this" IsFixed="true">
+    @if (_tabs.Count > 0)
+    {
+      <DialogHeader>
+        @if (_tabs.Count > 1)
         {
-          <li>
-            <PlButton
-              Variant="@(TabComponent.ActiveTabId == tab.Id ? ButtonVariant.Secondary : ButtonVariant.Outline)"
-              OnClick="@(() => TabComponent.ChangeTab(tab.Id))"
-            >
-              @tab.Label
-            </PlButton>
-          </li>
+          <PlTabsList>
+            @foreach (SectionDialogTab tab in _tabs)
+            {
+              <PlTabsTrigger Value="@tab.Id" Label="@tab.Label">
+                @tab.Label
+              </PlTabsTrigger>
+            }
+          </PlTabsList>
         }
-      </ul>
-    </DialogHeader>
-    @ChildContent
-  </Tabs>
+        else
+        {
+          <span class="truncate text-base font-semibold tracking-tight text-foreground">
+            @_tabs[0].Label
+          </span>
+        }
+      </DialogHeader>
+    }
+
+    <div class="p-6">
+      @ChildContent
+    </div>
+  </CascadingValue>
+  </PlTabs>
 </Dialog>
 
 @code {
-  [Parameter] public RenderFragment? ChildContent { get; set; }
-  [Parameter] public string? DefaultTab { get; set; }
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
 
-  private Tabs TabComponent { get; set; } = default!;
+  [Parameter]
+  public string? DefaultTab { get; set; }
+
+  private string? _activeTab;
+  private readonly List<SectionDialogTab> _tabs = [];
+
+  internal void RegisterTab(SectionDialogTab tab)
+  {
+    if (_tabs.Contains(tab))
+      return;
+
+    _tabs.Add(tab);
+
+    if (string.IsNullOrEmpty(_activeTab))
+      _activeTab = DefaultTab ?? tab.Id;
+
+    StateHasChanged();
+  }
+
+  internal void UnregisterTab(SectionDialogTab tab)
+  {
+    if (!_tabs.Remove(tab))
+      return;
+
+    StateHasChanged();
+  }
 }

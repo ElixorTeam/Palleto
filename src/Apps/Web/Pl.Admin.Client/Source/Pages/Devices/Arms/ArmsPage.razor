@@ -21,7 +21,14 @@
 @inject DevicesEndpoints DevicesEndpoints
 @inject RedirectHelper RedirectHelper
 
-<BrowserTitle Label="@Localizer["SectionArm"]" />
+<Breadcrumbs Class="pb-5">
+  <PlBreadcrumbItem>
+    <PlBreadcrumbPage>@Localizer["MenuDevices"]</PlBreadcrumbPage>
+  </PlBreadcrumbItem>
+  <PlBreadcrumbItem>
+    <PlBreadcrumbPage>@Localizer["SectionArm"]</PlBreadcrumbPage>
+  </PlBreadcrumbItem>
+</Breadcrumbs>
 
 <UserProductionSiteErrorSuspense>
   <UseEndpoint
@@ -30,15 +37,6 @@
     Options="@PageHelper.DefaultEndpointOptions"
     Context="query"
   >
-    <Breadcrumbs Class="pb-5">
-      <PlBreadcrumbItem>
-        <PlBreadcrumbPage>@Localizer["MenuDevices"]</PlBreadcrumbPage>
-      </PlBreadcrumbItem>
-      <PlBreadcrumbItem>
-        <PlBreadcrumbPage>@Localizer["SectionArm"]</PlBreadcrumbPage>
-      </PlBreadcrumbItem>
-    </Breadcrumbs>
-
     <DataGridHeader>
       <DataGridLabelWithCounter
         Label="@Localizer["SectionArm"]"

@@ -10,21 +10,19 @@
 @inject IStringLocalizer<WsDataResources> WsDataLocalizer
 @inject DiagnosticEndpoints DiagnosticEndpoints
 
-<BrowserTitle Label="@Localizer["SectionMigrations"]" />
+<Breadcrumbs Class="pb-5">
+  <PlBreadcrumbItem>
+    <PlBreadcrumbPage>@Localizer["MenuDiagnostics"]</PlBreadcrumbPage>
+  </PlBreadcrumbItem>
+  <PlBreadcrumbItem>
+    <PlBreadcrumbPage>@Localizer["SectionMigrations"]</PlBreadcrumbPage>
+  </PlBreadcrumbItem>
+</Breadcrumbs>
 
 <UseParameterlessEndpoint
   Endpoint="@DiagnosticEndpoints.MigrationsEndpoint"
   Context="query"
 >
-  <Breadcrumbs Class="pb-5">
-    <PlBreadcrumbItem>
-      <PlBreadcrumbPage>@Localizer["MenuDiagnostics"]</PlBreadcrumbPage>
-    </PlBreadcrumbItem>
-    <PlBreadcrumbItem>
-      <PlBreadcrumbPage>@Localizer["SectionMigrations"]</PlBreadcrumbPage>
-    </PlBreadcrumbItem>
-  </Breadcrumbs>
-
   <DataGridHeader>
     <DataGridLabelWithCounter
       Label="@Localizer["SectionMigrations"]"

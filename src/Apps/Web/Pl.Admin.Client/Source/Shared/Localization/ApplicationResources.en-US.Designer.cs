@@ -492,15 +492,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This page could not be found.
-        /// </summary>
-        public static string NotFoundMessage {
-            get {
-                return ResourceManager.GetString("NotFoundMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to If you see an empty block, it means that the browser is blocking the request to the printer through the site. You can follow the {0} to the device or disable the browser security settings for the site by following {1}..
         /// </summary>
         public static string PrinterControlDescription {

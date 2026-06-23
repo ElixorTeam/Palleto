@@ -6,9 +6,9 @@
 @inject IStringLocalizer<ApplicationResources> Localizer
 
 <SectionDialog>
-  <Tab Id="@typeof(PluUpdateForm).ToString()" Label="@Localizer["SectionPlu"]">
+  <SectionDialogTab Id="@typeof(PluUpdateForm).ToString()" Label="@Localizer["SectionPlu"]">
     <PluUpdateForm Model="Content" FormModel="@PluMapper.DtoToUpdateDto(Content)" />
-  </Tab>
+  </SectionDialogTab>
 </SectionDialog>
 
 @code {

@@ -57,5 +57,6 @@ public static class Routes
     # endregion
 
     public const string Home = "/";
+    public const string AccessDenied = "/access-denied";
     public const string Authorization = "/auth";
 }

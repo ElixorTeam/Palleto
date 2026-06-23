@@ -13,8 +13,6 @@
   Arg="@Id"
   Context="query"
 >
-  <BrowserTitle Label="@WsDataLocalizer["ColPallet"]" />
-
   <Breadcrumbs>
     <PlBreadcrumbItem>
       <PlBreadcrumbPage>@Localizer["MenuOperations"]</PlBreadcrumbPage>
@@ -27,34 +25,37 @@
     }
   </Breadcrumbs>
 
-  <ViewHeader Title="@(query.HasData ? WsDataLocalizer["ColPallet"] + " №" + query.Data.Number : string.Empty)">
-    <ButtonsContent>
-      @if (query.HasData)
-      {
-        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPallet(query.Data.Id))" />
-      }
-    </ButtonsContent>
+  <ViewTabs @bind-CurrentTab="CurrentTab">
+    <ViewHeader Title="@(query.HasData ? WsDataLocalizer["ColPallet"] + " №" + query.Data.Number : string.Empty)">
+      <ButtonsContent>
+        @if (query.HasData)
+        {
+          <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToPallet(query.Data.Id))" />
+        }
+      </ButtonsContent>
 
-    <TabsContent>
-      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
-        @Localizer["SectionViewInfo"]
-      </ViewTabButton>
-      <ViewTabButton Value="labels" @bind-CurrentTab="CurrentTab">
-        @WsDataLocalizer["ColLabels"]
-      </ViewTabButton>
-    </TabsContent>
-  </ViewHeader>
-  <Tabs @bind-ActiveTabId="@CurrentTab">
+      <TabsContent>
+        <ViewTabsList>
+          <ViewTabTrigger Value="info" Label="@Localizer["SectionViewInfo"]">
+            @Localizer["SectionViewInfo"]
+          </ViewTabTrigger>
+          <ViewTabTrigger Value="labels" Label="@WsDataLocalizer["ColLabels"]">
+            @WsDataLocalizer["ColLabels"]
+          </ViewTabTrigger>
+        </ViewTabsList>
+      </TabsContent>
+    </ViewHeader>
+
     @if (query.HasData)
     {
-      <Tab Id="info">
+      <PlTabsContent Value="info">
         <PalletViewInfo Model="query.Data"/>
-      </Tab>
-      <Tab Id="labels">
+      </PlTabsContent>
+      <PlTabsContent Value="labels">
         <PalletViewLabels Model="query.Data"/>
-      </Tab>
+      </PlTabsContent>
     }
-  </Tabs>
+  </ViewTabs>
 </UseEndpoint>
 
 @code {

@@ -1,20 +1,17 @@
 ﻿namespace Pl.Components;
 
-/// <summary>
-/// Defines the size variant for a Button component.
-/// </summary>
 public enum ButtonSize
 {
     Sm,
     Default,
     Lg,
     Icon,
-    Full // From old palleto
+    Full
 }
 
 internal static class ButtonSizeExtensions
 {
-    internal static string GetCss(this ButtonSize size) =>
+    internal static string Css(this ButtonSize size) =>
         size switch
         {
             // Old palleto style (not shadcn)

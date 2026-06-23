@@ -1,13 +1,12 @@
-@page "/not-found"
 @using Pl.Admin.Client.Source.Shared.Constants
 
 <PlNotice
-  Variant="NoticeVariant.Danger"
-  Title="Такой страницы не существует (404)"
+  Variant="NoticeVariant.Warning"
+  Title="Недостаточно прав для доступа (403)"
 >
   <ChildContent>
     <p class="text-sm text-muted-foreground">
-      Проверьте адрес или
+      Обратитесь к администратору или
       <PlButton Href="@Routes.Home" Variant="ButtonVariant.Link" Class="h-auto px-0 py-0">
         вернитесь на главную страницу
       </PlButton>
