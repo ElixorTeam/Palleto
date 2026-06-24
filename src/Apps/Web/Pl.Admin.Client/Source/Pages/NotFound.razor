@@ -1,16 +1,10 @@
 @page "/not-found"
 @using Pl.Admin.Client.Source.Shared.Constants
 
-<PlNotice
-  Variant="NoticeVariant.Danger"
-  Title="Такой страницы не существует (404)"
->
-  <ChildContent>
-    <p class="text-sm text-muted-foreground">
-      Проверьте адрес или
-      <PlButton Href="@Routes.Home" Variant="ButtonVariant.Link" Class="h-auto px-0 py-0">
-        вернитесь на главную страницу
-      </PlButton>
-    </p>
-  </ChildContent>
-</PlNotice>
+<PlAlert Variant="AlertVariant.Destructive">
+  <HeroIcon Name="no-symbol" />
+  <PlAlertTitle>Такой страницы не существует (404)</PlAlertTitle>
+  <PlAlertDescription>
+    Проверьте адрес или <a href="@Routes.Home">вернитесь на главную страницу</a>
+  </PlAlertDescription>
+</PlAlert>

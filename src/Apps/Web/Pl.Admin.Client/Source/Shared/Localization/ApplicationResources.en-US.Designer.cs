@@ -528,15 +528,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The platform is not configured for this account. Contact support..
-        /// </summary>
-        public static string ProductionSiteSuspenseDescription {
-            get {
-                return ResourceManager.GetString("ProductionSiteSuspenseDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ARM.
         /// </summary>
         public static string SectionArm {

@@ -530,15 +530,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string ProductionSiteSuspenseDescription {
-            get {
-                return ResourceManager.GetString("ProductionSiteSuspenseDescription", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
         public static string SectionArm {
             get {
                 return ResourceManager.GetString("SectionArm", resourceCulture);

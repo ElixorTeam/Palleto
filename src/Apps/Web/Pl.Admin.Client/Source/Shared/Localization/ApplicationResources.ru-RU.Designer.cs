@@ -528,15 +528,6 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Площадка не настроена для данного аккаунта. Обратитесь к поддержке..
-        /// </summary>
-        public static string ProductionSiteSuspenseDescription {
-            get {
-                return ResourceManager.GetString("ProductionSiteSuspenseDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to АРМ.
         /// </summary>
         public static string SectionArm {

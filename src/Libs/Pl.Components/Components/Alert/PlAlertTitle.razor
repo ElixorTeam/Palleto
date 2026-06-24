@@ -1,0 +1,23 @@
+﻿@namespace Pl.Components
+@inherits PlComponentBase
+
+<div
+  data-slot="alert-title"
+  class="@CssClass">
+  @ChildContent
+</div>
+
+
+@code {
+  /// <summary>
+  /// Gets or sets the content to be rendered inside the badge.
+  /// </summary>
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
+
+  private string CssClass => CssUtil.Cn(
+    "font-medium group-has-[>svg]/alert:col-start-2" +
+    "[&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground",
+    Class
+  );
+}

@@ -183,9 +183,6 @@
     <data name="ArmTypeEnumUniversal" xml:space="preserve">
         <value>Universal</value>
     </data>
-    <data name="ProductionSiteSuspenseDescription" xml:space="preserve">
-        <value>The platform is not configured for this account. Contact support.</value>
-    </data>
     <data name="SectionMigrations" xml:space="preserve">
         <value>Migrations</value>
     </data>

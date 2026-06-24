@@ -16,7 +16,7 @@
         <DownloadFile SourceUrl="https://github.com/tailwindlabs/tailwindcss/releases/download/v$(TailwindToolsVersion)/$(TailwindExeName)" DestinationFolder="$(TailwindExeDir)" />
         <Exec Condition="!$([MSBuild]::IsOSPlatform('Windows'))" Command="chmod +x '$(TailwindExePath)'" />
     </Target>
-    
+
     <Target Name="GetTailwindInputs">
         <PropertyGroup>
             <TailwindExeName Condition="$([MSBuild]::IsOSPlatform('Windows'))">tailwindcss-windows-x64.exe</TailwindExeName>
@@ -24,8 +24,8 @@
             <TailwindExeName Condition="$([MSBuild]::IsOSPlatform('OSX'))">tailwindcss-macos-x64</TailwindExeName>
             <TailwindExeDir>$([System.IO.Path]::Combine("node_modules", $(TailwindToolsVersion)))</TailwindExeDir>
             <TailwindExePath>$([System.IO.Path]::Combine($(TailwindExeDir), $(TailwindExeName)))</TailwindExePath>
-        </PropertyGroup>		
-        <ItemGroup>			
+        </PropertyGroup>
+        <ItemGroup>
             <TailwindFileInputs Include="$(MSBuildProjectDirectory)\**\*.css;$(MSBuildProjectDirectory)\**\*.razor;$(MSBuildProjectDirectory)\**\*.cshtml" />
             <UpToDateCheckInput Include="@(TailwindFileInputs)" />
         </ItemGroup>

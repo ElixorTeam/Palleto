@@ -1,15 +1,9 @@
 @using Pl.Admin.Client.Source.Shared.Constants
 
-<PlNotice
-  Variant="NoticeVariant.Warning"
-  Title="Недостаточно прав для доступа (403)"
->
-  <ChildContent>
-    <p class="text-sm text-muted-foreground">
-      Обратитесь к администратору или
-      <PlButton Href="@Routes.Home" Variant="ButtonVariant.Link" Class="h-auto px-0 py-0">
-        вернитесь на главную страницу
-      </PlButton>
-    </p>
-  </ChildContent>
-</PlNotice>
+<PlAlert Variant="AlertVariant.Warning">
+  <HeroIcon Name="exclamation-triangle" />
+  <PlAlertTitle>Недостаточно прав для доступа (403)</PlAlertTitle>
+  <PlAlertDescription>
+    Обратитесь к администратору или <a href="@Routes.Home">вернитесь на главную страницу</a>
+  </PlAlertDescription>
+</PlAlert>

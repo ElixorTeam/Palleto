@@ -1,6 +1,5 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 
-@inject IStringLocalizer<ApplicationResources> Localizer
 @inject ReferencesEndpoints ReferencesEndpoints
 
 <UseParameterlessEndpoint
@@ -15,11 +14,11 @@
   }
   else if (userProductionSiteQuery.IsError || !userProductionSiteQuery.HasData)
   {
-    <PlNotice
-      Variant="NoticeVariant.Warning"
-      Title="Площадка не установлена"
-      Description="@Localizer["ProductionSiteSuspenseDescription"]"
-    />
+    <PlAlert Variant="AlertVariant.Warning">
+      <HeroIcon Name="exclamation-triangle" />
+      <PlAlertTitle>Площадка не установлена</PlAlertTitle>
+      <PlAlertDescription>Площадка не настроена для данного аккаунта. Обратитесь к поддержке.</PlAlertDescription>
+    </PlAlert>
   }
   else
   {

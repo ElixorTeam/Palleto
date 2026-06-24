@@ -1,0 +1,1 @@
+﻿//    "build:css": "bunx @tailwindcss/cli -i wwwroot/app.css -o wwwroot/app.min.css --minify",

@@ -183,9 +183,6 @@
     <data name="ArmTypeEnumUniversal" xml:space="preserve">
         <value />
     </data>
-    <data name="ProductionSiteSuspenseDescription" xml:space="preserve">
-        <value />
-    </data>
     <data name="SectionMigrations" xml:space="preserve">
         <value />
     </data>
