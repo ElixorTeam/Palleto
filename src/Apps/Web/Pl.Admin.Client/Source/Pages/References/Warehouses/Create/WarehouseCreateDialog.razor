@@ -5,7 +5,7 @@
 @inject IState<ProductionSiteState> ProductionSiteState
 
 <SectionDialog>
-  <SectionDialogTab Id="@typeof(WarehouseCreateForm).ToString()" Label="@Localizer["SectionWarehouses"]">
+  <Tab Id="@typeof(WarehouseCreateForm).ToString()" Label="@Localizer["SectionWarehouses"]">
     <WarehouseCreateForm FormModel="@(new() { ProductionSiteId = ProductionSiteState.Value.ProductionSite.Id })" />
-  </SectionDialogTab>
+  </Tab>
 </SectionDialog>

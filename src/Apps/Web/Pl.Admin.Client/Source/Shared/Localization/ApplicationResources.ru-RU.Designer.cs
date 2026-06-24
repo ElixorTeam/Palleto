@@ -141,7 +141,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Добавить.
+        ///   Looks up a localized string similar to Создать.
         /// </summary>
         public static string BtnAdd {
             get {

@@ -1,6 +1,5 @@
 ﻿using BlazorBlueprint.Primitives.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace Pl.Components;
 

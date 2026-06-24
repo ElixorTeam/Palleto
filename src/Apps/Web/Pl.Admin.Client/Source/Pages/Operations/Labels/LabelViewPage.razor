@@ -13,6 +13,7 @@
   Arg="@Id"
   Context="query"
 >
+
   <Breadcrumbs>
     <PlBreadcrumbItem>
       <PlBreadcrumbPage>@Localizer["MenuOperations"]</PlBreadcrumbPage>
@@ -25,36 +26,34 @@
     }
   </Breadcrumbs>
 
-  <ViewTabs @bind-CurrentTab="CurrentTab">
-    <ViewHeader Title="@(query.HasData ? WsDataLocalizer["ColLabel"] + " №" + query.Data.Id : string.Empty)">
-      <ButtonsContent>
-        @if (query.HasData)
-        {
-          <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToLabel(query.Data.Id))" />
-        }
-      </ButtonsContent>
-      <TabsContent>
-        <ViewTabsList>
-          <ViewTabTrigger Value="info" Label="@Localizer["SectionViewInfo"]">
-            @Localizer["SectionViewInfo"]
-          </ViewTabTrigger>
-          <ViewTabTrigger Value="preview" Label="@Localizer["SectionViewPreview"]">
-            @Localizer["SectionViewPreview"]
-          </ViewTabTrigger>
-        </ViewTabsList>
-      </TabsContent>
-    </ViewHeader>
+  <ViewHeader Title="@(query.HasData ? WsDataLocalizer["ColLabel"] + " №" + query.Data.Id : string.Empty)">
+    <ButtonsContent>
+      @if (query.HasData)
+      {
+        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToLabel(query.Data.Id))" />
+      }
+    </ButtonsContent>
+    <TabsContent>
+      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
+        @Localizer["SectionViewInfo"]
+      </ViewTabButton>
+      <ViewTabButton Value="preview" @bind-CurrentTab="CurrentTab">
+        @Localizer["SectionViewPreview"]
+      </ViewTabButton>
+    </TabsContent>
+  </ViewHeader>
 
+  <Tabs @bind-ActiveTabId="@CurrentTab">
     @if (query.HasData)
     {
-      <PlTabsContent Value="info">
+      <Tab Id="info">
         <LabelViewInfo Model="query.Data"/>
-      </PlTabsContent>
-      <PlTabsContent Value="preview">
+      </Tab>
+      <Tab Id="preview">
         <LabelViewPreview Model="query.Data"/>
-      </PlTabsContent>
+      </Tab>
     }
-  </ViewTabs>
+  </Tabs>
 </UseEndpoint>
 
 @code {

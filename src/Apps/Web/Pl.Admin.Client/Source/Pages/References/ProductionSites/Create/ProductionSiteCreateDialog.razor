@@ -3,7 +3,7 @@
 @inject IStringLocalizer<ApplicationResources> Localizer
 
 <SectionDialog>
-  <SectionDialogTab Id="@typeof(ProductionSiteCreateForm).ToString()" Label="@Localizer["SectionProductionSites"]">
+  <Tab Id="@typeof(ProductionSiteCreateForm).ToString()" Label="@Localizer["SectionProductionSites"]">
     <ProductionSiteCreateForm FormModel="@(new())" />
-  </SectionDialogTab>
+  </Tab>
 </SectionDialog>

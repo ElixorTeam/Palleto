@@ -1,0 +1,35 @@
+@implements IDisposable
+
+<div
+  role="tabpanel"
+  hidden="@(Control.ActiveTabId != Id)"
+  class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+>
+  @if (Control.ActiveTabId == Id)
+  {
+    @ChildContent
+  }
+</div>
+
+@code {
+  [CascadingParameter] private Tabs Control { get; set; } = null!;
+
+  /// <summary>
+  /// Required value to identify tab in tabs
+  /// </summary>
+  [Parameter, EditorRequired] public string Id { get; set; } = null!;
+
+  /// <summary>
+  /// Required value to identify tab in tabs
+  /// </summary>
+  [Parameter] public string Label { get; set; } = string.Empty;
+
+  /// <summary>
+  /// The content to be rendered inside the component.
+  /// </summary>
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  protected override async Task OnInitializedAsync() => await Control.RegisterTab(this);
+
+  public void Dispose() => Control.UnregisterTab(this);
+}

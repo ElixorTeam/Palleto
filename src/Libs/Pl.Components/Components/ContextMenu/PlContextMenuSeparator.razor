@@ -1,0 +1,13 @@
+﻿@namespace Pl.Components
+@inherits PlComponentBase
+
+<span class="@CssClass">
+  @ChildContent
+</span>
+
+@code {
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
+
+  private string CssClass => CssUtil.Cn("ml-auto text-xs tracking-widest opacity-60", Class);
+}

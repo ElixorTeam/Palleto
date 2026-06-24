@@ -2,10 +2,11 @@
 @using Pl.Desktop.Models.Features.Pallets.Output
 
 <div class="size-full flex flex-col overflow-hidden">
-  <PlTabs
-    Value="@ActiveTabId"
-    ValueChanged="ChangeActiveId"
-    Class="size-full flex flex-col overflow-hidden">
+  <Tabs
+    ActiveTabId="@PalletState.Value.PalletViewTabType.ToString()"
+    ActiveTabIdChanged="@(value => ChangeActiveId(value))"
+    @ref="TabsComponent"
+  >
     <div class="h-14 shrink-0 bg-background w-full grid grid-cols-4 border-b px-4">
       <div class="flex h-full items-center">
         <PlButton
@@ -16,25 +17,32 @@
         </PlButton>
       </div>
       <div class="h-full flex items-center justify-center w-full col-span-2 grow overflow-hidden">
-        <PlTabsList Class="h-auto bg-transparent p-0 gap-2">
-          <PlTabsTrigger Value="@PalletViewTabType.Info.ToString()" Label="@WsDataLocalizer["ColPallet"]">
-            @WsDataLocalizer["ColPallet"]
-          </PlTabsTrigger>
-          <PlTabsTrigger Value="@PalletViewTabType.Labels.ToString()" Label="@Localizer["ColPrint"]">
-            @Localizer["ColPrint"]
-          </PlTabsTrigger>
-        </PlTabsList>
+        <ul class="size-full flex items-center gap-2 justify-center">
+          @foreach (Tab tab in TabsComponent.TabsList)
+          {
+            <li>
+              <PlButton
+                Variant="@(PalletState.Value.PalletViewTabType.ToString() == tab.Id ? ButtonVariant.Secondary : ButtonVariant.Outline)"
+                OnClick="@(() => ChangeActiveId(tab.Id))"
+                Disabled="@(TabsComponent.ActiveTabId == tab.Id)"
+                Class="disabled:!opacity-100"
+              >
+                @tab.Label
+              </PlButton>
+            </li>
+          }
+        </ul>
       </div>
     </div>
     <div class="size-full bg-secondary/[.3] flex flex-col grow overflow-hidden">
-      <PlTabsContent Value="@PalletViewTabType.Info.ToString()">
+      <Tab Id="@PalletViewTabType.Info.ToString()" Label="@WsDataLocalizer["ColPallet"]">
         <PalletOverview Pallet="Pallet" />
-      </PlTabsContent>
-      <PlTabsContent Value="@PalletViewTabType.Labels.ToString()">
+      </Tab>
+      <Tab Id="@PalletViewTabType.Labels.ToString()" Label="@Localizer["ColPrint"]">
         <LabelsGrid Pallet="Pallet" />
-      </PlTabsContent>
+      </Tab>
     </div>
-  </PlTabs>
+  </Tabs>
 </div>
 
 @code {
@@ -47,17 +55,20 @@
 
   # endregion
 
-  [Parameter, EditorRequired] public PalletDto Pallet { get; set; } = null!;
+  [Parameter, EditorRequired] public PalletDto Pallet { get; set; } = default!;
 
-  private string ActiveTabId => PalletState.Value.PalletViewTabType.ToString();
+  private Tabs TabsComponent { get; set; } = default!;
 
-  private void ChangeActiveId(string? newActiveId)
+  protected override void OnAfterRender(bool firstRender)
   {
-    if (string.IsNullOrEmpty(newActiveId))
-      return;
+    if (!firstRender) return;
+    StateHasChanged();
+  }
 
-    if (Enum.TryParse(newActiveId, out PalletViewTabType newViewTab))
-      Dispatcher.Dispatch(new ChangePalletViewTabAction(newViewTab));
+  private void ChangeActiveId(string newActiveId)
+  {
+    bool isParsed = Enum.TryParse(newActiveId, out PalletViewTabType newViewTab);
+    if (isParsed) Dispatcher.Dispatch(new ChangePalletViewTabAction(newViewTab));
   }
 
   private void CloseCurrentPallet() => Dispatcher.Dispatch(new ResetPalletAction());

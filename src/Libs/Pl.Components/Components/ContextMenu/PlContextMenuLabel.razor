@@ -1,0 +1,8 @@
+﻿@namespace Pl.Components
+@inherits PlComponentBase
+
+<div class="@CssClass" role="separator" aria-orientation="horizontal"></div>
+
+@code {
+  private string CssClass => CssUtil.Cn("ml-auto text-xs tracking-widest opacity-60", Class);
+}

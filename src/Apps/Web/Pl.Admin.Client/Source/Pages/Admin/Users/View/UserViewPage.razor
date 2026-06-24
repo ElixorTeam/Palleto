@@ -19,6 +19,7 @@
 >
   @{ UserModel? user = query.Data?.FirstOrDefault(x => x.KcId == Id); }
 
+
   <Breadcrumbs>
     <PlBreadcrumbItem>
       <PlBreadcrumbPage>@Localizer["MenuAdministration"]</PlBreadcrumbPage>
@@ -34,33 +35,31 @@
     }
   </Breadcrumbs>
 
-  <ViewTabs @bind-CurrentTab="CurrentTab">
-    <ViewHeader Title="@user?.Fio.DisplayShortName">
-      <ButtonsContent>
-        @if (user != null)
-        {
-          <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToUser(user.KcId))" />
-          <ViewButtonUpdate TDialog="UserUpdateDialog" Model="@user" />
-          <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(user))" />
-        }
-      </ButtonsContent>
+  <ViewHeader Title="@user?.Fio.DisplayShortName">
+    <ButtonsContent>
+      @if (user != null)
+      {
+        <ViewButtonShare Link="@RedirectHelper.ToAbsoluteUrl(RedirectHelper.ToUser(user.KcId))" />
+        <ViewButtonUpdate TDialog="UserUpdateDialog" Model="@user" />
+        <ViewButtonDelete Action="@EventCallback.Factory.Create(this, () => DeleteItem(user))" />
+      }
+    </ButtonsContent>
 
-      <TabsContent>
-        <ViewTabsList>
-          <ViewTabTrigger Value="info" Label="@Localizer["SectionViewInfo"]">
-            @Localizer["SectionViewInfo"]
-          </ViewTabTrigger>
-        </ViewTabsList>
-      </TabsContent>
-    </ViewHeader>
+    <TabsContent>
+      <ViewTabButton Value="info" @bind-CurrentTab="CurrentTab">
+        @Localizer["SectionViewInfo"]
+      </ViewTabButton>
+    </TabsContent>
+  </ViewHeader>
 
+  <Tabs @bind-ActiveTabId="@CurrentTab">
     @if (user != null)
     {
-      <PlTabsContent Value="info">
+      <Tab Id="info">
         <UserViewInfo Model="@user"/>
-      </PlTabsContent>
+      </Tab>
     }
-  </ViewTabs>
+  </Tabs>
 </UseParameterlessEndpoint>
 
 @code {

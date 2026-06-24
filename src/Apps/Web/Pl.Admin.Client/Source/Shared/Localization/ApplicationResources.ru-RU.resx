@@ -160,7 +160,7 @@
         <value>Местоположение</value>
     </data>
     <data name="BtnAdd" xml:space="preserve">
-        <value>Добавить</value>
+        <value>Создать</value>
     </data>
     <data name="BarcodeEditorConstInputPlaceholder" xml:space="preserve">
         <value>Введите константу...</value>
