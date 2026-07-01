@@ -15,6 +15,21 @@ public sealed class UserHelper(
 
     #region Public
 
+    public Guid CurrentUserId
+    {
+        get
+        {
+            if (UserId == Guid.Empty)
+                throw new ApiInternalException
+                {
+                    ErrorDisplayMessage = "Пользователь не авторизован",
+                    StatusCode = HttpStatusCode.Unauthorized
+                };
+
+            return UserId;
+        }
+    }
+
     public Task<ProxyDto?> GetUserProductionSiteAsync() =>
         dbContext.Users
             .Where(i => i.Id == UserId)

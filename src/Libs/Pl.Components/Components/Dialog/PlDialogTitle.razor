@@ -1,0 +1,21 @@
+﻿@namespace Pl.Components
+
+<BlazorBlueprint.Primitives.Dialog.BbDialogTitle As="h2" class="@CssClass" @attributes="AdditionalAttributes">
+  @ChildContent
+</BlazorBlueprint.Primitives.Dialog.BbDialogTitle>
+
+@code {
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
+
+  [Parameter]
+  public string? Class { get; set; }
+
+  [Parameter(CaptureUnmatchedValues = true)]
+  public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+
+  private string CssClass => CssUtil.Cn(
+      "cn-font-heading text-base leading-none font-medium", Class
+  );
+}

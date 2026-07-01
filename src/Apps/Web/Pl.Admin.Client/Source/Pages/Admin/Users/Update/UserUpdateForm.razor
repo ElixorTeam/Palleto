@@ -1,3 +1,4 @@
+@using BlazorBlueprint.Primitives
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Client.Source.Shared.Api.Web.Models
 @using Pl.Admin.Models
@@ -28,37 +29,25 @@
       Value="@Model.Fio.DisplayShortName"
     />
 
-    <SectionInputWrapper
-      Path="@RedirectHelper.ToProductionSite(Model.ProductionSite.Id)"
-      Label="@WsDataLocalizer["ColProductionSite"]"
-      HtmlFor="user-warehouse"
+    <UseParameterlessEndpoint
+      Endpoint="@ReferencesEndpoints.ProductionSitesEndpoint"
+      Context="productionSitesQuery"
     >
-      <UseParameterlessEndpoint
-        Endpoint="@ReferencesEndpoints.ProductionSitesEndpoint"
-        Context="productionSitesQuery"
-      >
-        @if (productionSitesQuery.HasData)
-        {
-          <SelectSingle
-            TItem="ProductionSiteDto"
-            HtmlId="user-warehouse"
-            Items="productionSitesQuery.Data"
-            Value="@productionSitesQuery.Data.FirstOrDefault(x => x.Id == FormModel.ProductionSiteId)"
-            ValueChanged="@(value => FormModel.ProductionSiteId = value?.Id ?? Guid.Empty)"
-            Placeholder="@Localizer["FormProductionSiteDefaultPlaceholder"]"
-            EmptyPlaceholder="@Localizer["FormSelectEmptyDefaultPlaceholder"]"
-            SearchPlaceholder="@Localizer["FormSelectSearchDefaultPlaceholder"]"
-            ItemDisplayName="@(item => item.Name)"
-            Filterable
-          />
-        }
-        else
-        {
-          <Skeleton class="h-9 w-full" />
-        }
-      </UseParameterlessEndpoint>
-      <FieldValidation For="@(() => FormModel.ProductionSiteId)" />
-    </SectionInputWrapper>
+      @if (productionSitesQuery.HasData)
+      {
+        <PlFieldSelect
+          TValue="Guid"
+          @bind-Value="@FormModel.ProductionSiteId"
+          Label="@WsDataLocalizer["ColProductionSite"]"
+          Options="@productionSitesQuery.Data.Select(x => new SelectOption<Guid>(x.Id, x.Name))"
+          Placeholder="@Localizer["FormProductionSiteDefaultPlaceholder"]"
+        />
+      }
+      else
+      {
+        <Skeleton class="h-9 w-full" />
+      }
+    </UseParameterlessEndpoint>
   </FieldsContent>
   <ActionsContent>
     <FormActionReset OnClick="@ResetAction" />

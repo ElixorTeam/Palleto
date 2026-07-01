@@ -10,7 +10,9 @@
     id="@(TriggerContext?.TriggerId)"
     @ref="_buttonRef"
     disabled="@IsDisabled"
+    tabindex="@(IsDisabled ? -1 : 0)"
     aria-label="@AriaLabel"
+    aria-disabled="@IsDisabled.ToString().ToLower()"
     aria-haspopup="@(TriggerContext?.AriaHasPopup)"
     aria-expanded="@TriggerContext?.IsOpen.ToString().ToLower()"
     aria-controls="@(TriggerContext?.AriaControls)"
@@ -23,17 +25,10 @@
     @attributes="AdditionalAttributes">
     @if (Loading)
     {
-      @if (LoadingTemplate != null)
-      {
-        <span class="me-2">@LoadingTemplate</span>
-      }
-      else
-      {
         <svg class="me-2 h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-      }
       @if (!string.IsNullOrEmpty(LoadingText))
       {
         @LoadingText
@@ -75,17 +70,10 @@ else
      @attributes="AdditionalAttributes">
     @if (Loading)
     {
-      @if (LoadingTemplate != null)
-      {
-        <span class="me-2">@LoadingTemplate</span>
-      }
-      else
-      {
         <svg class="me-2 h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-      }
       @if (!string.IsNullOrEmpty(LoadingText))
       {
         @LoadingText
@@ -203,15 +191,6 @@ else
     [Parameter]
     public string? LoadingText { get; set; }
 
-    /// <summary>
-    /// Gets or sets a custom loading indicator template.
-    /// </summary>
-    /// <remarks>
-    /// When set and <see cref="Loading"/> is true, this template is rendered instead of the default spinner.
-    /// </remarks>
-    [Parameter]
-    public RenderFragment? LoadingTemplate { get; set; }
-
     #endregion
 
     #region Parameters - Link
@@ -283,7 +262,7 @@ else
 
     private string CssClass => CssUtil.Cn(
         "inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent",
-        "text-sm font-medium whitespace-nowrap transition-all outline-none select-none",
+        "bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none",
         "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
         "disabled:pointer-events-none disabled:opacity-50",
         Variant.Css(),

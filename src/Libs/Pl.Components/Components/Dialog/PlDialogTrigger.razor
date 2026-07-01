@@ -1,0 +1,22 @@
+﻿@namespace Pl.Components
+@using BlazorBlueprint.Primitives.Dialog
+
+<BbDialogTrigger AsChild="@AsChild" @attributes="AdditionalAttributes">
+  @ChildContent
+</BbDialogTrigger>
+
+@code {
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
+
+  [Parameter(CaptureUnmatchedValues = true)]
+  public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+  /// <summary>
+  /// When true, the trigger does not render its own button element.
+  /// Instead, it passes trigger behavior via TriggerContext to child components.
+  /// Use this when you want a custom component (like Button) to act as the trigger.
+  /// </summary>
+  [Parameter]
+  public bool AsChild { get; set; } = true;
+}

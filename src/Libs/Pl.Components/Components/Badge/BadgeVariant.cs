@@ -28,10 +28,10 @@ internal static class BadgeVariantExtensions
     internal static string Css(this BadgeVariant var) =>
         var switch
         {
-            BadgeVariant.Default => "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
-            BadgeVariant.Secondary => "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-            BadgeVariant.Destructive => "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-            BadgeVariant.Outline => "text-foreground",
+            BadgeVariant.Default => "bg-primary text-primary-foreground",
+            BadgeVariant.Secondary => "bg-secondary text-secondary-foreground",
+            BadgeVariant.Destructive => "bg-destructive text-white focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40",
+            BadgeVariant.Outline => "border-border text-foreground",
             _ => string.Empty
         };
 }

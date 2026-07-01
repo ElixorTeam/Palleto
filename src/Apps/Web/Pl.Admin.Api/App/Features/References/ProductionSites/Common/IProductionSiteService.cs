@@ -19,6 +19,7 @@ public interface IProductionSiteService :
 
     Task<ProductionSiteDto> CreateAsync(ProductionSiteCreateDto dto);
     Task<ProductionSiteDto> UpdateAsync(Guid id, ProductionSiteUpdateDto dto);
+    Task<ProxyDto> AttachServiceProductionSiteToCurrentUserAsync();
 
     #endregion
 }

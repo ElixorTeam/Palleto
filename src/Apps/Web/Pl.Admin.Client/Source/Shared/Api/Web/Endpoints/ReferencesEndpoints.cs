@@ -50,6 +50,13 @@ public class ReferencesEndpoints(IWebApi webApi)
         webApi.GetUserProxyProductionSite,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
+    public async Task<ProxyDto> AttachServiceProductionSiteToCurrentUserAsync()
+    {
+        ProxyDto proxy = await webApi.AttachServiceProductionSiteToCurrentUser();
+        ProxyUserProductionSiteEndpoint.UpdateQueryData(new(), _ => proxy);
+        return proxy;
+    }
+
     public ParameterlessEndpoint<ProxyDto[]> ProxyProductionSiteEndpoint { get; } = new(
         webApi.GetProxyProductionSites,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });

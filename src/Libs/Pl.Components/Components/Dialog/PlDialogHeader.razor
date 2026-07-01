@@ -1,8 +1,6 @@
 ﻿@namespace Pl.Components
-@inherits PlComponentBase
 
-
-<div class="@CssClass" role="presentation">
+<div class="@CssClass">
   @ChildContent
 </div>
 
@@ -10,7 +8,10 @@
   [Parameter]
   public RenderFragment? ChildContent { get; set; }
 
+  [Parameter]
+  public string? Class { get; set; }
+
   private string CssClass => CssUtil.Cn(
-    "px-1.5 py-1 text-xs font-medium text-muted-foreground", Class
+    "flex flex-col gap-2", Class
   );
 }

@@ -28,6 +28,11 @@ public sealed class ProductionSiteController(IProductionSiteService productionSi
     public Task<ProxyDto> GetProxyByUser() =>
         productionSiteService.GetProxyByUserAsync();
 
+    [Authorize(Policies.Admin)]
+    [HttpPost("user/service-production-site")]
+    public Task<ProxyDto> AttachServiceProductionSiteToCurrentUser() =>
+        productionSiteService.AttachServiceProductionSiteToCurrentUserAsync();
+
     [HttpGet("proxy")]
     public Task<ProxyDto[]> GetProxies() =>
         productionSiteService.GetProxiesAsync();

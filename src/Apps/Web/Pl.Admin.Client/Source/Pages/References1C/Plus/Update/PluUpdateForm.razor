@@ -1,3 +1,4 @@
+@using BlazorBlueprint.Primitives
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.References1C.Plus.Commands.Update
@@ -28,37 +29,26 @@
       Value="@($"{Model.Number} | {Model.Name}")"
     />
 
-    <SectionInputWrapper
-      Path="@RedirectHelper.ToTemplate(FormModel.TemplateId)"
-      Label="@WsDataLocalizer["ColTemplate"]"
-      HtmlFor="plu-template"
+    <UseEndpoint
+      Endpoint="@PrintSettingsEndpoints.ProxyTemplatesEndpoint"
+      Arg="@Model.IsWeight"
+      Context="templatesQuery"
     >
-      <UseEndpoint
-        Endpoint="@PrintSettingsEndpoints.ProxyTemplatesEndpoint"
-        Arg="@Model.IsWeight"
-        Context="templatesQuery"
-      >
-        @if (templatesQuery.HasData)
-        {
-          <SelectSingle
-            TItem="ProxyDto?"
-            HtmlId="plu-template"
-            Items="templatesQuery.Data"
-            Value="@templatesQuery.Data.SingleOrDefault(x => x.Id == FormModel.TemplateId)"
-            ValueChanged="@(value => FormModel.TemplateId = value?.Id ?? Guid.Empty)"
-            Placeholder="@Localizer["FormTemplateDefaultPlaceholder"]"
-            EmptyPlaceholder="@Localizer["FormSelectEmptyDefaultPlaceholder"]"
-            SearchPlaceholder="@Localizer["FormSelectSearchDefaultPlaceholder"]"
-            ItemDisplayName="@(item => item!.Name)"
-          />
-        }
-        else
-        {
-          <Skeleton class="h-9 w-full" />
-        }
-      </UseEndpoint>
-      <FieldValidation For="@(() => FormModel.TemplateId)" />
-    </SectionInputWrapper>
+      @if (templatesQuery.HasData)
+      {
+        <PlFieldSelect
+          TValue="Guid"
+          @bind-Value="@FormModel.TemplateId"
+          Label="@WsDataLocalizer["ColTemplate"]"
+          Options="@templatesQuery.Data.Select(x => new SelectOption<Guid>(x.Id, x.Name))"
+          Placeholder="@Localizer["FormTemplateDefaultPlaceholder"]"
+        />
+      }
+      else
+      {
+        <Skeleton class="h-9 w-full" />
+      }
+    </UseEndpoint>
   </FieldsContent>
   <ActionsContent>
     <FormActionReset OnClick="@ResetAction" />

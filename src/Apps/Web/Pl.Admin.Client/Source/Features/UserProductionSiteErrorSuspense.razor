@@ -1,6 +1,9 @@
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
+@using Pl.Admin.Client.Source.Shared.Services.Stores
 
 @inject ReferencesEndpoints ReferencesEndpoints
+@inject PageHelper PageHelper
+@inject IDispatcher Dispatcher
 
 <UseParameterlessEndpoint
   Endpoint="ReferencesEndpoints.ProxyUserProductionSiteEndpoint"
@@ -18,6 +21,18 @@
       <HeroIcon Name="exclamation-triangle" />
       <PlAlertTitle>Площадка не установлена</PlAlertTitle>
       <PlAlertDescription>Площадка не настроена для данного аккаунта. Обратитесь к поддержке.</PlAlertDescription>
+      <AuthorizeView Policy="@Policies.Admin">
+        <PlAlertAction>
+          <PlButton
+            Size="ButtonSize.Sm"
+            Variant="ButtonVariant.Outline"
+            Loading="@_isAttaching"
+            OnClick="@(() => AttachServiceProductionSiteAsync(userProductionSiteQuery.RefetchAsync))"
+          >
+            Привязать служебную площадку
+          </PlButton>
+        </PlAlertAction>
+      </AuthorizeView>
     </PlAlert>
   }
   else
@@ -29,4 +44,29 @@
 
 @code {
   [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  private bool _isAttaching;
+
+  private async Task AttachServiceProductionSiteAsync(Func<Task> refetchAsync)
+  {
+    if (_isAttaching) return;
+
+    _isAttaching = true;
+    try
+    {
+      await PageHelper.ApiActionWrapper(
+        async () =>
+        {
+          ProxyDto proxy = await ReferencesEndpoints.AttachServiceProductionSiteToCurrentUserAsync();
+          Dispatcher.Dispatch(new ChangeProductionSiteAction(proxy));
+        },
+        onSuccess: refetchAsync,
+        successMessage: "Служебная площадка привязана к аккаунту"
+      );
+    }
+    finally
+    {
+      _isAttaching = false;
+    }
+  }
 }

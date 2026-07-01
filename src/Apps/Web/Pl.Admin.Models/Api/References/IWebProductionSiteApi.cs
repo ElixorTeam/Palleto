@@ -13,6 +13,9 @@ public interface IWebProductionSiteApi
     [Get("/production-sites/user-proxy")]
     Task<ProxyDto> GetUserProxyProductionSite();
 
+    [Post("/production-sites/user/service-production-site")]
+    Task<ProxyDto> AttachServiceProductionSiteToCurrentUser();
+
     [Get("/production-sites")]
     Task<ProductionSiteDto[]> GetProductionSites();
 

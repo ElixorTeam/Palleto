@@ -17,32 +17,21 @@
   >
     @if (productionSiteQuery.HasData && userProdSiteQuery.IsSuccess)
     {
-      <SelectSingle
-        TItem="ProxyDto"
-        Items="productionSiteQuery.Data"
-        Value="ProductionSiteState.Value.ProductionSite"
-        ValueChanged="@OnItemChanged"
-        ItemDisplayName="@(item => item.Name)"
-        Position="VerticalPosition.Top"
-      >
-        <TriggerContent Context="select">
-          <PlButton
-            Id="@select.HtmlId"
-            Variant="ButtonVariant.Ghost"
-            Size="ButtonSize.Sm"
-            Class="shrink-0 h-8 w-full items-center disabled:opacity-100"
-            OnClick="@(() => select.ToggleDropdown())"
-            Disabled="@(productionSiteQuery.Data.Length <= 1)"
-            role="combobox"
-            aria-haspopup="listbox"
-            aria-expanded="@select.IsDropdownOpened.ToString()"
-            aria-disabled="false">
-            <HeroIcon Name="home" Class="size-4 mr-2"/>
-            <span class="truncate pt-px">@(select.Value?.Name ?? "Склад не выбран")</span>
-            <HeroIcon Name="chevron-up-down" Class="size-4 ml-auto"/>
-          </PlButton>
-        </TriggerContent>
-      </SelectSingle>
+      <PlSelect
+        TValue="ProxyDto"
+        Value="@ProductionSiteState.Value.ProductionSite"
+        DisplayTextSelector="e => e.Name"
+        ValueChanged="@OnItemChanged">
+        <PlSelectTrigger>
+          <PlSelectValue />
+        </PlSelectTrigger>
+        <PlSelectContent>
+          @foreach (var option in productionSiteQuery.Data)
+          {
+            <PlSelectItem Value="@option" Text="@option.Name">@option.Name</PlSelectItem>
+          }
+        </PlSelectContent>
+      </PlSelect>
     }
     else
     {
@@ -52,9 +41,11 @@
 </UseParameterlessEndpoint>
 
 @code {
-  private void OnItemChanged(ProxyDto? value)
+  private Task OnItemChanged(ProxyDto? value)
   {
-    if (value == null) return;
-    Dispatcher.Dispatch(new ChangeProductionSiteAction(value));
+    if (value is not null)
+      Dispatcher.Dispatch(new ChangeProductionSiteAction(value));
+
+    return Task.CompletedTask;
   }
 }

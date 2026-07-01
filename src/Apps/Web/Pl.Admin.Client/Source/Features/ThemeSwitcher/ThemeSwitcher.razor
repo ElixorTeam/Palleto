@@ -11,12 +11,10 @@
       Class="shrink-0">
       <HeroIcon Name="sun" Class="size-5 dark:hidden"/>
       <HeroIcon Name="moon" Class="size-5 hidden dark:block"/>
-      <span class="sr-only">Toggle theme</span>
     </PlButton>
   </PlDropdownTrigger>
   <PlDropdownContent>
     <PlDropdownLabel>Тема</PlDropdownLabel>
-    <PlDropdownSeparator/>
     <PlDropdownItem OnClick="@(() => SetTheme("light"))">
       <Icon><HeroIcon Name="sun" /></Icon>
       <ChildContent>@Localizer[ThemeType.Light.GetDescription()]</ChildContent>

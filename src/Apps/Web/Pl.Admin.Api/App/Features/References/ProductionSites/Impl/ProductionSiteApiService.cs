@@ -3,6 +3,7 @@ using Pl.Admin.Api.App.Features.References.ProductionSites.Impl.Expressions;
 using Pl.Admin.Api.App.Features.References.ProductionSites.Impl.Validators;
 using Pl.Admin.Api.App.Shared.Enums;
 using Pl.Database.Entities.Ref.ProductionSites;
+using Pl.Database.Entities.Ref.Users;
 using Pl.Admin.Api.App.Features.References.ProductionSites.Impl.Extensions;
 using Pl.Admin.Models.Features.References.ProductionSites.Commands;
 using Pl.Admin.Models.Features.References.ProductionSites.Queries;
@@ -81,6 +82,38 @@ internal sealed class ProductionSiteApiService(
     }
 
     public Task DeleteAsync(Guid id) => dbContext.ProductionSites.SafeDeleteAsync(i => i.Id == id, FkProperty.ProductionSite);
+
+    public async Task<ProxyDto> AttachServiceProductionSiteToCurrentUserAsync()
+    {
+        ProductionSiteEntity? serviceSite = await dbContext.ProductionSites
+            .FirstOrDefaultAsync(site => site.Id == DefaultTypes.GuidMax);
+
+        if (serviceSite is null)
+            throw new ApiInternalException
+            {
+                ErrorDisplayMessage = "Приложение развернуто некорректно: служебная площадка не найдена",
+                StatusCode = HttpStatusCode.InternalServerError
+            };
+
+        Guid userId = userHelper.CurrentUserId;
+        UserEntity? user = await dbContext.Users.FindAsync(userId);
+
+        if (user is null)
+        {
+            user = new UserEntity
+            {
+                Id = userId,
+                ProductionSite = serviceSite
+            };
+
+            await dbContext.Users.AddAsync(user);
+        }
+        else
+            user.ProductionSite = serviceSite;
+
+        await dbContext.SaveChangesAsync();
+        return CommonExpressions.ProductionSite.Compile().Invoke(serviceSite);
+    }
 
     #endregion
 }

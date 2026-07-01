@@ -1,34 +1,27 @@
 @typeparam TItem
+@using BlazorBlueprint.Primitives
 @inherits SectionFieldBase<TItem>
 
 @inject IStringLocalizer<ApplicationResources> Localizer
 
-<SectionInputWrapper Path="@Path" Label="@Label" HtmlFor="@HtmlId">
-  <SelectSingle
-    TItem="TItem"
-    Items="Items"
-    HtmlId="@HtmlId"
-    @bind-Value="@Value"
-    @bind-Value:after="OnValueChanged"
-    Placeholder="@Placeholder"
-    EmptyPlaceholder="@EmptyPlaceholder"
-    SearchPlaceholder="@SearchPlaceholder"
-    Filterable="IsFilterable"
-    ItemDisplayName="@ItemDisplayName"
-    Disabled="Disabled"
-  />
-  @if (For != null)
-  {
-    <FieldValidation For="@For" />
-  }
-</SectionInputWrapper>
+<PlFieldSelect
+  TValue="TItem"
+  @bind-Value="@Value"
+  @bind-Value:after="OnValueChanged"
+  Label="@Label"
+  Options="@SelectOptions"
+  Placeholder="@Placeholder"
+  Disabled="Disabled" />
 
 @code {
   [Parameter] public IEnumerable<TItem> Items { get; set; } = [];
   [Parameter] public bool IsFilterable { get; set; }
   [Parameter] public string EmptyPlaceholder { get; set; } = string.Empty;
   [Parameter] public string SearchPlaceholder { get; set; } = string.Empty;
-  [Parameter] public Func<TItem,string> ItemDisplayName { get; set; } = item => item!.ToString()!;
+  [Parameter] public Func<TItem, string> ItemDisplayName { get; set; } = item => item!.ToString()!;
+
+  private IEnumerable<SelectOption<TItem>> SelectOptions =>
+    Items.Select(item => new SelectOption<TItem>(item, ItemDisplayName(item)));
 
   protected override void OnInitialized()
   {

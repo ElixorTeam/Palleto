@@ -1,0 +1,102 @@
+﻿@namespace Pl.Components
+@using BlazorBlueprint.Primitives.Dialog
+
+<BbDialogPortal Container="@Container">
+  <BbDialogOverlay
+    class="fixed inset-0 isolate z-50 bg-black/10 backdrop-blur-sm duration-100 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+    CloseOnClick="@CloseOnOverlayClick" />
+
+  <BbDialogContent
+    class="@CssClass"
+    CloseOnEscape="@CloseOnEscape"
+    TrapFocus="@TrapFocus"
+    LockScroll="@LockScroll"
+    OnEscapeKeyDown="@OnEscapeKeyDown"
+    @attributes="AdditionalAttributes">
+    @ChildContent
+    @if (ShowCloseButton)
+    {
+      <BbDialogClose AsChild>
+        <PlButton
+          Variant="ButtonVariant.Ghost"
+          Size="ButtonSize.IconSm"
+          Class="absolute top-2 right-2">
+            <HeroIcon Name="x-mark" Class="size-4"/>
+            <span class="sr-only">Close</span>
+        </PlButton>
+      </BbDialogClose>
+    }
+  </BbDialogContent>
+</BbDialogPortal>
+
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Class { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    /// <summary>
+    /// Whether to show the close button (X icon).
+    /// Default is true.
+    /// </summary>
+    [Parameter]
+    public bool ShowCloseButton { get; set; } = true;
+
+    /// <summary>
+    /// Render the dialog inline within a container instead of portaling to document body.
+    /// When set, the dialog overlay and content stay in the DOM tree, allowing containment
+    /// by a parent element with CSS containment (e.g. transform: translateZ(0)).
+    /// When null (default), renders into document body via portal.
+    /// </summary>
+    [Parameter]
+    public string? Container { get; set; }
+
+    /// <summary>
+    /// Whether clicking the overlay (backdrop) should close the dialog.
+    /// Default is true.
+    /// </summary>
+    [Parameter]
+    public bool CloseOnOverlayClick { get; set; } = true;
+
+    /// <summary>
+    /// Whether pressing Escape should close the dialog.
+    /// Default is true.
+    /// </summary>
+    [Parameter]
+    public bool CloseOnEscape { get; set; } = true;
+
+    /// <summary>
+    /// Whether to trap focus within the dialog.
+    /// Default is true for modal dialogs.
+    /// </summary>
+    [Parameter]
+    public bool TrapFocus { get; set; } = true;
+
+    /// <summary>
+    /// Whether to lock body scroll when dialog is open.
+    /// Default is true for modal dialogs.
+    /// </summary>
+    [Parameter]
+    public bool LockScroll { get; set; } = true;
+
+    /// <summary>
+    /// Event callback invoked when Escape key is pressed.
+    /// </summary>
+    [Parameter]
+    public EventCallback<KeyboardEventArgs> OnEscapeKeyDown { get; set; }
+
+    private string CssClass => CssUtil.Cn(
+        "fixed top-[50%] left-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%]",
+        "gap-4 rounded-xl bg-popover p-4 text-sm text-popover-foreground",
+        "ring-1 ring-foreground/10 duration-100 outline-none sm:max-w-sm",
+        "data-[state=open]:animate-in data-[state=closed]:animate-out",
+        "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+        "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+        Class
+    );
+}

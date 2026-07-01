@@ -21,8 +21,8 @@
     public RenderFragment? ChildContent { get; set; }
 
     private string CssClass => CssUtil.Cn(
-        "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold",
-        "transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 select-none",
+        "inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full",
+        "border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap",
         Variant.Css(),
         Class
     );

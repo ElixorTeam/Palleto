@@ -33,6 +33,23 @@ public class WsDbContext(DbContextOptions<WsDbContext> options) : DbContext(opti
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.AddInterceptors(new ChangeDtInterceptor());
+        optionsBuilder.UseAsyncSeeding(async (ctx, _, cancellationToken) =>
+        {
+            ProductionSiteEntity? productionSite =
+                await ctx.Set<ProductionSiteEntity>()
+                    .FirstOrDefaultAsync(e => e.Id == DefaultTypes.GuidMax, cancellationToken);
+
+            if (productionSite == null)
+            {
+                ctx.Set<ProductionSiteEntity>().Add(new()
+                {
+                    Id = DefaultTypes.GuidMax,
+                    Name = "Служебная",
+                    Address = "Россия, 000000, Служебная обл., г. Служебный, д. 0",
+                });
+                await ctx.SaveChangesAsync(cancellationToken);
+            }
+        });
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

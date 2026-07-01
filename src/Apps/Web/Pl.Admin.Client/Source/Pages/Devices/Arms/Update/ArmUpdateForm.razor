@@ -64,38 +64,26 @@
         For="@(() => FormModel.SystemKey)"
       />
 
-      <SectionInputWrapper
-        Path="@RedirectHelper.ToPrinter(FormModel.PrinterId)"
-        Label="@WsDataLocalizer["ColPrinter"]"
-        HtmlFor="arms-printer"
+      <UseEndpoint
+        Endpoint="@DevicesEndpoints.ProxyPrintersEndpoint"
+        Arg="@Model.ProductionSite.Id"
+        Context="printersQuery"
       >
-        <UseEndpoint
-          Endpoint="@DevicesEndpoints.ProxyPrintersEndpoint"
-          Arg="@Model.ProductionSite.Id"
-          Context="printersQuery"
-        >
-          @if (printersQuery.HasData)
-          {
-            <SelectSingle
-              TItem="ProxyDto"
-              HtmlId="arms-printer"
-              Items="printersQuery.Data"
-              Value="@printersQuery.Data.SingleOrDefault(x => x.Id == FormModel.PrinterId)"
-              ValueChanged="@(value => FormModel.PrinterId = value?.Id ?? Guid.Empty)"
-              Placeholder="@Localizer["FormPrinterDefaultPlaceholder"]"
-              EmptyPlaceholder="@Localizer["FormSelectEmptyDefaultPlaceholder"]"
-              SearchPlaceholder="@Localizer["FormSelectSearchDefaultPlaceholder"]"
-              ItemDisplayName="@(item => item.Name)"
-              Filterable
-            />
-          }
-          else
-          {
-            <Skeleton class="h-9 w-full" />
-          }
-        </UseEndpoint>
-        <FieldValidation For="@(() => FormModel.PrinterId)" />
-      </SectionInputWrapper>
+        @if (printersQuery.HasData)
+        {
+          <PlFieldSelect
+            TValue="Guid"
+            @bind-Value="@FormModel.PrinterId"
+            Label="@WsDataLocalizer["ColPrinter"]"
+            Options="@printersQuery.Data.Select(x => new SelectOption<Guid>(x.Id, x.Name))"
+            Placeholder="@Localizer["FormPrinterDefaultPlaceholder"]"
+          />
+        }
+        else
+        {
+          <Skeleton class="h-9 w-full" />
+        }
+      </UseEndpoint>
 
       <FormDivider>@Localizer["FieldLocation"]</FormDivider>
 
@@ -105,38 +93,26 @@
         Path="@RedirectHelper.ToProductionSite(Model.ProductionSite.Id)"
       />
 
-      <SectionInputWrapper
-        Path="@RedirectHelper.ToWarehouse(FormModel.WarehouseId)"
-        Label="@WsDataLocalizer["ColWarehouse"]"
-        HtmlFor="arm-warehouse"
+      <UseEndpoint
+        Endpoint="@ReferencesEndpoints.ProxyWarehousesEndpoint"
+        Arg="@Model.ProductionSite.Id"
+        Context="warehousesQuery"
       >
-        <UseEndpoint
-          Endpoint="@ReferencesEndpoints.ProxyWarehousesEndpoint"
-          Arg="@Model.ProductionSite.Id"
-          Context="warehousesQuery"
-        >
-          @if (warehousesQuery.HasData)
-          {
-            <SelectSingle
-              TItem="ProxyDto"
-              HtmlId="arm-warehouse"
-              Items="warehousesQuery.Data"
-              Value="@warehousesQuery.Data.SingleOrDefault(x => x.Id == FormModel.WarehouseId)"
-              ValueChanged="@(value => FormModel.WarehouseId = value?.Id ?? Guid.Empty)"
-              Placeholder="@Localizer["FormWarehouseDefaultPlaceholder"]"
-              EmptyPlaceholder="@Localizer["FormSelectEmptyDefaultPlaceholder"]"
-              SearchPlaceholder="@Localizer["FormSelectSearchDefaultPlaceholder"]"
-              ItemDisplayName="@(item => item.Name)"
-              Filterable
-            />
-          }
-          else
-          {
-            <Skeleton class="h-9 w-full" />
-          }
-        </UseEndpoint>
-        <FieldValidation For="@(() => FormModel.WarehouseId)" />
-      </SectionInputWrapper>
+        @if (warehousesQuery.HasData)
+        {
+          <PlFieldSelect
+            TValue="Guid"
+            @bind-Value="@FormModel.WarehouseId"
+            Label="@WsDataLocalizer["ColWarehouse"]"
+            Options="@warehousesQuery.Data.Select(x => new SelectOption<Guid>(x.Id, x.Name))"
+            Placeholder="@Localizer["FormWarehouseDefaultPlaceholder"]"
+          />
+        }
+        else
+        {
+          <Skeleton class="h-9 w-full" />
+        }
+      </UseEndpoint>
     </FieldsContent>
     <ActionsContent>
       <FormActionReset OnClick="@ResetAction" />

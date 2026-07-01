@@ -12,19 +12,8 @@
 </BbDropdownMenuTrigger>
 
 @code {
-    [CascadingParameter]
-    private DropdownMenuContext? Context { get; set; }
-
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
-
-    /// <summary>
-    /// CSS classes applied when the dropdown is open.
-    /// Default is <c>null</c> (no active style).
-    /// Set to e.g. <c>"bg-accent text-accent-foreground"</c> to highlight the trigger when open.
-    /// </summary>
-    [Parameter]
-    public string ActiveClass { get; set; } = string.Empty;
 
     /// <summary>
     /// When true, the trigger does not render its own button element.
@@ -52,7 +41,5 @@
     [Parameter]
     public bool CustomClickHandling { get; set; }
 
-    private bool IsOpen => Context?.IsOpen ?? false;
-
-    private string CssClass => CssUtil.Cn(IsOpen ? ActiveClass : null, Class);
+    private string CssClass => CssUtil.Cn(Class);
 }

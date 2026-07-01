@@ -6,9 +6,8 @@
       <AdminLogo Class="size-6 text-background" />
     </div>
     <div class="grid flex-1 pt-1 text-left leading-tight">
-      <span class="truncate font-medium leading-4">Шестнадцатая</span>
       <div class="flex gap-1">
-        <span class="truncate font-light text-sm">Palleto HUB</span>
+        <span class="truncate font-medium leading-4">Palleto HUB</span>
         @if (!IsProduction)
         {
           <PlBadge Class="py-0 px-1.5" Variant="@BadgeVariant.Secondary">
@@ -16,8 +15,13 @@
           </PlBadge>
         }
       </div>
+      <span class="truncate font-light text-sm">Влад. стандарт</span>
     </div>
   </a>
+  <div class="pb-0.5">
+    <SidebarProductionSite />
+  </div>
+  Меню
 </div>
 
 @code {

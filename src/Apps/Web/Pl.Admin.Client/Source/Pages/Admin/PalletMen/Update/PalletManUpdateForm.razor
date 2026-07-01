@@ -1,3 +1,4 @@
+@using BlazorBlueprint.Primitives
 @using Pl.Admin.Client.Source.Shared.Api.Web.Endpoints
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Admins.PalletMen.Commands
@@ -35,38 +36,26 @@
         IsCopyable
       />
 
-      <SectionInputWrapper
-        Path="@(RedirectHelper.ToWarehouse(FormModel.WarehouseId))"
-        Label="@WsDataLocalizer["ColWarehouse"]"
-        HtmlFor="pallet-man-warehouse"
+      <UseEndpoint
+        Endpoint="@ReferencesEndpoints.ProxyWarehousesEndpoint"
+        Arg="Model.ProductionSite.Id"
+        Context="warehousesQuery"
       >
-        <UseEndpoint
-          Endpoint="@ReferencesEndpoints.ProxyWarehousesEndpoint"
-          Arg="Model.ProductionSite.Id"
-          Context="warehousesQuery"
-        >
-          @if (warehousesQuery.HasData)
-          {
-            <SelectSingle
-              TItem="ProxyDto"
-              HtmlId="pallet-man-warehouse"
-              Items="warehousesQuery.Data"
-              Value="@warehousesQuery.Data.SingleOrDefault(x => x.Id == FormModel.WarehouseId)"
-              ValueChanged="@(value => FormModel.WarehouseId = value?.Id ?? Guid.Empty)"
-              Placeholder="@Localizer["FormWarehouseDefaultPlaceholder"]"
-              EmptyPlaceholder="@Localizer["FormSelectEmptyDefaultPlaceholder"]"
-              SearchPlaceholder="@Localizer["FormSelectSearchDefaultPlaceholder"]"
-              ItemDisplayName="@(item => item.Name)"
-              Filterable
-            />
-          }
-          else
-          {
-            <Skeleton class="h-9 w-full" />
-          }
-        </UseEndpoint>
-        <FieldValidation For="@(() => FormModel.WarehouseId)" />
-      </SectionInputWrapper>
+        @if (warehousesQuery.HasData)
+        {
+          <PlFieldSelect
+            TValue="Guid"
+            @bind-Value="@FormModel.WarehouseId"
+            Label="@WsDataLocalizer["ColWarehouse"]"
+            Options="@warehousesQuery.Data.Select(x => new SelectOption<Guid>(x.Id, x.Name))"
+            Placeholder="@Localizer["FormWarehouseDefaultPlaceholder"]"
+          />
+        }
+        else
+        {
+          <Skeleton class="h-9 w-full" />
+        }
+      </UseEndpoint>
 
       <SectionTextField
         Label="@WsDataLocalizer["ColPassword"]"

@@ -1,0 +1,18 @@
+﻿@namespace Pl.Components
+
+<div class="@CssClass">
+  @ChildContent
+</div>
+
+@code {
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
+
+  [Parameter]
+  public string? Class { get; set; }
+
+  private string CssClass => CssUtil.Cn(
+    "-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4 sm:flex-row sm:justify-end",
+    Class
+  );
+}
