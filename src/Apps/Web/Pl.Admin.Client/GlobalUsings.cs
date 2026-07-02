@@ -15,7 +15,5 @@ global using FluentValidation;
 global using Pl.Admin.Client.Source.Shared.Localization;
 
 // 5. Modules
-global using Pl.Shared.Resources;
-global using Pl.Shared.Utils;
 global using Pl.Admin.Models.Auth;
 global using Pl.Admin.Models.Shared;

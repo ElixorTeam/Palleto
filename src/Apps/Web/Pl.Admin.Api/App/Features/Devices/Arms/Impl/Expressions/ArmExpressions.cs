@@ -32,7 +32,6 @@ public static class ArmExpressions
             Name = plu.Name,
             Number = (ushort)plu.Number,
             IsWeight = plu.IsWeight,
-            Brand = plu.Brand.Name,
             IsActive = plusId.Contains(plu.Id)
         };
 

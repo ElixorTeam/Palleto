@@ -15,9 +15,6 @@ public sealed record PluDto
     [JsonPropertyName("weight")]
     public required decimal Weight { get; init; }
 
-    [JsonPropertyName("brand")]
-    public required ProxyDto Brand { get; init; }
-
     [JsonPropertyName("shelfLifeDays")]
     public required ushort ShelfLifeDays { get; init; }
 

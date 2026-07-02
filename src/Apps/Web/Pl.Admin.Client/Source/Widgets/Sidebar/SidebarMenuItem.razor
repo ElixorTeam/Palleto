@@ -9,8 +9,7 @@
         data-active="@(GetIsAnyActive() ? "true" : "false")"
         type="button"
         @onclick="SwitchVisibility"
-        class="peer w-full h-9 gap-2 p-2 overflow-hidden flex text-left items-center transition-colors justify-between rounded-md hover:bg-secondary/50 data-[active=true]:font-normal"
-      >
+        class="peer w-full h-9 gap-2 p-2 overflow-hidden flex text-left items-center transition-colors justify-between rounded-md hover:bg-secondary/50 data-[active=true]:font-normal">
         <div class="flex gap-2 items-center">
           <HeroIcon Name="@Icon" Class="size-[1.1rem] shrink-0 pb-px"/>
           <span class="truncate">
@@ -26,8 +25,7 @@
             <ChildContent>
               <li>
                 <a href="@item.Link"
-                   class="@Css.Class("px-3 py-1.5 w-full h-8 flex text-primary items-center truncate transition-colors rounded-md", GetIsActivePath(item.Link) ?
-                            "font-normal bg-secondary" : "hover:bg-secondary/[.5]")">
+                   class="@Css.Class("px-3 py-1.5 w-full h-8 flex text-primary items-center truncate transition-colors rounded-md", GetIsActivePath(item.Link) ? "font-normal bg-secondary" : "hover:bg-secondary/[.5]")">
                   @item.Name
                 </a>
               </li>

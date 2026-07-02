@@ -8,9 +8,6 @@ public sealed record PluArmDto
     [JsonPropertyName("name")]
     public required string Name { get; init; }
 
-    [JsonPropertyName("brand")]
-    public required string Brand { get; init; }
-
     [JsonPropertyName("number")]
     public required ushort Number { get; init; }
 

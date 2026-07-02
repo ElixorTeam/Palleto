@@ -33,7 +33,6 @@ public sealed partial class SidebarMenu : ComponentBase
             new(Localizer["SectionBoxes"], Routes.Boxes),
             new(Localizer["SectionClips"], Routes.Clips),
             new(Localizer["SectionBundles"], Routes.Bundles),
-            new(Localizer["SectionBrands"], Routes.Brands)
         ]),
 
         new(Localizer["MenuReferences"], "book-open", [

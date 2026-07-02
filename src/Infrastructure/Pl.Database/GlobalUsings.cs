@@ -24,7 +24,6 @@ global using Pl.Database.Entities.Ref.ProductionSites;
 global using Pl.Database.Entities.Ref.Users;
 global using Pl.Database.Entities.Ref.Warehouses;
 global using Pl.Database.Entities.Ref1C.Boxes;
-global using Pl.Database.Entities.Ref1C.Brands;
 global using Pl.Database.Entities.Ref1C.Bundles;
 global using Pl.Database.Entities.Ref1C.Characteristics;
 global using Pl.Database.Entities.Ref1C.Clips;

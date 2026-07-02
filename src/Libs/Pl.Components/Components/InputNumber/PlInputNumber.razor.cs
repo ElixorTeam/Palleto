@@ -120,13 +120,6 @@ public partial class PlInputNumber<TValue> : PlComponentBase
     /// <summary>
     /// Default value is <see cref="JsSyncTiming.OnBlur"/>.
     /// </summary>
-    /// <remarks>
-    /// <list type="bullet">
-    /// <item><see cref="JsSyncTiming.Immediate"/> — every keystroke (batched via requestAnimationFrame).</item>
-    /// <item><see cref="JsSyncTiming.OnBlur"/> — only on blur (default).</item>
-    /// <item><see cref="JsSyncTiming.Debounced"/> — after typing pauses for <see cref="DebounceInterval"/> ms.</item>
-    /// </list>
-    /// </remarks>
     [Parameter]
     public JsSyncTiming JsSyncTiming { get; set; } = JsSyncTiming.OnBlur;
 
@@ -366,7 +359,7 @@ public partial class PlInputNumber<TValue> : PlComponentBase
         {
             Value = committedValue;
             await ValueChanged.InvokeAsync(committedValue);
-            NotifyFieldChanged();
+            _validation.NotifyFieldChanged();
         }
 
         StateHasChanged();
@@ -401,7 +394,7 @@ public partial class PlInputNumber<TValue> : PlComponentBase
                 Value = _valueAtFocus;
             }
 
-            NotifyFieldChanged();
+            _validation.NotifyFieldChanged();
         }
         else if (TryCommitValue(inputValue, out TValue committedValue))
         {
@@ -409,7 +402,7 @@ public partial class PlInputNumber<TValue> : PlComponentBase
             {
                 Value = committedValue;
                 await ValueChanged.InvokeAsync(committedValue);
-                NotifyFieldChanged();
+                _validation.NotifyFieldChanged();
             }
         }
 
@@ -511,8 +504,6 @@ public partial class PlInputNumber<TValue> : PlComponentBase
 
     #region Private Helpers
 
-    private void NotifyFieldChanged() => _validation.NotifyFieldChanged();
-
     private async Task SetValue(TValue value)
     {
         TValue clampedValue = ClampValue(value);
@@ -523,7 +514,7 @@ public partial class PlInputNumber<TValue> : PlComponentBase
         Value = clampedValue;
         _editingValue = clampedValue.ToString() ?? string.Empty;
         await ValueChanged.InvokeAsync(clampedValue);
-        NotifyFieldChanged();
+        _validation.NotifyFieldChanged();
     }
 
     private string GetFormattedValueString()

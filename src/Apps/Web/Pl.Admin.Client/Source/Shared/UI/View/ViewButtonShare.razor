@@ -1,14 +1,109 @@
-@inject IStringLocalizer<ApplicationResources> Localizer
-@inject IDialogService DialogService
-@inject PageHelper PageHelper
+@using Pl.Admin.Client.Source.Shared.Utils
+@using ToastService = Pl.Components.ToastService
 
-<PlButton Variant="ButtonVariant.Outline" OnClick="@OpenShareDialog">
-  <HeroIcon Name="share" Class="size-4 mr-2"/>
-  <span class="sr-only sm:!not-sr-only">@Localizer["BtnShare"]</span>
-</PlButton>
+@inject IStringLocalizer<ApplicationResources> Localizer
+@inject IJSRuntime JsRuntime
+@inject ToastService ToastService
+
+<PlDialog>
+  <PlDialogTrigger>
+    <PlButton Variant="ButtonVariant.Outline">
+      <HeroIcon Name="share" Class="size-4 mr-2"/>
+      <span class="sr-only sm:!not-sr-only">@Localizer["BtnShare"]</span>
+    </PlButton>
+  </PlDialogTrigger>
+  <PlDialogContent Class="gap-4">
+    <PlDialogHeader>
+      <PlDialogTitle>@Localizer["ShareDialogTitle"]</PlDialogTitle>
+      <PlDialogDescription>@Localizer["ShareDialogDescription"]</PlDialogDescription>
+    </PlDialogHeader>
+
+    <div class="flex w-full min-w-0 flex-col gap-3">
+      <div class="flex h-9 w-full min-w-0 items-center overflow-hidden rounded-md border pl-2.5 pr-1">
+        <input
+          value="@Link"
+          class="min-w-0 w-0 flex-1 truncate border-none bg-transparent px-2 text-sm focus:outline-none"
+          readonly
+        />
+        <PlTooltip>
+          <PlTooltipTrigger>
+            <PlButton
+              OnClick="@CopyToClipboard"
+              Size="ButtonSize.IconXs"
+              Variant="ButtonVariant.Ghost"
+              Class="size-7 shrink-0"
+            >
+              <span class="relative inline-flex size-4 shrink-0">
+                <span class="@CopyIconStateClass(_copied)">
+                  <HeroIcon Name="clipboard-document" Class="size-4"/>
+                </span>
+                <span class="@CopyIconStateClass(!_copied)">
+                  <HeroIcon Name="check" Class="size-4"/>
+                </span>
+              </span>
+              <span class="sr-only">Скопировать</span>
+            </PlButton>
+          </PlTooltipTrigger>
+          <PlTooltipContent>В буфер обмена</PlTooltipContent>
+        </PlTooltip>
+      </div>
+
+      <div class="grid min-w-0 grid-cols-2 gap-2">
+        <PlButton
+          Href="@ShareUrlUtil.MaxUrl(Link)"
+          target="_blank"
+          Class="w-full bg-violet-600 text-white hover:bg-violet-700"
+        >
+          Max
+        </PlButton>
+        <PlButton
+          Href="@ShareUrlUtil.TgUrl(Link)"
+          target="_blank"
+          Class="w-full bg-blue-500 text-white hover:bg-blue-600"
+        >
+          Telegram
+        </PlButton>
+      </div>
+    </div>
+  </PlDialogContent>
+</PlDialog>
 
 @code {
-  [Parameter, EditorRequired] public string Link { get; set; } = string.Empty;
+  [Parameter, EditorRequired] public string Link { get; set; }
 
-  private Task OpenShareDialog() => DialogService.ShowDialogAsync<ShareUrlDialog>(Link, PageHelper.DialogParameters);
+  private bool _copied;
+  private int _copyResetGeneration;
+
+  private async Task CopyToClipboard()
+  {
+    int generation = ++_copyResetGeneration;
+    _copied = true;
+
+    try
+    {
+      await JsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Link);
+      _ = ResetCopiedStateAsync(generation);
+    }
+    catch
+    {
+      _copied = false;
+      ToastService.Error("Ваш браузер не поддерживает копирование в буфер обмена");
+    }
+  }
+
+  private async Task ResetCopiedStateAsync(int generation)
+  {
+    await Task.Delay(1000);
+
+    if (generation != _copyResetGeneration)
+      return;
+
+    _copied = false;
+    await InvokeAsync(StateHasChanged);
+  }
+
+  private static string CopyIconStateClass(bool hidden) =>
+    Css.Class(
+      "absolute inset-0 flex items-center justify-center transition-[opacity,transform] duration-300 ease-in-out",
+      hidden ? "pointer-events-none scale-50 opacity-0" : "scale-100 opacity-100");
 }

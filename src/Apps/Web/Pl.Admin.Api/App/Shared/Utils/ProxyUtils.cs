@@ -4,7 +4,6 @@ using Pl.Database.Entities.Ref.PalletMen;
 using Pl.Database.Entities.Ref.Printers;
 using Pl.Database.Entities.Ref.ProductionSites;
 using Pl.Database.Entities.Ref.Warehouses;
-using Pl.Database.Entities.Ref1C.Brands;
 using Pl.Database.Entities.Ref1C.Bundles;
 using Pl.Database.Entities.Ref1C.Clips;
 using Pl.Database.Entities.Ref1C.Plus;
@@ -14,9 +13,6 @@ namespace Pl.Admin.Api.App.Shared.Utils;
 
 public static class ProxyUtils
 {
-    [Pure]
-    public static ProxyDto Brand(BrandEntity i) => new(i.Id,  i.Name);
-
     [Pure]
     public static ProxyDto Bundle(BundleEntity i) => new(i.Id, i.Name);
 

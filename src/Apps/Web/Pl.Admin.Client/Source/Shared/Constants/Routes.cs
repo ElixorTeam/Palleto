@@ -29,7 +29,6 @@ public static class Routes
 
     public const string Clips = "/clips";
     public const string Boxes = "/boxes";
-    public const string Brands = "/brands";
     public const string Bundles = "/bundles";
     public const string Plus = "/plus";
 

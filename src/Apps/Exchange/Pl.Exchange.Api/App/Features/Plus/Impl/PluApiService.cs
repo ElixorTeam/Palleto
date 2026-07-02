@@ -21,7 +21,6 @@ internal sealed partial class PluApiService(PluDtoValidator validator, ILogger<P
 
         ResolveNotExistsFkDb(dtos, dbContext.Boxes, dto => dto.BoxUid, "Коробка - не найдена");
         ResolveNotExistsFkDb(dtos, dbContext.Clips, dto => dto.ClipUid, "Клипса - не найдена");
-        ResolveNotExistsFkDb(dtos, dbContext.Brands, dto => dto.BrandUid, "Бренд - не найден");
         ResolveNotExistsFkDb(dtos, dbContext.Bundles, dto => dto.BundleUid, "Пакет - не найден");
 
         SavePlus(dtos);

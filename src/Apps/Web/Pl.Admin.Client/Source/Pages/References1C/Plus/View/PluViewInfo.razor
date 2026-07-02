@@ -24,12 +24,6 @@
     Value="@Model.Weight.ToString(CultureInfo.InvariantCulture)"
   />
 
-  <ViewField
-    Label="@WsDataLocalizer["ColBrand"]"
-    Value="@Model.Brand.Name"
-    Link="@RedirectHelper.ToBrand(Model.Brand.Id)"
-  />
-
   @if (Model.Template != null)
   {
     <ViewField

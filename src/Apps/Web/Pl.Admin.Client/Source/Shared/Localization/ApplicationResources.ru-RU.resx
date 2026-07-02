@@ -280,10 +280,10 @@
         <value>Аналитика линии по смене</value>
     </data>
     <data name="ShareDialogTitle" xml:space="preserve">
-        <value>Поделиться записью</value>
+        <value>Поделиться ссылкой</value>
     </data>
     <data name="ShareDialogDescription" xml:space="preserve">
-        <value>Вы можете либо скопировать ссылку вручную, либо воспользоваться встроенными функционалами социальных сетей</value>
+        <value>Любой, у кого есть эта ссылка, сможет это просмотреть.</value>
     </data>
     <data name="PrinterControlTitle" xml:space="preserve">
         <value>Удаленное управление принтером</value>

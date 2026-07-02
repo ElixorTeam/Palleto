@@ -17,15 +17,15 @@
     <PlDropdownLabel>Тема</PlDropdownLabel>
     <PlDropdownItem OnClick="@(() => SetTheme("light"))">
       <Icon><HeroIcon Name="sun" /></Icon>
-      <ChildContent>@Localizer[ThemeType.Light.GetDescription()]</ChildContent>
+      <ChildContent>@Localizer["ThemeLight"]</ChildContent>
     </PlDropdownItem>
     <PlDropdownItem OnClick="@(() => SetTheme("dark"))">
       <Icon><HeroIcon Name="moon" /></Icon>
-      <ChildContent>@Localizer[ThemeType.Dark.GetDescription()]</ChildContent>
+      <ChildContent>@Localizer["ThemeDark"]</ChildContent>
     </PlDropdownItem>
     <PlDropdownItem OnClick="@(() => SetTheme("system"))">
       <Icon><HeroIcon Name="computer-desktop" /></Icon>
-      <ChildContent>@Localizer[ThemeType.System.GetDescription()]</ChildContent>
+      <ChildContent>@Localizer["ThemeSystem"]</ChildContent>
     </PlDropdownItem>
   </PlDropdownContent>
 </PlDropdown>

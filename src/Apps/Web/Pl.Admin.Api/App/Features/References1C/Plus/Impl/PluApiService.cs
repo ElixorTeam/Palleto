@@ -103,7 +103,6 @@ internal sealed class PluApiService(WsDbContext dbContext) : IPluService
     private async Task LoadDefaultForeignKeysAsync(PluEntity entity)
     {
         await dbContext.Entry(entity).Reference(e => e.Clip).LoadAsync();
-        await dbContext.Entry(entity).Reference(e => e.Brand).LoadAsync();
         await dbContext.Entry(entity).Reference(e => e.Bundle).LoadAsync();
         await dbContext.Entry(entity).Reference(e => e.Template).LoadAsync();
     }

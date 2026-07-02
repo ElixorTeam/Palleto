@@ -762,7 +762,7 @@ namespace Pl.Admin.Client.Source.Shared.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Share an entry.
+        ///   Looks up a localized string similar to Share link.
         /// </summary>
         public static string ShareDialogTitle {
             get {

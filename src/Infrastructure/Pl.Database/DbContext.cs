@@ -11,7 +11,6 @@ public class WsDbContext(DbContextOptions<WsDbContext> options) : DbContext(opti
     public DbSet<DatabaseTableView> DatabaseTables { get; init; }
     public DbSet<ZplResourceEntity> ZplResources { get; init; }
     public DbSet<PalletManEntity> PalletMen { get; init; }
-    public DbSet<BrandEntity> Brands { get; init; }
     public DbSet<ProductionSiteEntity> ProductionSites { get; init; }
     public DbSet<TemplateEntity> Templates { get; init; }
     public DbSet<BoxEntity> Boxes { get; init; }

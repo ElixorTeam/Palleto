@@ -40,14 +40,6 @@ public class References1CEndpoints(IWebApi webApi)
         webApi.GetClipByUid,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
 
-    public ParameterlessEndpoint<BrandDto[]> BrandsEndpoint { get; } = new(
-        webApi.GetBrands,
-        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
-
-    public Endpoint<Guid, BrandDto> BrandEndpoint { get; } = new(
-        webApi.GetBrandByUid,
-        options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });
-
     public Endpoint<Guid, CharacteristicDto[]> CharacteristicsEndpoint { get; } = new(
         webApi.GetPluCharacteristics,
         options: new() { DefaultStaleTime = TimeSpan.FromMinutes(1) });

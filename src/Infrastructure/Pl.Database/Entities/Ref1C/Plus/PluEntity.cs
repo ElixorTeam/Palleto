@@ -22,11 +22,6 @@ public sealed class PluEntity : EntityBase
 
     //
 
-    public Guid BrandId { get; set; }
-    public BrandEntity Brand { get; set; } = null!;
-
-    //
-
     public Guid ClipId { get; set; }
     public ClipEntity Clip { get; set; } = null!;
 

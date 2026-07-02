@@ -24,27 +24,23 @@
         aria-valuenow="@Value.ToString()"
         role="spinbutton" />
     <div class="flex flex-col">
-        <button
-            type="button"
-            tabindex="-1"
-            class="@ButtonClass"
-            disabled="@(Disabled || IsAtMax)"
-            @onclick="Increment"
-            aria-label="Increase value">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
-                <path d="m18 15-6-6-6 6"/>
-            </svg>
-        </button>
-        <button
-            type="button"
-            tabindex="-1"
-            class="@ButtonClass"
-            disabled="@(Disabled || IsAtMin)"
-            @onclick="Decrement"
-            aria-label="Decrease value">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
-                <path d="m6 9 6 6 6-6"/>
-            </svg>
-        </button>
+      <button
+        type="button"
+        tabindex="-1"
+        class="@ButtonClass"
+        disabled="@(Disabled || IsAtMax)"
+        @onclick="Increment"
+        aria-label="Increase value">
+        <HeroIcon Name="plus" Class="size-3"/>
+      </button>
+      <button
+        type="button"
+        tabindex="-1"
+        class="@ButtonClass"
+        disabled="@(Disabled || IsAtMin)"
+        @onclick="Decrement"
+        aria-label="Decrease value">
+        <HeroIcon Name="minus" Class="size-3"/>
+      </button>
     </div>
 </div>

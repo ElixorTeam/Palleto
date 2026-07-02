@@ -52,8 +52,6 @@ public sealed class RedirectHelper(IAuthorizationService authorizationService, N
 
     public string ToBox(Guid uid) => Link(uid, Routes.Boxes);
 
-    public string ToBrand(Guid uid) => Link(uid, Routes.Brands);
-
     public string ToBundle(Guid uid) => Link(uid, Routes.Bundles);
 
     public string ToClip(Guid uid) => Link(uid, Routes.Clips);

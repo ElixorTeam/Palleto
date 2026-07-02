@@ -97,33 +97,6 @@
           Field="@($"{nameof(PluArmDto.Name)}")"
           Width="30%"
         />
-
-        <DataGridColumn
-          Caption="@WsDataLocalizer["ColBrand"]"
-          Field="@($"{nameof(PluArmDto.Brand)}")"
-          Width="30%"
-          Sortable="false"
-          FilterMethod="DataGridColumnFilterMethod.Equals"
-          FilterCellClass="!font-normal"
-        >
-          <FilterTemplate>
-            <UseParameterlessEndpoint Endpoint="@References1CEndpoints.BrandsEndpoint" Context="brandsQuery">
-              @if (brandsQuery.HasData)
-              {
-                <PlSelect
-                  TValue="BrandDto?"
-                  @bind-Value="@BrandFilter"
-                  @bind-Value:after="@(() => context.TriggerFilterChange(BrandFilter?.Name))"
-                  Options="@BuildBrandFilterOptions(brandsQuery.Data)"
-                  Placeholder="@Localizer["SelectItemNotSelected"]" />
-              }
-              else
-              {
-                <Skeleton Class="h-9 w-full" />
-              }
-            </UseParameterlessEndpoint>
-          </FilterTemplate>
-        </DataGridColumn>
       </ColumnsContent>
       <ContextMenuContent>
         <DataGridActionOpenItem Link="@(RedirectHelper.ToPlu(context.Item.Id))" />

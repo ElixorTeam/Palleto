@@ -54,7 +54,7 @@
                 return Side.Value;
             }
 
-            string placement = Context?.Placement ?? "top";
+            string placement = Context.Placement;
             string basePlacement = placement.Split('-')[0];
 
             return basePlacement switch
@@ -69,9 +69,9 @@
     }
 
     private string CssClass => CssUtil.Cn(
-        "z-50 rounded-md border bg-popover px-3 py-1.5",
-        "overflow-hidden text-sm text-popover-foreground shadow-md",
-        "animate-in fade-in-0 zoom-in-95 max-w-md",
+        "z-50 inline-flex w-fit max-w-xs items-center gap-1.5",
+        "rounded-md bg-foreground px-3 py-1.5 text-xs text-background",
+        "animate-in fade-in-0 zoom-in-95",
         EffectiveSide switch
         {
             PopoverSide.Top => "slide-in-from-bottom-2",

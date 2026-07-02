@@ -3,7 +3,7 @@
 
 <BbDialogPortal Container="@Container">
   <BbDialogOverlay
-    class="fixed inset-0 isolate z-50 bg-black/10 backdrop-blur-sm duration-100 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+    class="fixed inset-0 isolate z-50 bg-black/50 duration-100 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
     CloseOnClick="@CloseOnOverlayClick" />
 
   <BbDialogContent
@@ -78,14 +78,14 @@
     public bool TrapFocus { get; set; } = true;
 
     /// <summary>
-    /// Whether to lock body scroll when dialog is open.
+    /// Whether to lock the body scroll when the dialog is open.
     /// Default is true for modal dialogs.
     /// </summary>
     [Parameter]
     public bool LockScroll { get; set; } = true;
 
     /// <summary>
-    /// Event callback invoked when Escape key is pressed.
+    /// Event callback invoked when an Escape key is pressed.
     /// </summary>
     [Parameter]
     public EventCallback<KeyboardEventArgs> OnEscapeKeyDown { get; set; }

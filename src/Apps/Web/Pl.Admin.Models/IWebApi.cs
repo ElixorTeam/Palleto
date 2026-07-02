@@ -15,7 +15,6 @@ public interface IWebApi :
     IWebBoxApi,
     IWebClipApi,
     IWebBundleApi,
-    IBrandApi,
     IPluApi,
     IWebProductionSiteApi,
     IWebWarehouseApi,

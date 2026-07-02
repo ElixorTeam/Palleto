@@ -40,18 +40,6 @@ internal sealed class PluConfiguration : IEntityTypeConfiguration<PluEntity>
 
         //
 
-        builder.Property(e => e.BrandId)
-            .HasColumnName("BRAND_UID");
-
-        builder.HasOne(e => e.Brand)
-            .WithMany()
-            .HasForeignKey(plu => plu.BrandId)
-            .HasConstraintName($"FK_{DbTables.Plus}__BRAND")
-            .OnDelete(DeleteBehavior.Restrict)
-            .IsRequired();
-
-        //
-
         builder.Property(e => e.TemplateId)
             .HasColumnName("TEMPLATE_UID");
 

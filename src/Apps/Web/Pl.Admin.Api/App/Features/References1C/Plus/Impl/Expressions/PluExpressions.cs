@@ -15,7 +15,6 @@ public static class PluExpressions
             ShelfLifeDays = (ushort)plu.ShelfLifeDays,
 
             Clip = ProxyUtils.Clip(plu.Clip),
-            Brand = ProxyUtils.Brand(plu.Brand),
             Bundle = ProxyUtils.Bundle(plu.Bundle),
             Template = plu.TemplateId != null ? ProxyUtils.Template(plu.Template) : null,
 

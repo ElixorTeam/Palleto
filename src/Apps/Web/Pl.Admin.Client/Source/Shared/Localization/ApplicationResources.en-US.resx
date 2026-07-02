@@ -280,10 +280,10 @@
         <value>Work shift arm analytics</value>
     </data>
     <data name="ShareDialogDescription" xml:space="preserve">
-        <value>You can either copy the link manually, or use the built-in functionality of social networks</value>
+        <value>Anyone who has this link will be able to view this.</value>
     </data>
     <data name="ShareDialogTitle" xml:space="preserve">
-        <value>Share an entry</value>
+        <value>Share link</value>
     </data>
     <data name="PrinterControlDescription" xml:space="preserve">
         <value>If you see an empty block, it means that the browser is blocking the request to the printer through the site. You can follow the {0} to the device or disable the browser security settings for the site by following {1}.</value>
