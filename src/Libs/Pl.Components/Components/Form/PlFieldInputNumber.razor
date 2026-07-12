@@ -25,7 +25,7 @@
       Disabled="@Disabled"
       Required="@Required"
       Format="@Format"
-      JsSyncTiming="@JsSyncTiming"
+      Debouncing="@Debouncing"
       DebounceInterval="@DebounceInterval"
       AriaLabel="@AriaLabel"
       AriaDescribedBy="@DescribedById"
@@ -127,23 +127,17 @@
     public string? Format { get; set; }
 
     /// <summary>
-    /// Default value is <see cref="JsSyncTiming.OnBlur"/>.
+    /// When <c>true</c>, value updates are debounced during typing.
+    /// When <c>false</c> (default), updates fire only on blur.
     /// </summary>
-    /// <remarks>
-    /// <list type="bullet">
-    /// <item><see cref="JsSyncTiming.Immediate"/> — every keystroke (batched via requestAnimationFrame).</item>
-    /// <item><see cref="JsSyncTiming.OnBlur"/> — only on blur (default).</item>
-    /// <item><see cref="JsSyncTiming.Debounced"/> — after typing pauses for <see cref="DebounceInterval"/> ms.</item>
-    /// </list>
-    /// </remarks>
     [Parameter]
-    public JsSyncTiming JsSyncTiming { get; set; } = JsSyncTiming.OnBlur;
+    public bool Debouncing { get; set; }
 
     /// <summary>
-    /// Debounce delay when <see cref="JsSyncTiming"/> is <see cref="JsSyncTiming.Debounced"/>.
+    /// Debounce delay in milliseconds when <see cref="Debouncing"/> is <c>true</c>.
     /// </summary>
     [Parameter]
-    public int DebounceInterval { get; set; } = 300;
+    public int DebounceInterval { get; set; } = 500;
 
     /// <summary>
     /// Gets or sets additional CSS classes applied to the inner NumericInput element.

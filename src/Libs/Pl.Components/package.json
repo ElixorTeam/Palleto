@@ -6,9 +6,7 @@
   "scripts": {
     "format": "bunx biome format wwwroot/libs --write",
     "lint": "bunx biome lint wwwroot/libs/**/*.{ts} --write",
-    "build:modules": "node build-modules.mjs",
-    "build:js": "esbuild wwwroot/ts/index.ts --bundle --minify --target=es2020 --outfile=wwwroot/index.js",
-    "build": "bun run build:js && bun run build:modules && bun run build:css"
+    "build:js": "node build-modules.mjs && esbuild wwwroot/ts/index.ts --bundle --minify --target=es2020 --outfile=wwwroot/index.js"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.6",

@@ -1,9 +1,9 @@
 ﻿@namespace Pl.Components
-@inject IJSRuntime JsRuntime
 @inherits PlComponentBase
 @using System.Linq.Expressions
 @using Microsoft.AspNetCore.Components.Forms
 @implements IAsyncDisposable
+@inject JsModuleBinder<JsConfig> JsModule
 
 @if (ShowCharacterCount)
 {
@@ -16,6 +16,13 @@
 }
 
 @code {
+    private readonly record struct JsConfig(
+        bool Debouncing,
+        int DebounceMs,
+        bool HasCharacterCount,
+        string? CharacterCountSelector,
+        int? MaxLength);
+
     private RenderFragment TextareaContent =>
     @<textarea
       @ref="_inputRef"
@@ -34,11 +41,8 @@
     </textarea>;
 
     private ElementReference _inputRef;
-    private IJSObjectReference? _jsModule;
     private DotNetObjectReference<PlTextArea>? _dotNetRef;
-    private readonly string _instanceId = Guid.NewGuid().ToString("N");
     private string? _generatedId;
-    private bool _jsInitialized;
     private bool _disposed;
     private readonly EditContextFieldState _validation = new();
 
@@ -60,13 +64,6 @@
     [Parameter]
     public string? Value { get; set; }
 
-    /// <summary>
-    /// Gets or sets the callback invoked when the textarea value changes.
-    /// </summary>
-    /// <remarks>
-    /// When <see cref="JsSyncTiming"/> is <see cref="JsSyncTiming.OnBlur"/> (default),
-    /// fires only on blur. Use <see cref="JsSyncTiming.Immediate"/> for per-keystroke updates.
-    /// </remarks>
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }
 
@@ -180,24 +177,15 @@
     public string? Name { get; set; }
 
     /// <summary>
-    /// Gets or sets when <see cref="ValueChanged"/> fires.
+    /// When <c>true</c>, value updates are debounced during typing.
+    /// When <c>false</c> (default), updates fire only on blur.
     /// </summary>
-    /// <remarks>
-    /// <list type="bullet">
-    /// <item><see cref="JsSyncTiming.Immediate"/> — every keystroke (batched via requestAnimationFrame).</item>
-    /// <item><see cref="JsSyncTiming.OnBlur"/> — only on blur (default).</item>
-    /// <item><see cref="JsSyncTiming.Debounced"/> — after typing pauses for <see cref="DebounceInterval"/> ms.</item>
-    /// </list>
-    /// </remarks>
     [Parameter]
-    public JsSyncTiming JsSyncTiming { get; set; } = JsSyncTiming.OnBlur;
+    public bool Debouncing { get; set; }
 
     /// <summary>
-    /// Gets or sets the debounced delay in milliseconds when <see cref="JsSyncTiming"/> is <see cref="JsSyncTiming.Debounced"/>.
+    /// Debounce delay in milliseconds when <see cref="Debouncing"/> is <c>true</c>.
     /// </summary>
-    /// <remarks>
-    /// Ignored when <see cref="JsSyncTiming"/> is not <see cref="JsSyncTiming.Debounced"/>. Default is 500 ms.
-    /// </remarks>
     [Parameter]
     public int DebounceInterval { get; set; } = 500;
 
@@ -243,49 +231,33 @@
     );
 
     /// <inheritdoc />
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
-        base.OnParametersSet();
+        await base.OnParametersSetAsync();
         _validation.Update(CascadedEditContext, ValueExpression);
+
+        await JsModule.SyncConfigAsync(GetJsConfig());
     }
 
     /// <inheritdoc />
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
-        {
-            try
-            {
-               _jsModule = await JsRuntime.ImportJsModuleAsync("input-text");
-                _dotNetRef = DotNetObjectReference.Create(this);
-                await _jsModule.InvokeVoidAsync("initialize", _inputRef, _dotNetRef, _instanceId, GetJsConfig());
-                _jsInitialized = true;
-            }
-            catch (Exception ex) when (ex is JSDisconnectedException or TaskCanceledException or ObjectDisposedException)
-            {
-                // Expected during circuit disconnect
-            }
-            catch (InvalidOperationException)
-            {
-                // JS interop not available during prerendering
-            }
-        }
+        if (!firstRender)
+            return;
+
+        _dotNetRef ??= DotNetObjectReference.Create(this);
+        await JsModule.SetupAsync("input-text", _inputRef, _dotNetRef, GetJsConfig());
     }
 
-    /// <summary>
-    /// Builds the JS configuration object from current parameters.
-    /// </summary>
-    private object GetJsConfig() => new
-    {
-        mode = JsSyncTiming.ToJsValue(),
-        debounceMs = DebounceInterval,
-        hasCharacterCount = ShowCharacterCount,
-        characterCountSelector = ShowCharacterCount ? "[data-character-count]" : null,
-        maxLength = MaxLength
-    };
+    private JsConfig GetJsConfig() => new(
+        Debouncing,
+        DebounceInterval,
+        ShowCharacterCount,
+        ShowCharacterCount ? "[data-character-count]" : null,
+        MaxLength);
 
     /// <summary>
-    /// Called from JavaScript during typing (Immediate/Debounced modes only).
+    /// Called from JavaScript during typing when <see cref="Debouncing"/> is enabled.
     /// </summary>
     [JSInvokable]
     public async Task JsOnInput(string? value)
@@ -328,22 +300,7 @@
     {
         _disposed = true;
 
-        if (_jsModule != null && _jsInitialized)
-        {
-            try
-            {
-                await _jsModule.InvokeVoidAsync("dispose", _instanceId);
-                await _jsModule.DisposeAsync();
-            }
-            catch (Exception ex) when (ex is JSDisconnectedException or TaskCanceledException or ObjectDisposedException)
-            {
-                // Expected during circuit disconnect
-            }
-            catch (InvalidOperationException)
-            {
-                // JS interop not available
-            }
-        }
+        await JsModule.DisposeAsync();
 
         _dotNetRef?.Dispose();
         GC.SuppressFinalize(this);

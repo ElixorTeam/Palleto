@@ -189,6 +189,9 @@
     <data name="SectionTables" xml:space="preserve">
         <value />
     </data>
+    <data name="SectionInputPlayground" xml:space="preserve">
+        <value />
+    </data>
     <data name="ArmPluRemovedUnsuccessfully" xml:space="preserve">
         <value />
     </data>

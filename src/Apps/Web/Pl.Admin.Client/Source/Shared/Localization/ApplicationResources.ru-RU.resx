@@ -189,6 +189,9 @@
     <data name="SectionTables" xml:space="preserve">
         <value>Таблицы</value>
     </data>
+    <data name="SectionInputPlayground" xml:space="preserve">
+        <value>Тест полей ввода</value>
+    </data>
     <data name="ArmPluRemovedUnsuccessfully" xml:space="preserve">
         <value>Не удалось убрать {0} ПЛУ с АРМ</value>
     </data>

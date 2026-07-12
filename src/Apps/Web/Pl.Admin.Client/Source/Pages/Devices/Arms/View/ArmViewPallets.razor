@@ -103,7 +103,7 @@
 </UseEndpoint>
 
 @code {
-  [Parameter, EditorRequired] public ArmDto Model { get; set; } = default!;
+  [Parameter, EditorRequired] public ArmDto Model { get; set; }
 
   private WorkShift WorkShift { get; set; } = new();
 }

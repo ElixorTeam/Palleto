@@ -1,9 +1,6 @@
 @inherits SectionFieldBase<System.Net.IPAddress>
 
 <SectionInputWrapper
-  Path="@Path"
-  Label="@Label"
-  HtmlFor="@HtmlId"
   ValueToCopy="@(IsCopyable ? Value?.ToString() : string.Empty)"
 >
   <InputIpField

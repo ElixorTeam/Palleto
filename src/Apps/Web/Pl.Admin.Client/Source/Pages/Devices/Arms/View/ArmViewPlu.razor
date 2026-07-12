@@ -3,7 +3,6 @@
 @using Refit
 @using Pl.Admin.Models
 @using Pl.Admin.Models.Features.Devices.Arms.Queries
-@using Pl.Admin.Models.Features.References1C.Brands
 @using Pl.Admin.Client.Source.Features
 @using ToastService = Pl.Components.ToastService
 
@@ -12,7 +11,6 @@
 @inject RedirectHelper RedirectHelper
 @inject PageHelper PageHelper
 @inject IWebApi WebApi
-@inject References1CEndpoints References1CEndpoints
 @inject DevicesEndpoints DevicesEndpoints
 @inject ToastService ToastService
 
@@ -108,9 +106,8 @@
 
 
 @code {
-  [Parameter, EditorRequired] public ArmDto Model { get; set; } = default!;
+  [Parameter, EditorRequired] public ArmDto Model { get; set; }
 
-  private BrandDto? BrandFilter { get; set; }
   private bool? IsWeightFilter { get; set; }
   private bool? IsActiveFilter { get; set; }
   private IList<SelectOption<bool?>> IsActiveFilterOptions { get; set; } = [];
@@ -138,11 +135,6 @@
       _ => IsWeightFilter
     };
   }
-
-  private IList<SelectOption<BrandDto?>> BuildBrandFilterOptions(IEnumerable<BrandDto> brands) =>
-    brands.Select(brand => new SelectOption<BrandDto?>(brand, brand.Name))
-      .Append(new(null, Localizer["SelectItemNotSelected"]))
-      .ToList();
 
   private async Task DeleteArmPlu(PluArmDto item)
   {

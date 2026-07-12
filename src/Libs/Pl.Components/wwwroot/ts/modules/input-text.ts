@@ -2,18 +2,15 @@
  * Text Input TypeScript interop module.
  * Handles input/change events in JS to minimize C# interop calls.
  *
- * Modes:
- *   - onchange:  JS only calls C# on the native change event (zero interop during typing).
- *                For inputs this fires on blur and Enter; for textareas it fires on blur only.
- *   - immediate: JS batches calls via requestAnimationFrame.
- *   - debounced: JS debounces calls via setTimeout.
+ * Modes (config.debouncing):
+ *   - false: updates fire only on blur/change (zero interop during typing)
+ *   - true:  debounced JsOnInput while typing + JsOnChange on blur
  */
 
 import type { DotNetObjectType } from "../types/dotnet-object-type";
-import type { InputUpdateMode } from "../types/input-update-mode.ts";
 
 export interface TextInputConfig {
-	mode: InputUpdateMode;
+	debouncing: boolean;
 	debounceMs: number;
 	hasCharacterCount?: boolean;
 	characterCountSelector?: string;
@@ -107,31 +104,18 @@ export function initialize(
 
 		updateCharacterCount();
 
-		if (config.mode === "onblur") {
-			return;
-		}
+        if (!state.config.debouncing) {
+            return;
+        }
 
-		if (config.mode === "immediate") {
-			if (state.rafId !== null) {
-				cancelAnimationFrame(state.rafId);
-			}
-			state.pendingValue = value;
-			state.rafId = requestAnimationFrame(() => {
-				state.rafId = null;
-				callOnInput(state.pendingValue ?? "");
-			});
-			return;
-		}
 
-		if (config.mode === "debounced") {
-			if (state.debounceTimer !== null) {
-				window.clearTimeout(state.debounceTimer);
-			}
-			state.debounceTimer = window.setTimeout(() => {
-				state.debounceTimer = null;
-				callOnInput(value);
-			}, config.debounceMs);
-		}
+        if (state.debounceTimer !== null) {
+            window.clearTimeout(state.debounceTimer);
+        }
+        state.debounceTimer = window.setTimeout(() => {
+            state.debounceTimer = null;
+            callOnInput(value);
+        }, config.debounceMs);
 	};
 
 	const handleChange = (): void => {

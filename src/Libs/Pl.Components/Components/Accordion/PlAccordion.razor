@@ -7,9 +7,9 @@
   ValueChanged="@ValueChanged"
   DefaultValue="@DefaultValue"
   OnValueChange="@OnValueChange"
-  Type="@Type"
+  Type="@(Multiple ? AccordionType.Multiple : AccordionType.Single)"
   Collapsible="@Collapsible"
-  class="@CssClass">
+  class="@CssUtil.Cn(Class)">
   @ChildContent
 </BbAccordion>
 
@@ -48,14 +48,11 @@
   /// <summary>
   /// Type of accordion (single or multiple).
   /// </summary>
-  [Parameter]
-  public AccordionType Type { get; set; } = AccordionType.Single;
+  [Parameter] public bool Multiple { get; set; }
 
   /// <summary>
   /// Whether items can be collapsed when in single mode.
   /// </summary>
   [Parameter]
   public bool Collapsible { get; set; }
-
-  private string CssClass => CssUtil.Cn(Class);
 }

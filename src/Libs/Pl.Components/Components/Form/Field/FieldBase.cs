@@ -36,12 +36,6 @@ public abstract class FieldBase : ComponentBase, IDisposable
     /// <summary>
     /// Gets or sets a manual error text to display on the field.
     /// </summary>
-    /// <remarks>
-    /// When set, the field enters an invalid state and displays this text as the error message.
-    /// This can be used to inject validation errors from external sources (e.g., server-side
-    /// validation or <see cref="PlDynamicForm"/>). When the field also has EditContext validation
-    /// errors, this text takes precedence over the auto-generated validation messages.
-    /// </remarks>
     [Parameter]
     public string? ErrorText { get; set; }
 

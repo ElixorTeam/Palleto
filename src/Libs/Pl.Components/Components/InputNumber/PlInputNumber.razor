@@ -1,10 +1,10 @@
 ﻿@namespace Pl.Components
 @typeparam TValue where TValue : struct, System.Numerics.INumber<TValue>
-@inject IJSRuntime JsRuntime
 @inherits PlComponentBase
+@inject JsModuleBinder<JsConfig> JsModule
 @implements IAsyncDisposable
 
-<div class="@ContainerClass">
+<div class="flex items-center gap-1">
     <input
         @ref="_inputRef"
         id="@EffectiveId"

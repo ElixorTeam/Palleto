@@ -6,53 +6,33 @@ using static System.GC;
 
 namespace Pl.Components;
 
-public partial class PlInputNumber<TValue> : PlComponentBase
-    where TValue : struct, INumber<TValue>
+public partial class PlInputNumber<TValue> : PlComponentBase where TValue : struct, INumber<TValue>
 {
-    #region Fields
+    private readonly record struct JsConfig(
+        bool Debouncing,
+        int DebounceMs,
+        bool AllowDecimal,
+        bool AllowNegative,
+        string DecimalSeparator);
 
-    /// <summary>
-    /// Unique instance identifier passed to the numeric-input JS module for lifecycle tracking.
-    /// </summary>
-    private readonly string _instanceId = Guid.NewGuid().ToString("N");
-
-    /// <summary>
-    /// Handles EditForm field change notifications and validation state.
-    /// </summary>
     private readonly EditContextFieldState _validation = new();
 
-    /// <summary>
-    /// Reference to the native input element for JS interop initialization.
-    /// </summary>
     private ElementReference _inputRef;
-
-    private IJSObjectReference? _jsModule;
     private DotNetObjectReference<PlInputNumber<TValue>>? _dotNetRef;
-
-    private bool _disposed;
-    private bool _isEditing;
-    private bool _jsInitialized;
-
     private string? _generatedId;
     private string _editingValue = string.Empty;
+    private bool _disposed;
+    private bool _isEditing;
     private TValue _valueAtFocus;
 
-    #endregion
-
-    #region Cascading Parameters
-
     /// <summary>
-    /// Gets the cascaded <see cref="EditContext"/> from a parent <see cref="EditForm"/>.
+    /// Gets or sets the cascaded EditContext from a parent EditForm.
     /// </summary>
     [CascadingParameter]
     private EditContext? CascadedEditContext { get; set; }
 
     [CascadingParameter(Name = "FieldIsInvalid")]
     private bool? FieldIsInvalid { get; set; }
-
-    #endregion
-
-    #region Parameters - Value & Binding
 
     /// <summary>
     /// Gets or sets the current value.
@@ -65,17 +45,6 @@ public partial class PlInputNumber<TValue> : PlComponentBase
     /// </summary>
     [Parameter]
     public EventCallback<TValue> ValueChanged { get; set; }
-
-    /// <summary>
-    /// Gets or sets an expression that identifies the bound value for EditForm integration.
-    /// Automatically provided by <c>@bind-Value</c>.
-    /// </summary>
-    [Parameter]
-    public Expression<Func<TValue>>? ValueExpression { get; set; }
-
-    #endregion
-
-    #region Parameters - Constraints
 
     /// <summary>
     /// Gets or sets the minimum allowed value.
@@ -102,14 +71,10 @@ public partial class PlInputNumber<TValue> : PlComponentBase
     public int? DecimalPlaces { get; set; }
 
     /// <summary>
-    /// Default value is <c>true</c>.
+    /// Gets or sets whether negative values are allowed.
     /// </summary>
     [Parameter]
     public bool AllowNegative { get; set; } = true;
-
-    #endregion
-
-    #region Parameters - Display
 
     /// <summary>
     /// Gets or sets the format string for displaying the value.
@@ -118,20 +83,23 @@ public partial class PlInputNumber<TValue> : PlComponentBase
     public string? Format { get; set; }
 
     /// <summary>
-    /// Default value is <see cref="JsSyncTiming.OnBlur"/>.
+    /// When <c>true</c>, <see cref="ValueChanged"/> is debounced during typing.
+    /// When <c>false</c> (default), updates fire only on blur.
     /// </summary>
     [Parameter]
-    public JsSyncTiming JsSyncTiming { get; set; } = JsSyncTiming.OnBlur;
+    public bool Debouncing { get; set; }
 
     /// <summary>
-    /// Default value is <c>300</c>. Used when <see cref="JsSyncTiming"/> is <see cref="JsSyncTiming.Debounced"/>.
+    /// Debounce delay in milliseconds when <see cref="Debouncing"/> is <c>true</c>. Default is 500 ms.
     /// </summary>
     [Parameter]
-    public int DebounceInterval { get; set; } = 300;
+    public int DebounceInterval { get; set; } = 500;
 
-    #endregion
-
-    #region Parameters - Base
+    /// <summary>
+    /// Gets or sets whether to show increment/decrement buttons.
+    /// </summary>
+    [Parameter]
+    public bool ShowButtons { get; set; }
 
     /// <summary>
     /// Gets or sets the placeholder text.
@@ -158,18 +126,7 @@ public partial class PlInputNumber<TValue> : PlComponentBase
     public string? Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the HTML name attribute. Auto-derived from <see cref="ValueExpression"/>
-    /// when inside an EditForm if not explicitly set.
-    /// </summary>
-    [Parameter]
-    public string? Name { get; set; }
-
-    #endregion
-
-    #region Parameters - Events & Accessibility
-
-    /// <summary>
-    /// Gets or sets the ARIA label for the input.
+    /// Gets or sets the ARIA label.
     /// </summary>
     [Parameter]
     public string? AriaLabel { get; set; }
@@ -184,22 +141,23 @@ public partial class PlInputNumber<TValue> : PlComponentBase
     /// Gets or sets whether the input value is invalid.
     /// </summary>
     [Parameter]
-    public bool AriaInvalid { get; set; }
+    public bool? AriaInvalid { get; set; }
 
-    #endregion
+    /// <summary>
+    /// Gets or sets the HTML name attribute for the input element.
+    /// </summary>
+    /// <remarks>
+    /// When inside an EditForm and not explicitly set, the name is automatically
+    /// derived from the ValueExpression (FieldIdentifier) to support SSR form postback.
+    /// </remarks>
+    [Parameter]
+    public string? Name { get; set; }
 
-    #region Computed Properties
-
-    private static bool IsFloatingPoint =>
-        typeof(TValue) == typeof(double) || typeof(TValue) == typeof(float) || typeof(TValue) == typeof(decimal);
-
-    private static string InputMode => IsFloatingPoint ? "decimal" : "numeric";
-
-    private TValue StepValue => Step ?? TValue.One;
-
-    private bool IsAtMax => Value >= Max;
-
-    private bool IsAtMin => Value <= Min;
+    /// <summary>
+    /// Gets or sets an expression that identifies the bound value.
+    /// </summary>
+    [Parameter]
+    public Expression<Func<TValue>>? ValueExpression { get; set; }
 
     /// <summary>
     /// Gets the effective aria-invalid value combining manual AriaInvalid and EditContext validation.
@@ -213,16 +171,20 @@ public partial class PlInputNumber<TValue> : PlComponentBase
 
     private string EffectiveId => Id ?? (_generatedId ??= $"numeric-{Guid.NewGuid().ToString("N")[..8]}");
 
+    private TValue StepValue => Step ?? TValue.One;
+
+    private bool IsAtMax => Value >= Max;
+    private bool IsAtMin => Value <= Min;
+
     private string DisplayValue => _isEditing ? _editingValue : GetFormattedValueString();
 
-    /// <summary>
-    /// Gets the computed CSS classes for the spinbutton group wrapper.
-    /// </summary>
-    private static string ContainerClass => "flex items-center gap-1";
+    private static bool IsFloatingPoint =>
+        typeof(TValue) == typeof(double) ||
+        typeof(TValue) == typeof(float) ||
+        typeof(TValue) == typeof(decimal);
 
-    /// <summary>
-    /// Gets the computed CSS classes for the numeric input element.
-    /// </summary>
+    private static string InputMode => IsFloatingPoint ? "decimal" : "numeric";
+
     private string CssClass =>
         CssUtil.Cn(
             // Base input styles
@@ -244,9 +206,6 @@ public partial class PlInputNumber<TValue> : PlComponentBase
             Class
         );
 
-    /// <summary>
-    /// Gets the computed CSS classes for the stepper buttons.
-    /// </summary>
     private static string ButtonClass =>
         CssUtil.Cn(
             // Base button styles
@@ -260,15 +219,17 @@ public partial class PlInputNumber<TValue> : PlComponentBase
             "transition-colors"
         );
 
-    #endregion
-
-    #region Lifecycle
-
     /// <inheritdoc />
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
-        base.OnParametersSet();
+        await base.OnParametersSetAsync();
+
         _validation.Update(CascadedEditContext, ValueExpression);
+
+        if (!_isEditing)
+            _valueAtFocus = Value;
+
+        await JsModule.SyncConfigAsync(GetJsConfig());
     }
 
     /// <inheritdoc />
@@ -277,100 +238,56 @@ public partial class PlInputNumber<TValue> : PlComponentBase
         if (!firstRender)
             return;
 
-        try
-        {
-            _jsModule = await JsRuntime.ImportJsModuleAsync("input-number");
-            _dotNetRef = DotNetObjectReference.Create(this);
-            await _jsModule.InvokeVoidAsync("initialize", _inputRef, _dotNetRef, _instanceId, GetJsConfig());
-            _jsInitialized = true;
-        }
-        catch (Exception ex) when (ex is JSDisconnectedException or TaskCanceledException or ObjectDisposedException)
-        {
-            // Expected during circuit disconnect
-        }
-        catch (InvalidOperationException)
-        {
-            // JS interop not available during prerendering
-        }
+        _dotNetRef ??= DotNetObjectReference.Create(this);
+        await JsModule.SetupAsync("numeric-input", _inputRef, _dotNetRef, GetJsConfig());
     }
+
+    /// <summary>
+    /// Sets focus to the underlying input element.
+    /// </summary>
+    public ValueTask FocusAsync() => _inputRef.FocusAsync();
 
     public async ValueTask DisposeAsync()
     {
         _disposed = true;
 
-        if (_jsModule is not null && _jsInitialized)
-        {
-            try
-            {
-                await _jsModule.InvokeVoidAsync("dispose", _instanceId);
-                await _jsModule.DisposeAsync();
-            }
-            catch (Exception ex)
-                when (ex is JSDisconnectedException or TaskCanceledException or ObjectDisposedException)
-            {
-                // Expected during circuit disconnect
-            }
-            catch (InvalidOperationException)
-            {
-                // JS interop not available
-            }
-        }
+        await JsModule.DisposeAsync();
 
         _dotNetRef?.Dispose();
         SuppressFinalize(this);
     }
 
-    #endregion
-
-    #region JS Interop
-
     /// <summary>
-    /// Builds the JS configuration object from current parameters.
+    /// Called from JavaScript during typing. JS has already handled debounce if enabled.
     /// </summary>
-    private object GetJsConfig() =>
-        new
-        {
-            mode = JsSyncTiming.ToJsValue(),
-            debounceMs = DebounceInterval,
-            stepKeys = new[] { "ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End" },
-            allowDecimal = IsFloatingPoint,
-            allowNegative = AllowNegative,
-            decimalSeparator = CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator,
-        };
-
-    /// <summary>
-    /// Called from JavaScript during typing.
-    /// </summary>
-    /// <param>
-    /// When <c>false</c>, only syncs the edit buffer for display.
-    /// When <c>true</c>, also tries to commit <see cref="Value"/> (Immediate/Debounced).
-    /// </param>
-    [JSInvokable]
+    [JSInvokable("JsOnInput")]
     public async Task JsOnInput(string? value)
     {
-        if (_disposed)
-            return;
+        if (_disposed) { return; }
 
         string inputValue = value ?? string.Empty;
         _editingValue = inputValue;
         _isEditing = true;
 
-        if (TryCommitValue(inputValue, out TValue committedValue) && !committedValue.Equals(Value))
+        if (TryCommitValue(inputValue, out TValue committedValue))
         {
-            Value = committedValue;
-            await ValueChanged.InvokeAsync(committedValue);
-            _validation.NotifyFieldChanged();
+            if (!committedValue.Equals(Value))
+            {
+                Value = committedValue;
+                await ValueChanged.InvokeAsync(committedValue);
+                NotifyFieldChanged();
+            }
+
+            _valueAtFocus = committedValue;
         }
 
         StateHasChanged();
     }
 
     /// <summary>
-    /// Called from JavaScript on blur. Commits the current value.
-    /// Returns the formatted display text because Blazor may skip updating the native
-    /// input when <see cref="DisplayValue"/> did not change between renders (e.g. overflow revert).
+    /// Called from JavaScript on blur. Returns formatted display text for the native input element.
     /// </summary>
-    [JSInvokable]
+    [JSInvokable("JsOnBlur")]
     public async Task<string> JsOnBlur(string? value)
     {
         if (_disposed)
@@ -379,50 +296,39 @@ public partial class PlInputNumber<TValue> : PlComponentBase
         string inputValue = value ?? string.Empty;
         _isEditing = false;
 
-        if (JsSyncTiming == JsSyncTiming.OnBlur)
-        {
-            if (TryCommitValue(inputValue, out TValue committedValue))
-            {
-                if (!committedValue.Equals(Value))
-                {
-                    Value = committedValue;
-                    await ValueChanged.InvokeAsync(committedValue);
-                }
-            }
-            else
-            {
-                Value = _valueAtFocus;
-            }
-
-            _validation.NotifyFieldChanged();
-        }
-        else if (TryCommitValue(inputValue, out TValue committedValue))
+        if (TryCommitValue(inputValue, out TValue committedValue))
         {
             if (!committedValue.Equals(Value))
             {
                 Value = committedValue;
                 await ValueChanged.InvokeAsync(committedValue);
-                _validation.NotifyFieldChanged();
+                NotifyFieldChanged();
             }
+
+            _valueAtFocus = committedValue;
+        }
+        else
+        {
+            Value = _valueAtFocus;
         }
 
-        string displayValue = GetFormattedValueString();
-        _editingValue = displayValue;
+        string display = GetFormattedValueString();
+        _editingValue = display;
         StateHasChanged();
-        return displayValue;
+        return display;
     }
 
     /// <summary>
     /// Called from JavaScript on focus.
     /// </summary>
-    [JSInvokable]
+    [JSInvokable("JsOnFocus")]
     public void JsOnFocus()
     {
         if (_disposed)
             return;
 
         _valueAtFocus = Value;
-        _editingValue = Value.ToString() ?? string.Empty;
+        _editingValue = GetFormattedValueString();
         _isEditing = true;
         StateHasChanged();
     }
@@ -431,7 +337,7 @@ public partial class PlInputNumber<TValue> : PlComponentBase
     /// Called from JavaScript when a step key is pressed (ArrowUp/Down, PageUp/Down, Home/End).
     /// JS has already called preventDefault().
     /// </summary>
-    [JSInvokable]
+    [JSInvokable("JsOnKeyDown")]
     public async Task JsOnKeyDown(string key)
     {
         if (_disposed || Disabled)
@@ -464,62 +370,18 @@ public partial class PlInputNumber<TValue> : PlComponentBase
         StateHasChanged();
     }
 
-    #endregion
+    private JsConfig GetJsConfig() => new(
+        Debouncing,
+        DebounceInterval,
+        IsFloatingPoint,
+        AllowNegative,
+        CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
 
-    #region Event Handlers
-
-    private async Task Increment()
-    {
-        if (Disabled || IsAtMax)
-            return;
-
-        await SetValue(Value + StepValue);
-    }
-
-    private async Task Decrement()
-    {
-        if (Disabled || IsAtMin)
-            return;
-
-        await SetValue(Value - StepValue);
-    }
-
-    private async Task IncrementBy(TValue amount)
-    {
-        if (Disabled)
-            return;
-
-        await SetValue(Value + amount);
-    }
-
-    private async Task DecrementBy(TValue amount)
-    {
-        if (Disabled)
-            return;
-
-        await SetValue(Value - amount);
-    }
-
-    #endregion
-
-    #region Private Helpers
-
-    private async Task SetValue(TValue value)
-    {
-        TValue clampedValue = ClampValue(value);
-
-        if (clampedValue.Equals(Value))
-            return;
-
-        Value = clampedValue;
-        _editingValue = clampedValue.ToString() ?? string.Empty;
-        await ValueChanged.InvokeAsync(clampedValue);
-        _validation.NotifyFieldChanged();
-    }
+    private void NotifyFieldChanged() => _validation.NotifyFieldChanged();
 
     private string GetFormattedValueString()
     {
-        if (Format is not null)
+        if (Format != null)
             return string.Format(CultureInfo.InvariantCulture, $"{{0:{Format}}}", Value);
 
         if (DecimalPlaces.HasValue && IsFloatingPoint)
@@ -528,29 +390,45 @@ public partial class PlInputNumber<TValue> : PlComponentBase
         return Value.ToString() ?? string.Empty;
     }
 
-    private bool IsWithinRange(TValue value)
+    private async Task Increment()
     {
-        if (!AllowNegative && value < TValue.Zero)
-            return false;
-
-        if (value < Min)
-            return false;
-
-        return !Max.HasValue || value <= Max.Value;
+        if (Disabled || IsAtMax)
+            return;
+        await SetValue(Value + StepValue);
     }
 
-    private bool TryCommitValue(string? input, out TValue result)
+    private async Task Decrement()
     {
-        result = default;
+        if (Disabled || IsAtMin)
+            return;
+        await SetValue(Value - StepValue);
+    }
 
-        if (!TryParseValue(input, out TValue parsedValue))
-            return false;
+    private async Task IncrementBy(TValue amount)
+    {
+        if (Disabled)
+            return;
+        await SetValue(Value + amount);
+    }
 
-        if (!IsWithinRange(parsedValue))
-            return false;
+    private async Task DecrementBy(TValue amount)
+    {
+        if (Disabled)
+            return;
+        await SetValue(Value - amount);
+    }
 
-        result = parsedValue;
-        return true;
+    private async Task SetValue(TValue value)
+    {
+        TValue clampedValue = ClampValue(value);
+
+        if (!clampedValue.Equals(Value))
+        {
+            Value = clampedValue;
+            _editingValue = clampedValue.ToString() ?? string.Empty;
+            await ValueChanged.InvokeAsync(clampedValue);
+            NotifyFieldChanged();
+        }
     }
 
     private TValue ClampValue(TValue value)
@@ -565,6 +443,31 @@ public partial class PlInputNumber<TValue> : PlComponentBase
             value = Max.Value;
 
         return value;
+    }
+
+    private bool TryCommitValue(string? input, out TValue result)
+    {
+        result = _valueAtFocus;
+
+        if (!TryParseValue(input, out TValue parsed))
+            return false;
+
+        if (!IsWithinRange(parsed))
+            return false;
+
+        result = parsed;
+        return true;
+    }
+
+    private bool IsWithinRange(TValue value)
+    {
+        if (!AllowNegative && value < TValue.Zero)
+            return false;
+
+        if (value < Min)
+            return false;
+
+        return !(value > Max);
     }
 
     private bool TryParseValue(string? input, out TValue result)
@@ -584,6 +487,4 @@ public partial class PlInputNumber<TValue> : PlComponentBase
 
         return TValue.TryParse(input, CultureInfo.InvariantCulture, out result);
     }
-
-    #endregion
 }

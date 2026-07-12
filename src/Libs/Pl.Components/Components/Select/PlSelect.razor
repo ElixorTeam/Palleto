@@ -172,21 +172,29 @@
     }
 
     /// <summary>
-    /// Returns a display text selector for the primitives layer.
+    /// Returns a display text selector for the primitive layer.
     /// Options mode: looks up text from the Options collection.
     /// Compositional mode: passes through DisplayTextSelector as-is.
     /// </summary>
     private Func<TValue, string>? GetDisplayTextSelector()
     {
-        if (Options is not null)
-        {
-            return v => Options
-                .FirstOrDefault(o => EqualityComparer<TValue>.Default.Equals(o.Value, v))
-                ?.Text ?? v?.ToString() ?? "";
-        }
+        if (Options is null)
+          return DisplayTextSelector;
 
-        return DisplayTextSelector;
+        return v =>
+        {
+            SelectOption<TValue>? option = Options
+                .FirstOrDefault(o => EqualityComparer<TValue>.Default.Equals(o.Value, v));
+
+            if (option is not null)
+                return option.Text;
+
+            return IsUnsetValue(v) ? string.Empty : v?.ToString() ?? string.Empty;
+        };
     }
+
+    private static bool IsUnsetValue(TValue? value) =>
+        value is null || EqualityComparer<TValue>.Default.Equals(value, default!);
 
     /// <summary>
     /// Gets the computed CSS classes for the select container.

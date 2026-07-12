@@ -24,7 +24,7 @@ public enum InputType
     /// Telephone number input.
     /// Optimized for phone number entry with tel: keyboard layout.
     /// </summary>
-    Tel,
+    Phone,
 
     /// <summary>
     /// URL input.
@@ -34,7 +34,7 @@ public enum InputType
 
     /// <summary>
     /// Search query input.
-    /// Displays search icon and may show recent searches.
+    /// Displays a search icon and may show recent searches.
     /// </summary>
     Search,
 }
@@ -44,10 +44,9 @@ internal static class InputTypeExtensions
     internal static string GetHtmlType(this InputType type) =>
         type switch
         {
-            InputType.Text => "text",
             InputType.Email => "email",
             InputType.Password => "password",
-            InputType.Tel => "tel",
+            InputType.Phone => "tel",
             InputType.Url => "url",
             InputType.Search => "search",
             _ => "text"

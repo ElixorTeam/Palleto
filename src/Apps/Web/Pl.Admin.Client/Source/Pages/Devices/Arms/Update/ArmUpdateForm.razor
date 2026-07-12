@@ -9,7 +9,6 @@
 @inject IWebApi WebApi
 @inject IStringLocalizer<WsDataResources> WsDataLocalizer
 @inject IStringLocalizer<ApplicationResources> Localizer
-@inject RedirectHelper RedirectHelper
 @inject DevicesEndpoints DevicesEndpoints
 @inject ReferencesEndpoints ReferencesEndpoints
 @inject ArmUpdateValidator ArmUpdateValidator
@@ -90,7 +89,6 @@
       <SectionReadOnlyField
         Label="@WsDataLocalizer["ColProductionSite"]"
         Value="@Model.ProductionSite.Name"
-        Path="@RedirectHelper.ToProductionSite(Model.ProductionSite.Id)"
       />
 
       <UseEndpoint

@@ -26,9 +26,5 @@
         </None>
     </ItemGroup>
 
-    <ItemGroup>
-      <UpToDateCheckInput Remove="Components\Combobox\PlCombobox.razor" />
-    </ItemGroup>
-
     <Import Project="..\..\.targets\TailwindIntegration.targets" />
 </Project>

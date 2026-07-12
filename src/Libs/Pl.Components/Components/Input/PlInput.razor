@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Components.Forms
 @inherits PlComponentBase
 @implements IAsyncDisposable
-@inject IJSRuntime JsRuntime
+@inject JsModuleBinder<JsConfig> JsModule
 
 <input
   @ref="_inputRef"
@@ -21,16 +21,14 @@
   @attributes="AdditionalAttributes" />
 
 @code {
-    private ElementReference _inputRef;
-    private IJSObjectReference? _jsModule;
-    private DotNetObjectReference<PlInput>? _dotNetRef;
-
-    private readonly string _instanceId = Guid.NewGuid().ToString("N");
-    private string? _generatedId;
-    private bool _jsInitialized;
-    private bool _disposed;
+    private readonly record struct JsConfig(bool Debouncing, int DebounceMs);
 
     private readonly EditContextFieldState _validation = new();
+
+    private ElementReference _inputRef;
+    private DotNetObjectReference<PlInput>? _dotNetRef;
+    private string? _generatedId;
+    private bool _disposed;
 
     /// <summary>
     /// Gets or sets the cascaded EditContext from a parent EditForm.
@@ -60,15 +58,31 @@
     [Parameter]
     public string? Value { get; set; }
 
-    /// <summary>
-    /// Gets or sets the callback invoked when the input value changes.
-    /// </summary>
-    /// <remarks>
-    /// When <see cref="JsSyncTiming"/> is <see cref="JsSyncTiming.OnBlur"/> (default),
-    /// fires only on blur or Enter. Use <see cref="JsSyncTiming.Immediate"/> for per-keystroke updates.
-    /// </remarks>
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }
+
+    /// <summary>
+    /// Gets or sets an expression that identifies the bound value.
+    /// </summary>
+    /// <remarks>
+    /// Used for form validation integration. When provided, the input
+    /// registers with the EditContext and participates in form validation.
+    /// </remarks>
+    [Parameter]
+    public Expression<Func<string?>>? ValueExpression { get; set; }
+
+    /// <summary>
+    /// When <c>true</c>, value updates are debounced during typing.
+    /// When <c>false</c> (default), updates fire only on blur.
+    /// </summary>
+    [Parameter]
+    public bool Debouncing { get; set; }
+
+    /// <summary>
+    /// Debounce delay in milliseconds when <see cref="Debouncing"/> is <c>true</c>.
+    /// </summary>
+    [Parameter]
+    public int DebounceInterval { get; set; } = 500;
 
     /// <summary>
     /// Gets or sets the placeholder text displayed when the input is empty.
@@ -113,6 +127,16 @@
     public string? Id { get; set; }
 
     /// <summary>
+    /// Gets or sets the HTML name attribute for the input element.
+    /// </summary>
+    /// <remarks>
+    /// When inside an EditForm and not explicitly set, the name is automatically
+    /// derived from the ValueExpression (FieldIdentifier) to support SSR form postback.
+    /// </remarks>
+    [Parameter]
+    public string? Name { get; set; }
+
+    /// <summary>
     /// Gets or sets the ARIA label for the input.
     /// </summary>
     /// <remarks>
@@ -141,48 +165,6 @@
     /// </remarks>
     [Parameter]
     public bool? AriaInvalid { get; set; }
-
-    /// <summary>
-    /// Gets or sets the HTML name attribute for the input element.
-    /// </summary>
-    /// <remarks>
-    /// When inside an EditForm and not explicitly set, the name is automatically
-    /// derived from the ValueExpression (FieldIdentifier) to support SSR form postback.
-    /// </remarks>
-    [Parameter]
-    public string? Name { get; set; }
-
-    /// <summary>
-    /// Gets or sets an expression that identifies the bound value.
-    /// </summary>
-    /// <remarks>
-    /// Used for form validation integration. When provided, the input
-    /// registers with the EditContext and participates in form validation.
-    /// </remarks>
-    [Parameter]
-    public Expression<Func<string?>>? ValueExpression { get; set; }
-
-    /// <summary>
-    /// Gets or sets when <see cref="ValueChanged"/> fires.
-    /// </summary>
-    /// <remarks>
-    /// <list type="bullet">
-    /// <item><see cref="JsSyncTiming.Immediate"/> — every keystroke (batched via requestAnimationFrame).</item>
-    /// <item><see cref="JsSyncTiming.OnBlur"/> — only on blur / Enter (default).</item>
-    /// <item><see cref="JsSyncTiming.Debounced"/> — after typing pauses for <see cref="DebounceInterval"/> ms.</item>
-    /// </list>
-    /// </remarks>
-    [Parameter]
-    public JsSyncTiming JsSyncTiming { get; set; } = JsSyncTiming.OnBlur;
-
-    /// <summary>
-    /// Gets or sets the debounced delay in milliseconds when <see cref="JsSyncTiming"/> is <see cref="JsSyncTiming.Debounced"/>.
-    /// </summary>
-    /// <remarks>
-    /// Ignored when <see cref="JsSyncTiming"/> is not <see cref="JsSyncTiming.Debounced"/>. Default is 500 ms.
-    /// </remarks>
-    [Parameter]
-    public int DebounceInterval { get; set; } = 500;
 
     /// <summary>
     /// Gets the effective name attribute, falling back to the FieldIdentifier name when inside an EditForm.
@@ -221,38 +203,37 @@
     );
 
     /// <inheritdoc />
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
-        base.OnParametersSet();
+        await base.OnParametersSetAsync();
 
         _validation.Update(CascadedEditContext, ValueExpression);
+
+        await JsModule.SyncConfigAsync(GetJsConfig());
     }
 
     /// <inheritdoc />
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
-        {
-            try
-            {
-                _jsModule = await JsRuntime.ImportJsModuleAsync("input-text");
-                _dotNetRef = DotNetObjectReference.Create(this);
-                await _jsModule.InvokeVoidAsync("initialize", _inputRef, _dotNetRef, _instanceId, JsSyncTiming.ToJsValue());
-                _jsInitialized = true;
-            }
-            catch (Exception ex) when (ex is JSDisconnectedException or TaskCanceledException or ObjectDisposedException)
-            {
-                // Expected during circuit disconnect
-            }
-            catch (InvalidOperationException)
-            {
-                // JS interop not available during prerendering
-            }
-        }
+        if (!firstRender)
+            return;
+
+        _dotNetRef ??= DotNetObjectReference.Create(this);
+        await JsModule.SetupAsync("input-text", _inputRef, _dotNetRef, GetJsConfig());
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+      _disposed = true;
+
+      await JsModule.DisposeAsync();
+
+      _dotNetRef?.Dispose();
+      GC.SuppressFinalize(this);
     }
 
     /// <summary>
-    /// Called from JavaScript during typing (Immediate/Debounced modes only).
+    /// Called from JavaScript during typing when <see cref="Debouncing"/> is enabled.
     /// </summary>
     [JSInvokable]
     public async Task JsOnInput(string? value)
@@ -277,7 +258,7 @@
     }
 
     /// <summary>
-    /// Called from JavaScript on blur/Enter (all modes).
+    /// Called from JavaScript on blur/change (all modes).
     /// </summary>
     [JSInvokable]
     public async Task JsOnChange(string? value)
@@ -301,28 +282,5 @@
         StateHasChanged();
     }
 
-    public async ValueTask DisposeAsync()
-    {
-      _disposed = true;
-
-      if (_jsModule != null && _jsInitialized)
-      {
-        try
-        {
-          await _jsModule.InvokeVoidAsync("dispose", _instanceId);
-          await _jsModule.DisposeAsync();
-        }
-        catch (Exception ex) when (ex is JSDisconnectedException or TaskCanceledException or ObjectDisposedException)
-        {
-          // Expected during circuit disconnect
-        }
-        catch (InvalidOperationException)
-        {
-          // JS interop not available
-        }
-      }
-
-      _dotNetRef?.Dispose();
-      GC.SuppressFinalize(this);
-    }
+    private JsConfig GetJsConfig() => new(Debouncing, DebounceInterval);
 }

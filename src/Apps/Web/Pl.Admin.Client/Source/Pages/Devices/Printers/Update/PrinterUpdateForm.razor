@@ -39,7 +39,6 @@
         Label="@($"{WsDataLocalizer["ColIp"]} ({Localizer["FormPrinterControl"]})")"
         @bind-Value="@FormModel.Ip"
         For="@(() => FormModel.Ip)"
-        Path="@($"http://{FormModel.Ip}")"
       />
 
       <PlFieldSelect

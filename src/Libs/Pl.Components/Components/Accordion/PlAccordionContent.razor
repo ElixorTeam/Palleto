@@ -2,7 +2,7 @@
 @namespace Pl.Components
 @inherits PlComponentBase
 
-<BbAccordionContent ForceMount="@ForceMount" class="@CssClass">
+<BbAccordionContent ForceMount="true" class="@CssClass">
   <div class="overflow-hidden min-h-0">
     <div class="pb-4 pt-0 text-sm">
       @ChildContent
@@ -11,14 +11,6 @@
 </BbAccordionContent>
 
 @code {
-  /// <summary>
-  /// Whether to force mount the content even when closed.
-  /// When true (default), enables smooth CSS animations.
-  /// When false, content unmounts when closed (no animation, lower memory).
-  /// </summary>
-  [Parameter]
-  public bool ForceMount { get; set; } = true;
-
   /// <summary>
   /// The child content to render when the item is open.
   /// </summary>

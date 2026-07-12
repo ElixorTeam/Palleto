@@ -1,7 +1,3 @@
-@using ToastService = Pl.Components.ToastService
-@inject IJSRuntime JsRuntime
-@inject ToastService ToastService
-
 <div class="w-full overflow-hidden flex flex-col">
   <span class="truncate text-muted-foreground">
     @Label
@@ -17,21 +13,14 @@
     }
     @if (Copyable)
     {
-      <PlButton
-        Variant="ButtonVariant.Ghost"
-        Size="ButtonSize.Icon"
-        Class="size-6 shrink-0"
-        OnClick="@SaveToClipboard">
-        <HeroIcon Name="clipboard" Class="size-4"/>
-      </PlButton>
+      <CopyToClipboardButton Value="@Value"/>
     }
     @if (!string.IsNullOrWhiteSpace(Link))
     {
       <PlButton
-        Link="@Link"
+        Href="@Link"
         Variant="ButtonVariant.Ghost"
-        Size="ButtonSize.Icon"
-        Class="size-6 shrink-0">
+        Size="ButtonSize.IconXs">
         <HeroIcon Name="arrow-top-right-on-square" Class="size-4"/>
       </PlButton>
     }
@@ -39,22 +28,9 @@
 </div>
 
 @code {
-  [Parameter] public string Label { get; set; } = string.Empty;
+  [Parameter, EditorRequired] public string Label { get; set; }
+
+  [Parameter] public string? Link { get; set; }
   [Parameter] public string? Value { get; set; }
-  [Parameter] public string Link { get; set; } = string.Empty;
   [Parameter] public bool Copyable { get; set; }
-
-  private async Task SaveToClipboard()
-  {
-    if (string.IsNullOrWhiteSpace(Value)) return;
-
-    try
-    {
-      await JsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Value);
-    }
-    catch
-    {
-      ToastService.Error("Ваш браузер не потдерживает копирование", "Ошибка");
-    }
-  }
 }

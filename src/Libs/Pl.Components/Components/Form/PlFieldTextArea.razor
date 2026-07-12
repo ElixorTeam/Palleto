@@ -19,7 +19,7 @@
       Required="@Required"
       MaxLength="@MaxLength"
       ShowCharacterCount="@ShowCharacterCount"
-      JsSyncTiming="@JsSyncTiming"
+      Debouncing="@Debouncing"
       DebounceInterval="@DebounceInterval"
       AriaLabel="@AriaLabel"
       AriaDescribedBy="@DescribedById"
@@ -50,13 +50,6 @@
     [Parameter]
     public string? Value { get; set; }
 
-    /// <summary>
-    /// Gets or sets the callback invoked when the textarea value changes.
-    /// </summary>
-    /// <remarks>
-    /// When <see cref="JsSyncTiming"/> is <see cref="JsSyncTiming.OnBlur"/> (default),
-    /// fires only on blur. Use <see cref="JsSyncTiming.Immediate"/> for per-keystroke updates.
-    /// </remarks>
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }
 
@@ -97,13 +90,14 @@
     public bool ShowCharacterCount { get; set; }
 
     /// <summary>
-    /// Gets or sets when ValueChanged fires.
+    /// When <c>true</c>, value updates are debounced during typing.
+    /// When <c>false</c> (default), updates fire only on blur.
     /// </summary>
     [Parameter]
-    public JsSyncTiming JsSyncTiming { get; set; } = JsSyncTiming.OnBlur;
+    public bool Debouncing { get; set; }
 
     /// <summary>
-    /// Gets or sets the debounced delay in milliseconds.
+    /// Debounce delay in milliseconds when <see cref="Debouncing"/> is <c>true</c>.
     /// </summary>
     [Parameter]
     public int DebounceInterval { get; set; } = 500;

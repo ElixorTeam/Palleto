@@ -159,9 +159,14 @@
       return v =>
       {
         SelectOption<TValue>? option = Options.FirstOrDefault(o => EqualityComparer<TValue>.Default.Equals(o.Value, v));
-        string result = option?.Text ?? v?.ToString() ?? string.Empty;
 
-        return result;
+        if (option is not null)
+          return option.Text;
+
+        return IsUnsetValue(v) ? string.Empty : v?.ToString() ?? string.Empty;
       };
     }
+
+    private static bool IsUnsetValue(TValue? value) =>
+      value is null || EqualityComparer<TValue>.Default.Equals(value, default!);
 }
