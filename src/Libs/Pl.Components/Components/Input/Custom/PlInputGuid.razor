@@ -1,0 +1,127 @@
+@namespace Pl.Components
+@using System.Linq.Expressions
+@using Microsoft.AspNetCore.Components.Forms
+@inherits PlComponentBase
+
+<PlInput
+  Id="@Id"
+  Name="@EffectiveName"
+  Value="@_text"
+  ValueChanged="HandleTextChanged"
+  Placeholder="@Placeholder"
+  Disabled="@Disabled"
+  Required="@Required"
+  AriaLabel="@AriaLabel"
+  AriaDescribedBy="@AriaDescribedBy"
+  AriaInvalid="@EffectiveAriaInvalid"
+  Class="@Class"
+  maxlength="36"
+  @attributes="AdditionalAttributes" />
+
+@code {
+    private readonly EditContextFieldState _validation = new();
+
+    private string? _text;
+    private Guid _lastSyncedValue;
+
+    [CascadingParameter]
+    private EditContext? CascadedEditContext { get; set; }
+
+    [CascadingParameter(Name = "FieldIsInvalid")]
+    private bool? FieldIsInvalid { get; set; }
+
+    [Parameter]
+    public Guid Value { get; set; }
+
+    [Parameter]
+    public EventCallback<Guid> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<Guid>>? ValueExpression { get; set; }
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool Required { get; set; }
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? Name { get; set; }
+
+    [Parameter]
+    public string? AriaLabel { get; set; }
+
+    [Parameter]
+    public string? AriaDescribedBy { get; set; }
+
+    [Parameter]
+    public bool? AriaInvalid { get; set; }
+
+    private string? EffectiveName => _validation.GetEffectiveName(Name);
+
+    private bool? EffectiveAriaInvalid =>
+        AriaInvalid ?? (FieldIsInvalid == true || _validation.IsInvalid ? true : null);
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        _validation.Update(CascadedEditContext, ValueExpression);
+
+        if (Value == _lastSyncedValue)
+            return;
+
+        _lastSyncedValue = Value;
+        _text = FormatValue(Value);
+    }
+
+    private async Task HandleTextChanged(string? text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            await CommitAsync(Guid.Empty);
+            await SyncDisplayAsync(Guid.Empty);
+            return;
+        }
+
+        if (Guid.TryParse(text, out Guid parsed))
+        {
+            await CommitAsync(parsed);
+            await SyncDisplayAsync(parsed);
+            return;
+        }
+
+        await SyncDisplayAsync(_lastSyncedValue);
+    }
+
+    private async Task SyncDisplayAsync(Guid value)
+    {
+        _text = "";
+        await InvokeAsync(StateHasChanged);
+
+        _text = FormatValue(value);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task CommitAsync(Guid value)
+    {
+        if (Value == value)
+            return;
+
+        if (ValueChanged.HasDelegate)
+            await ValueChanged.InvokeAsync(value);
+
+        Value = value;
+        _lastSyncedValue = value;
+        _validation.NotifyFieldChanged();
+    }
+
+    private static string? FormatValue(Guid value) =>
+        value == Guid.Empty ? null : value.ToString("D");
+}

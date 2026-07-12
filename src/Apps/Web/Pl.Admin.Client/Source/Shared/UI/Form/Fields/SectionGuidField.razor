@@ -3,15 +3,11 @@
 <SectionInputWrapper
   ValueToCopy="@(IsCopyable ? Value.ToString() : string.Empty)"
 >
-  <InputGuidField
-    id="@HtmlId"
-    @bind-Value="@Value"
-    @bind-Value:after="OnValueChanged"
+  <PlFieldInputGuid
+    Value="@Value"
+    ValueChanged="@ValueChanged"
+    ValueExpression="@ValueExpression"
+    Label="@Label"
     Placeholder="@Placeholder"
-    Disabled="Disabled"
-  />
-  @if (For != null)
-  {
-    <FieldValidation For="@For" />
-  }
+    Disabled="@Disabled" />
 </SectionInputWrapper>

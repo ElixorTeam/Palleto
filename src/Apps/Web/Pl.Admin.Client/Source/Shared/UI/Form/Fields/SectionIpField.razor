@@ -1,17 +1,23 @@
-@inherits SectionFieldBase<System.Net.IPAddress>
+@inherits SectionFieldBase<IPAddress>
 
 <SectionInputWrapper
   ValueToCopy="@(IsCopyable ? Value?.ToString() : string.Empty)"
 >
-  <InputIpField
-    id="@HtmlId"
-    @bind-Value="@Value"
-    @bind-Value:after="OnValueChanged"
+  <PlFieldInputIp
+    Value="@EffectiveValue"
+    ValueChanged="@HandleValueChanged"
+    ValueExpression="@ValueExpression"
+    Label="@Label"
     Placeholder="@Placeholder"
-    Disabled="Disabled"
-  />
-  @if (For != null)
-  {
-    <FieldValidation For="@For" />
-  }
+    Disabled="@Disabled" />
 </SectionInputWrapper>
+
+@code {
+  private IPAddress EffectiveValue => Value ?? IPAddress.None;
+
+  private async Task HandleValueChanged(IPAddress value)
+  {
+    Value = value;
+    await ValueChanged.InvokeAsync(value);
+  }
+}

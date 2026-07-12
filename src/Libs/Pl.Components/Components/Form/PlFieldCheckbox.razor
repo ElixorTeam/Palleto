@@ -54,7 +54,7 @@
     }
     @if (!string.IsNullOrEmpty(HelperText) && !IsInvalid)
     {
-      <PlFieldDescription Pl="@DescriptionId">@HelperText</PlFieldDescription>
+      <PlFieldDescription Id="@DescriptionId">@HelperText</PlFieldDescription>
     }
     @if (!string.IsNullOrEmpty(ErrorText) && IsInvalid)
     {

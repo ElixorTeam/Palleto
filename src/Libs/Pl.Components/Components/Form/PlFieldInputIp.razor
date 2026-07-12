@@ -1,0 +1,73 @@
+@namespace Pl.Components
+@using System.Linq.Expressions
+@using System.Net
+@inherits FieldBase
+
+<PlField Orientation="@Orientation" IsInvalid="@IsInvalid" Class="@Class">
+  @if (!string.IsNullOrEmpty(Label))
+  {
+    <PlFieldLabel For="@ControlId">@Label</PlFieldLabel>
+  }
+  <PlFieldContent>
+    <PlInputIp
+      Id="@ControlId"
+      Value="@Value"
+      ValueChanged="HandleValueChanged"
+      ValueExpression="@ValueExpression"
+      Name="@Name"
+      Placeholder="@Placeholder"
+      Disabled="@Disabled"
+      Required="@Required"
+      AriaLabel="@AriaLabel"
+      AriaDescribedBy="@DescribedById"
+      AriaInvalid="@IsInvalid"
+      Class="@InputClass" />
+    @if (!string.IsNullOrEmpty(HelperText) && !IsInvalid)
+    {
+      <PlFieldDescription Id="@DescriptionId">@HelperText</PlFieldDescription>
+    }
+    @if (IsInvalid && !string.IsNullOrEmpty(ErrorText))
+    {
+      <PlFieldError Id="@ErrorId">@ErrorText</PlFieldError>
+    }
+    else if (HasEditContextErrors)
+    {
+      <PlFieldError Id="@ErrorId" Errors="@EditContextErrors" />
+    }
+  </PlFieldContent>
+</PlField>
+
+@code {
+    [Parameter]
+    public IPAddress Value { get; set; } = IPAddress.None;
+
+    [Parameter]
+    public EventCallback<IPAddress> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<IPAddress>>? ValueExpression { get; set; }
+
+    [Parameter]
+    public string? Name { get; set; }
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    [Parameter]
+    public bool Required { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public string? InputClass { get; set; }
+
+    protected override LambdaExpression? GetFieldExpression() => ValueExpression;
+
+    private async Task HandleValueChanged(IPAddress value)
+    {
+        Value = value;
+        await ValueChanged.InvokeAsync(value);
+        NotifyFieldChanged();
+    }
+}
