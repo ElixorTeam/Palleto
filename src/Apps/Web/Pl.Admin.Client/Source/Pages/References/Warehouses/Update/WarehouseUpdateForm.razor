@@ -21,16 +21,14 @@
   <FieldsContent>
     <SectionAdminGuidField Value="@Model.Id" />
 
-    <SectionTextField
+    <PlFieldInput
       Label="@WsDataLocalizer["ColName"]"
       @bind-Value="@FormModel.Name"
-      For="@(() => FormModel.Name)"
     />
 
-    <SectionGuidField
+    <PlFieldInputGuid
       Label="UID 1C"
       @bind-Value="@FormModel.Id1C"
-      For="@(() => FormModel.Id1C)"
     />
 
   </FieldsContent>

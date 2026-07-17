@@ -24,9 +24,10 @@
   <FieldsContent>
     <SectionAdminGuidField Value="@Model.Id" />
 
-    <SectionReadOnlyField
+    <PlFieldInput
       Label="@WsDataLocalizer["ColName"]"
       Value="@($"{Model.Number} | {Model.Name}")"
+      Disabled
     />
 
     <UseEndpoint

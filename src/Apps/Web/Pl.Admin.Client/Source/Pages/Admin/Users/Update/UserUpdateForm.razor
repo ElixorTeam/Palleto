@@ -24,9 +24,10 @@
   <FieldsContent>
     <SectionAdminGuidField Value="@Model.KcId" Label="UID KC" />
 
-    <SectionReadOnlyField
+    <PlFieldInput
       Label="@WsDataLocalizer["ColName"]"
       Value="@Model.Fio.DisplayShortName"
+      Disabled
     />
 
     <UseParameterlessEndpoint

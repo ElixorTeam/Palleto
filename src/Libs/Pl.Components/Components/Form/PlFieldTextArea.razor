@@ -14,7 +14,7 @@
       ValueChanged="HandleValueChanged"
       ValueExpression="@ValueExpression"
       Name="@Name"
-      Placeholder="@Placeholder"
+      Placeholder="@ResolvedPlaceholder"
       Disabled="@Disabled"
       Required="@Required"
       MaxLength="@MaxLength"
@@ -64,12 +64,6 @@
     /// </summary>
     [Parameter]
     public string? Name { get; set; }
-
-    /// <summary>
-    /// Gets or sets the placeholder text.
-    /// </summary>
-    [Parameter]
-    public string? Placeholder { get; set; }
 
     /// <summary>
     /// Gets or sets whether the textarea is required.

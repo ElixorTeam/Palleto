@@ -15,16 +15,15 @@
   OnSubmitAction="@CreateItem"
 >
   <FieldsContent>
-    <SectionTextField
+    <PlFieldInput
       @bind-Value="@FormModel.Name"
       Label="@WsDataLocalizer["ColName"]"
-      For="@(() => FormModel.Name)"
     />
 
-    <SectionGuidField
+    <PlFieldInputGuid
       Label="UID 1C"
       @bind-Value="@FormModel.Id1C"
-      For="@(() => FormModel.Id1C)"/>
+    />
   </FieldsContent>
 </SectionForm>
 

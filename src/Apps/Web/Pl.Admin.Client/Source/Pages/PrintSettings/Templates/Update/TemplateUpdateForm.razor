@@ -21,17 +21,17 @@
   <FieldsContent>
     <SectionAdminGuidField Value="@Model.Id" />
 
-    <SectionReadOnlyField
+    <PlFieldInput
       Label="@WsDataLocalizer["ColType"]"
       Value="@GetTemplateTypeName(Model.IsWeight)"
+      Disabled
     />
 
     <FormDivider>@WsDataLocalizer["ColDescription"]</FormDivider>
 
-    <SectionTextField
+    <PlFieldInput
       Label="@WsDataLocalizer["ColName"]"
       @bind-Value="@FormModel.Name"
-      For="@(() => FormModel.Name)"
     />
 
     <PlFieldSelect
@@ -68,11 +68,12 @@
           if (string.IsNullOrWhiteSpace(FormModel.Body)) FormModel.Body = templateBodyQuery.Data;
           if (string.IsNullOrWhiteSpace(DialogItemCopy.Body)) DialogItemCopy.Body = templateBodyQuery.Data;
         }
-        <SectionTextAreaField
-          Label="@WsDataLocalizer["ColTemplate"]"
-          @bind-Value="@FormModel.Body"
-          IsCopyable
-        />
+        <CopyableField Value="@FormModel.Body" Class="col-span-2">
+          <PlFieldTextArea
+            Label="@WsDataLocalizer["ColTemplate"]"
+            @bind-Value="@FormModel.Body"
+          />
+        </CopyableField>
       }
       else
       {

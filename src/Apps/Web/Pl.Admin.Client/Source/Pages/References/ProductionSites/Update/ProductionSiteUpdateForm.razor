@@ -20,16 +20,15 @@
   <FieldsContent>
     <SectionAdminGuidField Value="@Model.Id" />
 
-    <SectionTextField
+    <PlFieldInput
       Label="@WsDataLocalizer["ColName"]"
       @bind-Value="@FormModel.Name"
-      For="@(() => FormModel.Name)"
     />
 
-    <SectionTextAreaField
+    <PlFieldTextArea
+      Class="col-span-2"
       Label="@WsDataLocalizer["ColAddress"]"
       @bind-Value="@FormModel.Address"
-      For="@(() => FormModel.Address)"
     />
   </FieldsContent>
   <ActionsContent>

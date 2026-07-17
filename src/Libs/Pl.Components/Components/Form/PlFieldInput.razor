@@ -15,7 +15,7 @@
       ValueExpression="@ValueExpression"
       Name="@Name"
       Type="@Type"
-      Placeholder="@Placeholder"
+      Placeholder="@ResolvedPlaceholder"
       Disabled="@Disabled"
       Required="@Required"
       Debouncing="@Debouncing"
@@ -64,12 +64,6 @@
     /// </summary>
     [Parameter]
     public string? Name { get; set; }
-
-    /// <summary>
-    /// Gets or sets the placeholder text.
-    /// </summary>
-    [Parameter]
-    public string? Placeholder { get; set; }
 
     /// <summary>
     /// Gets or sets whether the input is required.

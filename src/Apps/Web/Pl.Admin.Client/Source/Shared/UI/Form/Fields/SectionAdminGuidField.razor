@@ -1,13 +1,10 @@
 <AuthorizeView Policy="@Policies.Admin">
-  <SectionInputWrapper ValueToCopy="@Value.ToString()">
-    <PlFieldInput
-      Label="ID"
-      Value="@Value.ToString().ToUpper()"
-      Disabled
-    />
-  </SectionInputWrapper>
+  <CopyableField Value="@Value.ToString()">
+    <PlFieldInput Label="@Label" Value="@Value.ToString().ToUpper()" Disabled />
+  </CopyableField>
 </AuthorizeView>
 
 @code {
   [Parameter] public Guid Value { get; set; }
+  [Parameter] public string Label { get; set; } = "ID";
 }

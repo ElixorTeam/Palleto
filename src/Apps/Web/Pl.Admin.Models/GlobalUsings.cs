@@ -11,6 +11,7 @@ global using BF.Utilities.Json;
 
 // 4. Internal
 global using Pl.Admin.Models.Shared;
+global using Pl.Admin.Models.Shared.Validators;
 
 // 5. Modules
 global using Pl.Shared.Resources;

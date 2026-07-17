@@ -1,5 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Localization;
+using Pl.Components.Resources;
 
 namespace Pl.Components;
 
@@ -8,6 +10,9 @@ public abstract class FieldBase : ComponentBase, IDisposable
     private FieldIdentifier? _fieldIdentifier;
     private LambdaExpression? _cachedExpression;
     private EditContext? _subscribedEditContext;
+
+    [Inject]
+    protected IStringLocalizer<PlComponentsResources> Localizer { get; set; } = null!;
 
     [CascadingParameter]
     private EditContext? CascadedEditContext { get; set; }
@@ -23,6 +28,23 @@ public abstract class FieldBase : ComponentBase, IDisposable
     /// </summary>
     [Parameter]
     public string? Label { get; set; }
+
+    /// <summary>
+    /// Gets or sets the placeholder text. When empty, a localized default is used.
+    /// </summary>
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    /// <summary>
+    /// Placeholder passed to the inner control — falls back to a localized default.
+    /// </summary>
+    protected string ResolvedPlaceholder =>
+        string.IsNullOrWhiteSpace(Placeholder) ? Localizer["InputDefaultPlaceholder"] : Placeholder;
+
+    /// <summary>
+    /// Localized default placeholder. Override in select-like fields.
+    /// </summary>
+    protected virtual string GetDefaultPlaceholder() => Localizer["InputDefaultPlaceholder"];
 
     /// <summary>
     /// Gets or sets the helper text displayed below the control.

@@ -15,7 +15,7 @@
       ValueChanged="HandleValueChanged"
       ValueExpression="@ValueExpression"
       Name="@Name"
-      Placeholder="@Placeholder"
+      Placeholder="@ResolvedPlaceholder"
       Disabled="@Disabled"
       Required="@Required"
       AriaLabel="@AriaLabel"
@@ -49,9 +49,6 @@
 
     [Parameter]
     public string? Name { get; set; }
-
-    [Parameter]
-    public string? Placeholder { get; set; }
 
     [Parameter]
     public bool Required { get; set; }

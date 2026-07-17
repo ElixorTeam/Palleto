@@ -29,12 +29,12 @@
     <FieldsContent>
       <SectionAdminGuidField Value="@Model.Id"/>
 
-      <SectionGuidField
-        Label="UID 1C"
-        @bind-Value="@FormModel.Id1C"
-        For="@(() => FormModel.Id1C)"
-        IsCopyable
-      />
+      <CopyableField Value="@FormModel.Id1C.ToString()">
+        <PlFieldInputGuid
+          Label="UID 1C"
+          @bind-Value="@FormModel.Id1C"
+        />
+      </CopyableField>
 
       <UseEndpoint
         Endpoint="@ReferencesEndpoints.ProxyWarehousesEndpoint"
@@ -57,30 +57,26 @@
         }
       </UseEndpoint>
 
-      <SectionTextField
+      <PlFieldInput
         Label="@WsDataLocalizer["ColPassword"]"
         @bind-Value="@FormModel.Password"
-        For="@(() => FormModel.Password)"
       />
 
       <FormDivider>@WsDataLocalizer["ColFIO"]</FormDivider>
 
-      <SectionTextField
+      <PlFieldInput
         Label="@WsDataLocalizer["ColSurname"]"
         @bind-Value="@FormModel.Surname"
-        For="@(() => FormModel.Surname)"
       />
 
-      <SectionTextField
+      <PlFieldInput
         Label="@WsDataLocalizer["ColFirstName"]"
         @bind-Value="@FormModel.Name"
-        For="@(() => FormModel.Name)"
       />
 
-      <SectionTextField
+      <PlFieldInput
         Label="@WsDataLocalizer["ColPatronymic"]"
         @bind-Value="@FormModel.Patronymic"
-        For="@(() => FormModel.Patronymic)"
       />
     </FieldsContent>
     <ActionsContent>

@@ -24,7 +24,7 @@ public class PrinterUpdateValidator : AbstractValidator<PrinterUpdateDto>
             .MaximumLength(16).NotEmpty().Matches("^[A-Z0-9-]*$")
             .WithName(wsDataLocalizer["ColName"]);
 
-        RuleFor(item => item.Ip).NotEmpty().NotEqual(IPAddress.None);
+        RuleFor(item => item.Ip).NotEmptyIp();
         RuleFor(item => item.Type).IsInEnum().WithName(wsDataLocalizer["ColManufacturer"]);
     }
 }

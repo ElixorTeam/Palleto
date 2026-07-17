@@ -11,6 +11,7 @@
     <ItemGroup Label="Packages">
         <PackageReference Include="BlazorBlueprint.Icons.Heroicons" />
         <PackageReference Include="BlazorBlueprint.Primitives" />
+        <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" />
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" VersionOverride="4.11.5" />
         <PackageReference Include="TailwindMerge.NET" />
     </ItemGroup>

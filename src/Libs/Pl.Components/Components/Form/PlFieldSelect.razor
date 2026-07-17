@@ -22,7 +22,7 @@
       Class="@InputClass">
 
       <PlSelectTrigger id="@ControlId" aria-describedby="@DescribedById" AriaInvalid="@IsInvalid">
-        <PlSelectValue Placeholder="@Placeholder" />
+        <PlSelectValue Placeholder="@ResolvedPlaceholder" />
       </PlSelectTrigger>
 
       <PlSelectContent OnLoadMore="@OnLoadMore" IsLoading="@IsLoading" EndOfListMessage="@EndOfListMessage">
@@ -87,12 +87,6 @@
     public bool Required { get; set; }
 
     /// <summary>
-    /// Gets or sets the placeholder text displayed when no value is selected.
-    /// </summary>
-    [Parameter]
-    public string? Placeholder { get; set; }
-
-    /// <summary>
     /// Gets or sets a function to derive display text from the selected value.
     /// </summary>
     [Parameter]
@@ -143,6 +137,9 @@
 
     /// <inheritdoc />
     protected override LambdaExpression? GetFieldExpression() => ValueExpression;
+
+    /// <inheritdoc />
+    protected override string GetDefaultPlaceholder() => Localizer["SelectDefaultPlaceholder"];
 
     private async Task HandleValueChanged(TValue? value)
     {

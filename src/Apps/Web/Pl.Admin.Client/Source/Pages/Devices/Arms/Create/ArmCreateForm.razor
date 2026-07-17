@@ -30,12 +30,11 @@
       Max="99999"
     />
 
-    <SectionTextField
+    <PlFieldInput
       Label="@WsDataLocalizer["ColName"]"
       @bind-Value="@FormModel.Name"
-      For="@(() => FormModel.Name)"
-      MaxLength="32"
     />
+    @* MaxLength="32" *@
 
     <PlFieldSelect
       TValue="ArmType"
@@ -45,10 +44,9 @@
 
     <FormDivider>@WsDataLocalizer["ColDevice"]</FormDivider>
 
-    <SectionGuidField
+    <PlFieldInputGuid
       Label="@WsDataLocalizer["ColSystemKey"]"
       @bind-Value="@FormModel.SystemKey"
-      For="@(() => FormModel.SystemKey)"
     />
 
     <UseEndpoint
@@ -74,9 +72,10 @@
 
     <FormDivider>@Localizer["FieldLocation"]</FormDivider>
 
-    <SectionReadOnlyField
+    <PlFieldInput
       Label="@WsDataLocalizer["ColProductionSite"]"
       Value="@ProductionSiteState.Value.ProductionSite.Name"
+      Disabled
     />
 
     <UseEndpoint

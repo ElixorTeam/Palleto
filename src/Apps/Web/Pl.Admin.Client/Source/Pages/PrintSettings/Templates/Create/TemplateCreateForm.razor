@@ -17,10 +17,9 @@
 >
   <FieldsContent>
 
-    <SectionTextField
+    <PlFieldInput
       Label="@WsDataLocalizer["ColName"]"
       @bind-Value="@FormModel.Name"
-      For="@(() => FormModel.Name)"
     />
 
     <PlFieldSelect
@@ -56,7 +55,8 @@
 
     <FormDivider>@WsDataLocalizer["ColTemplate"]</FormDivider>
 
-    <SectionTextAreaField
+    <PlFieldTextArea
+      Class="col-span-2"
       Label="@WsDataLocalizer["ColTemplate"]"
       @bind-Value="@FormModel.Body"
     />

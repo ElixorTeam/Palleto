@@ -1,0 +1,22 @@
+@* Copy overlay for any field. Renders children as-is when Value is empty. *@
+
+@if (string.IsNullOrWhiteSpace(Value))
+{
+  @ChildContent
+}
+else
+{
+  <div class="@Css.Class("relative w-full", Class)">
+    @ChildContent
+    <CopyToClipboardButton
+      Value="@Value"
+      Class="absolute top-7 right-2 opacity-50 hover:opacity-100"
+    />
+  </div>
+}
+
+@code {
+  [Parameter] public string? Value { get; set; }
+  [Parameter] public string? Class { get; set; }
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+}

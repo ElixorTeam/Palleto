@@ -22,7 +22,7 @@
   <FieldsContent>
     <SectionAdminGuidField Value="@Model.Id" />
 
-    <SectionTextField
+    <PlFieldInput
       Label="@WsDataLocalizer["ColType"]"
       Value="@Localizer[Model.Type.GetDescription()]"
       Disabled
@@ -30,10 +30,9 @@
 
     <FormDivider></FormDivider>
 
-    <SectionTextField
+    <PlFieldInput
       Label="@WsDataLocalizer["ColName"]"
       @bind-Value="@FormModel.Name"
-      For="@(() => FormModel.Name)"
     />
 
     <UseEndpoint
@@ -47,11 +46,12 @@
           if (string.IsNullOrWhiteSpace(FormModel.Body)) FormModel.Body = resourceBodyQuery.Data;
           if (string.IsNullOrWhiteSpace(DialogItemCopy.Body)) DialogItemCopy.Body = resourceBodyQuery.Data;
         }
-        <SectionTextAreaField
-          Label="@WsDataLocalizer["ColTemplate"]"
-          @bind-Value="@FormModel.Body"
-          IsCopyable
-        />
+        <CopyableField Value="@FormModel.Body" Class="col-span-2">
+          <PlFieldTextArea
+            Label="@WsDataLocalizer["ColTemplate"]"
+            @bind-Value="@FormModel.Body"
+          />
+        </CopyableField>
       }
       else
       {

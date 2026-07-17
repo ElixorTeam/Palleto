@@ -18,10 +18,9 @@
   OnSubmitAction="@CreateItem"
 >
   <FieldsContent>
-    <SectionTextField
+    <PlFieldInput
       Label="@WsDataLocalizer["ColName"]"
       @bind-Value="@FormModel.Name"
-      For="@(() => FormModel.Name)"
     />
 
     <PlFieldSelect
@@ -30,7 +29,8 @@
       Label="@WsDataLocalizer["ColType"]"
       Options="ZplResourceTypes" />
 
-    <SectionTextAreaField
+    <PlFieldTextArea
+      Class="col-span-2"
       Label="@WsDataLocalizer["ColData"]"
       @bind-Value="@FormModel.Body"
     />

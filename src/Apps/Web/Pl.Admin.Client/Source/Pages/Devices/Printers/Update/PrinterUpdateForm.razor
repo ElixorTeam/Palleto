@@ -29,16 +29,14 @@
     <FieldsContent>
       <SectionAdminGuidField Value="@Model.Id" />
 
-      <SectionTextField
+      <PlFieldInput
         Label="@WsDataLocalizer["ColName"]"
         @bind-Value="FormModel.Name"
-        For="@(() => FormModel.Name)"
       />
 
-      <SectionIpField
+      <PlFieldInputIp
         Label="@($"{WsDataLocalizer["ColIp"]} ({Localizer["FormPrinterControl"]})")"
         @bind-Value="@FormModel.Ip"
-        For="@(() => FormModel.Ip)"
       />
 
       <PlFieldSelect

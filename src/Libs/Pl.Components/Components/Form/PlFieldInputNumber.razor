@@ -21,7 +21,7 @@
       Step="@Step"
       DecimalPlaces="@DecimalPlaces"
       AllowNegative="@AllowNegative"
-      Placeholder="@Placeholder"
+      Placeholder="@ResolvedPlaceholder"
       Disabled="@Disabled"
       Required="@Required"
       Format="@Format"
@@ -101,12 +101,6 @@
     /// </summary>
     [Parameter]
     public bool AllowNegative { get; set; } = true;
-
-    /// <summary>
-    /// Gets or sets the placeholder text.
-    /// </summary>
-    [Parameter]
-    public string? Placeholder { get; set; }
 
     /// <summary>
     /// Gets or sets whether the input is disabled.

@@ -30,13 +30,7 @@
   public RenderFragment? ChildContent { get; set; }
 
   private string CssClass => CssUtil.Cn(
-    // Typography - smaller size
-    "text-sm",
-    // Color - muted for helper text
-    "text-muted-foreground",
-    // Text balancing for better line breaks
-    "text-balance",
-    // Custom classes (if provided)
+    "text-sm text-muted-foreground text-balance",
     Class
   );
 }
